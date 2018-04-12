@@ -1,0 +1,24 @@
+.home {
+	padding: 20px;
+	min-height: 100%;
+	width: 100%;
+}
+
+.card {
+	border-radius: 10px;
+	width: 100%;
+	max-width: 750px;
+	margin: 0 auto;
+}
+
+.cardHeader {
+	padding: 16px;
+}
+
+.cardBody {
+	padding: 30px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	
+}

@@ -11,6 +11,10 @@ html, body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
+body.mdc-theme--dark .mdc-card {
+  background: #444444;
+}
+
 /* fallback */
 @font-face {
   font-family: 'Material Icons';

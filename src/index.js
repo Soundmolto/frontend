@@ -1,4 +1,15 @@
+import { Provider, connect } from 'preact-redux';
+import App from './components/App';
+import store from './store';
 import './style';
-import App from './components/app';
 
-export default App;
+console.log(store);
+
+const Main = () => (
+	<Provider store={store}>
+		<App />
+	</Provider>
+);
+
+
+export default Main;

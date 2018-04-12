@@ -1,6 +1,6 @@
-# preact material app
+# Music streaming Frontend
 
-Super performant `Material` app for preact world using [preact-material-components](https://github.com/prateekbh/preact-material-components)
+Preact frontend for the Music streaming service.
 
 ## CLI Commands
 
