@@ -7,7 +7,6 @@ export function begin_login () {
 }
 
 export async function login (body, dispatch) {
-    console.log(dispatch);
     let returnObject = {};
 
     try {
@@ -19,6 +18,7 @@ export async function login (body, dispatch) {
                 'Content-Type': 'application/json'
             }
         });
+
 
         if (data.status === 200) {
             returnObject = {

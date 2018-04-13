@@ -53,7 +53,8 @@ export default class Login extends Component {
 	}
 
 	render() {
-		// if (this.props.)
+		if (this.props.token != null) window.location.assign("/");
+
 		return (
 			<div class={style.home}>
 				<Card className={style.card}>
