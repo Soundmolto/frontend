@@ -3,6 +3,7 @@ import { connect } from 'preact-redux';
 import Card from 'preact-material-components/Card';
 import TextField from 'preact-material-components/TextField';
 import Button from 'preact-material-components/Button';
+import { begin_login, login } from '../../actions/login';
 import 'preact-material-components/Card/style.css';
 import 'preact-material-components/Button/style.css';
 import 'preact-material-components/TextField/style.css';
@@ -26,12 +27,11 @@ export default class Login extends Component {
 	 * 
 	 * @param {Event} e - The submit event.
 	 */
-	onLogin (e) {
+	async onLogin (e) {
 		e.preventDefault();
 		// Handle the login event with the current state
-		console.log(
-			state
-		);
+		this.props.dispatch(begin_login());
+		login(state, this.props.dispatch);
 	}
 
 	/**
@@ -53,6 +53,7 @@ export default class Login extends Component {
 	}
 
 	render() {
+		// if (this.props.)
 		return (
 			<div class={style.home}>
 				<Card className={style.card}>
