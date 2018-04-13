@@ -1,6 +1,7 @@
 import { API_ENDPOINT } from '../api';
 
 export function begin_login () {
+    localStorage.clear();
     return {
         type: "USER_REQUESTED_LOGIN"
     }

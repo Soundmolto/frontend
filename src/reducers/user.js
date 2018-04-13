@@ -13,7 +13,7 @@ export default function reducer (state = {
             break;
         }
 
-        case "USER_LOGOUT_SUCCEEDED": {
+        case "USER_LOGOUT": {
             state = {
                 id: "",
                 verified: "false",

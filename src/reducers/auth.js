@@ -15,6 +15,11 @@ export default function reducer (state = { logged_in: false, logging_in: false, 
             state = { ...state, logged_in: false, logging_in: false, error: true };
             break;
         }
+
+        case "USER_LOGOUT": {
+            state = { logged_in: false, logging_in: false, error: false, token: null };
+            break;
+        }
     }
 
     return state;

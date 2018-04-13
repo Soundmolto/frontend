@@ -10,8 +10,11 @@ import 'preact-material-components/Dialog/style.css';
 import 'preact-material-components/Drawer/style.css';
 import 'preact-material-components/List/style.css';
 import 'preact-material-components/Toolbar/style.css';
+import { connect } from 'preact-redux';
+import { logout } from '../../actions/logout';
 // import style from './style';
 
+@connect(state => state)
 export default class Header extends Component {
 	closeDrawer() {
 		this.drawer.MDComponent.open = false;
@@ -52,6 +55,30 @@ export default class Header extends Component {
 		);
 	}
 
+	logout () {
+		this.props.dispatch(logout());
+	}
+
+	login_or_logout () {
+		let defaultVal = (
+			<Drawer.DrawerItem onClick={this.goToLogin}>
+					<List.ItemGraphic>vpn_key</List.ItemGraphic>
+					Login
+				</Drawer.DrawerItem>
+		);
+
+		if (this.props.auth.logged_in) {
+			defaultVal = (
+				<Drawer.DrawerItem onClick={this.logout.bind(this)}>
+					<List.ItemGraphic>vpn_key</List.ItemGraphic>
+					Logout
+				</Drawer.DrawerItem>
+			);
+		}
+
+		return defaultVal;
+	}
+
 	render() {
 		return (
 			<div>
@@ -78,10 +105,7 @@ export default class Header extends Component {
 							<List.ItemGraphic>account_circle</List.ItemGraphic>
 							Profile
 						</Drawer.DrawerItem>
-						<Drawer.DrawerItem onClick={this.goToLogin}>
-							<List.ItemGraphic>account_circle</List.ItemGraphic>
-							Profile
-						</Drawer.DrawerItem>
+						{this.login_or_logout()}
 					</Drawer.TemporaryDrawerContent>
 				</Drawer.TemporaryDrawer>
 				<Dialog ref={this.dialogRef}>
