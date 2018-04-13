@@ -4,6 +4,7 @@ import Card from 'preact-material-components/Card';
 import TextField from 'preact-material-components/TextField';
 import Button from 'preact-material-components/Button';
 import { begin_login, login } from '../../actions/login';
+import { route } from 'preact-router';
 import 'preact-material-components/Card/style.css';
 import 'preact-material-components/Button/style.css';
 import 'preact-material-components/TextField/style.css';
@@ -29,9 +30,11 @@ export default class Login extends Component {
 	 */
 	async onLogin (e) {
 		e.preventDefault();
-		// Handle the login event with the current state
-		this.props.dispatch(begin_login());
-		login(state, this.props.dispatch);
+		const { dispatch } = this.props;
+		/** This will update the UI to indicate we're logging in */
+		dispatch(begin_login());
+		/** This will update our state to indicate we've either logged in or failed login */
+		login(state, dispatch);
 	}
 
 	/**
@@ -53,7 +56,7 @@ export default class Login extends Component {
 	}
 
 	render() {
-		if (this.props.token != null) window.location.assign("/");
+		if (this.props.token != null) route("/", true);
 
 		return (
 			<div class={style.home}>
