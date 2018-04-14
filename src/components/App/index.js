@@ -5,10 +5,20 @@ import Header from '../header';
 import Home from 'async!../../routes/home';
 import Profile from 'async!../../routes/profile';
 import Login from 'async!../../routes/login';
+import Users from 'async!../../routes/users';
+import Footer from '../Footer';
 import Helmet from 'preact-helmet';
+import { request_new_data } from '../../actions/user';
 
 @connect(state => state)
 export default class App extends Component {
+
+	componentDidMount () {
+		const { auth, dispatch, user } = this.props;
+		if (auth.logged_in) {
+			request_new_data(dispatch, { token: auth.token, vanity_url: user.profile.url })
+		}
+	}
 
 	/** Gets fired when the route changes.
 	 *	@param {Object} event		"change" event from [preact-router](http://git.io/preact-router)
@@ -37,7 +47,9 @@ export default class App extends Component {
 					<Profile path="/profile/" user="me" />
 					<Profile path="/profile/:user" />
 					<Login path="/login" />
+					<Users path="/users" />
 				</Router>
+				<Footer />
 			</div>
 		);
 	}

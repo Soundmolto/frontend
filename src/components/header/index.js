@@ -61,24 +61,30 @@ export default class Header extends Component {
 	login_or_logout () {
 		let defaultVal = (
 			<Drawer.DrawerItem onClick={this.goToLogin}>
-					<List.ItemGraphic>vpn_key</List.ItemGraphic>
-					Login
-				</Drawer.DrawerItem>
+				<List.ItemGraphic>vpn_key</List.ItemGraphic>
+				Login
+			</Drawer.DrawerItem>
 		);
 
 		if (this.props.auth.logged_in) {
 			defaultVal = (
-				<Drawer.DrawerItem onClick={this.logout.bind(this)}>
-					<List.ItemGraphic>vpn_key</List.ItemGraphic>
-					Logout
-				</Drawer.DrawerItem>
+				<div>
+					<Drawer.DrawerItem onClick={this.goToMyProfile}>
+						<List.ItemGraphic>account_circle</List.ItemGraphic>
+						Profile
+					</Drawer.DrawerItem>
+					<Drawer.DrawerItem onClick={this.logout.bind(this)}>
+						<List.ItemGraphic>vpn_key</List.ItemGraphic>
+						Logout
+					</Drawer.DrawerItem>
+				</div>
 			);
 		}
 
 		return defaultVal;
 	}
 
-	render () {
+	render ({ auth, user }) {
 		return (
 			<div>
 				<Toolbar className="toolbar">
@@ -98,19 +104,16 @@ export default class Header extends Component {
 				</Toolbar>
 				<Drawer.TemporaryDrawer ref={this.drawerRef}>
 					<Drawer.DrawerHeader>
-						Components
+						Welcome {user.profile.displayName || ""}
 					</Drawer.DrawerHeader>
-					<Drawer.TemporaryDrawerContent>
+					<Drawer.DrawerContent>
 						<Drawer.DrawerItem onClick={this.goHome}>
 							<List.ItemGraphic>home</List.ItemGraphic>
 							Home
 						</Drawer.DrawerItem>
-						<Drawer.DrawerItem onClick={this.goToMyProfile}>
-							<List.ItemGraphic>account_circle</List.ItemGraphic>
-							Profile
-						</Drawer.DrawerItem>
+						
 						{this.login_or_logout()}
-					</Drawer.TemporaryDrawerContent>
+					</Drawer.DrawerContent>
 				</Drawer.TemporaryDrawer>
 				<Dialog ref={this.dialogRef}>
 					<Dialog.Header>Settings</Dialog.Header>

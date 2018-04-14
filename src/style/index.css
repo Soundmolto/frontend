@@ -67,3 +67,24 @@ body.mdc-theme--dark .mdc-card {
 .mdc-toolbar__icon, .mdc-toolbar__menu-icon.material-icons, .mdc-toolbar__icon.material-icons, .mdc-toolbar__menu-icon.material-icons {
   display: flex !important;
 }
+
+.mdc-drawer__header {
+  background: #333;
+}
+
+.mdc-drawer__header-content {
+  color: white;
+}
+
+.footer {
+  position: fixed;
+  bottom: 10px;
+  width: 100vw;
+}
+
+@media screen and (max-width: 1199px) {
+  .footer > .mdc-tab-bar {
+    max-width: 900px;
+    width: 100%;
+  }
+}

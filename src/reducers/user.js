@@ -24,6 +24,11 @@ export default function reducer (state = {
             };
             break;
         }
+
+        case "USER_NEW_DATA": {
+            state = Object.assign({}, state, action.payload);
+            break;
+        }
     }
 
     return state;
