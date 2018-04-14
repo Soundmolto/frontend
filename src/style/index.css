@@ -44,10 +44,26 @@ body.mdc-theme--dark .mdc-card {
 }
 
 #app {
-	height: 100%;
+  height: 100%;
+  padding-top: 70px;
 }
 
 .mdc-theme--dark {
 	background-color: #333;
 	color: #fff;
+}
+
+.mdc-toolbar {
+  position: fixed;
+  top: 0;
+  background: #333;
+}
+
+.mdc-toolbar__menu-icon + .mdc-toolbar__title {
+  margin-left: 8px;
+  margin-right: 0;
+}
+
+.mdc-toolbar__icon, .mdc-toolbar__menu-icon.material-icons, .mdc-toolbar__icon.material-icons, .mdc-toolbar__menu-icon.material-icons {
+  display: flex !important;
 }

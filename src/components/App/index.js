@@ -5,6 +5,7 @@ import Header from '../header';
 import Home from 'async!../../routes/home';
 import Profile from 'async!../../routes/profile';
 import Login from 'async!../../routes/login';
+import Helmet from 'preact-helmet';
 
 @connect(state => state)
 export default class App extends Component {
@@ -17,10 +18,20 @@ export default class App extends Component {
 		this.currentUrl = e.url;
 	};
 
+	get_current_route () {
+		return this.currentUrl;
+	}
+
 	render () {
+		const url = this.get_current_route.bind(this);
 		return (
 			<div id="app">
-				<Header />
+				{/* <Helmet link={
+					[
+						{rel: "stylesheet", href: "//fonts.googleapis.com/icon?family=Material+Icons"}
+					]
+				} /> */}
+				<Header get_url={url} />
 				<Router onChange={this.handleRoute}>
 					<Home path="/" />
 					<Profile path="/profile/" user="me" />

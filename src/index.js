@@ -3,6 +3,7 @@ import App from './components/App';
 import store from './store';
 import './style';
 
+
 const Main = () => (
 	<Provider store={store}>
 		<App />

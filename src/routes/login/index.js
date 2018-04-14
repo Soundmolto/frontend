@@ -56,7 +56,6 @@ export default class Login extends Component {
 	}
 
 	render() {
-		console.log(this.props.logged_in);
 		if (this.props.logged_in === true) route("/", true);
 
 		return (

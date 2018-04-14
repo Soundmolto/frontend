@@ -1,5 +1,7 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
+import { connect } from 'preact-redux';
+import { logout } from '../../actions/logout';
 import Toolbar from 'preact-material-components/Toolbar';
 import Drawer from 'preact-material-components/Drawer';
 import List from 'preact-material-components/List';
@@ -10,9 +12,6 @@ import 'preact-material-components/Dialog/style.css';
 import 'preact-material-components/Drawer/style.css';
 import 'preact-material-components/List/style.css';
 import 'preact-material-components/Toolbar/style.css';
-import { connect } from 'preact-redux';
-import { logout } from '../../actions/logout';
-// import style from './style';
 
 @connect(state => state)
 export default class Header extends Component {
@@ -79,7 +78,7 @@ export default class Header extends Component {
 		return defaultVal;
 	}
 
-	render() {
+	render () {
 		return (
 			<div>
 				<Toolbar className="toolbar">
@@ -88,14 +87,19 @@ export default class Header extends Component {
 							<Toolbar.Icon menu onClick={this.openDrawer}>
 								menu
 							</Toolbar.Icon>
-							<Toolbar.Title>Preact app</Toolbar.Title>
+							<Toolbar.Title>
+								Music streaming app
+							</Toolbar.Title>
 						</Toolbar.Section>
-						<Toolbar.Section align-end onClick={this.openSettings}>
+						<Toolbar.Section align-end={true} onClick={this.openSettings}>
 							<Toolbar.Icon>settings</Toolbar.Icon>
 						</Toolbar.Section>
 					</Toolbar.Row>
 				</Toolbar>
 				<Drawer.TemporaryDrawer ref={this.drawerRef}>
+					<Drawer.DrawerHeader>
+						Components
+					</Drawer.DrawerHeader>
 					<Drawer.TemporaryDrawerContent>
 						<Drawer.DrawerItem onClick={this.goHome}>
 							<List.ItemGraphic>home</List.ItemGraphic>
