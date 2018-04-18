@@ -6,7 +6,6 @@ import 'preact-material-components/Icon/style.css';
 
 export default class Footer extends Component {
     render () {
-        console.log(this);
         return (
             <div className="footer">
                 <Tabs className="demo-tabs" icon-tab-bar={true}>

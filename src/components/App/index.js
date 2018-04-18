@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import { Router } from 'preact-router';
 import { connect } from 'preact-redux';
-import Header from '../header';
+import Header from '../Header';
 import Home from 'async!../../routes/home';
 import Profile from 'async!../../routes/profile';
 import Login from 'async!../../routes/login';
@@ -45,9 +45,9 @@ export default class App extends Component {
 				<Router onChange={this.handleRoute}>
 					<Home path="/" />
 					<Profile path="/profile/" user="me" />
-					<Profile path="/profile/:user" />
 					<Login path="/login" />
 					<Users path="/users" />
+					<Profile path="/users/:vanity_url" />
 				</Router>
 				<Footer />
 			</div>

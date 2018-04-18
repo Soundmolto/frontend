@@ -29,6 +29,11 @@ export default function reducer (state = {
             state = Object.assign({}, state, action.payload);
             break;
         }
+
+        case "VIEW_PROFILE": {
+            state = Object.assign({}, state, action.payload);
+            break;
+        }
     }
 
     return state;

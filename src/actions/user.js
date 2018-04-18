@@ -57,3 +57,33 @@ export async function fetch_users (dispatch) {
         return dispatch(returnObject);
     }
 }
+
+export async function fetch_user (dispatch, { token, vanity_url }) {
+    let returnObject = {};
+
+    console.log(token, vanity_url)
+
+    try {
+        const data = await fetch(`${API_ENDPOINT}/users/${vanity_url}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                ...prefill_auth(token)
+            }
+        });
+
+        if (data.status === 200) {
+            returnObject = {
+                type: "VIEW_PROFILE",
+                payload: await data.json()
+            }
+        } else {
+            throw new Error(data.statusText);
+        }
+
+    } catch (error) {
+        console.log(error);
+    } finally {
+        return dispatch(returnObject);
+    }
+}

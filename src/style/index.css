@@ -45,7 +45,7 @@ body.mdc-theme--dark .mdc-card {
 
 #app {
   height: 100%;
-  padding-top: 70px;
+  padding-top: 64px;
 }
 
 .mdc-theme--dark {
@@ -87,4 +87,13 @@ body.mdc-theme--dark .mdc-card {
     max-width: 900px;
     width: 100%;
   }
+}
+
+.mdc-card__actions {
+  padding: 0 !important;
+}
+
+.vertical-center {
+  display: flex;
+  align-items: center;
 }
