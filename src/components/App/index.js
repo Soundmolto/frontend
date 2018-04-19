@@ -36,18 +36,13 @@ export default class App extends Component {
 		const url = this.get_current_route.bind(this);
 		return (
 			<div id="app">
-				{/* <Helmet link={
-					[
-						{rel: "stylesheet", href: "//fonts.googleapis.com/icon?family=Material+Icons"}
-					]
-				} /> */}
 				<Header get_url={url} />
 				<Router onChange={this.handleRoute}>
 					<Home path="/" />
 					<Profile path="/profile/" user="me" />
 					<Login path="/login" />
 					<Users path="/users" />
-					<Profile path="/users/:vanity_url" />
+					<Profile path="/:vanity_url" />
 				</Router>
 				<Footer />
 			</div>

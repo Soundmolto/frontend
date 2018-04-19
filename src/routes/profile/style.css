@@ -27,3 +27,12 @@
 .profile_contents {
 	padding: 20px;
 }
+
+.profile_contents [class="mdc-card"] {
+	border-radius: 10px;
+	padding: 20px;
+}
+
+.profile_contents [class="mdc-card"] h2 {
+	margin-top: 0;
+}

@@ -4,22 +4,20 @@ import 'preact-material-components/Card/style.css';
 import 'preact-material-components/Button/style.css';
 import { Link } from 'preact-router';
 
-export class UserCard extends Component {
+const new_line_br = text => (text.replace('\n', '<br />'));
+
+export class UserDescription extends Component {
     render ({ user }) {
         return (
             <div>
                 <Card>
                     <div>
                         <h2 class=" mdc-typography--title">
-                            {user.profile.displayName || "Untitled user"}
+                            {user.profile.displayName || user.profile.url || "Untitled user"}
                         </h2>
-                        <div class=" mdc-typography--caption">
-                            {user.profile.description || "No description"}
+                        <div class=" mdc-typography--caption" dangerouslySetInnerHTML={{__html: new_line_br(user.profile.description) || "<p>No description</p>"}}>
                         </div>
                     </div>
-                    <Card.Actions>
-                        <Link className="mdc-card__action mdc-button mdc-card__action--button" style="width: 100%" href={`/${user.profile.url}`}>View Profile</Link>
-                    </Card.Actions>
                 </Card>
             </div>
         );
