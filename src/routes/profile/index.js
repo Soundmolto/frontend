@@ -20,7 +20,6 @@ export default class Profile extends Component {
 
 	// Note: `user` comes from the URL, courtesy of our router
 	render({ user }, { time, count }) {
-		console.log(this);
 		return (
 			<div class={style.profile}>
 				<div class={style.header}>
@@ -44,7 +43,7 @@ export default class Profile extends Component {
 								{user.tracks.length <= 0 && <h1>No tracks</h1>}
 							</LayoutGrid.Cell>
 							<LayoutGrid.Cell cols="2">
-								<UserDescription user={user} />
+								{user != null && <UserDescription user={user} />}
 							</LayoutGrid.Cell>
 						</LayoutGrid.Inner>
 					</LayoutGrid>

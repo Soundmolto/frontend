@@ -4,7 +4,16 @@ import 'preact-material-components/Card/style.css';
 import 'preact-material-components/Button/style.css';
 import { Link } from 'preact-router';
 
-const new_line_br = text => (text.replace('\n', '<br />'));
+const new_line_br = text => {
+    let _t = text;
+    try {
+        _t = text.replace('\n', '<br />');
+    } catch (e) {
+        console.error(e);
+    } finally {
+        return _t;
+    }
+};
 
 export class UserDescription extends Component {
     render ({ user }) {
