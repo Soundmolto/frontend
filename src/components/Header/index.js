@@ -95,7 +95,7 @@ export default class Header extends Component {
 				</Toolbar>
 				<Drawer.TemporaryDrawer ref={this.drawerRef}>
 					<Drawer.DrawerHeader>
-						Welcome {user.profile.displayName || ""}
+						Welcome {user.profile.displayName || user.profile.url || ""}
 					</Drawer.DrawerHeader>
 					<Drawer.DrawerContent>
 						<Drawer.DrawerItem onClick={this.goHome}>
