@@ -8,6 +8,7 @@ import List from 'preact-material-components/List';
 import Dialog from 'preact-material-components/Dialog';
 import Switch from 'preact-material-components/Switch';
 import Menu from 'preact-material-components/Menu';
+import Icon from 'preact-material-components/Icon';
 import 'preact-material-components/Switch/style.css';
 import 'preact-material-components/Dialog/style.css';
 import 'preact-material-components/Drawer/style.css';
@@ -40,7 +41,7 @@ export default class Header extends Component {
 	};
 
 	goHome = this.linkTo('/');
-	goToMyProfile = this.linkTo('/profile');
+	goToMyProfile = this.linkTo('/me');
 	goToLogin = this.linkTo('/login');
 
 	toggleDarkTheme = () => {
@@ -113,8 +114,14 @@ export default class Header extends Component {
 												<p class={style.padding}>
 													{user.profile.displayName || user.profile.url || ""}
 												</p>
-												<Menu.Item>Hello2</Menu.Item>
-												<Menu.Item>Hello3</Menu.Item>
+												<Menu.Item onClick={this.goToMyProfile}>
+													<Icon class={style.icon}>person</Icon>
+													Profile
+												</Menu.Item>
+												<Menu.Item onClick={this.logout.bind(this)}>
+													<Icon class={style.icon}>vpn_key</Icon>
+													Logout
+												</Menu.Item>
 											</Menu>
 										</Menu.Anchor>
 									</div>
