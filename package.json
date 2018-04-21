@@ -35,6 +35,7 @@
     "preact-material-components": "^1.4.0",
     "preact-redux": "^2.0.3",
     "preact-router": "^2.5.5",
+    "react-hotkeys": "^1.1.4",
     "redux": "^3.7.2",
     "redux-localstorage": "^0.4.1",
     "redux-promise-middleware": "^5.0.0"
