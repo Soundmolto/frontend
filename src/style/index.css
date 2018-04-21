@@ -1,3 +1,7 @@
+:root {
+  --mdc-theme-primary: #5D8CAE;
+  --mdc-theme-primary-font: #FFFFFF;
+}
 html, body {
 	height: 100%;
 	width: 100%;
@@ -51,7 +55,6 @@ body.mdc-theme--dark .mdc-card {
 .mdc-theme--dark {
 	background-color: #333;
   color: #fff;
-  --mdc-theme-primary: #5D8CAE;
 }
 
 .mdc-toolbar {

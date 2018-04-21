@@ -7,16 +7,22 @@ import Drawer from 'preact-material-components/Drawer';
 import List from 'preact-material-components/List';
 import Dialog from 'preact-material-components/Dialog';
 import Switch from 'preact-material-components/Switch';
+import Menu from 'preact-material-components/Menu';
 import 'preact-material-components/Switch/style.css';
 import 'preact-material-components/Dialog/style.css';
 import 'preact-material-components/Drawer/style.css';
 import 'preact-material-components/List/style.css';
 import 'preact-material-components/Toolbar/style.css';
+import 'preact-material-components/List/style.css';
+import 'preact-material-components/Menu/style.css';
 import { dark_theme, light_theme } from '../../actions/ui';
 import { THEMES } from '../../themes';
+import { UserPictureName } from '../UserPictureName';
+import style from './style';
 
 @connect(state => state)
 export default class Header extends Component {
+
 	closeDrawer() {
 		this.drawer.MDComponent.open = false;
 	}
@@ -43,6 +49,13 @@ export default class Header extends Component {
 		} else {
 			dark_theme(this.props.dispatch);
 		}
+	}
+
+	toggleMenu () {
+		const currentState = this.menu.MDComponent.open;
+		let nextState = true;
+		if (null != currentState) nextState = !currentState;
+		this.menu.MDComponent.open = nextState;
 	}
 
 	logout () {
@@ -88,8 +101,28 @@ export default class Header extends Component {
 								Music streaming app
 							</Toolbar.Title>
 						</Toolbar.Section>
-						<Toolbar.Section align-end={true} onClick={this.openSettings}>
-							<Toolbar.Icon>settings</Toolbar.Icon>
+						<Toolbar.Section align-end={true} >
+							<div class={style.header}>
+								{auth.logged_in === true && (
+									<div>
+										<div onClick={this.toggleMenu.bind(this)} class={style.clickable}>
+											<UserPictureName user={user} />
+										</div>
+										<Menu.Anchor>
+											<Menu ref={menu => { this.menu = menu; }} class={style.menu}>
+												<p class={style.padding}>
+													{user.profile.displayName || user.profile.url || ""}
+												</p>
+												<Menu.Item>Hello2</Menu.Item>
+												<Menu.Item>Hello3</Menu.Item>
+											</Menu>
+										</Menu.Anchor>
+									</div>
+								)}
+							</div>
+							<div>
+								<Toolbar.Icon onClick={this.openSettings}>settings</Toolbar.Icon>
+							</div>
 						</Toolbar.Section>
 					</Toolbar.Row>
 				</Toolbar>

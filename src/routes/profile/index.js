@@ -6,8 +6,8 @@ import 'preact-material-components/Button/style.css';
 import { connect } from 'preact-redux';
 import { fetch_user } from '../../actions/user';
 import style from './style';
-import Goku from '../../assets/goku.png';
 import { UserDescription } from '../../components/UserDescription';
+import { UserPictureName } from '../../components/UserPictureName';
 
 @connect(state => state)
 export default class Profile extends Component {
@@ -28,13 +28,7 @@ export default class Profile extends Component {
 		return (
 			<div class={style.profile}>
 				<div class={style.header}>
-					<div class="vertical-center">
-						<img src={Goku} />
-						<h1>
-							{viewedUser.profile.displayName || viewedUser.profile.url || "[Name]"}
-							<small className={style.smol}>{viewedUser.profile.location || ""}</small>
-						</h1>
-					</div>	
+					<UserPictureName user={viewedUser} />
 				</div>
 				<div class={style.profile_contents}>
 					<LayoutGrid>
