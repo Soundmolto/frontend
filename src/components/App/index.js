@@ -39,7 +39,7 @@ export default class App extends Component {
 				<Header get_url={url} />
 				<Router onChange={this.handleRoute}>
 					<Home path="/" />
-					<Profile path="/profile/" user="me" />
+					<Profile path="/me/" />
 					<Login path="/login" />
 					<Users path="/users" />
 					<Profile path="/:vanity_url" />

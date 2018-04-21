@@ -36,3 +36,9 @@
 .profile_contents [class="mdc-card"] h2 {
 	margin-top: 0;
 }
+
+.smol {
+	font-size: 1rem;
+	line-height: 1rem;
+	display: block;
+}

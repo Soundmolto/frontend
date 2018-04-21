@@ -3,6 +3,8 @@ import { connect } from 'preact-redux';
 import Card from 'preact-material-components/Card';
 import TextField from 'preact-material-components/TextField';
 import Button from 'preact-material-components/Button';
+import LinearProgress from 'preact-material-components/LinearProgress';
+import 'preact-material-components/LinearProgress/style.css';
 import { begin_login, login } from '../../actions/login';
 import { route } from 'preact-router';
 import 'preact-material-components/Card/style.css';
@@ -55,8 +57,8 @@ export default class Login extends Component {
 		state = {...state, password: event.currentTarget.value || ""};
 	}
 
-	render() {
-		if (this.props.logged_in === true) route("/", true);
+	render ({ logging_in, logged_in}) {
+		if (logged_in === true) route("/", true);
 
 		return (
 			<div class={style.home}>
@@ -65,7 +67,10 @@ export default class Login extends Component {
 						<TextField label="Enter your email address" type="email" autofocus onChange={this.onEmailChange.bind(this)} />
 						<TextField type="password" label="Enter a password" onChange={this.onPasswordChange.bind(this)} />
 						<div className={style.buttonContainer}>
-							<Button raised onClick={this.onLogin.bind(this)} type="submit">Login</Button>
+							<Button raised onClick={this.onLogin.bind(this)} type="submit">
+								{!logged_in && !logging_in && "Login"}
+								{!logged_in && logging_in && <LinearProgress reversed={true} indeterminate={true} />}
+							</Button>
 						</div>
 					</form>
 				</Card>

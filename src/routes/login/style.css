@@ -20,5 +20,12 @@
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
-	
+}
+
+[class="mdc-text-field"] {
+	width: 100% !important;
+}
+
+.buttonContainer {
+	transition: all 0.3s ease-in-out;
 }

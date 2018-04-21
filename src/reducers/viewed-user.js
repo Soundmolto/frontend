@@ -4,29 +4,26 @@ export default function reducer (state = {
     following: [],
     followers: [],
     profile: {},
-    tracks: []
+    tracks: [],
+    found: false
   }, action) {
     switch (action.type) {
 
-        case "USER_LOGIN_SUCCEEDED": {
-            state = Object.assign({}, state, action.payload.user);
+        case "VIEW_PROFILE": {
+            state = Object.assign({}, state, action.payload, { found: true });
             break;
         }
 
-        case "USER_LOGOUT": {
+        case "PROFILE_NOT_FOUND": {
             state = {
                 id: "",
                 verified: "false",
                 following: [],
                 followers: [],
                 profile: {},
-                tracks: []
-            };
-            break;
-        }
-
-        case "USER_NEW_DATA": {
-            state = Object.assign({}, state, action.payload);
+                tracks: [],
+                found: false
+              };
             break;
         }
     }

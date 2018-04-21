@@ -60,8 +60,7 @@ export async function fetch_users (dispatch) {
 
 export async function fetch_user (dispatch, { token, vanity_url }) {
     let returnObject = {};
-
-    console.log(token, vanity_url)
+    let error = {};
 
     try {
         const data = await fetch(`${API_ENDPOINT}/users/${vanity_url}`, {
@@ -78,11 +77,19 @@ export async function fetch_user (dispatch, { token, vanity_url }) {
                 payload: await data.json()
             }
         } else {
+            error = await data.json()
             throw new Error(data.statusText);
         }
 
-    } catch (error) {
-        console.log(error);
+    } catch (e) {
+        console.log(e);
+
+        if (error.error === 'User not found') {
+            returnObject = {
+                type: "PROFILE_NOT_FOUND",
+                payload: {}
+            }
+        }
     } finally {
         return dispatch(returnObject);
     }
