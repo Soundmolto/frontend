@@ -12,14 +12,13 @@ import 'preact-material-components/Dialog/style.css';
 import 'preact-material-components/Drawer/style.css';
 import 'preact-material-components/List/style.css';
 import 'preact-material-components/Toolbar/style.css';
+import { dark_theme, light_theme } from '../../actions/ui';
+import { THEMES } from '../../themes';
 
 @connect(state => state)
 export default class Header extends Component {
 	closeDrawer() {
 		this.drawer.MDComponent.open = false;
-		this.state = {
-			darkThemeEnabled: false
-		};
 	}
 
 	openDrawer = () => (this.drawer.MDComponent.open = true);
@@ -39,19 +38,11 @@ export default class Header extends Component {
 	goToLogin = this.linkTo('/login');
 
 	toggleDarkTheme = () => {
-		this.setState(
-			{
-				darkThemeEnabled: !this.state.darkThemeEnabled
-			},
-			() => {
-				if (this.state.darkThemeEnabled) {
-					document.body.classList.add('mdc-theme--dark');
-				}
-				else {
-					document.body.classList.remove('mdc-theme--dark');
-				}
-			}
-		);
+		if (this.props.UI.theme === THEMES.dark) {
+			light_theme(this.props.dispatch);
+		} else {
+			dark_theme(this.props.dispatch);
+		}
 	}
 
 	logout () {
@@ -119,7 +110,7 @@ export default class Header extends Component {
 					<Dialog.Header>Settings</Dialog.Header>
 					<Dialog.Body>
 						<div>
-							Enable dark theme <Switch onClick={this.toggleDarkTheme} />
+							Enable dark theme <Switch checked={this.props.UI.theme === THEMES.dark} onClick={this.toggleDarkTheme} />
 						</div>
 					</Dialog.Body>
 					<Dialog.Footer>

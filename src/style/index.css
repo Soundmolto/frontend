@@ -50,7 +50,8 @@ body.mdc-theme--dark .mdc-card {
 
 .mdc-theme--dark {
 	background-color: #333;
-	color: #fff;
+  color: #fff;
+  --mdc-theme-primary: #5D8CAE;
 }
 
 .mdc-toolbar {
@@ -96,4 +97,22 @@ body.mdc-theme--dark .mdc-card {
 .vertical-center {
   display: flex;
   align-items: center;
+}
+
+.mdc-theme--dark .mdc-dialog--open .mdc-dialog__surface {
+  background-color: #636366;
+  border-radius: 10px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.mdc-theme--dark .mdc-dialog--open .mdc-dialog__backdrop {
+  opacity: 0.8;
+}
+
+.mdc-theme--dark .mdc-button:not(:disabled) {
+  color: white;
+}
+
+.mdc-theme--dark .mdc-dialog__body {
+  color: #cfcfcf;
 }

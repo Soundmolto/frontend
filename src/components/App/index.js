@@ -6,15 +6,15 @@ import Home from 'async!../../routes/home';
 import Profile from 'async!../../routes/profile';
 import Login from 'async!../../routes/login';
 import Users from 'async!../../routes/users';
-import Footer from '../Footer';
 import Helmet from 'preact-helmet';
 import { request_new_data } from '../../actions/user';
+import { THEMES } from '../../themes';
 
 @connect(state => state)
 export default class App extends Component {
 
 	componentDidMount () {
-		const { auth, dispatch, user } = this.props;
+		const { auth, dispatch, user, UI } = this.props;
 		if (auth.logged_in) {
 			request_new_data(dispatch, { token: auth.token, vanity_url: user.profile.url })
 		}
@@ -32,8 +32,15 @@ export default class App extends Component {
 		return this.currentUrl;
 	}
 
-	render () {
+	render ({ UI }) {
 		const url = this.get_current_route.bind(this);
+
+		if (UI.theme === THEMES.dark) {
+			document.body.classList.add('mdc-theme--dark');
+		} else {
+			document.body.classList.remove('mdc-theme--dark');
+		}
+
 		return (
 			<div id="app">
 				<Header get_url={url} />
@@ -44,7 +51,6 @@ export default class App extends Component {
 					<Users path="/users" />
 					<Profile path="/:vanity_url" />
 				</Router>
-				<Footer />
 			</div>
 		);
 	}
