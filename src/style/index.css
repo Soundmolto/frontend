@@ -10,7 +10,7 @@
 
 html, body {
   min-height: 100vh;
-	height: 100%;
+	height: auto;
 	width: 100%;
 	padding: 0;
 	margin: 0;
@@ -19,7 +19,8 @@ html, body {
 	font-weight: 400;
 	color: #444;
 	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-y: hidden;
 }
 
 body > div {

@@ -3,8 +3,7 @@ import { prefill_auth } from '../prefill-authorized-route';
 
 export async function request_new_data (dispatch, { token, vanity_url }) {
     let returnObject = {};
-
-    if (token )
+    let error = {};
 
     try {
         const data = await fetch(`${API_ENDPOINT}/users/${vanity_url}`, {
@@ -21,11 +20,17 @@ export async function request_new_data (dispatch, { token, vanity_url }) {
                 payload: await data.json()
             }
         } else {
+            error = data;
             throw new Error(data.statusText);
         }
 
-    } catch (error) {
-        console.log(error);
+    } catch (e) {
+        console.log(e);
+        if (error.status === 404 || error.status === 403 || error.status === 401) {
+            returnObject = {
+                type: "USER_LOGOUT"
+            }
+        }
     } finally {
         return dispatch(returnObject);
     }
