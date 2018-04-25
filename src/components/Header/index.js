@@ -102,88 +102,96 @@ export default class Header extends Component {
 
 	}
 
-	render ({ auth, user }) {
-		return (
-			<div>
-				<Toolbar className="toolbar">
-					<Toolbar.Row>
-						<Toolbar.Section align-start>
-							<Toolbar.Icon menu onClick={this.openDrawer}>
-								menu
-							</Toolbar.Icon>
-							<Toolbar.Title>
-								Music streaming app
-							</Toolbar.Title>
-						</Toolbar.Section>
-						<Toolbar.Section align-end={true} >
-							<div class={style.header}>
-								{auth.logged_in === true && (
-									<div>
-										<div onClick={this.toggleMenu.bind(this)} class={style.clickable}>
-											<UserPictureName user={user} />
+	render ({ auth, user, UI }) {
+		try {
+			if (UI.settings_open === true) {
+				this.openSettings();
+			}
+		} catch (e) {
+			console.log(e);
+		} finally {
+			return (
+				<div>
+					<Toolbar className="toolbar">
+						<Toolbar.Row>
+							<Toolbar.Section align-start>
+								<Toolbar.Icon menu onClick={this.openDrawer}>
+									menu
+								</Toolbar.Icon>
+								<Toolbar.Title>
+									Music streaming app
+								</Toolbar.Title>
+							</Toolbar.Section>
+							<Toolbar.Section align-end={true} >
+								<div class={style.header}>
+									{auth.logged_in === true && (
+										<div>
+											<div onClick={this.toggleMenu.bind(this)} class={style.clickable}>
+												<UserPictureName user={user} />
+											</div>
+											<Menu.Anchor>
+												<Menu ref={menu => { this.menu = menu; }} class={style.menu}>
+													<p class={style.padding}>
+														{user.profile.displayName || user.profile.url || ""}
+													</p>
+													<Menu.Item onClick={this.goToMyProfile}>
+														<Icon class={style.icon}>person</Icon>
+														Profile
+													</Menu.Item>
+													<Menu.Item onClick={this.openEditProfileModal}>
+														<Icon class={style.icon}>edit</Icon>
+														Edit Profile
+													</Menu.Item>
+													<Menu.Item onClick={this.logout.bind(this)}>
+														<Icon class={style.icon}>vpn_key</Icon>
+														Logout
+													</Menu.Item>
+												</Menu>
+											</Menu.Anchor>
 										</div>
-										<Menu.Anchor>
-											<Menu ref={menu => { this.menu = menu; }} class={style.menu}>
-												<p class={style.padding}>
-													{user.profile.displayName || user.profile.url || ""}
-												</p>
-												<Menu.Item onClick={this.goToMyProfile}>
-													<Icon class={style.icon}>person</Icon>
-													Profile
-												</Menu.Item>
-												<Menu.Item onClick={this.openEditProfileModal}>
-													<Icon class={style.icon}>edit</Icon>
-													Edit Profile
-												</Menu.Item>
-												<Menu.Item onClick={this.logout.bind(this)}>
-													<Icon class={style.icon}>vpn_key</Icon>
-													Logout
-												</Menu.Item>
-											</Menu>
-										</Menu.Anchor>
-									</div>
-								)}
-							</div>
+									)}
+								</div>
+								<div>
+									<Toolbar.Icon onClick={this.openSettings}>settings</Toolbar.Icon>
+								</div>
+							</Toolbar.Section>
+						</Toolbar.Row>
+					</Toolbar>
+					<Drawer.TemporaryDrawer ref={this.drawerRef}>
+						<Drawer.DrawerHeader>
+							Welcome {user.profile.displayName || user.profile.url || ""}
+						</Drawer.DrawerHeader>
+						<Drawer.DrawerContent>
+							<Drawer.DrawerItem onClick={this.goHome}>
+								<List.ItemGraphic>home</List.ItemGraphic>
+								Home
+							</Drawer.DrawerItem>
+							
+							{this.login_or_logout()}
+						</Drawer.DrawerContent>
+					</Drawer.TemporaryDrawer>
+					<Dialog ref={this.settingsDialogRef} onCancel={e => this.props.dispatch({ type: "HIDE_SETTINGS_PANEL" } )}>
+						<Dialog.Header>Settings</Dialog.Header>
+						<Dialog.Body>
 							<div>
-								<Toolbar.Icon onClick={this.openSettings}>settings</Toolbar.Icon>
+								Enable dark theme <Switch checked={this.props.UI.theme === THEMES.dark} onClick={this.toggleDarkTheme} />
 							</div>
-						</Toolbar.Section>
-					</Toolbar.Row>
-				</Toolbar>
-				<Drawer.TemporaryDrawer ref={this.drawerRef}>
-					<Drawer.DrawerHeader>
-						Welcome {user.profile.displayName || user.profile.url || ""}
-					</Drawer.DrawerHeader>
-					<Drawer.DrawerContent>
-						<Drawer.DrawerItem onClick={this.goHome}>
-							<List.ItemGraphic>home</List.ItemGraphic>
-							Home
-						</Drawer.DrawerItem>
-						
-						{this.login_or_logout()}
-					</Drawer.DrawerContent>
-				</Drawer.TemporaryDrawer>
-				<Dialog ref={this.settingsDialogRef}>
-					<Dialog.Header>Settings</Dialog.Header>
-					<Dialog.Body>
-						<div>
-							Enable dark theme <Switch checked={this.props.UI.theme === THEMES.dark} onClick={this.toggleDarkTheme} />
-						</div>
-					</Dialog.Body>
-					<Dialog.Footer>
-						<Dialog.FooterButton accept>okay</Dialog.FooterButton>
-					</Dialog.Footer>
-				</Dialog>
-				<Dialog ref={this.editProfileDialogRef}>
-					<Dialog.Header>Edit Profile</Dialog.Header>
-					<Dialog.Body>
-						<EditProfile ref={this.editProfileRef} />
-					</Dialog.Body>
-					<Dialog.Footer>
-						<Dialog.FooterButton accept onClick={this.onSaveProfile.bind(this)}>okay</Dialog.FooterButton>
-					</Dialog.Footer>
-				</Dialog>
-			</div>
-		);
+						</Dialog.Body>
+						<Dialog.Footer>
+							<Dialog.FooterButton accept>okay</Dialog.FooterButton>
+						</Dialog.Footer>
+					</Dialog>
+					<Dialog ref={this.editProfileDialogRef}>
+						<Dialog.Header>Edit Profile</Dialog.Header>
+						<Dialog.Body>
+							<EditProfile ref={this.editProfileRef} />
+						</Dialog.Body>
+						<Dialog.Footer>
+							<Dialog.FooterButton accept onClick={this.onSaveProfile.bind(this)}>okay</Dialog.FooterButton>
+						</Dialog.Footer>
+					</Dialog>
+				</div>
+			);
+		}
 	}
 }

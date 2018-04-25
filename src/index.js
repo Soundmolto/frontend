@@ -11,7 +11,11 @@ class HotKeysHOC extends Component {
 	};
 
 	handlers = {
-		'show:settings': e => console.log(e)
+		'show:settings': e => {
+			store.dispatch({
+				type: "SHOW_SETTINGS_PANEL"
+			})
+		}
 	};
 
 	render ({ children }) {
