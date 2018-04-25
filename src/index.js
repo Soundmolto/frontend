@@ -20,7 +20,7 @@ class HotKeysHOC extends Component {
 
 	render ({ children }) {
 		return (
-			<HotKeys handlers={this.handlers} keyMap={this.map} autofocus={true}>
+			<HotKeys handlers={this.handlers} keyMap={this.map} focused={true} attach={window}>
 				{children}
 			</HotKeys>
 		);
