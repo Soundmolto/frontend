@@ -1,6 +1,8 @@
+import { USER } from '../enums/user';
+
 export function logout () {
     return {
-        type: "USER_LOGOUT",
+        type: USER.MUST_LOGOUT,
         payload: null
     }
 }

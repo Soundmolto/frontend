@@ -1,3 +1,5 @@
+import { USER } from '../enums/user';
+
 export default function reducer (state = {
     id: "",
     verified: "false",
@@ -8,12 +10,12 @@ export default function reducer (state = {
   }, action) {
     switch (action.type) {
 
-        case "USER_LOGIN_SUCCEEDED": {
+        case USER.SUCCESSFULLY_LOGGED_IN: {
             state = Object.assign({}, state, action.payload.user);
             break;
         }
 
-        case "USER_LOGOUT": {
+        case USER.MUST_LOGOUT: {
             state = {
                 id: "",
                 verified: "false",
@@ -25,7 +27,7 @@ export default function reducer (state = {
             break;
         }
 
-        case "USER_NEW_DATA": {
+        case USER.HAS_NEW_DATA: {
             state = Object.assign({}, state, action.payload);
             break;
         }

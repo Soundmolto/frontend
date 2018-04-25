@@ -8,7 +8,7 @@ import Login from 'async!../../routes/login';
 import Users from 'async!../../routes/users';
 import Helmet from 'preact-helmet';
 import { request_new_data } from '../../actions/user';
-import { THEMES } from '../../themes';
+import { THEMES } from '../../enums/themes';
 
 @connect(state => state)
 export default class App extends Component {

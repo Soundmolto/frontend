@@ -1,0 +1,8 @@
+.formField {
+	width: 100%;
+	flex-wrap: wrap;
+}
+
+.formField > div {
+	width: 100%;
+}

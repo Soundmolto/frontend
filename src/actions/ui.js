@@ -1,8 +1,8 @@
-import { THEMES } from '../themes';
+import { THEMES } from '../enums/themes';
 
 export function dark_theme (dispatch) {
     dispatch({
-        type: "CHANGE_THEME",
+        type: THEMES.CHANGE_THEME,
         payload: {
             theme: THEMES.dark
         }
@@ -11,7 +11,7 @@ export function dark_theme (dispatch) {
 
 export function light_theme (dispatch) {
     dispatch({
-        type: "CHANGE_THEME",
+        type: THEMES.CHANGE_THEME,
         payload: {
             theme: THEMES.light
         }

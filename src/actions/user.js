@@ -1,5 +1,6 @@
 import { API_ENDPOINT } from '../api';
 import { prefill_auth } from '../prefill-authorized-route';
+import { USER } from '../enums/user';
 
 export async function request_new_data (dispatch, { token, vanity_url }) {
     let returnObject = {};
@@ -16,7 +17,7 @@ export async function request_new_data (dispatch, { token, vanity_url }) {
 
         if (data.status === 200) {
             returnObject = {
-                type: "USER_NEW_DATA",
+                type: USER.HAS_NEW_DATA,
                 payload: await data.json()
             }
         } else {
@@ -28,7 +29,7 @@ export async function request_new_data (dispatch, { token, vanity_url }) {
         console.log(e);
         if (error.status === 404 || error.status === 403 || error.status === 401) {
             returnObject = {
-                type: "USER_LOGOUT"
+                type: USER.MUST_LOGOUT
             }
         }
     } finally {
@@ -49,7 +50,7 @@ export async function fetch_users (dispatch) {
 
         if (data.status === 200) {
             returnObject = {
-                type: "ALL_USERS",
+                type: USER.GOT_ALL_USERS,
                 payload: await data.json()
             }
         } else {
@@ -78,7 +79,7 @@ export async function fetch_user (dispatch, { token, vanity_url }) {
 
         if (data.status === 200) {
             returnObject = {
-                type: "VIEW_PROFILE",
+                type: USER.VIEW_PROFILE,
                 payload: await data.json()
             }
         } else {
@@ -91,7 +92,7 @@ export async function fetch_user (dispatch, { token, vanity_url }) {
 
         if (error.error === 'User not found') {
             returnObject = {
-                type: "PROFILE_NOT_FOUND",
+                type: USER.PROFILE_UPDATE_FAILURE,
                 payload: {}
             }
         }

@@ -1,7 +1,6 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
 import { connect } from 'preact-redux';
-import { logout } from '../../actions/logout';
 import Toolbar from 'preact-material-components/Toolbar';
 import Drawer from 'preact-material-components/Drawer';
 import List from 'preact-material-components/List';
@@ -9,6 +8,7 @@ import Dialog from 'preact-material-components/Dialog';
 import Switch from 'preact-material-components/Switch';
 import Menu from 'preact-material-components/Menu';
 import Icon from 'preact-material-components/Icon';
+import EditProfile from '../EditProfile';
 import 'preact-material-components/Switch/style.css';
 import 'preact-material-components/Dialog/style.css';
 import 'preact-material-components/Drawer/style.css';
@@ -16,10 +16,13 @@ import 'preact-material-components/List/style.css';
 import 'preact-material-components/Toolbar/style.css';
 import 'preact-material-components/List/style.css';
 import 'preact-material-components/Menu/style.css';
-import { dark_theme, light_theme } from '../../actions/ui';
-import { THEMES } from '../../themes';
 import { UserPictureName } from '../UserPictureName';
 import style from './style';
+
+import { THEMES } from '../../enums/themes';
+import { dark_theme, light_theme } from '../../actions/ui';
+import { logout } from '../../actions/logout';
+import { edit_profile } from '../../actions/profile';
 
 @connect(state => state)
 export default class Header extends Component {
@@ -30,10 +33,13 @@ export default class Header extends Component {
 
 	openDrawer = () => (this.drawer.MDComponent.open = true);
 
-	openSettings = () => this.dialog.MDComponent.show();
+	openSettings = () => this.settingsModal.MDComponent.show();
+	openEditProfileModal = () => this.editProfileModal.MDComponent.show();
 
 	drawerRef = drawer => (this.drawer = drawer);
-	dialogRef = dialog => (this.dialog = dialog);
+	settingsDialogRef = dialog => (this.settingsModal = dialog);
+	editProfileDialogRef = dialog => (this.editProfileModal = dialog);
+	editProfileRef = editProfile => (this.editProfile = editProfile);
 
 	linkTo = path => () => {
 		route(path);
@@ -60,6 +66,7 @@ export default class Header extends Component {
 	}
 
 	logout () {
+		this.closeDrawer();
 		this.props.dispatch(logout());
 	}
 
@@ -87,6 +94,12 @@ export default class Header extends Component {
 		}
 
 		return defaultVal;
+	}
+
+	onSaveProfile (e) {
+		const values = this.editProfile._component.values;
+		console.log(values);
+
 	}
 
 	render ({ auth, user }) {
@@ -118,6 +131,10 @@ export default class Header extends Component {
 													<Icon class={style.icon}>person</Icon>
 													Profile
 												</Menu.Item>
+												<Menu.Item onClick={this.openEditProfileModal}>
+													<Icon class={style.icon}>edit</Icon>
+													Edit Profile
+												</Menu.Item>
 												<Menu.Item onClick={this.logout.bind(this)}>
 													<Icon class={style.icon}>vpn_key</Icon>
 													Logout
@@ -146,7 +163,7 @@ export default class Header extends Component {
 						{this.login_or_logout()}
 					</Drawer.DrawerContent>
 				</Drawer.TemporaryDrawer>
-				<Dialog ref={this.dialogRef}>
+				<Dialog ref={this.settingsDialogRef}>
 					<Dialog.Header>Settings</Dialog.Header>
 					<Dialog.Body>
 						<div>
@@ -155,6 +172,15 @@ export default class Header extends Component {
 					</Dialog.Body>
 					<Dialog.Footer>
 						<Dialog.FooterButton accept>okay</Dialog.FooterButton>
+					</Dialog.Footer>
+				</Dialog>
+				<Dialog ref={this.editProfileDialogRef}>
+					<Dialog.Header>Edit Profile</Dialog.Header>
+					<Dialog.Body>
+						<EditProfile ref={this.editProfileRef} />
+					</Dialog.Body>
+					<Dialog.Footer>
+						<Dialog.FooterButton accept onClick={this.onSaveProfile.bind(this)}>okay</Dialog.FooterButton>
 					</Dialog.Footer>
 				</Dialog>
 			</div>

@@ -1,9 +1,8 @@
-import { THEMES } from '../themes';
+import { THEMES } from '../enums/themes';
 
 export default function reducer (state = { theme: THEMES.light }, action) {
-    console.log(action);
     switch (action.type) {
-        case "CHANGE_THEME": {
+        case THEMES.CHANGE_THEME: {
             state = { theme: action.payload.theme };
             break;
         }

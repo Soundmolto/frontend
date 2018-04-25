@@ -1,4 +1,5 @@
 export const THEMES = Object.freeze({
     dark: "DARK",
-    light: "DEFAULT"
+    light: "DEFAULT",
+    CHANGE_THEME: "CHANGE_THEME"
 })

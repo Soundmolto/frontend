@@ -1,3 +1,5 @@
+import { USER } from '../enums/user';
+
 export default function reducer (state = {
     id: "",
     verified: "false",
@@ -9,12 +11,12 @@ export default function reducer (state = {
   }, action) {
     switch (action.type) {
 
-        case "VIEW_PROFILE": {
+        case USER.VIEW_PROFILE: {
             state = Object.assign({}, state, action.payload, { found: true });
             break;
         }
 
-        case "PROFILE_NOT_FOUND": {
+        case USER.PROFILE_NOT_FOUND: {
             state = {
                 id: "",
                 verified: "false",

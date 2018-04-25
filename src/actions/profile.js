@@ -1,30 +1,25 @@
 import { API_ENDPOINT } from '../api';
 import { USER } from '../enums/user';
+import { prefill_auth } from '../prefill-authorized-route';
 
-export function begin_login () {
-    localStorage.clear();
-    return {
-        type: USER.LOGIN_REQUESTED
-    }
-}
-
-export async function login (body, dispatch) {
+export async function edit_profile (dispatch, { profile, token }) {
     let returnObject = {};
 
     try {
-        const data = await fetch(`${API_ENDPOINT}/login`, {
-            body: JSON.stringify(body),
+        const data = await fetch(`${API_ENDPOINT}/user/${profile.id}`, {
+            body: JSON.stringify(profile),
             method: "POST",
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                ...prefill_auth(token)
             }
         });
 
 
         if (data.status === 200) {
             returnObject = {
-                type: USER.SUCCESSFULLY_LOGGED_IN,
+                type: USER.PROFILE_UPDATE_SUCCESS,
                 payload: await data.json()
             }
         } else {
@@ -33,10 +28,10 @@ export async function login (body, dispatch) {
 
     } catch (error) {
         returnObject = {
-            type: USER.FAILED_LOGIN,
+            type: USER.PROFILE_UPDATE_FAILURE,
             payload: { error }
         };
     } finally {
         return dispatch(returnObject);
     }
-}
+};
