@@ -28,13 +28,7 @@ export default class EditProfile extends Component {
     onSubmit (e) {
         e.preventDefault();
         const id = this.props.user.id;
-        edit_profile(this.props.dispatch, {
-            token: this.props.auth.token,
-            profile: {
-                ...state
-            },
-            id
-        })
+        edit_profile(this.props.dispatch, { token: this.props.auth.token, profile: { ...state }, id });
         return true;
     }
 
@@ -49,6 +43,7 @@ export default class EditProfile extends Component {
             <form onSubmit={this.onSubmit.bind(this)} class={styles.form}>
                 <TextField label="Your display name" type="text" autofocus value={user.profile.displayName} style={full_width} onChange={e => this.onInputChange(e, 'displayName')} />
                 <TextField label="Your profile URL" type="text" autofocus value={user.profile.url} style={full_width} onChange={e => this.onInputChange(e, 'url')} />
+                <TextField label="Description" textarea autofocus value={user.profile.description} style={full_width} onChange={e => this.onInputChange(e, 'description')} />
                 <Button type="submit">Submit</Button>
             </form>
         );

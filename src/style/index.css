@@ -20,7 +20,7 @@ html, body {
 	color: #444;
 	-webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 body > div {
@@ -149,4 +149,8 @@ body.mdc-theme--dark .mdc-card {
 
 .mdc-theme--dark :not(.mdc-list--non-interactive) > .mdc-list-item:hover::before {
   opacity: 0.2;
+}
+
+.mdc-text-field--textarea .mdc-floating-label {
+  background: transparent;
 }

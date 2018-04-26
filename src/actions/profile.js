@@ -33,7 +33,8 @@ export async function edit_profile (dispatch, { profile, token, id }) {
     } finally {
         if (returnObject.error == null) {
             dispatch({
-                type: USER.REQU
+                type: USER.HAS_NEW_DATA,
+                payload: Object.assign({}, returnObject.payload)
             })
         }
         return dispatch(returnObject);
