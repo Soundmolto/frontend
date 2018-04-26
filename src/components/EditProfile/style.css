@@ -1,8 +1,8 @@
-.formField {
+.form {
 	width: 100%;
 	flex-wrap: wrap;
 }
 
-.formField > div {
+.form > div {
 	width: 100%;
 }

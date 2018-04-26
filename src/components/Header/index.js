@@ -22,7 +22,6 @@ import style from './style';
 import { THEMES } from '../../enums/themes';
 import { dark_theme, light_theme } from '../../actions/ui';
 import { logout } from '../../actions/logout';
-import { edit_profile } from '../../actions/profile';
 
 @connect(state => state)
 export default class Header extends Component {
@@ -94,12 +93,6 @@ export default class Header extends Component {
 		}
 
 		return defaultVal;
-	}
-
-	onSaveProfile (e) {
-		const values = this.editProfile._component.values;
-		console.log(values);
-
 	}
 
 	render ({ auth, user, UI }) {
@@ -186,9 +179,6 @@ export default class Header extends Component {
 						<Dialog.Body>
 							<EditProfile ref={this.editProfileRef} />
 						</Dialog.Body>
-						<Dialog.Footer>
-							<Dialog.FooterButton accept onClick={this.onSaveProfile.bind(this)}>okay</Dialog.FooterButton>
-						</Dialog.Footer>
 					</Dialog>
 				</div>
 			);

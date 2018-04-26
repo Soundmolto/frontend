@@ -2,20 +2,19 @@ import { API_ENDPOINT } from '../api';
 import { USER } from '../enums/user';
 import { prefill_auth } from '../prefill-authorized-route';
 
-export async function edit_profile (dispatch, { profile, token }) {
+export async function edit_profile (dispatch, { profile, token, id }) {
     let returnObject = {};
 
     try {
-        const data = await fetch(`${API_ENDPOINT}/user/${profile.id}`, {
+        const data = await fetch(`${API_ENDPOINT}/users/${id}`, {
             body: JSON.stringify(profile),
-            method: "POST",
+            method: "PATCH",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 ...prefill_auth(token)
             }
         });
-
 
         if (data.status === 200) {
             returnObject = {
@@ -32,6 +31,11 @@ export async function edit_profile (dispatch, { profile, token }) {
             payload: { error }
         };
     } finally {
+        if (returnObject.error == null) {
+            dispatch({
+                type: USER.REQU
+            })
+        }
         return dispatch(returnObject);
     }
 };
