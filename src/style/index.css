@@ -3,11 +3,13 @@
   --mdc-theme-primary-font: #FFFFFF;
   --mdc-theme--error-message: #b64040;
   --mdc-theme--error-message-color: #FFFFFF;
+  --mdc-theme-link-primary-on-background: #5D8CAE;
 }
 
 .mdc-theme--dark {
   --mdc-theme-text-primary-on-background: #fff;
   --mdc-theme-background: #333;
+  --mdc-theme-link-primary-on-background: #FFFFFF;
   /* #b64040 */
 }
 

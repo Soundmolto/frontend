@@ -62,7 +62,7 @@
     display: block;
     padding: 10px 0;
     text-decoration: none;
-    color: var(--mdc-theme-primary);
+    color: var(--mdc-theme-link-primary-on-background);
 }
 
 .goto-panel a:hover {
