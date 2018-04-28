@@ -5,6 +5,12 @@ import App from './components/App';
 import store from './store';
 import './style';
 
+let attach = null;
+
+if (typeof window !== "undefined") {
+	attach = window;
+}
+
 class HotKeysHOC extends Component {
 	map = {
 		'show:settings': 'ctrl+,'
@@ -20,7 +26,7 @@ class HotKeysHOC extends Component {
 
 	render ({ children }) {
 		return (
-			<HotKeys handlers={this.handlers} keyMap={this.map} focused={true} attach={window}>
+			<HotKeys handlers={this.handlers} keyMap={this.map} focused={true} attach={attach}>
 				{children}
 			</HotKeys>
 		);

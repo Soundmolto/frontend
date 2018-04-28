@@ -12,6 +12,18 @@ import Helmet from 'preact-helmet';
 import { request_new_data } from '../../actions/user';
 import { THEMES } from '../../enums/themes';
 
+let onRender = () => {};
+
+if (typeof window !== "undefined") {
+	onRender = () => {
+		if (UI.theme === THEMES.dark) {
+			document.body.classList.add('mdc-theme--dark');
+		} else {
+			document.body.classList.remove('mdc-theme--dark');
+		}
+	};
+}
+
 @connect(state => state)
 export default class App extends Component {
 
@@ -37,11 +49,7 @@ export default class App extends Component {
 	render ({ UI }) {
 		const url = this.get_current_route.bind(this);
 
-		if (UI.theme === THEMES.dark) {
-			document.body.classList.add('mdc-theme--dark');
-		} else {
-			document.body.classList.remove('mdc-theme--dark');
-		}
+		onRender();
 
 		return (
 			<div id="app">
