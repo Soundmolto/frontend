@@ -76,6 +76,7 @@ body.mdc-theme--dark .mdc-card {
   position: fixed;
   top: 0;
   background: #333;
+  z-index: 4;
 }
 
 .mdc-toolbar__menu-icon + .mdc-toolbar__title {
@@ -126,10 +127,10 @@ body.mdc-theme--dark .mdc-card {
   opacity: 0.8;
 }
 
-
 .mdc-theme--dark .mdc-button:not(:disabled) {
   color: white;
 }
+
 .mdc-theme--dark .mdc-dialog__body {
   color: #cfcfcf;
 }

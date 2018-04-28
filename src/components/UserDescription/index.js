@@ -15,9 +15,9 @@ export class UserDescription extends Component {
                 <Card>
                     <div>
                         <h2 class={className}>
-                            {user.profile.displayName || user.profile.url || "Untitled user"}
+                            {user.displayName || user.url || "Untitled user"}
                         </h2>
-                        <div class="mdc-typography--caption" dangerouslySetInnerHTML={{__html: new_line_br(user.profile.description) || "<p>No description</p>"}}>
+                        <div class="mdc-typography--caption" dangerouslySetInnerHTML={{__html: new_line_br(user.description) || "<p>No description</p>"}}>
                         </div>
                     </div>
                 </Card>

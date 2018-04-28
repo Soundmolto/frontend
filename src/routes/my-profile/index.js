@@ -8,6 +8,7 @@ import { fetch_user } from '../../actions/user';
 import style from './style';
 import { UserDescription } from '../../components/UserDescription';
 import { UserPictureName } from '../../components/UserPictureName';
+import { UserFollowers } from '../../components/UserFollowers';
 
 @connect(state => state)
 export default class MyProfile extends Component {
@@ -19,10 +20,11 @@ export default class MyProfile extends Component {
 
 	// Note: `user` comes from the URL, courtesy of our router
 	render({ user }) {
+		console.log(user);
 		return (
 			<div class={style.profile}>
 				<div class={style.header}>
-					<UserPictureName user={user} show_location={true} />
+					<UserPictureName user={user.profile} show_location={true} />
 				</div>
 				<div class={style.profile_contents}>
 					<LayoutGrid>
@@ -34,7 +36,9 @@ export default class MyProfile extends Component {
 								{user.tracks.length <= 0 && <h1>No tracks</h1>}
 							</LayoutGrid.Cell>
 							<LayoutGrid.Cell desktopCols="3" tabletCols="12">
-								{user != null && <UserDescription user={user} />}
+								{user != null && <UserDescription user={user.profile} />}
+								{user != null && <UserFollowers viewedUser={user} style={{ 'margin-top': '20px' }} />}
+								{/* {user != null && <UserFollowers viewedUser={user} style={{ 'margin-top': '20px' }} />} */}
 							</LayoutGrid.Cell>
 						</LayoutGrid.Inner>
 					</LayoutGrid>

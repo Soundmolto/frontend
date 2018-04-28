@@ -100,3 +100,79 @@ export async function fetch_user (dispatch, { token, vanity_url }) {
         return dispatch(returnObject);
     }
 }
+
+export async function follow_user (dispatch, { token, user }) {
+    let returnObject = {};
+    let error = {};
+
+    try {
+        const data = await fetch(`${API_ENDPOINT}/users/${user.id}/follow`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                ...prefill_auth(token)
+            },
+            method: "POST"
+        });
+
+        if (data.status === 200) {
+            returnObject = {
+                type: USER.VIEW_PROFILE,
+                payload: await data.json()
+            }
+        } else {
+            error = await data.json()
+            throw new Error(data.statusText);
+        }
+
+    } catch (e) {
+        console.log(e);
+
+        if (error.error === 'User not found') {
+            returnObject = {
+                type: USER.PROFILE_UPDATE_FAILURE,
+                payload: {}
+            }
+        }
+    } finally {
+        return dispatch(returnObject);
+    }
+}
+
+export async function unfollow_user (dispatch, { token, user }) {
+    let returnObject = {};
+    let error = {};
+
+    try {
+        const data = await fetch(`${API_ENDPOINT}/users/${user.id}/unfollow`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                ...prefill_auth(token)
+            },
+            method: "POST"
+        });
+
+        if (data.status === 200) {
+            returnObject = {
+                type: USER.VIEW_PROFILE,
+                payload: await data.json()
+            }
+        } else {
+            error = await data.json()
+            throw new Error(data.statusText);
+        }
+
+    } catch (e) {
+        console.log(e);
+
+        if (error.error === 'User not found') {
+            returnObject = {
+                type: USER.PROFILE_UPDATE_FAILURE,
+                payload: {}
+            }
+        }
+    } finally {
+        return dispatch(returnObject);
+    }
+}

@@ -58,7 +58,6 @@ export default class Login extends Component {
 	}
 
 	render ({ loading, logged_in, error, errorMessage }) {
-		console.log(errorMessage);
 		if (logged_in === true) route("/", true);
 
 		return (

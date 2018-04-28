@@ -127,7 +127,7 @@ export default class Header extends Component {
 									{auth.logged_in === true && (
 										<div>
 											<div onClick={this.toggleMenu.bind(this)} class={style.clickable}>
-												<UserPictureName user={user} />
+												<UserPictureName user={user.profile} />
 											</div>
 											<Menu.Anchor>
 												<Menu ref={menu => { this.menu = menu; }} class={style.menu}>

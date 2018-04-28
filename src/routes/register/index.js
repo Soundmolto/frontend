@@ -60,8 +60,6 @@ export default class Login extends Component {
 	render ({ loading, logged_in, error, errorMessage }) {
 		if (logged_in === true) route("/", true);
 
-		console.log(error, errorMessage);
-
 		return (
 			<div class={style.home}>
 				<Card className={style.card}>

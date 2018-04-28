@@ -56,11 +56,11 @@ export default class App extends Component {
 				<Header get_url={url} />
 				<Router onChange={this.handleRoute}>
 					<Home path="/" />
-					<MyProfile path="/me/" />
-					<Login path="/login" />
-					<Register path="/register" />
+					<Login path="/login" key="login" />
+					<Register path="/register" key="register" />
 					<Users path="/users" />
-					<Profile path="/:vanity_url" />
+					<MyProfile path="/me" />
+					<Profile path="/:vanity_url" key="profile" />
 				</Router>
 			</div>
 		);

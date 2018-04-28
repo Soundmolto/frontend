@@ -1,0 +1,33 @@
+.card {
+    padding: 20px;
+}
+
+.card img {
+	max-width: 24px;
+	height: 24px;
+	margin-right: 10px;
+	border-radius: 100%;
+}
+
+.card [class="vertical-center"] {
+    font-size: 1rem;
+}
+
+.card h1 {
+    font-size: 1rem;
+    margin: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.link {
+    padding: 10px;
+    text-decoration: none;
+    color: var(--mdc-theme-primary);
+    border-radius: 4px;
+}
+
+.link:hover, .link:active, .link:focus {
+    background: rgba(0, 0, 0, 0.2);
+}

@@ -39,7 +39,6 @@ export default class EditProfile extends Component {
 
     render ({ user }) {
         state.profile = Object.assign({}, user.profile);
-        console.log(user);
         return (
             <form onSubmit={this.onSubmit.bind(this)} class={styles.form}>
                 <TextField label="Your display name" type="text" autofocus value={user.profile.displayName} style={full_width} onChange={e => this.onInputChange(e, 'displayName')} />
