@@ -10,13 +10,14 @@ import { UserDescription } from '../../components/UserDescription';
 import { UserPictureName } from '../../components/UserPictureName';
 
 @connect(state => state)
-export default class Profile extends Component {
+export default class MyProfile extends Component {
 
 	componentDidMount () {
-		const { auth, dispatch, vanity_url } = this.props;
-		fetch_user(this.props.dispatch.bind(this), { token: auth.token, vanity_url });
+		const { auth, dispatch, vanity_url, user, path } = this.props;
+		fetch_user(this.props.dispatch.bind(this), { token: auth.token, vanity_url: user.profile.url });
 	}
 
+	// Note: `user` comes from the URL, courtesy of our router
 	render({ viewedUser }) {
 		return (
 			<div class={style.profile}>

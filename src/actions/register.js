@@ -1,18 +1,19 @@
 import { API_ENDPOINT } from '../api';
 import { USER } from '../enums/user';
+import { route } from 'preact-router';
 
-export function begin_login () {
+export function begin_register () {
     localStorage.clear();
     return {
         type: USER.LOADING
     }
 }
 
-export async function login (body, dispatch, done) {
+export async function register (body, dispatch, done) {
     let returnObject = {};
 
     try {
-        const data = await fetch(`${API_ENDPOINT}/login`, {
+        const data = await fetch(`${API_ENDPOINT}/register`, {
             body: JSON.stringify(body),
             method: "POST",
             headers: {
@@ -32,14 +33,18 @@ export async function login (body, dispatch, done) {
 
     } catch (error) {
         returnObject = {
-            type: USER.FAILED_LOGIN,
+            type: USER.FAILED_REGISTER,
             payload: { error }
         };
     } finally {
-        if (done != null && typeof done === 'function') {
-            done();
-        }
-
         return dispatch(returnObject);
+
+        // if (done != null && typeof done === 'function') {
+        //     done();
+        // }
+
+        // if (returnObject.type === USER.SUCCESSFULLY_LOGGED_IN) {
+        //     return route("/login");
+        // }
     }
 }

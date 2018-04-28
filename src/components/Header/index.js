@@ -48,6 +48,7 @@ export default class Header extends Component {
 	goHome = this.linkTo('/');
 	goToMyProfile = this.linkTo('/me');
 	goToLogin = this.linkTo('/login');
+	goToRegister = this.linkTo('/register');
 
 	toggleDarkTheme = () => {
 		if (this.props.UI.theme === THEMES.dark) {
@@ -71,10 +72,16 @@ export default class Header extends Component {
 
 	login_or_logout () {
 		let defaultVal = (
-			<Drawer.DrawerItem onClick={this.goToLogin}>
-				<List.ItemGraphic>vpn_key</List.ItemGraphic>
-				Login
-			</Drawer.DrawerItem>
+			<div>
+				<Drawer.DrawerItem onClick={this.goToLogin}>
+					<List.ItemGraphic>vpn_key</List.ItemGraphic>
+					Login
+				</Drawer.DrawerItem>
+				<Drawer.DrawerItem onClick={this.goToRegister}>
+					<List.ItemGraphic>person_add</List.ItemGraphic>
+					Register
+				</Drawer.DrawerItem>
+			</div>
 		);
 
 		if (this.props.auth.logged_in) {

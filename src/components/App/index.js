@@ -4,8 +4,10 @@ import { connect } from 'preact-redux';
 import Header from '../Header';
 import Home from 'async!../../routes/home';
 import Profile from 'async!../../routes/profile';
+import MyProfile from 'async!../../routes/my-profile';
 import Login from 'async!../../routes/login';
 import Users from 'async!../../routes/users';
+import Register from 'async!../../routes/register';
 import Helmet from 'preact-helmet';
 import { request_new_data } from '../../actions/user';
 import { THEMES } from '../../enums/themes';
@@ -46,8 +48,9 @@ export default class App extends Component {
 				<Header get_url={url} />
 				<Router onChange={this.handleRoute}>
 					<Home path="/" />
-					<Profile path="/me/" />
+					<MyProfile path="/me/" />
 					<Login path="/login" />
+					<Register path="/register" />
 					<Users path="/users" />
 					<Profile path="/:vanity_url" />
 				</Router>

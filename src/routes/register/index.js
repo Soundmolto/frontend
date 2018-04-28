@@ -5,7 +5,7 @@ import TextField from 'preact-material-components/TextField';
 import Button from 'preact-material-components/Button';
 import LinearProgress from 'preact-material-components/LinearProgress';
 import 'preact-material-components/LinearProgress/style.css';
-import { begin_login, login } from '../../actions/login';
+import { begin_register, register } from '../../actions/register';
 import { route } from 'preact-router';
 import 'preact-material-components/Card/style.css';
 import 'preact-material-components/Button/style.css';
@@ -34,9 +34,9 @@ export default class Login extends Component {
 		e.preventDefault();
 		const { dispatch } = this.props;
 		/** This will update the UI to indicate we're logging in */
-		dispatch(begin_login());
+		dispatch(begin_register());
 		/** This will update our state to indicate we've either logged in or failed login */
-		login(state, dispatch, _ => state = {});
+		register(state, dispatch, _ => state = {});
 	}
 
 	/**
@@ -64,11 +64,11 @@ export default class Login extends Component {
 			<div class={style.home}>
 				<Card className={style.card}>
 					<form class={style.cardBody} onSubmit={this.onLogin.bind(this)}>
-						<TextField name="login_email" label="Enter your email address" type="email" autofocus onChange={this.onEmailChange.bind(this)} />
-						<TextField name="login_password" type="password" label="Enter a password" onChange={this.onPasswordChange.bind(this)} />
+						<TextField label="Enter your email address" type="email" autofocus onChange={this.onEmailChange.bind(this)} />
+						<TextField type="password" label="Enter a password" onChange={this.onPasswordChange.bind(this)} />
 						<div className={style.buttonContainer}>
 							<Button raised onClick={this.onLogin.bind(this)} type="submit">
-								{!logged_in && !loading && "Login"}
+								{!logged_in && !loading && "Register"}
 								{!logged_in && loading && <LinearProgress reversed={true} indeterminate={true} />}
 							</Button>
 						</div>
