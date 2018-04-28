@@ -13,7 +13,7 @@ export default function reducer (state = { logged_in: false, loading: false, err
         }
 
         case USER.FAILED_LOGIN: {
-            state = { ...state, logged_in: false, loading: false, error: true };
+            state = { ...state, logged_in: false, loading: false, error: true, errorMessage: action.payload.error };
             break;
         }
 
@@ -28,7 +28,7 @@ export default function reducer (state = { logged_in: false, loading: false, err
         }
 
         case USER.FAILED_REGISTER: {
-            state = { ...state, logged_in: false, loading: false, error: true };
+            state = { ...state, logged_in: false, loading: false, error: true, errorMessage: action.payload.error };
             break;
         }
 

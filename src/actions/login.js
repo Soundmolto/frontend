@@ -21,19 +21,21 @@ export async function login (body, dispatch, done) {
             }
         });
 
+        const payload =  await data.json();
+
         if (data.status === 200) {
             returnObject = {
                 type: USER.SUCCESSFULLY_LOGGED_IN,
-                payload: await data.json()
+                payload
             }
         } else {
-            throw new Error(data.statusText);
+            throw new Error(payload.error);
         }
 
     } catch (error) {
         returnObject = {
             type: USER.FAILED_LOGIN,
-            payload: { error }
+            payload: { error: error.message }
         };
     } finally {
         if (done != null && typeof done === 'function') {

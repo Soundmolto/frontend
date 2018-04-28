@@ -57,8 +57,10 @@ export default class Login extends Component {
 		state = {...state, password: event.currentTarget.value || ""};
 	}
 
-	render ({ loading, logged_in}) {
+	render ({ loading, logged_in, error, errorMessage }) {
 		if (logged_in === true) route("/", true);
+
+		console.log(error, errorMessage);
 
 		return (
 			<div class={style.home}>
@@ -71,6 +73,7 @@ export default class Login extends Component {
 								{!logged_in && !loading && "Register"}
 								{!logged_in && loading && <LinearProgress reversed={true} indeterminate={true} />}
 							</Button>
+							{error && errorMessage != null && <div className="error-message">{errorMessage}</div>}
 						</div>
 					</form>
 				</Card>

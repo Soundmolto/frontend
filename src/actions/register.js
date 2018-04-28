@@ -21,30 +21,23 @@ export async function register (body, dispatch, done) {
                 'Content-Type': 'application/json'
             }
         });
+        const payload = await data.json();
 
         if (data.status === 200) {
             returnObject = {
                 type: USER.SUCCESSFULLY_LOGGED_IN,
-                payload: await data.json()
+                payload: payload
             }
         } else {
-            throw new Error(data.statusText);
+            throw new Error(payload.error);
         }
 
     } catch (error) {
         returnObject = {
             type: USER.FAILED_REGISTER,
-            payload: { error }
+            payload: { error: error.message }
         };
     } finally {
         return dispatch(returnObject);
-
-        // if (done != null && typeof done === 'function') {
-        //     done();
-        // }
-
-        // if (returnObject.type === USER.SUCCESSFULLY_LOGGED_IN) {
-        //     return route("/login");
-        // }
     }
 }
