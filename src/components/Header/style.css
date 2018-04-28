@@ -56,3 +56,15 @@
 .icon {
     margin-right: 10px;
 }
+
+.goto-panel a {
+    transition: transform 0.3s ease-in-out;
+    display: block;
+    padding: 10px 0;
+    text-decoration: none;
+    color: var(--mdc-theme-primary);
+}
+
+.goto-panel a:hover {
+    transform: translateX(5px);
+}

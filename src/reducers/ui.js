@@ -1,6 +1,6 @@
 import { THEMES } from '../enums/themes';
 
-export default function reducer (state = { theme: THEMES.light, settings_open: false }, action) {
+export default function reducer (state = { theme: THEMES.light, settings_open: false, goto_open: false }, action) {
     switch (action.type) {
         case THEMES.CHANGE_THEME: {
             state = { ...state, theme: action.payload.theme };
@@ -14,6 +14,18 @@ export default function reducer (state = { theme: THEMES.light, settings_open: f
 
         case "HIDE_SETTINGS_PANEL": {
             state = { ...state, settings_open: false };
+            break;
+        }
+
+        case "SHOW_GOTO_PANEL": {
+            state = { ...state, goto_open: true };
+            break;
+        }
+
+
+
+        case "HIDE_GOTO_PANEL": {
+            state = { ...state, goto_open: false };
             break;
         }
     }

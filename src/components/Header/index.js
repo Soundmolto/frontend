@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import { route } from 'preact-router';
+import { route, Link } from 'preact-router';
 import { connect } from 'preact-redux';
 import Toolbar from 'preact-material-components/Toolbar';
 import Drawer from 'preact-material-components/Drawer';
@@ -34,11 +34,17 @@ export default class Header extends Component {
 
 	openSettings = () => this.settingsModal.MDComponent.show();
 	openEditProfileModal = () => this.editProfileModal.MDComponent.show();
+	openGotoPanel = () => this.gotoPanel.MDComponent.show();
+	closeGoToPanel = () => {
+		this.gotoPanel.MDComponent.close();
+		this.props.dispatch({ type: "HIDE_GOTO_PANEL" });
+	};
 
 	drawerRef = drawer => (this.drawer = drawer);
 	settingsDialogRef = dialog => (this.settingsModal = dialog);
 	editProfileDialogRef = dialog => (this.editProfileModal = dialog);
 	editProfileRef = editProfile => (this.editProfile = editProfile);
+	gotoPanelRef = gotoPanel => (this.gotoPanel = gotoPanel);
 
 	linkTo = path => () => {
 		route(path);
@@ -106,6 +112,10 @@ export default class Header extends Component {
 		try {
 			if (UI.settings_open === true) {
 				this.openSettings();
+			}
+
+			if (UI.goto_open === true) {
+				this.openGotoPanel();
 			}
 		} catch (e) {
 			console.log(e);
@@ -185,6 +195,22 @@ export default class Header extends Component {
 						<Dialog.Header>Edit Profile</Dialog.Header>
 						<Dialog.Body>
 							<EditProfile ref={this.editProfileRef} />
+						</Dialog.Body>
+					</Dialog>
+
+					<Dialog ref={this.gotoPanelRef} onCancel={e => this.closeGoToPanel()}>
+						<Dialog.Header>Go to</Dialog.Header>
+						<Dialog.Body class={style["goto-panel"]}>
+							<Link href="/" onClick={e => this.closeGoToPanel()}>Home</Link>
+							{!auth.logged_in && <Link href="/login" onClick={e => this.closeGoToPanel()}>Login</Link>}
+							{!auth.logged_in && <Link href="/register" onClick={e => this.closeGoToPanel()}>Register</Link>}
+							<Link href="/users" onClick={e => this.closeGoToPanel()}>Users</Link>
+							{auth.logged_in && <Link href="/me" onClick={e => this.closeGoToPanel()}>My profile</Link>}
+							{auth.logged_in && <Link href="#" onClick={e => {
+								e.preventDefault();
+								this.logout();
+								this.closeGoToPanel();
+							}}>Logout</Link>}
 						</Dialog.Body>
 					</Dialog>
 				</div>

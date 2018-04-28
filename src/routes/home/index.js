@@ -3,6 +3,7 @@ import Card from 'preact-material-components/Card';
 import 'preact-material-components/Card/style.css';
 import 'preact-material-components/Button/style.css';
 import style from './style';
+import { Link } from 'preact-router';
 
 export default class Home extends Component {
 	render() {
@@ -11,15 +12,21 @@ export default class Home extends Component {
 				<h1>Home route</h1>
 				<Card>
 					<div class={style.cardHeader}>
-						<h2 class=" mdc-typography--title">Home card</h2>
-						<div class=" mdc-typography--caption">Welcome to home route</div>
+						<p>
+							Shortcuts
+							<ul>
+								<li>
+									<pre>Control + ,</pre>
+									Open settings panel
+								</li>
+								<li>
+									<pre>Control + g</pre>
+									Open "Go to" panel
+								</li>
+							</ul>
+						</p>
+						<Link href="/users">Users</Link>
 					</div>
-					<div class={style.cardBody}>
-						Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-					</div>
-					<Card.Actions>
-						<Card.ActionButton>OKAY</Card.ActionButton>
-					</Card.Actions>
 				</Card>
 			</div>
 		);
