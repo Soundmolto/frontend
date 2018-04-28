@@ -16,7 +16,7 @@ export class UserFollowing extends Component {
         return (
             <div style={style}>
                 <Card class={styles.card}>
-                    <h1 style={{ 'margin-bottom': '10px' }}>Following</h1>
+                    <h1 style={{ 'margin-bottom': '10px' }}>Following {viewedUser.following.length}</h1>
                     {viewedUser.following.length !== 0 && viewedUser.following.map(follower => (
                         <Link href={`/${follower.url}`} class={styles.link}>
                             <UserPictureName user={follower} />

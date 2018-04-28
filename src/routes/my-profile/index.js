@@ -9,6 +9,7 @@ import style from './style';
 import { UserDescription } from '../../components/UserDescription';
 import { UserPictureName } from '../../components/UserPictureName';
 import { UserFollowers } from '../../components/UserFollowers';
+import { UserFollowing } from '../../components/UserFollowing';
 
 @connect(state => state)
 export default class MyProfile extends Component {
@@ -38,7 +39,7 @@ export default class MyProfile extends Component {
 							<LayoutGrid.Cell desktopCols="3" tabletCols="12">
 								{user != null && <UserDescription user={user.profile} />}
 								{user != null && <UserFollowers viewedUser={user} style={{ 'margin-top': '20px' }} />}
-								{/* {user != null && <UserFollowers viewedUser={user} style={{ 'margin-top': '20px' }} />} */}
+								{user != null && <UserFollowing viewedUser={user} style={{ 'margin-top': '20px' }} />}
 							</LayoutGrid.Cell>
 						</LayoutGrid.Inner>
 					</LayoutGrid>
