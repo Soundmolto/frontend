@@ -5,16 +5,7 @@ import 'preact-material-components/Button/style.css';
 import { Link } from 'preact-router';
 import styles from './style';
 
-const new_line_br = text => {
-    let _t = text;
-    try {
-        _t = text.replace('\n', '<br />');
-    } catch (e) {
-        console.error(e);
-    } finally {
-        return _t;
-    }
-};
+const new_line_br = (text = '') => text.replace('\n', '<br />');
 
 export class UserDescription extends Component {
     render ({ user }) {

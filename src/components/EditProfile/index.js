@@ -39,11 +39,13 @@ export default class EditProfile extends Component {
 
     render ({ user }) {
         state.profile = Object.assign({}, user.profile);
+        console.log(user);
         return (
             <form onSubmit={this.onSubmit.bind(this)} class={styles.form}>
                 <TextField label="Your display name" type="text" autofocus value={user.profile.displayName} style={full_width} onChange={e => this.onInputChange(e, 'displayName')} />
-                <TextField label="Your profile URL" type="text" autofocus value={user.profile.url} style={full_width} onChange={e => this.onInputChange(e, 'url')} />
-                <TextField label="Description" textarea autofocus value={user.profile.description} style={full_width} onChange={e => this.onInputChange(e, 'description')} />
+                <TextField label="Your profile URL" type="text" value={user.profile.url} style={full_width} onChange={e => this.onInputChange(e, 'url')} />
+                <TextField label="Your location" type="text" value={user.profile.location} style={full_width} onChange={e => this.onInputChange(e, 'location')} />
+                <TextField label="Description" textarea value={user.profile.description} style={full_width} onChange={e => this.onInputChange(e, 'description')} />
                 <Button type="submit">Submit</Button>
             </form>
         );

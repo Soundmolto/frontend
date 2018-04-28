@@ -21,7 +21,7 @@ export default class Profile extends Component {
 		return (
 			<div class={style.profile}>
 				<div class={style.header}>
-					<UserPictureName user={viewedUser} />
+					<UserPictureName user={viewedUser} show_location={true} />
 				</div>
 				<div class={style.profile_contents}>
 					<LayoutGrid>
@@ -40,10 +40,5 @@ export default class Profile extends Component {
 				</div>
 			</div>
 		);
-	}
-
-	componentWillUnmount () {
-		console.log('yeah');
-		state = {};
 	}
 }

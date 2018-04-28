@@ -18,33 +18,28 @@ export default class MyProfile extends Component {
 	}
 
 	// Note: `user` comes from the URL, courtesy of our router
-	render({ viewedUser }) {
+	render({ user }) {
 		return (
 			<div class={style.profile}>
 				<div class={style.header}>
-					<UserPictureName user={viewedUser} />
+					<UserPictureName user={user} show_location={true} />
 				</div>
 				<div class={style.profile_contents}>
 					<LayoutGrid>
 						<LayoutGrid.Inner>
 							<LayoutGrid.Cell desktopCols="9" tabletCols="12">
-								{viewedUser.tracks.length >= 1 && viewedUser.tracks.map( track => <div>
+								{user.tracks.length >= 1 && user.tracks.map( track => <div>
 									{(<pre>{JSON.stringify(track, null, 2)}</pre>)}
 								</div>)}
-								{viewedUser.tracks.length <= 0 && <h1>No tracks</h1>}
+								{user.tracks.length <= 0 && <h1>No tracks</h1>}
 							</LayoutGrid.Cell>
 							<LayoutGrid.Cell desktopCols="3" tabletCols="12">
-								{viewedUser != null && <UserDescription user={viewedUser} />}
+								{user != null && <UserDescription user={user} />}
 							</LayoutGrid.Cell>
 						</LayoutGrid.Inner>
 					</LayoutGrid>
 				</div>
 			</div>
 		);
-	}
-
-	componentWillUnmount () {
-		console.log('yeah');
-		state = {};
 	}
 }
