@@ -3,6 +3,19 @@ import { THEMES } from '../../enums/themes';
 import 'wavesurfer.js';
 import Wavesurfer from 'react-wavesurfer';
 
+let linGrad = '#5D8CAE';
+let linGradProgress = '#334b5c';
+
+if (typeof window !== "undefined") {
+	linGrad = document.createElement('canvas').getContext('2d').createLinearGradient(0, 0, 0, 250);
+	linGrad.addColorStop(0, '#5D8CAE');
+	linGrad.addColorStop(1, '#c67dcb');
+
+	linGradProgress = document.createElement('canvas').getContext('2d').createLinearGradient(0, 0, 0, 250);
+	linGradProgress.addColorStop(0, '#334b5c');
+	linGradProgress.addColorStop(1, '#7b4180');
+}
+
 export class Waveform extends Component {
 
 	constructor (props) {
@@ -34,7 +47,7 @@ export class Waveform extends Component {
 					onPosChange={this.handlePosChange.bind(this)}
 					playing={this.state.playing}
 					audioPeaks={data.peaks}
-					options={{ waveColor: `#5D8CAE`, progressColor: `#334b5c` }}
+					options={{ waveColor: linGrad, progressColor: linGradProgress }}
 					onFinish={e => {
 						this.setState({ playing: false });
 						onFinish();

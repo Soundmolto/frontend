@@ -17,8 +17,11 @@ export default class Users extends Component {
 	// Note: `user` comes from the URL, courtesy of our router
 	render({ users }) {
 		return (
-			<div class={style.profile}>
-				{users.map(user => (<UserCard user={user} />))}
+			<div>
+				<div class={style.header}><h1>Users</h1></div>
+				<div class={style.profile}>
+					{users.map(user => (<UserCard user={user} />))}
+				</div>
 			</div>
 		);
 	}

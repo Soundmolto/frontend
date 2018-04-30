@@ -132,7 +132,7 @@ export default class Header extends Component {
 									Music streaming app
 								</Toolbar.Title>
 							</Toolbar.Section>
-							<Toolbar.Section align-end={true} >
+							<Toolbar.Section align-end={true} style={{ 'margin-right': '10px' }}>
 								{auth.logged_in === true && (
 									<div>
 										<Toolbar.Icon onClick={this.showUploadTrackModal}>cloud_upload</Toolbar.Icon>

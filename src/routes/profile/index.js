@@ -67,7 +67,7 @@ export default class Profile extends Component {
 				<div class={style.header}>
 					<UserPictureName user={viewedUser.profile} show_location={true} style={{ width: '100%', position: 'relative' }}>
 						{auth.logged_in != null && user.profile.id !== viewedUser.profile.id && 
-							<Button style={{ position: 'absolute', right: '0', background: 'rgba(0, 0, 0, 0.2)', color: '#ffffff' }} onClick={this.toggle_following.bind(this)}>
+							<Button style={{ position: 'absolute', right: '28px', background: 'rgba(0, 0, 0, 0.2)', color: '#ffffff' }} onClick={this.toggle_following.bind(this)}>
 								{following && "Unfollow user"}
 								{!following && "Follow user"}
 							</Button>
