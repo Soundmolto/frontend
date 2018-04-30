@@ -22,6 +22,7 @@ import style from './style';
 import { THEMES } from '../../enums/themes';
 import { dark_theme, light_theme } from '../../actions/ui';
 import { logout } from '../../actions/logout';
+import { UploadTrack } from '../UploadTrack';
 
 @connect(state => state)
 export default class Header extends Component {
@@ -35,16 +36,15 @@ export default class Header extends Component {
 	openSettings = () => this.settingsModal.MDComponent.show();
 	openEditProfileModal = () => this.editProfileModal.MDComponent.show();
 	openGotoPanel = () => this.gotoPanel.MDComponent.show();
-	closeGoToPanel = () => {
-		this.gotoPanel.MDComponent.close();
-		this.props.dispatch({ type: "HIDE_GOTO_PANEL" });
-	};
+	closeGoToPanel = () => { this.gotoPanel.MDComponent.close(); this.props.dispatch({ type: "HIDE_GOTO_PANEL" }); };
+	showUploadTrackModal = () => { this.uploadTrackModal.MDComponent.show(); };
 
 	drawerRef = drawer => (this.drawer = drawer);
 	settingsDialogRef = dialog => (this.settingsModal = dialog);
 	editProfileDialogRef = dialog => (this.editProfileModal = dialog);
 	editProfileRef = editProfile => (this.editProfile = editProfile);
 	gotoPanelRef = gotoPanel => (this.gotoPanel = gotoPanel);
+	uploadTrackModalRef = dialog => (this.uploadTrackModal = dialog);
 
 	linkTo = path => () => {
 		route(path);
@@ -133,7 +133,13 @@ export default class Header extends Component {
 								</Toolbar.Title>
 							</Toolbar.Section>
 							<Toolbar.Section align-end={true} >
+								{auth.logged_in === true && (
+									<div>
+										<Toolbar.Icon onClick={this.showUploadTrackModal}>cloud_upload</Toolbar.Icon>
+									</div>
+								)}
 								<div class={style.header}>
+									
 									{auth.logged_in === true && (
 										<div>
 											<div onClick={this.toggleMenu.bind(this)} class={style.clickable}>
@@ -191,6 +197,7 @@ export default class Header extends Component {
 							<Dialog.FooterButton accept>okay</Dialog.FooterButton>
 						</Dialog.Footer>
 					</Dialog>
+
 					<Dialog ref={this.editProfileDialogRef}>
 						<Dialog.Header>Edit Profile</Dialog.Header>
 						<Dialog.Body>
@@ -211,6 +218,13 @@ export default class Header extends Component {
 								this.logout();
 								this.closeGoToPanel();
 							}}>Logout</Link>}
+						</Dialog.Body>
+					</Dialog>
+
+					<Dialog ref={this.uploadTrackModalRef}>
+						<Dialog.Header>Upload track</Dialog.Header>
+						<Dialog.Body>
+							<UploadTrack />
 						</Dialog.Body>
 					</Dialog>
 				</div>

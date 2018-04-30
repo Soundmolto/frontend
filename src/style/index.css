@@ -4,10 +4,12 @@
   --mdc-theme--error-message: #b64040;
   --mdc-theme--error-message-color: #FFFFFF;
   --mdc-theme-link-primary-on-background: #5D8CAE;
+  --mdc-theme-text-primary: #333;
 }
 
 .mdc-theme--dark {
   --mdc-theme-text-primary-on-background: #fff;
+  --mdc-theme-text-primary: #FFFFFF;
   --mdc-theme-background: #333;
   --mdc-theme-link-primary-on-background: #FFFFFF;
   /* #b64040 */
@@ -169,4 +171,8 @@ body.mdc-theme--dark .mdc-card {
 	font-weight: 600;
 	font-size: 0.9rem;
 	border-radius: 4px;
+}
+
+.mdc-dialog__surface {
+  border-top: 5px solid var(--mdc-theme-primary);
 }

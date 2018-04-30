@@ -57,7 +57,7 @@ export default class Profile extends Component {
 		}
 	}
 
-	render({ viewedUser }) {
+	render({ auth, user, viewedUser }) {
 		const following = this.following(viewedUser);
 		if (this.currentUrl !== getCurrentUrl()) this.updateData();
 
@@ -65,16 +65,19 @@ export default class Profile extends Component {
 			<div class={style.profile}>
 				<div class={style.header}>
 					<UserPictureName user={viewedUser.profile} show_location={true} style={{ width: '100%', position: 'relative' }}>
-						<Button style={{ position: 'absolute', right: '0', background: 'rgba(0, 0, 0, 0.2)', color: '#ffffff' }} onClick={this.toggle_following.bind(this)}>
-							{following && "Unfollow user"}
-							{!following && "Follow user"}
-						</Button>
+						{auth.logged_in != null && user.profile.id !== viewedUser.profile.id && 
+							<Button style={{ position: 'absolute', right: '0', background: 'rgba(0, 0, 0, 0.2)', color: '#ffffff' }} onClick={this.toggle_following.bind(this)}>
+								{following && "Unfollow user"}
+								{!following && "Follow user"}
+							</Button>
+						}
 					</UserPictureName>
 				</div>
 				<div class={style.profile_contents}>
 					<LayoutGrid>
 						<LayoutGrid.Inner>
 							<LayoutGrid.Cell desktopCols="9" tabletCols="12">
+								<h1>Tracks {viewedUser.tracks.length}</h1>
 								{viewedUser.tracks.length >= 1 && viewedUser.tracks.map( track => <div>
 									{(<pre>{JSON.stringify(track, null, 2)}</pre>)}
 								</div>)}

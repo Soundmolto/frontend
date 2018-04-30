@@ -10,6 +10,7 @@ import { UserDescription } from '../../components/UserDescription';
 import { UserPictureName } from '../../components/UserPictureName';
 import { UserFollowers } from '../../components/UserFollowers';
 import { UserFollowing } from '../../components/UserFollowing';
+import { Waveform } from '../../components/Waveform';
 
 @connect(state => state)
 export default class MyProfile extends Component {
@@ -21,7 +22,6 @@ export default class MyProfile extends Component {
 
 	// Note: `user` comes from the URL, courtesy of our router
 	render({ user }) {
-		console.log(user);
 		return (
 			<div class={style.profile}>
 				<div class={style.header}>
@@ -31,8 +31,12 @@ export default class MyProfile extends Component {
 					<LayoutGrid>
 						<LayoutGrid.Inner>
 							<LayoutGrid.Cell desktopCols="9" tabletCols="12">
+								<h1>
+									Tracks <small class={style.smolButNotSwol}>{user.tracks.length}</small>
+								</h1>
 								{user.tracks.length >= 1 && user.tracks.map( track => <div>
-									{(<pre>{JSON.stringify(track, null, 2)}</pre>)}
+									<Waveform data={track} />
+									{/* {(<pre>{JSON.stringify(track, null, 2)}</pre>)} */}
 								</div>)}
 								{user.tracks.length <= 0 && <h1>No tracks</h1>}
 							</LayoutGrid.Cell>
