@@ -18,7 +18,7 @@ export default class Users extends Component {
 	render({ users }) {
 		return (
 			<div>
-				<div class={style.header}><h1>Users</h1></div>
+				<div class="header"><h1>Users</h1></div>
 				<div class={style.profile}>
 					{users.map(user => (<UserCard user={user} />))}
 				</div>

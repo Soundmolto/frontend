@@ -69,7 +69,6 @@ body.mdc-theme--dark .mdc-card {
 
 #app {
   height: 100%;
-  padding-top: 64px;
 }
 
 .mdc-theme--dark {
@@ -80,8 +79,10 @@ body.mdc-theme--dark .mdc-card {
 .mdc-toolbar {
   position: fixed;
   top: 0;
-  background: #333;
+  background: #1f2935;
   z-index: 4;
+  background: rgb(78, 96, 125);
+  background: linear-gradient(rgb(78, 96, 125) 0%, rgb(78, 96, 125) 100%);
 }
 
 .mdc-toolbar__menu-icon + .mdc-toolbar__title {
@@ -176,4 +177,21 @@ body.mdc-theme--dark .mdc-card {
 
 .mdc-dialog__surface {
   border-top: 5px solid var(--mdc-theme-primary);
+}
+
+.header {
+  height: 230px;
+  width: 100vw;
+  display: flex;
+  padding: 64px 20px 0;
+  background: #5D8CAE;
+  background: -webkit-gradient(linear, left top, left bottom, from(var(--mdc-theme-primary)), color-stop(150%, var(--mdc-theme-complementary-color)));
+  background: linear-gradient(var(--mdc-theme-primary) 0%, var(--mdc-theme-complementary-color) 150%);
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  margin: auto 20px;
+	color: #FFF;
+	text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
 }

@@ -1,0 +1,12 @@
+.form {
+	width: 100%;
+	flex-wrap: wrap;
+}
+
+.form > div {
+	width: 100%;
+}
+
+.form textarea {
+	max-height: 300px;
+}

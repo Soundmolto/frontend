@@ -38,6 +38,8 @@ export default class Header extends Component {
 	openGotoPanel = () => this.gotoPanel.MDComponent.show();
 	closeGoToPanel = () => { this.gotoPanel.MDComponent.close(); this.props.dispatch({ type: "HIDE_GOTO_PANEL" }); };
 	showUploadTrackModal = () => { this.uploadTrackModal.MDComponent.show(); };
+	openShortcutsPanel = () => this.shortcutsPanel.MDComponent.show();
+	closeShortcutsPanel = () => { this.shortcutsPanel.MDComponent.close(); this.props.dispatch({ type: "HIDE_SHORTCUTS_PANEL" }); };
 
 	drawerRef = drawer => (this.drawer = drawer);
 	settingsDialogRef = dialog => (this.settingsModal = dialog);
@@ -45,6 +47,7 @@ export default class Header extends Component {
 	editProfileRef = editProfile => (this.editProfile = editProfile);
 	gotoPanelRef = gotoPanel => (this.gotoPanel = gotoPanel);
 	uploadTrackModalRef = dialog => (this.uploadTrackModal = dialog);
+	shortcutsPanelRef = dialog => (this.shortcutsPanel = dialog);
 
 	linkTo = path => () => {
 		route(path);
@@ -116,6 +119,10 @@ export default class Header extends Component {
 
 			if (UI.goto_open === true) {
 				this.openGotoPanel();
+			}
+
+			if (UI.shortcuts_open === true) {
+				this.openShortcutsPanel();
 			}
 		} catch (e) {
 			console.log(e);
@@ -221,12 +228,29 @@ export default class Header extends Component {
 						</Dialog.Body>
 					</Dialog>
 
+					<Dialog ref={this.shortcutsPanelRef} onCancel={e => this.closeShortcutsPanel()}>
+						<Dialog.Header>Shortcuts</Dialog.Header>
+						<Dialog.Body class={style["goto-panel"]}>
+							<ul>
+								<li>
+									<pre>Control + ,</pre>
+									Open settings panel
+								</li>
+								<li>
+									<pre>Control + g</pre>
+									Open "Go to" panel
+								</li>
+							</ul>
+						</Dialog.Body>
+					</Dialog>
+
 					<Dialog ref={this.uploadTrackModalRef}>
 						<Dialog.Header>Upload track</Dialog.Header>
 						<Dialog.Body>
 							<UploadTrack />
 						</Dialog.Body>
 					</Dialog>
+					<div class="mdc-toolbar-blur-bg"></div>
 				</div>
 			);
 		}

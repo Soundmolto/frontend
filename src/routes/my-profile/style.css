@@ -3,26 +3,11 @@
 	width: 100%;
 }
 
-.header {
-	height: 150px;
-	width: 100vw;
-	display: flex;
-	padding: 30px 20px;
-	background: #5D8CAE;
-	background: linear-gradient(var(--mdc-theme-primary) 0%, var(--mdc-theme-complementary-color) 150%);
-}
-
 .header img {
 	max-width: 64px;
 	height: 64px;
 	margin-right: 10px;
 	border-radius: 100%;
-}
-
-.header h1 {
-	margin: 0;
-	color: #FFF;
-	text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .profile_contents {

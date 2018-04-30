@@ -12,6 +12,7 @@ import { UserFollowers } from '../../components/UserFollowers';
 import { UserFollowing } from '../../components/UserFollowing';
 import { Waveform } from '../../components/Waveform';
 import { TrackCard } from '../../components/TrackCard';
+import { route } from 'preact-router';
 
 @connect(state => state)
 export default class MyProfile extends Component {
@@ -22,10 +23,11 @@ export default class MyProfile extends Component {
 	}
 
 	// Note: `user` comes from the URL, courtesy of our router
-	render({ user }) {
+	render({ auth, user }) {
+		if (!auth.logged_in) return route("/", true);
 		return (
 			<div class={style.profile}>
-				<div class={style.header}>
+				<div class={"header " + style.header}>
 					<UserPictureName user={user.profile} show_location={true} />
 				</div>
 				<div class={style.profile_contents}>

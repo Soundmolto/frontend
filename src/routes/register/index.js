@@ -61,20 +61,25 @@ export default class Login extends Component {
 		if (logged_in === true) route("/", true);
 
 		return (
-			<div class={style.home}>
-				<Card className={style.card}>
-					<form class={style.cardBody} onSubmit={this.onLogin.bind(this)}>
-						<TextField label="Enter your email address" type="email" autofocus onChange={this.onEmailChange.bind(this)} />
-						<TextField type="password" label="Enter a password" onChange={this.onPasswordChange.bind(this)} />
-						<div className={style.buttonContainer}>
-							<Button raised onClick={this.onLogin.bind(this)} type="submit">
-								{!logged_in && !loading && "Register"}
-								{!logged_in && loading && <LinearProgress reversed={true} indeterminate={true} />}
-							</Button>
-							{error && errorMessage != null && <div className="error-message">{errorMessage}</div>}
-						</div>
-					</form>
-				</Card>
+			<div>
+				<div class="header">
+					<h1>Register</h1>
+				</div>
+				<div class={style.home}>
+					<Card className={style.card}>
+						<form class={style.cardBody} onSubmit={this.onLogin.bind(this)}>
+							<TextField label="Enter your email address" type="email" autofocus onChange={this.onEmailChange.bind(this)} key="registration-email" />
+							<TextField type="password" label="Enter a password" onChange={this.onPasswordChange.bind(this)} key="registration-password" />
+							<div className={style.buttonContainer}>
+								<Button raised onClick={this.onLogin.bind(this)} type="submit">
+									{!logged_in && !loading && "Register"}
+									{!logged_in && loading && <LinearProgress reversed={true} indeterminate={true} />}
+								</Button>
+								{error && errorMessage != null && <div className="error-message">{errorMessage}</div>}
+							</div>
+						</form>
+					</Card>
+				</div>
 			</div>
 		);
 	}

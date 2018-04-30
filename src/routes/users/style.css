@@ -2,22 +2,6 @@
 	width: 100%;
 }
 
-.header {
-	height: 150px;
-	width: 100vw;
-	display: flex;
-	padding: 30px 20px;
-	background: #5D8CAE;
-	background: linear-gradient(var(--mdc-theme-primary) 0%, var(--mdc-theme-complementary-color) 150%);
-	margin-bottom: 20px;
-}
-
-.header h1 {
-	margin: auto 20px;
-	color: #FFF;
-	text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
-}
-
 @media screen and (min-width: 1200px) {
 	.profile {
 		display: flex;

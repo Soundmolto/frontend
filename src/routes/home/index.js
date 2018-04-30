@@ -9,7 +9,7 @@ export default class Home extends Component {
 	render() {
 		return (
 			<div>
-				<div class={style.header}>
+				<div class="header">
 					<h1>
 						Home
 					</h1>

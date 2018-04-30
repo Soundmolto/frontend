@@ -14,7 +14,8 @@ if (typeof window !== "undefined") {
 class HotKeysHOC extends Component {
 	map = {
 		'show:settings': 'ctrl+,',
-		'show:goto': 'ctrl+g'
+		'show:goto': 'ctrl+g',
+		'show:shortcuts': 'ctrl+/'
 	};
 
 	handlers = {
@@ -28,6 +29,13 @@ class HotKeysHOC extends Component {
 			e.stopPropagation();
 			store.dispatch({
 				type: "SHOW_GOTO_PANEL"
+			});
+		},
+		'show:shortcuts': e => {
+			e.preventDefault();
+			e.stopPropagation();
+			store.dispatch({
+				type: "SHOW_SHORTCUTS_PANEL"
 			});
 		}
 	};
