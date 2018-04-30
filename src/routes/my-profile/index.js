@@ -11,6 +11,7 @@ import { UserPictureName } from '../../components/UserPictureName';
 import { UserFollowers } from '../../components/UserFollowers';
 import { UserFollowing } from '../../components/UserFollowing';
 import { Waveform } from '../../components/Waveform';
+import { TrackCard } from '../../components/TrackCard';
 
 @connect(state => state)
 export default class MyProfile extends Component {
@@ -30,17 +31,16 @@ export default class MyProfile extends Component {
 				<div class={style.profile_contents}>
 					<LayoutGrid>
 						<LayoutGrid.Inner>
-							<LayoutGrid.Cell desktopCols="9" tabletCols="12">
-								<h1>
+							<LayoutGrid.Cell desktopCols="9" tabletCols="12" tabletOrder="2">
+								<h1 style={{ 'margin-top': "0" }}>
 									Tracks <small class={style.smolButNotSwol}>{user.tracks.length}</small>
 								</h1>
 								{user.tracks.length >= 1 && user.tracks.map( track => <div>
-									<Waveform data={track} />
-									{/* {(<pre>{JSON.stringify(track, null, 2)}</pre>)} */}
+									<TrackCard track={track} user={user} currentUser={user} key={track.id} />
 								</div>)}
 								{user.tracks.length <= 0 && <h1>No tracks</h1>}
 							</LayoutGrid.Cell>
-							<LayoutGrid.Cell desktopCols="3" tabletCols="12">
+							<LayoutGrid.Cell desktopCols="3" tabletCols="12" tabletOrder="1">
 								{user != null && <UserDescription user={user.profile} />}
 								{user != null && <UserFollowers viewedUser={user} style={{ 'margin-top': '20px' }} />}
 								{user != null && <UserFollowing viewedUser={user} style={{ 'margin-top': '20px' }} />}

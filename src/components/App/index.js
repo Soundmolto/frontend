@@ -59,7 +59,7 @@ export default class App extends Component {
 					<Login path="/login" key="login" />
 					<Register path="/register" key="register" />
 					<Users path="/users" />
-					<MyProfile path="/me" />
+					<MyProfile path="/me" key="my-profile" />
 					<Profile path="/:vanity_url" key="profile" />
 				</Router>
 			</div>

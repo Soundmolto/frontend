@@ -1,0 +1,45 @@
+.username {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1.0rem;
+}
+
+.centered {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 0 0;
+    font-weight: 600;
+    padding: 10px 0;
+    border-radius: 4px;
+}
+
+.actionable {
+    cursor: pointer;
+    user-select: none;
+    padding: 10px;
+}
+
+.actionable:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.actionable:active, .actionable:focus {
+    background: rgba(0, 0, 0, 0.35);
+}
+
+.centered > i {
+    margin-right: 10px;
+}
+
+.displayName {
+    margin: 0;
+    margin-left: 75px;
+    font-size: 0.8rem;
+    color: var(--mdc-theme-text-primary);
+    opacity: 0.7;
+}
+
+.card {
+    margin-bottom: 20px;
+}

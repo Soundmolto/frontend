@@ -11,6 +11,7 @@ import { UserPictureName } from '../../components/UserPictureName';
 import { UserFollowers } from '../../components/UserFollowers';
 import { getCurrentUrl } from 'preact-router';
 import { UserFollowing } from '../../components/UserFollowing';
+import { TrackCard } from '../../components/TrackCard';
 
 let _following = false;
 
@@ -76,10 +77,12 @@ export default class Profile extends Component {
 				<div class={style.profile_contents}>
 					<LayoutGrid>
 						<LayoutGrid.Inner>
-							<LayoutGrid.Cell desktopCols="9" tabletCols="12">
-								<h1>Tracks {viewedUser.tracks.length}</h1>
+						<LayoutGrid.Cell desktopCols="9" tabletCols="12" tabletOrder="2">
+								<h1 style={{ 'margin-top': "0" }}>
+									Tracks <small class={style.smolButNotSwol}>{viewedUser.tracks.length}</small>
+								</h1>
 								{viewedUser.tracks.length >= 1 && viewedUser.tracks.map( track => <div>
-									{(<pre>{JSON.stringify(track, null, 2)}</pre>)}
+									<TrackCard track={track} user={viewedUser} currentUser={user} key={track.id} />
 								</div>)}
 								{viewedUser.tracks.length <= 0 && <h1>No tracks</h1>}
 							</LayoutGrid.Cell>
