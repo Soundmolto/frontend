@@ -26,26 +26,33 @@ export default class MyProfile extends Component {
 	render({ auth, user }) {
 		if (!auth.logged_in) return route("/", true);
 		return (
-			<div class={style.profile}>
+			<div class={style.profile} key={"user-profile-" + user.id}>
 				<div class={"header " + style.header}>
-					<UserPictureName user={user.profile} show_location={true} />
+					<UserPictureName user={user.profile} show_location={true} style={{
+							width: '100%',
+							position: 'relative',
+							'max-width': '100%',
+							'overflow': 'hidden',
+						}} h1_class={style.username_custom} />
 				</div>
-				<div class={style.profile_contents}>
-					<LayoutGrid>
-						<LayoutGrid.Inner>
-							<LayoutGrid.Cell desktopCols="9" tabletCols="12" tabletOrder="2">
+				<div class={style.profile_contents} key={'profile-contents-' + user.id}>
+					<LayoutGrid key={'layout-grid-' + user.id}>
+						<LayoutGrid.Inner key={'layout-grid-inner-' + user.id}>
+							<LayoutGrid.Cell desktopCols="9" tabletCols="12" tabletOrder="2" key={'layout-grid-cell-tracks-' + user.id}>
 								<h1 style={{ 'margin-top': "0" }}>
 									Tracks <small class={style.smolButNotSwol}>{user.tracks.length}</small>
 								</h1>
-								{user.tracks.length >= 1 && user.tracks.map( track => <div>
-									<TrackCard track={track} user={user} currentUser={user} key={track.id} />
-								</div>)}
-								{user.tracks.length <= 0 && <h1>No tracks</h1>}
+								<div key={'user-tracks-' + user.id}>
+									{user.tracks.length >= 1 && user.tracks.map(track => (
+										<TrackCard track={track} user={user} currentUser={user} key={track.id} />
+									))}
+									{user.tracks.length <= 0 && <h1>No tracks</h1>}
+								</div>
 							</LayoutGrid.Cell>
-							<LayoutGrid.Cell desktopCols="3" tabletCols="12" tabletOrder="1">
-								{user != null && <UserDescription user={user.profile} />}
-								{user != null && <UserFollowers viewedUser={user} style={{ 'margin-top': '20px' }} />}
-								{user != null && <UserFollowing viewedUser={user} style={{ 'margin-top': '20px' }} />}
+							<LayoutGrid.Cell desktopCols="3" tabletCols="12" tabletOrder="1" key={'layout-grid-cell-about-' + user.id}>
+								{user != null && <UserDescription user={user.profile} key={"user-profile-description-" + user.id} />}
+								{user != null && <UserFollowers viewedUser={user} style={{ 'margin-top': '20px' }} key={"user-profile-followers-" + user.id} />}
+								{user != null && <UserFollowing viewedUser={user} style={{ 'margin-top': '20px' }} key={"user-profile-following-" + user.id} />}
 							</LayoutGrid.Cell>
 						</LayoutGrid.Inner>
 					</LayoutGrid>

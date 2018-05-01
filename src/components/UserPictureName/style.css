@@ -3,3 +3,9 @@
 	line-height: 1rem;
 	display: block;
 }
+
+.username {
+	overflow: hidden;
+	max-width: calc(100% - 60px);
+	text-overflow: ellipsis;
+}

@@ -29,6 +29,19 @@
     max-width: 250px;
 }
 
+.menu {
+    overflow: hidden;
+    border-radius: 2px;
+    max-width: 250px;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 768px) {
+    .clickable, .menu {
+        max-width: 150px;
+    }
+}
+
 .clickable:hover {
     background: rgba(255, 255, 255, 0.4)
 }
@@ -38,13 +51,6 @@
     margin: 0;
     background: var(--mdc-theme-primary);
     color: var(--mdc-theme-primary-font);
-}
-
-.menu {
-    overflow: hidden;
-    border-radius: 2px;
-    max-width: 250px;
-    overflow: hidden;
 }
 
 .menu ul {

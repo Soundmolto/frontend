@@ -65,9 +65,14 @@ export default class Profile extends Component {
 		return (
 			<div class={style.profile}>
 				<div class={"header " + style.header}>
-					<UserPictureName user={viewedUser.profile} show_location={true} style={{ width: '100%', position: 'relative' }}>
+					<UserPictureName user={viewedUser.profile} show_location={true} style={{
+							width: '100%',
+							position: 'relative',
+							'max-width': '100%',
+							'overflow': 'hidden',
+						}} h1_class={style.username_custom}>
 						{auth.logged_in != null && user.profile.id !== viewedUser.profile.id && 
-							<Button style={{ position: 'absolute', right: '28px', background: 'rgba(0, 0, 0, 0.2)', color: '#ffffff' }} onClick={this.toggle_following.bind(this)}>
+							<Button class={style.button} onClick={this.toggle_following.bind(this)}>
 								{following && "Unfollow user"}
 								{!following && "Follow user"}
 							</Button>
@@ -81,7 +86,7 @@ export default class Profile extends Component {
 								<h1 style={{ 'margin-top': "0" }}>
 									Tracks <small class={style.smolButNotSwol}>{viewedUser.tracks.length}</small>
 								</h1>
-								{viewedUser.tracks.length >= 1 && viewedUser.tracks.map( track => <div>
+								{viewedUser.tracks.length >= 1 && viewedUser.tracks.map( track => <div key={'parent-' + track.id}>
 									<TrackCard track={track} user={viewedUser} currentUser={user} key={track.id} />
 								</div>)}
 								{viewedUser.tracks.length <= 0 && <h1>No tracks</h1>}

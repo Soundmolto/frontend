@@ -18,29 +18,49 @@ if (typeof window !== "undefined") {
 
 export class Waveform extends Component {
 
+	setState (state) {
+		this._previousState = Object.assign({}, this.state);
+		super.setState(state);
+	}
+
 	constructor (props) {
 		super(props);
-		this.state = { playing: false, pos: 0, mouseDown: false };
+		this.state = { playing: false, pos: 0 };
+		this._previousState = { playing: false, pos: 0 };
 	}
 
 	handleTogglePlay () {
 		this.setState({ playing: !this.state.playing });
 		if (this.props.onTogglePlay != null) {
-			this.props.onTogglePlay(this.state.playing);
+			this.props.onTogglePlay(this.state.playing, this.state.pos);
+		}
+	}
+
+	play () {
+		if (false === this.state.playing) {
+			this.setState({ playing: true });
+			if (this.props.onTogglePlay != null) {
+				this.props.onTogglePlay(this.state.playing, this.state.pos);
+			}
 		}
 	}
 
 	handlePosChange (e) {
 		this.setState({ pos: e.originalArgs[0] });
+		this.props.onPosChange(e.originalArgs[0]);
 	}
 
 	componentWillUnmount () {
-		this.setState({ playing: false, pos: 0, mouseDown: false });
+		this.setState({ playing: false, pos: 0 });
+	}
+
+	onPause (e) {
+		this.setState({ playing: false });
 	}
 
 	render ({ data, UI, onFinish }) {
 		return (
-			<div onClick={this.handleTogglePlay.bind(this)}>
+			<div onClick={this.play.bind(this)}>
 				<Wavesurfer
 					audioFile={data.stream_url}
 					pos={this.state.pos}
@@ -53,6 +73,7 @@ export class Waveform extends Component {
 						onFinish();
 					}}
 					onPlay={this.props.onStartPlay}
+					key={'waveform-' + data.id}
 					/>
 			</div>
 		)

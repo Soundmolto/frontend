@@ -3,6 +3,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 1.0rem;
+    margin-top: 0;
+    max-width: calc(100% - 48px);
 }
 
 .centered {
@@ -38,8 +40,18 @@
     font-size: 0.8rem;
     color: var(--mdc-theme-text-primary);
     opacity: 0.7;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 123px);
 }
 
 .card {
     margin-bottom: 20px;
+}
+
+.cardRoot {
+    padding: 20px;
+    box-shadow: 0 15px 20px -15px rgba(0, 0, 0, 0.35);
+    border-radius: 10px;
 }

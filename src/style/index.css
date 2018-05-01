@@ -6,6 +6,7 @@
   --mdc-theme-link-primary-on-background: #5D8CAE;
   --mdc-theme-text-primary: #333;
   --mdc-theme-complementary-color: #c67dcb;
+  --mdc-layout-grid-margin-phone: 0 !important;
 }
 
 .mdc-theme--dark {
@@ -193,5 +194,17 @@ body.mdc-theme--dark .mdc-card {
 .header h1 {
   margin: auto 20px;
 	color: #FFF;
-	text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mdc-snackbar {
+  z-index: 10;
+}
+
+@media screen and (max-width: 570px) {
+  .mdc-toolbar__title {
+    display: none;
+  }
 }

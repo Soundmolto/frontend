@@ -3,3 +3,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.caption {
+    word-break: break-all;
+}

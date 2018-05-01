@@ -13,7 +13,7 @@ export class UserCard extends Component {
                         <h2 class=" mdc-typography--title">
                             {user.profile.displayName || "Untitled user"}
                         </h2>
-                        <div class=" mdc-typography--caption">
+                        <div class=" mdc-typography--caption" style={{ 'word-break': 'break-all' }}>
                             {user.profile.description || "No description"}
                         </div>
                     </div>
