@@ -62,6 +62,7 @@ export class Waveform extends Component {
 		return (
 			<div onClick={this.play.bind(this)}>
 				<Wavesurfer
+					ref={e => (this.waveSurfer = e)}
 					audioFile={data.stream_url}
 					pos={this.state.pos}
 					onPosChange={this.handlePosChange.bind(this)}

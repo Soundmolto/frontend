@@ -208,3 +208,7 @@ body.mdc-theme--dark .mdc-card {
     display: none;
   }
 }
+
+.prel {
+  position: relative;
+}

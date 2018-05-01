@@ -59,6 +59,10 @@ export default class App extends Component {
 					<Login path="/login" key="login" />
 					<Register path="/register" key="register" />
 					<Users path="/users" />
+					{/* 
+						For the sake of simplicity during dev of alpha, this was setup as 2 routes.
+						We should look at re-merging these routes in the future.
+					*/}
 					<MyProfile path="/me" key="my-profile" />
 					<Profile path="/:vanity_url" key="profile" />
 				</Router>

@@ -31,7 +31,7 @@
 .button {
 	position: absolute;
 	background: rgba(0, 0, 0, 0.2) !important;
-	color: #ffffff;
+	color: #ffffff !important;
 }
 
 @media screen and (min-width: 500px) {

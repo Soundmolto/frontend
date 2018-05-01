@@ -14,7 +14,7 @@ import 'preact-material-components/Snackbar/style.css';
 import styles from './style';
 import { delete_track } from '../../actions/track';
 import { connect } from 'preact-redux';
-
+import { seconds_to_time } from '../../utils/seconds-to-time';
 
 const new_line_br = (text = '') => text.replace('\n', '<br />');
 let className = (e) => (e);
@@ -25,7 +25,6 @@ export class TrackCard extends Component {
 	plays = 0;
 	played = false;
 	deleting = false;
-	pos = 0;
 
 	editTrackRef = dialog => (this.editTrackPanel = dialog);
 
@@ -88,7 +87,7 @@ export class TrackCard extends Component {
 		}, 2750);
 	}
 
-	render ({ track, user, currentUser }) {
+	render ({ track, user, currentUser }, { pos }) {
 		if (this.played === false ) this.plays = track.plays;
 
 		return (
@@ -120,6 +119,13 @@ export class TrackCard extends Component {
 							key={track.id}
 							onPosChange={pos => this.setState({ pos })}
 						/>
+						<div style={{ 'font-size': '0.9rem' }}>
+							<p class={`${styles.centered} prel ${styles.w100}`} >
+								<span>
+									{seconds_to_time(159).rendered}
+								</span>
+							</p>
+						</div>
 						<div>
 							<p class={styles.centered}>
 								<Icon>headset</Icon> {this.plays}
