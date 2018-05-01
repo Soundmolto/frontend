@@ -122,7 +122,7 @@ export class TrackCard extends Component {
 						<div style={{ 'font-size': '0.9rem' }}>
 							<p class={`${styles.centered} prel ${styles.w100}`} >
 								<span>
-									{seconds_to_time(159).rendered}
+									{seconds_to_time(track.duration).rendered}
 								</span>
 							</p>
 						</div>
