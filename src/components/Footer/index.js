@@ -6,17 +6,12 @@ import { connect } from "preact-redux";
 @connect(({ currently_playing }) => ({ currently_playing }))
 export default class Footer extends Component {
 	
-	interval = null;
 	pos = 0;
 	duration = 0;
 
-	int_func () {
-		const { currently_playing } = this.props;
-		if (currently_playing != null && currently_playing.track != null) {
-			this.progressBar.setAttribute('style', `transform: translateX(${this.pos / this.duration * 100}%)`);
-			
-		}
-	}
+	onPosChange (pos) {
+		this.progressBar.setAttribute('style', `transform: translateX(${pos / this.duration * 100}%)`);
+	}	
 
 	render ({ currently_playing }) {
 		let amount = 0;
@@ -26,9 +21,8 @@ export default class Footer extends Component {
 			amount = currently_playing.position / currently_playing.track.duration * 100;
 		}
 
-		if (typeof window !== "undefined") {
-			window.setInterval(this.int_func.bind(this), 1000)
-		}
+		console.log(currently_playing);
+
 		return (
 			<div class={styles.footer}>
 				<div class={styles.trackBar}>
@@ -39,8 +33,8 @@ export default class Footer extends Component {
 				<div class={styles.artwork}><img src={Goku} /></div>
 				<div class={styles.songInfo}>
 					<p>
-						<span>Jake</span>
-						<span>Moe shop - Superstar</span>
+						<span>{currently_playing.owner && currently_playing.owner.profile && currently_playing.owner.profile.displayName}</span>
+						<span>{currently_playing && currently_playing.track && currently_playing.track.name}</span>
 					</p>
 				</div>
 			</div>

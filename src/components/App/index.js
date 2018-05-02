@@ -28,6 +28,8 @@ if (typeof window !== "undefined") {
 @connect(state => state)
 export default class App extends Component {
 
+	footer = null;
+
 	componentDidMount () {
 		const { auth, dispatch, user, UI } = this.props;
 		if (auth.logged_in) {
@@ -64,10 +66,10 @@ export default class App extends Component {
 						For the sake of simplicity during dev of alpha, this was setup as 2 routes.
 						We should look at re-merging these routes in the future.
 					*/}
-					<MyProfile path="/me" key="my-profile" />
-					<Profile path="/:vanity_url" key="profile" />
+					<MyProfile path="/me" key="my-profile" footer={this.footer} />
+					<Profile path="/:vanity_url" key="profile" footer={this.footer} />
 				</Router>
-				<Footer />
+				<Footer ref={e => (this.footer = e)} />
 			</div>
 		);
 	}

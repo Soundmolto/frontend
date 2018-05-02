@@ -44,7 +44,7 @@ export default class MyProfile extends Component {
 								</h1>
 								<div key={'user-tracks-' + user.id}>
 									{user.tracks.length >= 1 && user.tracks.map(track => (
-										<TrackCard track={track} user={user} currentUser={user} key={track.id} />
+										<TrackCard track={track} user={user} currentUser={user} key={track.id} footer={this.props.footer} />
 									))}
 									{user.tracks.length <= 0 && <h1>No tracks</h1>}
 								</div>

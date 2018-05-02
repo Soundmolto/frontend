@@ -81,9 +81,9 @@ export async function delete_track (dispatch, { track, token, id }) {
     }
 }
 
-export function currently_playing (dispatch, { playing, position, track }) {
+export function currently_playing (dispatch, { playing, position, track, owner }) {
 	let type = TRACK.PLAYING_TRACK;
 	if (!playing) type = TRACK.PAUSED_TRACK;
 	delete track.peaks;
-	return dispatch({ type: type, payload: { position, track } })
+	return dispatch({ type: type, payload: { position, track, owner } })
 }

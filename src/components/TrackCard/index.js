@@ -138,6 +138,8 @@ export class TrackCard extends Component {
 								// 	track,
 								// 	owner: user
 								// });
+								console.log(this.props);
+								this.props.footer._component.onPosChange(pos);
 							}}
 						/>
 						<div>
