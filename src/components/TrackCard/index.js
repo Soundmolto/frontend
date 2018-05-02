@@ -12,7 +12,7 @@ import 'preact-material-components/Button/style.css';
 import 'preact-material-components/Dialog/style.css';
 import 'preact-material-components/Snackbar/style.css';
 import styles from './style';
-import { delete_track } from '../../actions/track';
+import { currently_playing, delete_track } from '../../actions/track';
 import { connect } from 'preact-redux';
 import { seconds_to_time } from '../../utils/seconds-to-time';
 
@@ -51,10 +51,22 @@ export class TrackCard extends Component {
 
 	onTogglePlay (playing, pos) {
 		this.setState({ playing, pos });
+		currently_playing(this.props.dispatch, {
+			playing: this.state.playing,
+			position: pos,
+			track: this.props.track,
+			owner: this.props.user
+		});
 	}
 
 	onPause (pos) {
-		this.setState({ playing: false, pos })
+		this.setState({ playing: false, pos });
+		currently_playing(this.props.dispatch, {
+			playing: this.state.playing,
+			position: pos,
+			track: this.props.track,
+			owner: this.props.user
+		});
 	}
 
 	onStartPlay () {
@@ -62,6 +74,12 @@ export class TrackCard extends Component {
 			this.plays++;
 			this.setState({ playing: true });
 			this.played = true;
+			currently_playing(this.props.dispatch, {
+				playing: this.state.playing,
+				position: 0,
+				track: this.props.track,
+				owner: this.props.user
+			});
 		}
 	}
 
@@ -103,11 +121,6 @@ export class TrackCard extends Component {
 								</Icon>
 							</Button>
 							{track.name}
-							{user.profile.id === currentUser.profile.id && (
-								<p class={className(`${styles.centered} ${styles.actionable}`)} style={{ 'position': 'absolute', 'top': 0, 'right': 0 }} onClick={this.onClickDeleteTrack.bind(this)}>
-									<Icon style={{ margin: 0 }}>delete</Icon>
-								</p>
-							)}
 						</h2>
 						<Waveform
 							ref={e => (this.waveform = e)}
@@ -117,23 +130,36 @@ export class TrackCard extends Component {
 							onPause={this.onPause.bind(this)}
 							onStartPlay={this.onStartPlay.bind(this)}
 							key={track.id}
-							onPosChange={pos => this.setState({ pos })}
+							onPosChange={pos => {
+								// this.setState({ pos });
+								// currently_playing(this.props.dispatch, {
+								// 	playing: this.state.playing,
+								// 	position: pos,
+								// 	track,
+								// 	owner: user
+								// });
+							}}
 						/>
-						<div style={{ 'font-size': '0.9rem' }}>
-							<p class={`${styles.centered} prel ${styles.w100}`} >
-								<span>
-									{seconds_to_time(track.duration).rendered}
-								</span>
-							</p>
-						</div>
 						<div>
 							<p class={styles.centered}>
 								<Icon>headset</Icon> {this.plays}
 							</p>
-							{user.profile.id === currentUser.profile.id && (
-								<p class={className(`${styles.centered} ${styles.actionable}`)} style={{ 'float': 'right' }} onClick={this.onClickEditTrack.bind(this)}>
-									<Icon style={{ margin: 0 }}>edit</Icon>
+							<span style={{ 'font-size': '0.9rem', float: 'right' }}>
+								<p class={`${styles.centered} prel ${styles.w100}`} >
+									<span>
+										{seconds_to_time(track.duration).rendered}
+									</span>
 								</p>
+							</span>
+							{user.profile.id === currentUser.profile.id && (
+								<span>
+									<p class={className(`${styles.centered} ${styles.actionable}`)} style={{ 'float': 'right' }} onClick={this.onClickDeleteTrack.bind(this)}>
+										<Icon style={{ margin: 0 }}>delete</Icon>
+									</p>
+									<p class={className(`${styles.centered} ${styles.actionable}`)} style={{ 'float': 'right' }} onClick={this.onClickEditTrack.bind(this)}>
+										<Icon style={{ margin: 0 }}>edit</Icon>
+									</p>
+								</span>
 							)}
 						</div>
 					</div>

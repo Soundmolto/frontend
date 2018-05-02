@@ -39,7 +39,6 @@ export class EditTrack extends Component {
 
 	render ({ track }) {
 		state = Object.assign({}, track);
-		console.log(track);
 		return (
 			<form onSubmit={this.onSubmit.bind(this)} class={styles.form}>
 				<TextField label="Track name" type="text" autofocus value={track.name} style={full_width} onChange={e => this.onInputChange(e, 'name')} />

@@ -1,5 +1,6 @@
 import { API_ENDPOINT } from '../api';
 import { USER } from '../enums/user';
+import { TRACK } from '../enums/track';
 import { prefill_auth } from '../prefill-authorized-route';
 
 export async function edit_track (dispatch, { track, token, id }) {
@@ -78,4 +79,11 @@ export async function delete_track (dispatch, { track, token, id }) {
         }
         return dispatch(returnObject);
     }
+}
+
+export function currently_playing (dispatch, { playing, position, track }) {
+	let type = TRACK.PLAYING_TRACK;
+	if (!playing) type = TRACK.PAUSED_TRACK;
+	delete track.peaks;
+	return dispatch({ type: type, payload: { position, track } })
 }
