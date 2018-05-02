@@ -7,6 +7,7 @@
   --mdc-theme-text-primary: #333;
   --mdc-theme-complementary-color: #c67dcb;
   --mdc-layout-grid-margin-phone: 0 !important;
+  --mdc-theme--footer-background: #cfcfcf;
 }
 
 .mdc-theme--dark {
@@ -14,6 +15,7 @@
   --mdc-theme-text-primary: #FFFFFF;
   --mdc-theme-background: #333;
   --mdc-theme-link-primary-on-background: #FFFFFF;
+  --mdc-theme--footer-background: rgb(36, 36, 36);
   /* #b64040 */
 }
 
@@ -103,19 +105,6 @@ body.mdc-theme--dark .mdc-card {
   color: white;
 }
 
-.footer {
-  position: fixed;
-  bottom: 10px;
-  width: 100vw;
-}
-
-@media screen and (max-width: 1199px) {
-  .footer > .mdc-tab-bar {
-    max-width: 900px;
-    width: 100%;
-  }
-}
-
 .mdc-card__actions {
   padding: 0 !important;
 }
@@ -186,7 +175,6 @@ body.mdc-theme--dark .mdc-card {
   display: flex;
   padding: 64px 20px 0;
   background: #5D8CAE;
-  background: -webkit-gradient(linear, left top, left bottom, from(var(--mdc-theme-primary)), color-stop(150%, var(--mdc-theme-complementary-color)));
   background: linear-gradient(var(--mdc-theme-primary) 0%, var(--mdc-theme-complementary-color) 150%);
   margin-bottom: 20px;
 }

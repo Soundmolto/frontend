@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import { Router } from 'preact-router';
 import { connect } from 'preact-redux';
 import Header from '../Header';
+import Footer from '../Footer';
 import Home from 'async!../../routes/home';
 import Profile from 'async!../../routes/profile';
 import MyProfile from 'async!../../routes/my-profile';
@@ -66,6 +67,7 @@ export default class App extends Component {
 					<MyProfile path="/me" key="my-profile" />
 					<Profile path="/:vanity_url" key="profile" />
 				</Router>
+				<Footer />
 			</div>
 		);
 	}

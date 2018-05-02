@@ -1,0 +1,60 @@
+.footer {
+	position: fixed;
+	bottom: 0;
+	width: 100vw;
+	background: rgb(78, 96, 125);
+	background: linear-gradient(rgb(78, 96, 125) 0%, rgb(78, 96, 125) 100%);
+	min-height: 64px;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+}
+
+.footer .artwork {
+	border-radius: 100%;
+	overflow: hidden;
+	width: 64px;
+	height: 64px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.footer .artwork img {
+	max-width: 64px;
+	max-width: 64px;
+	height: auto;
+	width: auto;
+}
+
+.footer .songInfo p {
+	margin-left: 10px;
+}
+
+.footer .songInfo p span {
+	display: block;
+	font-size: 0.8rem;
+	color: #FFFFFF;
+	font-weight: 600;
+}
+
+.footer .trackBar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 4px;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	transition: height 0.3s ease-in-out;
+}
+
+.footer:hover .trackBar, .footer:active .trackBar, .footer:focus .trackBar {
+	height: 6px;
+}
+
+.footer .trackBar .progress {
+	background: var(--mdc-theme-complementary-color);
+	width: 100%;
+	transform: translateX(-95%);
+	height: 100%;
+}

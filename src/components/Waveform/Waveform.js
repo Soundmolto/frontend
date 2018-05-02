@@ -68,7 +68,7 @@ export class Waveform extends Component {
 					onPosChange={this.handlePosChange.bind(this)}
 					playing={this.state.playing}
 					audioPeaks={data.peaks}
-					options={{ waveColor: linGrad, progressColor: linGradProgress }}
+					options={{ waveColor: linGrad, progressColor: linGradProgress, barWidth: 1 }}
 					onFinish={e => {
 						this.setState({ playing: false });
 						onFinish();
