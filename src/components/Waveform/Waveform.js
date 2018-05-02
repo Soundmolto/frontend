@@ -2,6 +2,7 @@ import { Component } from 'preact';
 import { THEMES } from '../../enums/themes';
 import 'wavesurfer.js';
 import Wavesurfer from 'react-wavesurfer';
+import { connect } from 'preact-redux';
 
 let linGrad = '#5D8CAE';
 let linGradProgress = '#334b5c';
@@ -15,7 +16,7 @@ if (typeof window !== "undefined") {
 	linGradProgress.addColorStop(0, '#334b5c');
 	linGradProgress.addColorStop(1, '#7b4180');
 }
-
+@connect(({ currently_playing }) => ({ currently_playing }))
 export class Waveform extends Component {
 
 	setState (state) {
@@ -58,7 +59,12 @@ export class Waveform extends Component {
 		this.setState({ playing: false });
 	}
 
-	render ({ data, UI, onFinish }) {
+	render ({ data, UI, onFinish, currently_playing }) {
+		let playing = this.state.playing;
+		const trackID = data.id;
+		const currently_playing_id = currently_playing && currently_playing.track.id;
+		if (trackID === currently_playing_id) playing = currently_playing.playing;
+
 		return (
 			<div onClick={this.play.bind(this)}>
 				<Wavesurfer
@@ -66,7 +72,7 @@ export class Waveform extends Component {
 					audioFile={data.stream_url}
 					pos={this.state.pos}
 					onPosChange={this.handlePosChange.bind(this)}
-					playing={this.state.playing}
+					playing={playing}
 					audioPeaks={data.peaks}
 					options={{ waveColor: linGrad, progressColor: linGradProgress, barWidth: 1 }}
 					onFinish={e => {

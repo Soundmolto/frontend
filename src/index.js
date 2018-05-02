@@ -1,6 +1,7 @@
 import { Component } from 'preact';
 import { Provider, connect } from 'preact-redux';
 import { HotKeys } from 'react-hotkeys';
+import { TRACK } from './enums/track'
 import App from './components/App';
 import store from './store';
 import './style';
@@ -15,7 +16,8 @@ class HotKeysHOC extends Component {
 	map = {
 		'show:settings': 'ctrl+,',
 		'show:goto': 'ctrl+g',
-		'show:shortcuts': 'ctrl+/'
+		'show:shortcuts': 'ctrl+/',
+		'toggle:playing': 'space'
 	};
 
 	handlers = {
@@ -37,6 +39,15 @@ class HotKeysHOC extends Component {
 			store.dispatch({
 				type: "SHOW_SHORTCUTS_PANEL"
 			});
+		},
+		'toggle:playing': e => {
+			const state = store.getState();
+			if (state.currently_playing.track != null) {
+				store.dispatch({
+					type: TRACK.PLAYING_TRACK,
+					payload: state.currently_playing
+				})
+			}
 		}
 	};
 
@@ -46,6 +57,13 @@ class HotKeysHOC extends Component {
 				{children}
 			</HotKeys>
 		);
+	}
+
+	constructor (opts) {
+		super(opts);
+		const state = store.getState();
+		const payload = Object.assign({}, state.currently_playing, { position: 0 })
+		store.dispatch({ type: TRACK.PAUSED_TRACK, payload });
 	}
 };
 
