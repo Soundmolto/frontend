@@ -46,7 +46,7 @@ export class TrackCard extends Component {
 
 	onClickPlayPause (e) {
 		this.setState({ playing: !this.state.playing });
-		this.waveform.handleTogglePlay();
+		this.waveform._component.handleTogglePlay();
 	}
 
 	onTogglePlay (playing, pos) {
@@ -131,14 +131,6 @@ export class TrackCard extends Component {
 							onStartPlay={this.onStartPlay.bind(this)}
 							key={track.id}
 							onPosChange={pos => {
-								// this.setState({ pos });
-								// currently_playing(this.props.dispatch, {
-								// 	playing: this.state.playing,
-								// 	position: pos,
-								// 	track,
-								// 	owner: user
-								// });
-								console.log(this.props);
 								this.props.footer._component.onPosChange(pos);
 							}}
 						/>

@@ -72,6 +72,7 @@ body.mdc-theme--dark .mdc-card {
 
 #app {
   height: 100%;
+  padding-bottom: 84px;
 }
 
 .mdc-theme--dark {

@@ -1,5 +1,6 @@
 .footer {
 	position: fixed;
+	z-index: 10;
 	bottom: 0;
 	width: 100vw;
 	background: rgb(78, 96, 125);
@@ -60,4 +61,28 @@
 	position: absolute;
 	left: -100%;
 	height: 100%;
+}
+
+.footer .start, .footer .middle, .footer .end {
+	display: flex;
+	width: 100%;
+}
+
+.footer .middle {
+	color: var(--mdc-theme-primary-font);
+	justify-content: center;
+}
+
+.footer .middle .button {
+	width: 48px;
+	height: 48px;
+	color: var(--mdc-theme-primary-font);
+}
+
+.footer .middle .button i {
+	color: var(--mdc-theme-primary-font);
+}
+
+.footer .end {
+	justify-content: flex-end;
 }

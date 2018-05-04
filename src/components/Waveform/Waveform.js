@@ -62,7 +62,7 @@ export class Waveform extends Component {
 	render ({ data, UI, onFinish, currently_playing }) {
 		let playing = this.state.playing;
 		const trackID = data.id;
-		const currently_playing_id = currently_playing && currently_playing.track.id;
+		const currently_playing_id = currently_playing && currently_playing.track != null && currently_playing.track.id;
 		if (trackID === currently_playing_id) playing = currently_playing.playing;
 
 		return (
