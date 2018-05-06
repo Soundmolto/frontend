@@ -25,6 +25,12 @@ export default class Footer extends Component {
 		return currently_playing.position / currently_playing.track.duration * 100;
 	}
 
+	onClickPlay (e) {
+		
+	}
+
+	onClickPause () {}
+
 	render ({ currently_playing }) {
 		let amount = 0;
 		let duration = 0;
@@ -59,8 +65,8 @@ export default class Footer extends Component {
 						<Icon style={{ margin: 0 }}>skip_previous</Icon>
 					</Button>
 					<Button ripple className={`${styles.button}`}>
-						{!playing && <Icon style={{ margin: 0 }}>play_arrow</Icon>}
-						{playing && <Icon style={{ margin: 0 }}>pause</Icon>}
+						{!playing && <Icon style={{ margin: 0 }} onClick={this.onClickPlay.bind(this)}>play_arrow</Icon>}
+						{playing && <Icon style={{ margin: 0 }} onClick={this.onClickPause.bind(this)}>pause</Icon>}
 					</Button>
 					<Button ripple className={`${styles.button}`}>
 						<Icon style={{ margin: 0 }}>skip_next</Icon>
