@@ -108,7 +108,7 @@
 
 .mobile .songInfo span {
 	white-space: pre;
-    overflow: hidden;
+	overflow: hidden;
 	text-overflow: ellipsis;
 	max-width: calc(100vw - 110px);
 }

@@ -75,7 +75,12 @@ export class Waveform extends Component {
 		const currently_playing_id = currently_playing && currently_playing.track != null && currently_playing.track.id;
 		if (trackID === currently_playing_id) playing = currently_playing.playing;
 
+		if (trackID !== currently_playing_id && this.state.playing === true) {
+			this.setState({ playing: false });
+		}
+
 		if (this.props.parentPlaying === true && this.state.playing === false) {
+			console.log(this.props.parentPlaying);
 			this.setState({ playing: true });
 		}
 
