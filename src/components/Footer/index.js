@@ -6,14 +6,18 @@ import Button from 'preact-material-components/Button';
 import 'preact-material-components/Button/style.css';
 import { connect } from "preact-redux";
 import { seconds_to_time } from "../../utils/seconds-to-time";
+import { playing_now } from '../../actions/track';
+import { ENOLCK } from "constants";
 
 @connect(({ currently_playing }) => ({ currently_playing }))
 export default class Footer extends Component {
 	
 	pos = 0;
 	duration = 0;
+	__currentPos = 0;
 
 	onPosChange (pos) {
+		this.__currentPos = pos;
 		this.__currentTime = seconds_to_time(pos).rendered;
 		this.progressBar.setAttribute('style', `transform: translateX(${pos / this.duration * 100}%)`);
 		this.amount_el.textContent = this.__currentTime;
@@ -25,11 +29,33 @@ export default class Footer extends Component {
 		return currently_playing.position / currently_playing.track.duration * 100;
 	}
 
-	onClickPlay (e) {
-		
+	onClickPlay () {
+		const { currently_playing, dispatch } = this.props;
+		playing_now(dispatch, {
+			playing: true,
+			position: currently_playing.position,
+			track: currently_playing.track,
+			owner: currently_playing.owner
+		});
 	}
 
-	onClickPause () {}
+	onClickPause () {
+		const { currently_playing, dispatch } = this.props;
+		playing_now(dispatch, {
+			playing: false,
+			position: this.__currentPos,
+			track: currently_playing.track,
+			owner: currently_playing.owner
+		})
+	}
+
+	onClickTrackBar (e) {
+		const { currently_playing, dispatch } = this.props;
+		const percent = (e.offsetX / e.currentTarget.clientWidth);
+		const position = percent * this.duration;
+
+		playing_now(dispatch, { playing: true, position, track: currently_playing.track, owner: currently_playing.owner });
+	}
 
 	render ({ currently_playing }) {
 		let amount = 0;
@@ -43,7 +69,7 @@ export default class Footer extends Component {
 		return (
 			<div class={styles.footer}>
 				<div class={styles.start}>
-					<div class={styles.trackBar}>
+					<div class={styles.trackBar} onClick={this.onClickTrackBar.bind(this)}>
 						<div class={styles.progress} style={{
 							'transform': `translateX(${amount}%)`
 						}} ref={e => (this.progressBar = e)}></div>
@@ -64,10 +90,18 @@ export default class Footer extends Component {
 					<Button ripple className={`${styles.button}`}>
 						<Icon style={{ margin: 0 }}>skip_previous</Icon>
 					</Button>
-					<Button ripple className={`${styles.button}`}>
-						{!playing && <Icon style={{ margin: 0 }} onClick={this.onClickPlay.bind(this)}>play_arrow</Icon>}
-						{playing && <Icon style={{ margin: 0 }} onClick={this.onClickPause.bind(this)}>pause</Icon>}
-					</Button>
+					
+					{!playing && (
+						<Button ripple className={`${styles.button}`} onClick={this.onClickPlay.bind(this)}>
+								<Icon style={{ margin: 0 }} >play_arrow</Icon>
+						</Button>
+					)}
+
+					{playing && (
+						<Button ripple className={`${styles.button}`} onClick={this.onClickPause.bind(this)}>
+								<Icon style={{ margin: 0 }} >pause</Icon>
+						</Button>
+					)}
 					<Button ripple className={`${styles.button}`}>
 						<Icon style={{ margin: 0 }}>skip_next</Icon>
 					</Button>

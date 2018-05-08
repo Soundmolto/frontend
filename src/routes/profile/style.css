@@ -11,7 +11,11 @@
 }
 
 .profile_contents {
-	padding: 20px;
+	padding: 0 20px 20px;
+}
+
+.profile_contents h1.mainHeader {
+	font-size: 1.3rem;
 }
 
 .profile_contents [class="mdc-card"] {
@@ -20,6 +24,7 @@
 
 .profile_contents [class="mdc-card"] h2 {
 	margin-top: 0;
+	font-size: 0.9rem !important;
 }
 
 .smol {

@@ -83,7 +83,7 @@ export default class Profile extends Component {
 					<LayoutGrid>
 						<LayoutGrid.Inner>
 						<LayoutGrid.Cell desktopCols="9" tabletCols="12" tabletOrder="2">
-								<h1 style={{ 'margin-top': "0" }}>
+								<h1 class={style.mainHeader} style={{ 'margin-top': "0" }}>
 									Tracks <small class={style.smolButNotSwol}>{viewedUser.tracks.length}</small>
 								</h1>
 								{viewedUser.tracks.length >= 1 && viewedUser.tracks.map( track => <div key={'parent-' + track.id}>
@@ -92,6 +92,9 @@ export default class Profile extends Component {
 								{viewedUser.tracks.length <= 0 && <h1>No tracks</h1>}
 							</LayoutGrid.Cell>
 							<LayoutGrid.Cell desktopCols="3" tabletCols="12">
+								<h1 class={style.mainHeader} style={{ 'margin-top': "0" }}>
+									About
+								</h1>
 								{viewedUser != null && <UserDescription user={viewedUser.profile} />}
 								{viewedUser != null && <UserFollowers viewedUser={viewedUser} style={{ 'margin-top': '20px' }} />}
 								{viewedUser != null && <UserFollowing viewedUser={viewedUser} style={{ 'margin-top': '20px' }} />}

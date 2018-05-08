@@ -39,7 +39,7 @@ export default class MyProfile extends Component {
 					<LayoutGrid key={'layout-grid-' + user.id}>
 						<LayoutGrid.Inner key={'layout-grid-inner-' + user.id}>
 							<LayoutGrid.Cell desktopCols="9" tabletCols="12" tabletOrder="2" key={'layout-grid-cell-tracks-' + user.id}>
-								<h1 style={{ 'margin-top': "0" }}>
+								<h1 class={style.mainHeader} style={{ 'margin-top': "0" }}>
 									Tracks <small class={style.smolButNotSwol}>{user.tracks.length}</small>
 								</h1>
 								<div key={'user-tracks-' + user.id}>
@@ -50,6 +50,9 @@ export default class MyProfile extends Component {
 								</div>
 							</LayoutGrid.Cell>
 							<LayoutGrid.Cell desktopCols="3" tabletCols="12" tabletOrder="1" key={'layout-grid-cell-about-' + user.id}>
+								<h1 class={style.mainHeader} style={{ 'margin-top': "0" }}>
+									About
+								</h1>
 								{user != null && <UserDescription user={user.profile} key={"user-profile-description-" + user.id} />}
 								{user != null && <UserFollowers viewedUser={user} style={{ 'margin-top': '20px' }} key={"user-profile-followers-" + user.id} />}
 								{user != null && <UserFollowing viewedUser={user} style={{ 'margin-top': '20px' }} key={"user-profile-following-" + user.id} />}

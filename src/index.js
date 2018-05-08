@@ -42,11 +42,22 @@ class HotKeysHOC extends Component {
 		},
 		'toggle:playing': e => {
 			const state = store.getState();
+			e.preventDefault();
+
 			if (state.currently_playing.track != null) {
-				store.dispatch({
-					type: TRACK.PLAYING_TRACK,
-					payload: state.currently_playing
-				})
+				if (state.currently_playing.playing === true) {
+					store.dispatch({
+						type: TRACK.PAUSED_TRACK,
+						payload: state.currently_playing
+					})
+				} else {
+					store.dispatch({
+						type: TRACK.PLAYING_TRACK,
+						payload: state.currently_playing
+					})
+				}
+			} else {
+				
 			}
 		}
 	};

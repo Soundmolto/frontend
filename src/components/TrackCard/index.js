@@ -41,12 +41,18 @@ export class TrackCard extends Component {
 	state = { playing: false };
 
 	onFinish () {
-		this.setState({ playing: false });
+		this.setState({ playing: false, pos: 0 });
+		playing_now(this.props.dispatch, {
+			playing: this.state.playing,
+			position: 0,
+			track: this.props.track,
+			owner: this.props.user
+		});
 	}
 
 	onClickPlayPause (e) {
 		this.setState({ playing: !this.state.playing });
-		this.waveform._component.handleTogglePlay();
+		this.waveform._component.handleTogglePlay.bind(this.waveform._component)();
 	}
 
 	onTogglePlay (playing, pos) {
@@ -107,6 +113,9 @@ export class TrackCard extends Component {
 
 	render ({ track, user, currentUser, currently_playing }, { pos }) {
 		if (this.played === false ) this.plays = track.plays;
+		if (this.state.playing === false && currently_playing.track != null && track.id === currently_playing.track.id && currently_playing.playing === true) {
+			this.setState({ playing: true });
+		}
 
 		if (this.state.playing && track.id !== currently_playing.track.id) {
 			this.setState({ playing: false });
@@ -139,6 +148,7 @@ export class TrackCard extends Component {
 								this.props.footer._component.onPosChange(pos);
 							}}
 							audioContext={this.props.audioContext}
+							parentPlaying={this.state.playing}
 						/>
 						<div>
 							<p class={styles.centered}>

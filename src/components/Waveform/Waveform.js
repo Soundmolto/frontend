@@ -19,21 +19,31 @@ if (typeof window !== "undefined") {
 @connect(({ currently_playing }) => ({ currently_playing }))
 export class Waveform extends Component {
 
-	setState (state) {
-		this._previousState = Object.assign({}, this.state);
-		super.setState(state);
-	}
-
 	constructor (props) {
 		super(props);
 		this.state = { playing: false, pos: 0 };
-		this._previousState = { playing: false, pos: 0 };
 	}
 
 	handleTogglePlay () {
 		this.setState({ playing: !this.state.playing });
 		if (this.props.onTogglePlay != null) {
 			this.props.onTogglePlay(this.state.playing, this.state.pos);
+		}
+	}
+
+	componentWillReceiveProps ({ currently_playing, data }) {
+		const trackID = data.id;
+		const currently_playing_id = currently_playing && currently_playing.track != null && currently_playing.track.id;
+		if (trackID === currently_playing_id) {
+			this.setState({ playing: currently_playing.playing });
+
+			if (this.props.parentPlaying === true && this.state.playing === false) {
+				this.setState({ playing: true });
+			}
+	
+			if (currently_playing.position !== 0 && currently_playing.position !== this.state.position) {
+				this.setState({ pos: currently_playing.position });
+			}
 		}
 	}
 
@@ -65,6 +75,10 @@ export class Waveform extends Component {
 		const currently_playing_id = currently_playing && currently_playing.track != null && currently_playing.track.id;
 		if (trackID === currently_playing_id) playing = currently_playing.playing;
 
+		if (this.props.parentPlaying === true && this.state.playing === false) {
+			this.setState({ playing: true });
+		}
+
 		return (
 			<div onClick={this.play.bind(this)}>
 				<Wavesurfer
@@ -76,7 +90,7 @@ export class Waveform extends Component {
 					audioPeaks={data.peaks}
 					options={{ waveColor: linGrad, progressColor: linGradProgress, barWidth: 1 }}
 					onFinish={e => {
-						this.setState({ playing: false });
+						this.setState({ playing: false, pos: 0 });
 						onFinish();
 					}}
 					onPlay={this.props.onStartPlay}
