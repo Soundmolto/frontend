@@ -67,48 +67,77 @@ export default class Footer extends Component {
 		}
 
 		return (
-			<div class={styles.footer}>
-				<div class={styles.start}>
-					<div class={styles.trackBar} onClick={this.onClickTrackBar.bind(this)}>
-						<div class={styles.progress} style={{
-							'transform': `translateX(${amount}%)`
-						}} ref={e => (this.progressBar = e)}></div>
-					</div>
-					<div class={styles.artwork}><img src={Goku} /></div>
-					<div class={styles.songInfo}>
-						<p>
-							<span>{currently_playing.owner && currently_playing.owner.profile && currently_playing.owner.profile.displayName}</span>
-							<span>{currently_playing && currently_playing.track && currently_playing.track.name}</span>
-						</p>
-					</div>
-				</div>
-				<div class={styles.middle}>
-					<p ref={e => (this.amount_el = e)}>
-						{this.__currentTime == null && seconds_to_time(amount).rendered}
-						{this.__currentTime != null && this.__currentTime}
-					</p>
-					<Button ripple className={`${styles.button}`}>
-						<Icon style={{ margin: 0 }}>skip_previous</Icon>
-					</Button>
-					
-					{!playing && (
-						<Button ripple className={`${styles.button}`} onClick={this.onClickPlay.bind(this)}>
-								<Icon style={{ margin: 0 }} >play_arrow</Icon>
-						</Button>
-					)}
+			<div>
+				<div class={styles.mobile}>
+					<div class={styles.footer}>
+						<div class={styles.start}>
+							<div class={styles.songInfo}>
+								<p>
+									<span>{currently_playing.owner && currently_playing.owner.profile && currently_playing.owner.profile.displayName}</span>
+									<span>{currently_playing && currently_playing.track && currently_playing.track.name}</span>
+								</p>
+							</div>
+						</div>
+						<div class={styles.end}>
+						{!playing && (
+							<Button ripple className={`${styles.button}`} onClick={this.onClickPlay.bind(this)}>
+									<Icon style={{ margin: 0 }} >play_arrow</Icon>
+							</Button>
+						)}
 
-					{playing && (
-						<Button ripple className={`${styles.button}`} onClick={this.onClickPause.bind(this)}>
-								<Icon style={{ margin: 0 }} >pause</Icon>
-						</Button>
-					)}
-					<Button ripple className={`${styles.button}`}>
-						<Icon style={{ margin: 0 }}>skip_next</Icon>
-					</Button>
-					<p>{seconds_to_time(duration).rendered}</p>
+						{playing && (
+							<Button ripple className={`${styles.button}`} onClick={this.onClickPause.bind(this)}>
+									<Icon style={{ margin: 0 }} >pause</Icon>
+							</Button>
+						)}
+						</div>
+					</div>
 				</div>
-				<div class={styles.end}>
-				dssdjh
+				<div class={styles.notMobile}>
+					<div class={styles.footer}>
+						<div class={styles.start}>
+							<div class={styles.trackBar} onClick={this.onClickTrackBar.bind(this)}>
+								<div class={styles.progress} style={{
+									'transform': `translateX(${amount}%)`
+								}} ref={e => (this.progressBar = e)}></div>
+							</div>
+							<div class={styles.artwork}><img src={Goku} /></div>
+							<div class={styles.songInfo}>
+								<p>
+									<span>{currently_playing.owner && currently_playing.owner.profile && currently_playing.owner.profile.displayName}</span>
+									<span>{currently_playing && currently_playing.track && currently_playing.track.name}</span>
+								</p>
+							</div>
+						</div>
+						<div class={styles.middle}>
+							<p ref={e => (this.amount_el = e)}>
+								{this.__currentTime == null && seconds_to_time(amount).rendered}
+								{this.__currentTime != null && this.__currentTime}
+							</p>
+							<Button ripple className={`${styles.button}`}>
+								<Icon style={{ margin: 0 }}>skip_previous</Icon>
+							</Button>
+							
+							{!playing && (
+								<Button ripple className={`${styles.button}`} onClick={this.onClickPlay.bind(this)}>
+										<Icon style={{ margin: 0 }} >play_arrow</Icon>
+								</Button>
+							)}
+
+							{playing && (
+								<Button ripple className={`${styles.button}`} onClick={this.onClickPause.bind(this)}>
+										<Icon style={{ margin: 0 }} >pause</Icon>
+								</Button>
+							)}
+							<Button ripple className={`${styles.button}`}>
+								<Icon style={{ margin: 0 }}>skip_next</Icon>
+							</Button>
+							<p>{seconds_to_time(duration).rendered}</p>
+						</div>
+						<div class={styles.end}>
+							[Placeholder for extra controls]
+						</div>
+					</div>
 				</div>
 			</div>
 		);

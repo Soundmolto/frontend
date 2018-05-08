@@ -89,3 +89,26 @@
 	justify-content: flex-end;
 	padding: 0 15px;
 }
+
+@media screen and (max-width: 768px) {
+	.notMobile {
+		display: none;
+	}
+}
+
+@media screen and (min-width: 768px) {
+	.mobile {
+		display: none;
+	}
+}
+
+.mobile .songInfo {
+	font-size: 0.8rem;
+}
+
+.mobile .songInfo span {
+	white-space: pre;
+    overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: calc(100vw - 110px);
+}
