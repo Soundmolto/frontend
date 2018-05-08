@@ -55,7 +55,7 @@ export class Waveform extends Component {
 		this.setState({ playing: false, pos: 0 });
 	}
 
-	onPause (e) {
+	onPause () {
 		this.setState({ playing: false });
 	}
 
@@ -81,6 +81,7 @@ export class Waveform extends Component {
 					}}
 					onPlay={this.props.onStartPlay}
 					key={'waveform-' + data.id}
+					audioContext={this.props.audioContext}
 					/>
 			</div>
 		)

@@ -12,14 +12,14 @@ import 'preact-material-components/Button/style.css';
 import 'preact-material-components/Dialog/style.css';
 import 'preact-material-components/Snackbar/style.css';
 import styles from './style';
-import { currently_playing, delete_track } from '../../actions/track';
+import { playing_now, delete_track } from '../../actions/track';
 import { connect } from 'preact-redux';
 import { seconds_to_time } from '../../utils/seconds-to-time';
 
 const new_line_br = (text = '') => text.replace('\n', '<br />');
 let className = (e) => (e);
 
-@connect(({ auth }) => ({ auth }))
+@connect(({ auth, currently_playing }) => ({ auth, currently_playing }))
 export class TrackCard extends Component {
 
 	plays = 0;
@@ -51,7 +51,7 @@ export class TrackCard extends Component {
 
 	onTogglePlay (playing, pos) {
 		this.setState({ playing, pos });
-		currently_playing(this.props.dispatch, {
+		playing_now(this.props.dispatch, {
 			playing: this.state.playing,
 			position: pos,
 			track: this.props.track,
@@ -61,7 +61,7 @@ export class TrackCard extends Component {
 
 	onPause (pos) {
 		this.setState({ playing: false, pos });
-		currently_playing(this.props.dispatch, {
+		playing_now(this.props.dispatch, {
 			playing: this.state.playing,
 			position: pos,
 			track: this.props.track,
@@ -74,7 +74,7 @@ export class TrackCard extends Component {
 			this.plays++;
 			this.setState({ playing: true });
 			this.played = true;
-			currently_playing(this.props.dispatch, {
+			playing_now(this.props.dispatch, {
 				playing: this.state.playing,
 				position: 0,
 				track: this.props.track,
@@ -105,8 +105,13 @@ export class TrackCard extends Component {
 		}, 2750);
 	}
 
-	render ({ track, user, currentUser }, { pos }) {
+	render ({ track, user, currentUser, currently_playing }, { pos }) {
 		if (this.played === false ) this.plays = track.plays;
+
+		if (this.state.playing && track.id !== currently_playing.track.id) {
+			this.setState({ playing: false });
+			this.waveform._component.onPause();
+		}
 
 		return (
 			<div class={styles.card}>
@@ -133,6 +138,7 @@ export class TrackCard extends Component {
 							onPosChange={pos => {
 								this.props.footer._component.onPosChange(pos);
 							}}
+							audioContext={this.props.audioContext}
 						/>
 						<div>
 							<p class={styles.centered}>

@@ -14,6 +14,7 @@ import { request_new_data } from '../../actions/user';
 import { THEMES } from '../../enums/themes';
 
 let onRender = (UI) => {};
+let MainAudioContext;
 
 if (typeof window !== "undefined") {
 	onRender = (UI) => {
@@ -23,12 +24,17 @@ if (typeof window !== "undefined") {
 			document.body.classList.remove('mdc-theme--dark');
 		}
 	};
+
+	MainAudioContext = new AudioContext();
 }
+
+
 
 @connect(state => state)
 export default class App extends Component {
 
 	footer = null;
+	audioContext = MainAudioContext;
 
 	componentDidMount () {
 		const { auth, dispatch, user, UI } = this.props;
@@ -66,10 +72,10 @@ export default class App extends Component {
 						For the sake of simplicity during dev of alpha, this was setup as 2 routes.
 						We should look at re-merging these routes in the future.
 					*/}
-					<MyProfile path="/me" key="my-profile" footer={this.footer} />
-					<Profile path="/:vanity_url" key="profile" footer={this.footer} />
+					<MyProfile path="/me" key="my-profile" footer={this.footer} audioContext={this.audioContext} />
+					<Profile path="/:vanity_url" key="profile" footer={this.footer} audioContext={this.audioContext} />
 				</Router>
-				<Footer ref={e => (this.footer = e)} />
+				<Footer ref={e => (this.footer = e)} audioContext={this.audioContext} />
 			</div>
 		);
 	}
