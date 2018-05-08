@@ -9,7 +9,7 @@ import style from './style';
 import { UserDescription } from '../../components/UserDescription';
 import { UserPictureName } from '../../components/UserPictureName';
 import { UserFollowers } from '../../components/UserFollowers';
-import { getCurrentUrl } from 'preact-router';
+import { getCurrentUrl, route } from 'preact-router';
 import { UserFollowing } from '../../components/UserFollowing';
 import { TrackCard } from '../../components/TrackCard';
 
@@ -61,6 +61,7 @@ export default class Profile extends Component {
 	render({ auth, user, viewedUser }) {
 		const following = this.following(viewedUser);
 		if (this.currentUrl !== getCurrentUrl()) this.updateData();
+		if (getCurrentUrl() === `/${user.profile.url}`) route('/me');
 
 		return (
 			<div class={style.profile}>

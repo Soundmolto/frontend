@@ -51,7 +51,7 @@
 }
 
 .cardRoot {
-    padding: 20px;
+    padding: 20px 20px 10px;
     box-shadow: 0 15px 20px -15px rgba(0, 0, 0, 0.35);
     border-radius: 10px;
 }
