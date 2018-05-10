@@ -111,7 +111,7 @@ export class TrackCard extends Component {
 		}, 2750);
 	}
 
-	render ({ track, user, currentUser, currently_playing }, { pos }) {
+	render ({ track, user, currentUser, currently_playing, isCurrentTrack }, { pos }) {
 		if (this.played === false ) this.plays = track.plays;
 		if (this.state.playing === false && currently_playing.track != null && track.id === currently_playing.track.id && currently_playing.playing === true) {
 			this.setState({ playing: true });
@@ -134,7 +134,14 @@ export class TrackCard extends Component {
 									{this.state.playing && 'pause'}
 								</Icon>
 							</Button>
-							{track.name}
+							{isCurrentTrack == false && (
+								<a class={styles.link} href={`/${currentUser.profile.url}/${track.url}`}>
+									{track.name}
+								</a>
+							)}
+							{isCurrentTrack == true && (
+								track.name
+							)}
 						</h2>
 						<Waveform
 							ref={e => (this.waveform = e)}

@@ -88,7 +88,7 @@ export default class Profile extends Component {
 									Tracks <small class={style.smolButNotSwol}>{viewedUser.tracks.length}</small>
 								</h1>
 								{viewedUser.tracks.length >= 1 && viewedUser.tracks.map( track => <div key={'parent-' + track.id}>
-									<TrackCard track={track} user={viewedUser} currentUser={user} key={track.id} footer={this.props.footer} audioContext={this.props.audioContext} />
+									<TrackCard track={track} user={viewedUser} currentUser={user} key={track.id} footer={this.props.footer} audioContext={this.props.audioContext} isCurrentTrack={false} />
 								</div>)}
 								{viewedUser.tracks.length <= 0 && <h1>No tracks</h1>}
 							</LayoutGrid.Cell>

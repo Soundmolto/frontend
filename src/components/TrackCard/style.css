@@ -70,3 +70,12 @@
     line-height: 0.8rem;
     font-size: 0.8rem;
 }
+
+.link {
+    text-decoration: none;
+    color: var(--mdc-theme-complementary-color);
+}
+
+.link:hover, .link:active, .link:focus {
+    color: var(--mdc-theme-link-primary-on-background);
+}

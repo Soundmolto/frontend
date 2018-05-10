@@ -55,6 +55,10 @@
 	height: 6px;
 }
 
+.footer:hover .trackBar .thumb, .footer:active .trackBar .thumb, .footer:focus .trackBar .thumb {
+	transform: scale(1.3);
+}
+
 .footer .trackBar .progress {
 	background: var(--mdc-theme-complementary-color);
 	width: 100%;
@@ -64,9 +68,22 @@
 	height: 100%;
 }
 
+.footer .trackBar .thumb {
+	background: var(--mdc-theme-complementary-color);
+	transform: translateX(0);
+	position: absolute;
+	left: 0px;
+	top: -3px;
+	height: 12px;
+	width: 12px;
+	border-radius: 100%;
+	display: block;
+}
+
 .footer .start, .footer .middle, .footer .end {
 	display: flex;
 	width: 100%;
+	color: var(--mdc-theme-primary-font);
 }
 
 .footer .middle {

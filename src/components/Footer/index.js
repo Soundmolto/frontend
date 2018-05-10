@@ -20,6 +20,7 @@ export default class Footer extends Component {
 		this.__currentPos = pos;
 		this.__currentTime = seconds_to_time(pos).rendered;
 		this.progressBar.setAttribute('style', `transform: translateX(${pos / this.duration * 100}%)`);
+		this.thumb.setAttribute('style', `transform: translateX(${pos / this.duration * this.thumb.parentElement.clientWidth}px)`);
 		this.amount_el.textContent = this.__currentTime;
 	}
 
@@ -51,7 +52,7 @@ export default class Footer extends Component {
 
 	onClickTrackBar (e) {
 		const { currently_playing, dispatch } = this.props;
-		const percent = (e.offsetX / e.currentTarget.clientWidth);
+		const percent = (e.pageX / e.currentTarget.clientWidth);
 		const position = percent * this.duration;
 
 		playing_now(dispatch, { playing: true, position, track: currently_playing.track, owner: currently_playing.owner });
@@ -61,9 +62,15 @@ export default class Footer extends Component {
 		let amount = 0;
 		let duration = 0;
 		let playing = currently_playing != null && currently_playing.playing;
+		let parentWidth = 1;
+
 		if (currently_playing != null && currently_playing.track != null) {
 			amount = this.calculate_amount(currently_playing);
 			duration = parseInt(currently_playing.track.duration);
+		}
+
+		if (this.thumb != null) {
+			parentWidth = this.thumb.parentElement.clientWidth;
 		}
 
 		return (
@@ -100,6 +107,9 @@ export default class Footer extends Component {
 								<div class={styles.progress} style={{
 									'transform': `translateX(${amount}%)`
 								}} ref={e => (this.progressBar = e)}></div>
+								<div class={styles.thumb} style={{
+									'transform': `translateX(${this.__currentPos / this.duration* parentWidth}px)`
+								}} ref={e => (this.thumb = e)}></div>
 							</div>
 							<div class={styles.artwork}><img src={Goku} /></div>
 							<div class={styles.songInfo}>
