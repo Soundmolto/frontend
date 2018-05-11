@@ -20,6 +20,7 @@
     cursor: pointer;
     user-select: none;
     padding: 10px;
+    margin: 0 10px 0 0;
 }
 
 .actionable:hover {
@@ -78,4 +79,16 @@
 
 .link:hover, .link:active, .link:focus {
     color: var(--mdc-theme-link-primary-on-background);
+}
+
+.date {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 0.9rem;
 }

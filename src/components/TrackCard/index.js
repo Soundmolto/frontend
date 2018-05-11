@@ -15,6 +15,8 @@ import styles from './style';
 import { playing_now, delete_track } from '../../actions/track';
 import { connect } from 'preact-redux';
 import { seconds_to_time } from '../../utils/seconds-to-time';
+import dayjs from 'dayjs';
+import TimeAgo from 'timeago-react';
 
 const new_line_br = (text = '') => text.replace('\n', '<br />');
 let className = (e) => (e);
@@ -98,7 +100,11 @@ export class TrackCard extends Component {
 		this.bar.MDComponent.show({
 			message: "Deleting track",
 			actionText: "Undo",
-			actionHandler: e => (this.deleting = false)
+			actionHandler: e => {
+				e.preventDefault();
+				e.stopImmediatePropagation();
+				this.deleting = false;
+			}
 		});
 		window.setTimeout(_ => {
 			if (this.deleting) {
@@ -112,6 +118,7 @@ export class TrackCard extends Component {
 	}
 
 	render ({ track, user, currentUser, currently_playing, isCurrentTrack }, { pos }) {
+		const postedAt = dayjs(parseInt(track.createdAt));
 		if (this.played === false ) this.plays = track.plays;
 		if (this.state.playing === false && currently_playing.track != null && track.id === currently_playing.track.id && currently_playing.playing === true) {
 			this.setState({ playing: true });
@@ -136,6 +143,11 @@ export class TrackCard extends Component {
 						{isCurrentTrack == false && (
 							<h4 class={className(styles.displayName)}>{user.profile.displayName}</h4>
 						)}
+						<TimeAgo
+							datetime={postedAt.toDate()} 
+							locale='en_AU'
+							className={styles.date}
+						/>
 						<h2 class={className(`mdc-typography--title ${styles.username}`)}>
 							<Button style={{ margin: '0 10px 0 0' }} onClick={this.onClickPlayPause.bind(this)}>
 								<Icon>
