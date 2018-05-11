@@ -126,7 +126,16 @@ export class TrackCard extends Component {
 			<div class={styles.card}>
 				<Card class={styles.cardRoot}>
 					<div style={{ position: "relative" }}>
-						<h4 class={className(styles.displayName)}>{user.profile.displayName}</h4>
+						{isCurrentTrack === true && (
+							<h4 class={className(styles.displayName)}>
+								<a class={styles.link} href={`/${currentUser.profile.url}`}>
+									{user.profile.displayName}
+								</a>
+							</h4>
+						)}
+						{isCurrentTrack == false && (
+							<h4 class={className(styles.displayName)}>{user.profile.displayName}</h4>
+						)}
 						<h2 class={className(`mdc-typography--title ${styles.username}`)}>
 							<Button style={{ margin: '0 10px 0 0' }} onClick={this.onClickPlayPause.bind(this)}>
 								<Icon>

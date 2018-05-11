@@ -33,21 +33,26 @@ export default class Profile extends Component {
 	}
 
 	render({ auth, user, viewedUser, track }) {
-		console.log(track);
+		const viewedTrack = track.track;
+		const trackOwner = track.user;
+		console.log(
+			trackOwner,
+			viewedTrack
+		)
 		return (
 			<div class={style.profile}>
 				<div class={"header " + style.header}>
 					<h1>
-					{track.id != null && track.owner != null && (
-						track.name
+					{viewedTrack.id != null && viewedTrack.owner != null && (
+						viewedTrack.name
 					)}
 					</h1>
 				</div>
 				<div class={style.profile_contents}>
-					{track.id != null && track.owner != null && (
-						<TrackCard track={track} user={viewedUser} currentUser={user} key={track.id} footer={this.props.footer} audioContext={this.props.audioContext} isCurrentTrack={true} />
+					{viewedTrack.id != null && viewedTrack.owner != null && (
+						<TrackCard track={viewedTrack} user={trackOwner} currentUser={user} key={viewedTrack.id} footer={this.props.footer} audioContext={this.props.audioContext} isCurrentTrack={true} />
 					)}
-					{track.id == null && track.owner == null && (
+					{viewedTrack.id == null && viewedTrack.owner == null && (
 						<div>Oopsie doopsie me no findy the tracky wacky!!!</div>
 					)}
 				</div>
