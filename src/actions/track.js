@@ -81,6 +81,37 @@ export async function delete_track (dispatch, { track, token, id }) {
     }
 }
 
+export async function get_track (dispatch, { token, track_url, vanity_url }) {
+	let returnObject = {};
+
+    try {
+        const data = await fetch(`${API_ENDPOINT}/${vanity_url}/${track_url}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                ...prefill_auth(token)
+            }
+        });
+
+        if (data.status === 200) {
+            returnObject = {
+                type: USER.GOT_TRACK,
+                payload: await data.json()
+            }
+        } else {
+            throw new Error(data.statusText);
+        }
+
+    } catch (error) {
+        returnObject = {
+            type: USER.TRACK_NOT_FOUND,
+            payload: { error }
+        };
+    } finally {
+        return dispatch(returnObject);
+    }
+}
+
 export function playing_now (dispatch, { playing, position, track, owner }) {
 	let type = TRACK.PLAYING_TRACK;
 	if (!playing) type = TRACK.PAUSED_TRACK;

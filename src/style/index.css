@@ -201,3 +201,8 @@ body.mdc-theme--dark .mdc-card {
 .prel {
   position: relative;
 }
+
+.mdc-snackbar {
+  z-index: 11;
+  bottom: 132px;
+}

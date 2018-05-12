@@ -9,6 +9,7 @@ import MyProfile from 'async!../../routes/my-profile';
 import Login from 'async!../../routes/login';
 import Users from 'async!../../routes/users';
 import Register from 'async!../../routes/register';
+import Track from 'async!../../routes/track';
 import Helmet from 'preact-helmet';
 import { request_new_data } from '../../actions/user';
 import { THEMES } from '../../enums/themes';
@@ -74,6 +75,7 @@ export default class App extends Component {
 					*/}
 					<MyProfile path="/me" key="my-profile" footer={this.footer} audioContext={this.audioContext} />
 					<Profile path="/:vanity_url" key="profile" footer={this.footer} audioContext={this.audioContext} />
+					<Track path="/:vanity_url/:track_url" key="track" footer={this.footer} audioContext={this.audioContext} />
 				</Router>
 				<Footer ref={e => (this.footer = e)} audioContext={this.audioContext} />
 			</div>
