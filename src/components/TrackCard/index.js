@@ -136,7 +136,7 @@ export class TrackCard extends Component {
 						{isCurrentTrack === true && (
 							<h4 class={className(styles.displayName)}>
 								<a class={styles.link} href={`/${currentUser.profile.url}`}>
-									{user.profile.displayName}
+									{currentUser.profile.displayName || currentUser.profile.url || "N/A"}
 								</a>
 							</h4>
 						)}
