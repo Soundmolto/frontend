@@ -135,13 +135,13 @@ export class TrackCard extends Component {
 					<div style={{ position: "relative" }}>
 						{isCurrentTrack === true && (
 							<h4 class={className(styles.displayName)}>
-								<a class={styles.link} href={`/${currentUser.profile.url}`}>
-									{currentUser.profile.displayName || currentUser.profile.url || "N/A"}
+								<a class={styles.link} href={`/${user.profile.url}`}>
+									{user.profile.displayName || user.profile.url || "N/A"}
 								</a>
 							</h4>
 						)}
 						{isCurrentTrack == false && (
-							<h4 class={className(styles.displayName)}>{currentUser.profile.displayName}</h4>
+							<h4 class={className(styles.displayName)}>{user.profile.displayName}</h4>
 						)}
 						<TimeAgo
 							datetime={postedAt.toDate()} 
@@ -156,7 +156,7 @@ export class TrackCard extends Component {
 								</Icon>
 							</Button>
 							{isCurrentTrack == false && (
-								<a class={styles.link} href={`/${currentUser.profile.url}/${track.url}`}>
+								<a class={styles.link} href={`/${user.profile.url}/${track.url}`}>
 									{track.name}
 								</a>
 							)}
