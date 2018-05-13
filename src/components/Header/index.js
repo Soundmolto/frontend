@@ -200,9 +200,6 @@ export default class Header extends Component {
 								Enable dark theme <Switch checked={this.props.UI.theme === THEMES.dark} onClick={this.toggleDarkTheme} />
 							</div>
 						</Dialog.Body>
-						<Dialog.Footer>
-							<Dialog.FooterButton accept>okay</Dialog.FooterButton>
-						</Dialog.Footer>
 					</Dialog>
 
 					<Dialog ref={this.editProfileDialogRef}>
