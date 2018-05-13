@@ -63,6 +63,8 @@ export default class Profile extends Component {
 		if (this.currentUrl !== getCurrentUrl()) this.updateData();
 		if (getCurrentUrl() === `/${user.profile.url}`) route('/me');
 
+		console.log(viewedUser)
+
 		return (
 			<div class={style.profile}>
 				<div class={"header " + style.header}>

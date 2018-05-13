@@ -46,7 +46,7 @@ export default class Profile extends Component {
 				</div>
 				<div class={style.profile_contents}>
 					{viewedTrack != null && viewedTrack.id != null && viewedTrack.owner != null && (
-						<TrackCard track={viewedTrack} user={user} currentUser={trackOwner} key={viewedTrack.id} footer={this.props.footer} audioContext={this.props.audioContext} isCurrentTrack={true} />
+						<TrackCard track={viewedTrack} user={trackOwner} currentUser={user} key={viewedTrack.id} footer={this.props.footer} audioContext={this.props.audioContext} isCurrentTrack={true} />
 					)}
 					{(viewedTrack == null || viewedTrack != null && viewedTrack.id == null && viewedTrack.owner == null) && (
 						<div>Oopsie doopsie me no findy the tracky wacky!!!</div>

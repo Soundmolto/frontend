@@ -141,7 +141,7 @@ export class TrackCard extends Component {
 							</h4>
 						)}
 						{isCurrentTrack == false && (
-							<h4 class={className(styles.displayName)}>{user.profile.displayName}</h4>
+							<h4 class={className(styles.displayName)}>{user.profile.displayName || user.profile.url || "N/A"}</h4>
 						)}
 						<TimeAgo
 							datetime={postedAt.toDate()} 
