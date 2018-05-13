@@ -1,4 +1,5 @@
 import { THEMES } from '../enums/themes';
+import { SETTINGS } from '../enums/settings';
 
 export default function reducer (state = { theme: THEMES.light, settings_open: false, goto_open: false, shortcuts_open: false }, action) {
     switch (action.type) {
@@ -34,6 +35,11 @@ export default function reducer (state = { theme: THEMES.light, settings_open: f
 
         case "HIDE_SHORTCUTS_PANEL": {
             state = { ...state, shortcuts_open: false };
+            break;
+        }
+
+        case SETTINGS.RESET: {
+            state = Object.assign({}, state, action.payload);
             break;
         }
     }

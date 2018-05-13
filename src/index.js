@@ -2,6 +2,7 @@ import { Component } from 'preact';
 import { Provider, connect } from 'preact-redux';
 import { HotKeys } from 'react-hotkeys';
 import { TRACK } from './enums/track'
+import { SETTINGS } from './enums/settings'
 import App from './components/App';
 import store from './store';
 import './style';
@@ -73,8 +74,10 @@ class HotKeysHOC extends Component {
 	constructor (opts) {
 		super(opts);
 		const state = store.getState();
-		const payload = Object.assign({}, state.currently_playing, { position: 0 })
+		const payload = Object.assign({}, state.currently_playing, { position: 0 });
+		const _payload = Object.assign({}, state.UI, { settings_open: false, goto_open: false, shortcuts_open: false });
 		store.dispatch({ type: TRACK.PAUSED_TRACK, payload });
+		store.dispatch({ type: SETTINGS.RESET, payload });
 	}
 };
 

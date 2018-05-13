@@ -3,5 +3,6 @@ export const SETTINGS = Object.freeze({
     SUPPORTED: Object.freeze({
         TOGGLE_ON_CLICK: true,
         DARK_THEME: true
-    })
+    }),
+    RESET: "SETTINGS_RESET"
 })
