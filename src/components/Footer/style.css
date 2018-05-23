@@ -129,3 +129,18 @@
 	text-overflow: ellipsis;
 	max-width: calc(100vw - 110px);
 }
+
+.footer .songInfo a {
+	color: var(--mdc-theme-primary-font);
+	text-decoration: none;
+	margin-bottom: 10px;
+	transition: color 0.15s ease-in-out;
+}
+
+.footer .songInfo a.artist {
+	color: var(--mdc-theme-primary-font--darker);
+}
+
+.footer .songInfo a:hover, .footer .songInfo a:active, .footer .songInfo a:focus {
+    color: var(--mdc-theme-complementary-color);
+}

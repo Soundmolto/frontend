@@ -8,6 +8,7 @@
   --mdc-theme-complementary-color: #c67dcb;
   --mdc-layout-grid-margin-phone: 0 !important;
   --mdc-theme--footer-background: #cfcfcf;
+  --mdc-theme-primary-font--darker: #ccc;
 }
 
 .mdc-theme--dark {

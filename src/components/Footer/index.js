@@ -114,8 +114,16 @@ export default class Footer extends Component {
 							<div class={styles.artwork}><img src={Goku} /></div>
 							<div class={styles.songInfo}>
 								<p>
-									<span>{currently_playing.owner && currently_playing.owner.profile && currently_playing.owner.profile.displayName}</span>
-									<span>{currently_playing && currently_playing.track && currently_playing.track.name}</span>
+									<span>{currently_playing.owner && currently_playing.owner.profile && (
+										<a href={`/${currently_playing.owner.profile.url}`} class={styles.artist}>
+											{currently_playing.owner.profile.displayName}
+										</a>
+									)}</span>
+									<span>{currently_playing && currently_playing.track && (
+										<a href={`/${currently_playing.owner.profile.url}/${currently_playing.track.url}`}>
+											{currently_playing.track.name}
+										</a>
+									)}</span>
 								</p>
 							</div>
 						</div>
