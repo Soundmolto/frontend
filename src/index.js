@@ -25,47 +25,7 @@ for (const shortcut of shortcuts) {
 class HotKeysHOC extends Component {
 	map = map;
 
-	handlers = {
-		'show:settings': e => {
-			store.dispatch({
-				type: "SHOW_SETTINGS_PANEL"
-			})
-		},
-		'show:goto': e => {
-			e.preventDefault();
-			e.stopPropagation();
-			store.dispatch({
-				type: "SHOW_GOTO_PANEL"
-			});
-		},
-		'show:shortcuts': e => {
-			e.preventDefault();
-			e.stopPropagation();
-			store.dispatch({
-				type: "SHOW_SHORTCUTS_PANEL"
-			});
-		},
-		'toggle:playing': e => {
-			const state = store.getState();
-			e.preventDefault();
-
-			if (state.currently_playing.track != null) {
-				if (state.currently_playing.playing === true) {
-					store.dispatch({
-						type: TRACK.PAUSED_TRACK,
-						payload: state.currently_playing
-					})
-				} else {
-					store.dispatch({
-						type: TRACK.PLAYING_TRACK,
-						payload: state.currently_playing
-					})
-				}
-			} else {
-				
-			}
-		}
-	};
+	handlers = handlers;
 
 	render ({ children }) {
 		return (
