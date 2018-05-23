@@ -5,6 +5,12 @@ export default (config, env, helpers) => {
       "helpers": false,
       "polyfill": false,
       "regenerator": true
-    }]);
+	}]);
+	
+	helpers.getPlugins(config).push([
+		new helpers.webpack.ProvidePlugin({
+		  WaveSurfer: 'wavesurfer.js'
+		})
+	])
   };
   

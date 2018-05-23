@@ -106,6 +106,7 @@ export class TrackCard extends Component {
 				this.deleting = false;
 			}
 		});
+
 		window.setTimeout(_ => {
 			if (this.deleting) {
 				delete_track(this.props.dispatch, {

@@ -13,7 +13,7 @@ import 'preact-material-components/TextField/style.css';
 import style from './style';
 
 // State outside of the component.
-let state = {};
+let state = { email: '', password: '' };
 
 /**
  * The login page / component
@@ -45,7 +45,7 @@ export default class Login extends Component {
 	 * @param {Event|Object} event - The change event
 	 */
 	onEmailChange (event) {
-		state = {...state, email: event.currentTarget.value || ""};
+		state = Object.assign({}, state, {  email: event.currentTarget.value || "" });
 	}
 
 	/**
@@ -54,7 +54,7 @@ export default class Login extends Component {
 	 * @param {Event|Object} event - The change event
 	 */
 	onPasswordChange (event) {
-		state = {...state, password: event.currentTarget.value || ""};
+		state = Object.assign({}, state, { password: event.currentTarget.value || "" });
 	}
 
 	render ({ loading, logged_in, error, errorMessage }) {
@@ -68,8 +68,8 @@ export default class Login extends Component {
 				<div class={style.home}>
 					<Card className={style.card}>
 						<form class={style.cardBody} onSubmit={this.onLogin.bind(this)}>
-							<TextField name="login_email" label="Enter your email address" type="email" autofocus onChange={this.onEmailChange.bind(this)} key="login-email" />
-							<TextField name="login_password" type="password" label="Enter a password" onChange={this.onPasswordChange.bind(this)} key="login-password" />
+							<TextField name="login_email" label="Enter your email address" type="email" autofocus onChange={this.onEmailChange.bind(this)} onBlur={this.onEmailChange.bind(this)} key="login-email" />
+							<TextField name="login_password" type="password" label="Enter a password" onChange={this.onPasswordChange.bind(this)} onBlur={this.onPasswordChange.bind(this)} key="login-password" />
 							<div className={style.buttonContainer}>
 								<Button raised onClick={this.onLogin.bind(this)} type="submit">
 									{!logged_in && !loading && "Login"}

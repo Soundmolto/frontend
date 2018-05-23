@@ -1,6 +1,7 @@
 import { Component } from "preact";
 import style from './style';
 import Icon from 'preact-material-components/Icon';
+import LinearProgress from 'preact-material-components/LinearProgress';
 import { API_ENDPOINT } from "../../api";
 import { prefill_auth } from "../../prefill-authorized-route";
 import { connect } from "preact-redux";
@@ -49,11 +50,12 @@ export class UploadTrack extends Component {
 		this.setState({ loaded: true, loading: false })
 	}
 
-	render (props, state) {
+	render (props, { loading, active }) {
 		let className = `${style.uploader} ${style.center}`;
 
 		return (
 			<div class={style.root}>
+			{loading == false && (
 				<label className={className}
 					onDragEnter={this.onDragEnter.bind(this)}
 					onDragLeave={this.onDragLeave.bind(this)}
@@ -64,6 +66,10 @@ export class UploadTrack extends Component {
 					<Icon class={style.icon}>cloud_upload</Icon> Upload Track
 					<input type="file" accept="audio/*" onChange={this.onFileChange.bind(this)} />
 				</label>
+			)}
+			{loading == true && (
+				<LinearProgress indeterminate={true} />
+			)}
 			</div>
 		);
 	}

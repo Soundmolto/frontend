@@ -38,7 +38,7 @@ export async function login (body, dispatch, done) {
             payload: { error: error.message }
         };
     } finally {
-        if (done != null && typeof done === 'function') {
+        if (done != null && typeof done === 'function' && returnObject.type !== USER.FAILED_LOGIN) {
             done();
         }
 

@@ -3,6 +3,7 @@ import { THEMES } from '../../enums/themes';
 import 'wavesurfer.js';
 import Wavesurfer from 'react-wavesurfer';
 import { connect } from 'preact-redux';
+import WaveSurfer from 'wavesurfer.js';
 
 let linGrad = '#5D8CAE';
 let linGradProgress = '#334b5c';
@@ -80,7 +81,6 @@ export class Waveform extends Component {
 		}
 
 		if (this.props.parentPlaying === true && this.state.playing === false) {
-			console.log(this.props.parentPlaying);
 			this.setState({ playing: true });
 		}
 
@@ -93,14 +93,13 @@ export class Waveform extends Component {
 					onPosChange={this.handlePosChange.bind(this)}
 					playing={playing}
 					audioPeaks={data.peaks}
-					options={{ waveColor: linGrad, progressColor: linGradProgress, barWidth: 1 }}
+					options={{ waveColor: linGrad, progressColor: linGradProgress, barWidth: 1, audioContext: this.props.audioContext, closeAudioContext: false }}
 					onFinish={e => {
 						this.setState({ playing: false, pos: 0 });
 						onFinish();
 					}}
 					onPlay={this.props.onStartPlay}
 					key={'waveform-' + data.id}
-					audioContext={this.props.audioContext}
 					/>
 			</div>
 		)
