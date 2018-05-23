@@ -188,10 +188,6 @@ body.mdc-theme--dark .mdc-card {
   text-overflow: ellipsis;
 }
 
-.mdc-snackbar {
-  z-index: 10;
-}
-
 @media screen and (max-width: 570px) {
   .mdc-toolbar__title {
     display: none;
@@ -205,4 +201,9 @@ body.mdc-theme--dark .mdc-card {
 .mdc-snackbar {
   z-index: 11;
   bottom: 132px;
+  transform: translate(0, 180px) !important;
+}
+
+.mdc-snackbar--active {
+  transform: translate(0) !important;
 }

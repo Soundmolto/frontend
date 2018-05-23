@@ -101,8 +101,10 @@ export class TrackCard extends Component {
 			message: "Deleting track",
 			actionText: "Undo",
 			actionHandler: e => {
-				e.preventDefault();
-				e.stopImmediatePropagation();
+				if (e != null) {
+					e.preventDefault();
+					e.stopImmediatePropagation();
+				}
 				this.deleting = false;
 			}
 		});
