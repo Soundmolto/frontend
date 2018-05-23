@@ -57,3 +57,7 @@
 		max-width: calc(100% - 300px);
 	}
 }
+
+.header h1 {
+	white-space: pre;
+}

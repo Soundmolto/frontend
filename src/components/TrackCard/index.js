@@ -122,6 +122,10 @@ export class TrackCard extends Component {
 
 	render ({ track, user, currentUser, currently_playing, isCurrentTrack }, { pos }) {
 		const postedAt = dayjs(parseInt(track.createdAt));
+		let posted = postedAt.format('DD-MM-YYYY');
+		if (posted.indexOf("NaN") !== -1) {
+			posted = "Unavaliable - Parsing error";
+		}
 		if (this.played === false ) this.plays = track.plays;
 		if (this.state.playing === false && currently_playing.track != null && track.id === currently_playing.track.id && currently_playing.playing === true) {
 			this.setState({ playing: true });
@@ -150,6 +154,7 @@ export class TrackCard extends Component {
 							datetime={postedAt.toDate()} 
 							locale='en_AU'
 							className={styles.date}
+							title={`${posted}`}
 						/>
 						<h2 class={className(`mdc-typography--title ${styles.username}`)}>
 							<Button style={{ margin: '0 10px 0 0' }} onClick={this.onClickPlayPause.bind(this)}>
