@@ -199,7 +199,7 @@ body.mdc-theme--dark .mdc-card {
 }
 
 .mdc-snackbar {
-  z-index: 11;
+  z-index: 2;
   bottom: 84px;
   transform: translate(-50%, 132px) !important;
 }
