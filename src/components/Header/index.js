@@ -17,6 +17,7 @@ import 'preact-material-components/Toolbar/style.css';
 import 'preact-material-components/List/style.css';
 import 'preact-material-components/Menu/style.css';
 import { UserPictureName } from '../UserPictureName';
+import { shortcuts } from '../../shortcuts';
 import style from './style';
 
 import { THEMES } from '../../enums/themes';
@@ -229,14 +230,12 @@ export default class Header extends Component {
 						<Dialog.Header>Shortcuts</Dialog.Header>
 						<Dialog.Body class={style["goto-panel"]}>
 							<ul>
-								<li>
-									<pre>Control + ,</pre>
-									Open settings panel
-								</li>
-								<li>
-									<pre>Control + g</pre>
-									Open "Go to" panel
-								</li>
+								{shortcuts.map(shortcut => (
+									<li>
+										<pre>{shortcut.keys}</pre>
+										{shortcut.description}
+									</li>
+								))}
 							</ul>
 						</Dialog.Body>
 					</Dialog>

@@ -5,6 +5,7 @@ import { TRACK } from './enums/track'
 import { SETTINGS } from './enums/settings'
 import App from './components/App';
 import store from './store';
+import { shortcuts } from './shortcuts';
 import './style';
 
 let attach = null;
@@ -13,13 +14,16 @@ if (typeof window !== "undefined") {
 	attach = window;
 }
 
+let map = {};
+let handlers = {};
+
+for (const shortcut of shortcuts) {
+	map[shortcut.name] = shortcut.keys;
+	handlers[shortcut.name] = shortcut.action;
+}
+
 class HotKeysHOC extends Component {
-	map = {
-		'show:settings': 'ctrl+,',
-		'show:goto': 'ctrl+g',
-		'show:shortcuts': 'ctrl+/',
-		'toggle:playing': 'space'
-	};
+	map = map;
 
 	handlers = {
 		'show:settings': e => {

@@ -4,6 +4,7 @@ import 'preact-material-components/Card/style.css';
 import 'preact-material-components/Button/style.css';
 import style from './style';
 import { Link } from 'preact-router';
+import { shortcuts } from '../../shortcuts';
 
 export default class Home extends Component {
 	render() {
@@ -20,14 +21,12 @@ export default class Home extends Component {
 							<p>
 								Shortcuts
 								<ul>
-									<li>
-										<pre>Control + ,</pre>
-										Open settings panel
-									</li>
-									<li>
-										<pre>Control + g</pre>
-										Open "Go to" panel
-									</li>
+									{shortcuts.map(shortcut => (
+										<li>
+											<pre>{shortcut.keys}</pre>
+											{shortcut.description}
+										</li>
+									))}
 								</ul>
 							</p>
 							<Link href="/users">Users</Link>

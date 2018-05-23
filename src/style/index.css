@@ -39,6 +39,11 @@ body > div {
   min-height: 100vh;
 }
 
+.mdc-card, .mdc-dialog__surface {
+  box-shadow: 0 15px 20px -15px rgba(0, 0, 0, 0.35) !important;
+  border-radius: 10px !important;
+}
+
 body.mdc-theme--dark .mdc-card {
   background: #444444;
 }
@@ -168,7 +173,7 @@ body.mdc-theme--dark .mdc-card {
 }
 
 .mdc-dialog__surface {
-  border-top: 5px solid var(--mdc-theme-primary);
+  border-top: 10px solid var(--mdc-theme-primary);
 }
 
 .header {
