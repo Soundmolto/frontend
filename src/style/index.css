@@ -39,7 +39,7 @@ body > div {
   min-height: 100vh;
 }
 
-.mdc-card, .mdc-dialog__surface {
+.mdc-card, .mdc-dialog__surface, .mdc-menu {
   box-shadow: 0 15px 20px -15px rgba(0, 0, 0, 0.35) !important;
   border-radius: 10px !important;
 }
@@ -212,4 +212,8 @@ body.mdc-theme--dark .mdc-card {
 
 .mdc-snackbar--active {
   transform: translate(-50%, 0) !important;
+}
+
+.mdc-drawer--temporary {
+  z-index: 11;
 }
