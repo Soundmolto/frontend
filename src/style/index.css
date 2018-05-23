@@ -200,10 +200,10 @@ body.mdc-theme--dark .mdc-card {
 
 .mdc-snackbar {
   z-index: 11;
-  bottom: 132px;
-  transform: translate(0, 180px) !important;
+  bottom: 84px;
+  transform: translate(-50%, 132px) !important;
 }
 
 .mdc-snackbar--active {
-  transform: translate(0) !important;
+  transform: translate(-50%, 0) !important;
 }
