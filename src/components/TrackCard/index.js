@@ -17,6 +17,7 @@ import { connect } from 'preact-redux';
 import { seconds_to_time } from '../../utils/seconds-to-time';
 import dayjs from 'dayjs';
 import TimeAgo from 'timeago-react';
+import Goku from '../../assets/goku.png';
 
 const new_line_br = (text = '') => text.replace('\n', '<br />');
 let className = (e) => (e);
@@ -139,6 +140,14 @@ export class TrackCard extends Component {
 		return (
 			<div class={styles.card}>
 				<Card class={styles.cardRoot}>
+					<div class={styles.image} style={{ 'background-image': `url(${Goku})` }}>
+						<Button class={styles['play-button']} onClick={this.onClickPlayPause.bind(this)}>
+							<Icon>
+								{!this.state.playing && 'play_arrow'}
+								{this.state.playing && 'pause'}
+							</Icon>
+						</Button>
+					</div>
 					<div style={{ position: "relative" }}>
 						{isCurrentTrack === true && (
 							<h4 class={className(styles.displayName)}>
@@ -157,12 +166,6 @@ export class TrackCard extends Component {
 							title={`${posted}`}
 						/>
 						<h2 class={className(`mdc-typography--title ${styles.username}`)}>
-							<Button style={{ margin: '0 10px 0 0' }} onClick={this.onClickPlayPause.bind(this)}>
-								<Icon>
-									{!this.state.playing && 'play_arrow'}
-									{this.state.playing && 'pause'}
-								</Icon>
-							</Button>
 							{isCurrentTrack == false && (
 								<a class={styles.link} href={`/${user.profile.url}/${track.url}`}>
 									{track.name}
@@ -185,6 +188,7 @@ export class TrackCard extends Component {
 							}}
 							audioContext={this.props.audioContext}
 							parentPlaying={this.state.playing}
+							isCurrentTrack={isCurrentTrack}
 						/>
 						<div>
 							<p class={styles.centered}>

@@ -1,0 +1,37 @@
+.waveform {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: inherit;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.waveform canvas {
+    width: inherit;
+    height: inherit;
+    image-rendering: pixelated;
+    image-rendering: optimizeSpeed;
+    pointer-events: none;
+}
+
+.waveform-timeline--root {
+    position: absolute;
+    top:0;
+    left:0;
+    max-width: 100%;
+    z-index: 2;
+    width: 0%;
+    overflow: hidden;
+}
+
+.container {
+    display: block;
+    width: 100%;
+}
+
+.root {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}

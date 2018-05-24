@@ -29,8 +29,6 @@ if (typeof window !== "undefined") {
 	MainAudioContext = new AudioContext();
 }
 
-
-
 @connect(state => state)
 export default class App extends Component {
 
