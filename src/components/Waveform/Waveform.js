@@ -91,7 +91,7 @@ export class Waveform extends Component {
 		return canvas;
 	}
 
-	renderCanvas (data) {
+	async renderCanvas (data) {
 		const that = this;
 		const { audioContext } = this.props;
 		let j = 0;
@@ -100,63 +100,79 @@ export class Waveform extends Component {
 
 		const canvas = this.createCanvas(containerEl.parentElement.clientWidth);
 		const timeline = this.createCanvas(timelineRoot.parentElement.clientWidth);
+		try {
+			if (this.buffer == null) {
+				const _get = await fetch(data.waveform_url);
+				const bod = await _get.json();
 
-		const wave = new SoundCloudWaveform({
-			canvas,
-			bar_width: 2,
-			bar_gap : 0.35,
-			wave_color: linGrad,
-			audioContext,
-			onComplete (_buffer) {
-				const tline = new SoundCloudWaveform({ canvas: timeline, bar_width: 2, bar_gap : 0.35, wave_color: linGradProgress, audioContext });
-				if (that.buffer == null) {
-					that.buffer = _buffer;
-					tline.extractBuffer(_buffer);
-				} else {
+				this.buffer = bod.concat([]);
+
+				const wave = new SoundCloudWaveform({
+					canvas,
+					bar_width: 2,
+					bar_gap : 0.35,
+					wave_color: linGrad,
+					audioContext,
+					onComplete (_buffer) {
+						const tline = new SoundCloudWaveform({ canvas: timeline, bar_width: 2, bar_gap : 0.35, wave_color: linGradProgress, audioContext });
+						if (that.buffer == null) {
+							tline.extractBuffer(bod);
+							that.buffer = bod;
+						} else {
+							tline.extractBuffer(that.buffer);
+						}
+					}
+				});
+			} else {
+			}
+			const wave = new SoundCloudWaveform({
+				canvas,
+				bar_width: 2,
+				bar_gap : 0.35,
+				wave_color: linGrad,
+				audioContext,
+				onComplete () {
+					const tline = new SoundCloudWaveform({ canvas: timeline, bar_width: 2, bar_gap : 0.35, wave_color: linGradProgress, audioContext });
 					tline.extractBuffer(that.buffer);
 				}
-			}
-		});
+			});
+			wave.extractBuffer(that.buffer);
+			containerEl.appendChild(canvas);
+			timelineRoot.appendChild(timeline);
 
-		if (this.buffer == null) {
-			wave.loadMusic(data.stream_url);
-		} else {
-			wave.extractBuffer(this.buffer);
-		}
+			window.__getContext = () => { return audioContext; };
 
-		containerEl.appendChild(canvas);
-		timelineRoot.appendChild(timeline);
+			window.__playSong = () => {
+				// Get an AudioBufferSourceNode.
+				// This is the AudioNode to use when we want to play an AudioBuffer
+				var source = audioContext.createBufferSource();
+				var scriptNode = audioContext.createScriptProcessor(1024, 1, 1);
 
-		window.__getContext = () => { return audioContext; };
+				// console.log(source, audioContext.buffer.duration)
 
-		window.__playSong = () => {
-			// Get an AudioBufferSourceNode.
-			// This is the AudioNode to use when we want to play an AudioBuffer
-			var source = audioContext.createBufferSource();
-			var scriptNode = audioContext.createScriptProcessor(1024, 1, 1);
+				scriptNode.onaudioprocess = function(e) {
+					timelineRoot.setAttribute('style', `width: ${audioContext.currentTime / source.buffer.duration * 100}%`)
+					var output = e.outputBuffer.getChannelData(0);
+					var input = e.inputBuffer.getChannelData(0);
+					for (var i = 0; i < input.length; i++) {
+						output[i] = input[i];
+					}
+				};
 
-			// console.log(source, audioContext.buffer.duration)
+				// set the buffer in the AudioBufferSourceNode
+				source.buffer = this.buffer;
 
-			scriptNode.onaudioprocess = function(e) {
-				timelineRoot.setAttribute('style', `width: ${audioContext.currentTime / source.buffer.duration * 100}%`)
-				var output = e.outputBuffer.getChannelData(0);
-				var input = e.inputBuffer.getChannelData(0);
-				for (var i = 0; i < input.length; i++) {
-					output[i] = input[i];
-				}
+				// connect the AudioBufferSourceNode to the
+				// destination so we can hear the sound
+				source.connect(scriptNode);
+				scriptNode.connect(audioContext.destination);
+
+				// start the source playing
+				source.start(0);
 			};
-
-			// set the buffer in the AudioBufferSourceNode
-			source.buffer = this.buffer;
-
-			// connect the AudioBufferSourceNode to the
-			// destination so we can hear the sound
-			source.connect(scriptNode);
-			scriptNode.connect(audioContext.destination);
-
-			// start the source playing
-			source.start(0);
-		};
+		} catch (e) {
+			console.log(e);
+		}
 	}
 	
 	render ({ isCurrentTrack }) {
