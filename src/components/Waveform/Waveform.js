@@ -98,6 +98,7 @@ export class Waveform extends Component {
 						this.setState({ playing: false, pos: 0 });
 						onFinish();
 					}}
+					onReady={({wavesurfer}) => wavesurfer.setVolume(0)}
 					onPlay={this.props.onStartPlay}
 					key={'waveform-' + data.id}
 					/>

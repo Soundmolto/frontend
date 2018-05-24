@@ -28,6 +28,12 @@
 	width: auto;
 }
 
+.footer .songInfo {
+	max-width: calc(100% - 64px);
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 .footer .songInfo p {
 	margin-left: 10px;
 }
@@ -82,8 +88,9 @@
 
 .footer .start, .footer .middle, .footer .end {
 	display: flex;
-	width: 100%;
 	color: var(--mdc-theme-primary-font);
+	width: calc(100% / 3);
+	overflow: hidden;
 }
 
 .footer .middle {
@@ -135,6 +142,12 @@
 	text-decoration: none;
 	margin-bottom: 10px;
 	transition: color 0.15s ease-in-out;
+}
+
+.footer .songInfo p span, .footer .songInfo a {
+	overflow: hidden;
+	white-space: pre;
+	text-overflow: ellipsis;
 }
 
 .footer .songInfo a.artist {

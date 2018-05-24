@@ -1,4 +1,5 @@
 import store from './store';
+import { TRACK } from './enums/track';
 
 export const shortcuts = [
 	{
