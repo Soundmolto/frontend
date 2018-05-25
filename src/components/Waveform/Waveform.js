@@ -56,6 +56,7 @@ export class Waveform extends Component {
 	onTimeUpdate (e) {
 		if (this.props.data.id === store.getState().currently_playing.track.id) {
 			const audio = window.document.querySelector('audio');
+			if (this.timelineRoot == null && this.baseEl == null) return;
 			const timelineRoot = this.timelineRoot || this.baseEl.querySelector(`.${styles['waveform-timeline--root']}`);
 			timelineRoot.setAttribute('style', `width: ${audio.currentTime / audio.duration * 100}%;`);
 		}
