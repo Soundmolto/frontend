@@ -138,10 +138,6 @@ export class TrackCard extends Component {
 			this.setState({ playing: true });
 		}
 
-		console.log(
-			currently_playing
-		)
-
 		return (
 			<div class={styles.card}>
 				<Card class={styles.cardRoot}>

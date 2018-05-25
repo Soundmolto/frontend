@@ -16,11 +16,13 @@ export default class Footer extends Component {
 	duration = 0;
 	__currentPos = 0;
 
-	onPosChange (pos) {
+	onPosChange () {
+		const pos = this.audioPlayer.currentTime;
+		const duration = this.audioPlayer.duration;
 		this.__currentPos = pos;
 		this.__currentTime = seconds_to_time(pos).rendered;
-		this.progressBar.setAttribute('style', `transform: translateX(${pos / this.duration * 100}%)`);
-		this.thumb.setAttribute('style', `transform: translateX(${pos / this.duration * this.thumb.parentElement.clientWidth}px)`);
+		this.progressBar.setAttribute('style', `transform: translateX(${pos / duration * 100}%)`);
+		this.thumb.setAttribute('style', `transform: translateX(${pos / duration * this.thumb.parentElement.clientWidth}px)`);
 		this.amount_el.textContent = this.__currentTime;
 	}
 
@@ -55,12 +57,15 @@ export default class Footer extends Component {
 		const percent = (e.pageX / e.currentTarget.clientWidth);
 		const position = percent * this.duration;
 
+		this.audioPlayer.currentTime = position;
+
 		playing_now(dispatch, { playing: true, position, track: currently_playing.track, owner: currently_playing.owner });
 	}
 
 	componentWillUpdate ({ currently_playing }) {
 		if (currently_playing.playing === true) {
 			this.audioPlayer.play();
+			this.audioPlayer.addEventListener('timeupdate', this.onPosChange.bind(this));
 		} else {
 			this.audioPlayer.pause();
 		}

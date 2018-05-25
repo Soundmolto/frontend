@@ -22,6 +22,7 @@ if (typeof window !== "undefined") {
 export class Waveform extends Component {
 
 	buffer = null;
+	subscribed = false;
 
 	constructor (opts) {
 		super(opts);
@@ -39,18 +40,18 @@ export class Waveform extends Component {
 					this.loadData();
 				}
 
-				if (state.currently_playing.playing === true) {
-					const audio = window.document.querySelector('audio');
-
-					audio.addEventListener('timeupdate', this.onTimeUpdate.call(this, audio));
+				if (state.currently_playing.playing === true && state.currently_playing.track.id === this.props.data.id) {
+					this.subscribed = true;
+					window.document.querySelector('audio').addEventListener('timeupdate', this.onTimeUpdate.bind(this));
 				}
 			});
 		}
 	}
 
 	onTimeUpdate (e) {
+		const audio = window.document.querySelector('audio');
 		const timelineRoot = this.timelineRoot || document.querySelector(`.${styles['waveform-timeline--root']}`);
-		timelineRoot.setAttribute('style', `width: ${e.currentTime / e.duration * 100}%;`);
+		timelineRoot.setAttribute('style', `width: ${audio.currentTime / audio.duration * 100}%;`);
 	}
 
 	componentDidMount() {
@@ -137,15 +138,23 @@ export class Waveform extends Component {
 				timelineRoot.replaceChild(timeline, timelineRoot.firstChild);
 			}
 
+			if (typeof window !== "undefined") {
+	
+				const state = Object.assign({}, store.getState());
+	
+				if (this.subscribed === false && state.currently_playing.playing === true && state.currently_playing.track.id === this.props.data.id) {
+					this.subscribed = true;
+					window.document.querySelector('audio').addEventListener('timeupdate', this.onTimeUpdate.bind(this));
+				}
+			}
+
 		} catch (e) {
 			console.log(e);
 		}
 	}
 
 	componentWillUnmount () {
-		const audio = window.document.querySelector('audio');
-
-		audio.removeEventListener('timeupdate', this.onTimeUpdate.call(this, audio));
+		window.document.querySelector('audio').removeEventListener('timeupdate', this.onTimeUpdate.bind(this));
 	}
 	
 	render ({ isCurrentTrack }) {
