@@ -24,6 +24,7 @@ export class Waveform extends Component {
 
 	buffer = null;
 	subscribed = false;
+	mouseDown = false;
 
 	constructor (opts) {
 		super(opts);
@@ -165,8 +166,12 @@ export class Waveform extends Component {
 		const percentage = e.layerX / e.currentTarget.clientWidth;
 		const tooltip = e.currentTarget.querySelector(`.${styles.tooltip}`);
 		tooltip.classList.add(styles.show);
-		// console.log(`${percentage * 100}%`,this.props.data.duration * percentage);
 		tooltip.innerText = seconds_to_time(this.props.data.duration * percentage).rendered;
+
+		if (this.mouseDown === true) {
+			this.props.onClickContainer(this.props.data.duration * percentage);
+		}
+
 		if (tooltip.getAttribute('style') != null && parseInt(tooltip.getAttribute('style').split('transform: translateX(')[1].split('px)')) === e.layerX) {
 			return;
 		}
@@ -177,12 +182,24 @@ export class Waveform extends Component {
 	}
 
 	onMouseOut (e) {
+		if (e.relatedTarget.parentElement.parentElement == this.baseEl.firstChild || e.relatedTarget == this.baseEl.firstChild) return;
+		this.mouseDown = false;
 		e.currentTarget.querySelector(`.${styles.tooltip}`).classList.remove(styles.show);
 	}
 
 	onClickContainer (e) {
+		// const percentage = e.layerX / e.currentTarget.clientWidth;
+		// this.props.onClickContainer(this.props.data.duration * percentage);
+	}
+
+	onMouseDown (e) {
+		this.mouseDown = true;
 		const percentage = e.layerX / e.currentTarget.clientWidth;
 		this.props.onClickContainer(this.props.data.duration * percentage);
+	}
+
+	onMouseUp () {
+		this.mouseDown = false;
 	}
 
 	componentWillUnmount () {
@@ -197,7 +214,7 @@ export class Waveform extends Component {
 	render ({ isCurrentTrack }) {
 		return (
 			<div class={styles.root} ref={e => (this.baseEl = e)}>
-				<div class={`prel ${styles.container}`} onMouseMove={this.onMouseMove.bind(this)} onMouseOut={this.onMouseOut.bind(this)} onClick={this.onClickContainer.bind(this)}>
+				<div class={`prel ${styles.container}`} onMouseMove={this.onMouseMove.bind(this)} onMouseOut={this.onMouseOut.bind(this)} onClick={this.onClickContainer.bind(this)} onMouseDown={this.onMouseDown.bind(this)} onMouseUp={this.onMouseUp.bind(this)}>
 					<div class={styles.tooltip}></div>
 					<div className={styles.waveform} ref={e => this.containerEl = e}></div>
 					<div class={styles['waveform-timeline--root']} ref={e => this.timelineRoot = e}></div>
