@@ -22,20 +22,11 @@ export default class MyProfile extends Component {
 		fetch_user(this.props.dispatch.bind(this), { token: auth.token, vanity_url: user.profile.url });
 	}
 
-	componentWillUpdate (props) {
-		props.user.tracks.sort((first, second) => {
-			return parseInt(first.createdAt) - parseInt(second.createdAt);
-		});
-		props.user.tracks.reverse();
-	}
-
-	componentWillMount () {
-		this.props.user.tracks.reverse();
-	}
-
 	// Note: `user` comes from the URL, courtesy of our router
 	render({ auth, user }) {
 		if (!auth.logged_in) return route("/", true);
+		const tracks = user.tracks.concat([]);
+		tracks.reverse();
 		return (
 			<div class={style.profile} key={"user-profile-" + user.id}>
 				<div class={"header " + style.header}>
@@ -51,13 +42,13 @@ export default class MyProfile extends Component {
 						<LayoutGrid.Inner key={'layout-grid-inner-' + user.id}>
 							<LayoutGrid.Cell desktopCols="9" tabletCols="12" tabletOrder="2" key={'layout-grid-cell-tracks-' + user.id}>
 								<h1 class={style.mainHeader} style={{ 'margin-top': "0" }}>
-									Tracks <small class={style.smolButNotSwol}>{user.tracks.length}</small>
+									Tracks <small class={style.smolButNotSwol}>{tracks.length}</small>
 								</h1>
 								<div key={'user-tracks-' + user.id}>
-									{user.tracks.length >= 1 && user.tracks.map(track => (
+									{tracks.length >= 1 && tracks.map(track => (
 										<TrackCard track={track} user={user} currentUser={user} key={track.id} footer={this.props.footer} audioContext={this.props.audioContext} isCurrentTrack={false} />
 									))}
-									{user.tracks.length <= 0 && <h1>No tracks</h1>}
+									{tracks.length <= 0 && <h1>No tracks</h1>}
 								</div>
 							</LayoutGrid.Cell>
 							<LayoutGrid.Cell desktopCols="3" tabletCols="12" tabletOrder="1" key={'layout-grid-cell-about-' + user.id}>
