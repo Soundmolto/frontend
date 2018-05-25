@@ -81,7 +81,6 @@ export default class Footer extends Component {
 			}
 			this.audioPlayer.addEventListener('timeupdate', this.onPosChange.bind(this));
 			requestAnimationFrame(_ => {
-				console.log(this.tracks[this.props.currently_playing.track.id] || currently_playing.position || 0)
 				this.audioPlayer.play();
 				this.audioPlayer.currentTime = this.tracks[this.props.currently_playing.track.id] || currently_playing.position || 0;
 			});
