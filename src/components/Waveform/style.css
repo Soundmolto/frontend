@@ -40,7 +40,7 @@
 .tooltip {
     position: absolute;
     left: 0;
-    top: -20px;
+    top: -35px;
     transform: translateX(0);
     background: rgba(0, 0, 0, 0.7);
     padding: 10px;

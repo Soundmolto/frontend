@@ -28,7 +28,7 @@
 	width: auto;
 }
 
-.footer .songInfo {
+.notMobile .songInfo {
 	max-width: calc(100% - 64px);
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -89,8 +89,19 @@
 .footer .start, .footer .middle, .footer .end {
 	display: flex;
 	color: var(--mdc-theme-primary-font);
-	width: calc(100% / 3);
 	overflow: hidden;
+}
+
+.notMobile .start, .notMobile .middle, .notMobile .end {
+	width: calc(100% / 3);
+}
+
+.mobile .start, .mobile .middle, .mobile .end {
+	width: calc(100% / 2);
+}
+
+.mobile .start *, .mobile .middle *, .mobile .end * {
+	max-width: 100%;
 }
 
 .footer .middle {

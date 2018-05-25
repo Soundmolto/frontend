@@ -61,7 +61,10 @@ export default class Profile extends Component {
 	render({ auth, user, viewedUser }) {
 		const following = this.following(viewedUser);
 		if (this.currentUrl !== getCurrentUrl()) this.updateData();
-		// if (getCurrentUrl() === `/${user.profile.url}`) route('/me', true);
+		
+		const tracks = viewedUser.tracks.sort((first, second) => {
+			return parseInt(second.createdAt) - parseInt(first.createdAt);
+		});
 
 		return (
 			<div class={style.profile}>
@@ -87,10 +90,10 @@ export default class Profile extends Component {
 								<h1 class={style.mainHeader} style={{ 'margin-top': "0" }}>
 									Tracks <small class={style.smolButNotSwol}>{viewedUser.tracks.length}</small>
 								</h1>
-								{viewedUser.tracks.length >= 1 && viewedUser.tracks.map( track => <div key={'parent-' + track.id}>
+								{tracks.length >= 1 && tracks.map( track => <div key={'parent-' + track.id}>
 									<TrackCard track={track} user={viewedUser} currentUser={user} key={track.id} footer={this.props.footer} audioContext={this.props.audioContext} isCurrentTrack={false} />
 								</div>)}
-								{viewedUser.tracks.length <= 0 && <h1>No tracks</h1>}
+								{tracks.length <= 0 && <h1>No tracks</h1>}
 							</LayoutGrid.Cell>
 							<LayoutGrid.Cell desktopCols="3" tabletCols="12">
 								<h1 class={style.mainHeader} style={{ 'margin-top': "0" }}>

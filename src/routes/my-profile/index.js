@@ -25,8 +25,9 @@ export default class MyProfile extends Component {
 	// Note: `user` comes from the URL, courtesy of our router
 	render({ auth, user }) {
 		if (!auth.logged_in) return route("/", true);
-		const tracks = user.tracks.concat([]);
-		tracks.reverse();
+		const tracks = user.tracks.sort((first, second) => {
+			return parseInt(second.createdAt) - parseInt(first.createdAt);
+		});
 		return (
 			<div class={style.profile} key={"user-profile-" + user.id}>
 				<div class={"header " + style.header}>
