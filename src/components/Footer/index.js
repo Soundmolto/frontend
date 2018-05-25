@@ -15,6 +15,7 @@ export default class Footer extends Component {
 	pos = 0;
 	duration = 0;
 	__currentPos = 0;
+	tracks = {};
 
 	onPosChange () {
 		const pos = this.audioPlayer.currentTime;
@@ -24,6 +25,7 @@ export default class Footer extends Component {
 		this.progressBar.setAttribute('style', `transform: translateX(${pos / duration * 100}%)`);
 		this.thumb.setAttribute('style', `transform: translateX(${pos / duration * this.thumb.parentElement.clientWidth}px)`);
 		this.amount_el.textContent = this.__currentTime;
+		this.tracks[this.props.currently_playing.track.id] = pos;
 	}
 
 	calculate_amount (currently_playing) {
@@ -57,15 +59,24 @@ export default class Footer extends Component {
 		const percent = (e.pageX / e.currentTarget.clientWidth);
 		const position = percent * this.duration;
 
-		this.audioPlayer.currentTime = position;
+		// this.audioPlayer.currentTime = position;
+		this.tracks[this.props.currently_playing.track.id] = position;
 
 		playing_now(dispatch, { playing: true, position, track: currently_playing.track, owner: currently_playing.owner });
 	}
 
 	componentWillUpdate ({ currently_playing }) {
 		if (currently_playing.playing === true) {
+			console.log('aa');
 			this.audioPlayer.addEventListener('timeupdate', this.onPosChange.bind(this));
-			requestAnimationFrame(_ => this.audioPlayer.play());
+			requestAnimationFrame(_ => {
+				this.audioPlayer.play();
+				this.audioPlayer.currentTime = this.tracks[this.props.currently_playing.track.id] || 0;
+				console.log(
+					this.audioPlayer.currentTime,
+					this.tracks
+				)
+			});
 		} else {
 			this.audioPlayer.pause();
 		}
