@@ -134,8 +134,8 @@ export class TrackCard extends Component {
 			this.setState({ playing: false });
 		}
 
-		if (currently_playing.playing && this.state.playing === false && this.state.playing && track.id === currently_playing.track.id) {
-			this.setState({ playing: true });
+		if (currently_playing.playing === false && this.state.playing && track.id === currently_playing.track.id) {
+			this.setState({ playing: false });
 		}
 
 		return (
