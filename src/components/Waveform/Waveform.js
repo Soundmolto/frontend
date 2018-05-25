@@ -77,7 +77,7 @@ export class Waveform extends Component {
 	}
 	
 	removeCanvas () {
-		const el = document.querySelector(`.${styles.container}`);
+		const el = this.baseEl.querySelector(`.${styles.container}`);
 		const allCanvas = el != null && el.querySelectorAll('canvas') || [];
 
 		for (const _el of allCanvas) {
@@ -96,9 +96,8 @@ export class Waveform extends Component {
 		const that = this;
 		const { audioContext } = this.props;
 		let j = 0;
-		let containerEl = this.containerEl || document.querySelector(`.${styles.waveform}`);
-		let timelineRoot = this.timelineRoot || document.querySelector(`.${styles['waveform-timeline--root']}`);
-
+		let containerEl = this.containerEl || this.baseEl.querySelector(`.${styles.waveform}`);
+		let timelineRoot = this.timelineRoot || this.baseEl.querySelector(`.${styles['waveform-timeline--root']}`);
 
 		const canvas = this.createCanvas(containerEl.parentElement.clientWidth);
 		const timeline = this.createCanvas(timelineRoot.parentElement.clientWidth);
@@ -149,17 +148,21 @@ export class Waveform extends Component {
 			}
 
 		} catch (e) {
-			console.log(e);
+			// console.log(e);
 		}
 	}
 
 	componentWillUnmount () {
 		window.document.querySelector('audio').removeEventListener('timeupdate', this.onTimeUpdate.bind(this));
 	}
+
+	shouldComponentUpdate () {
+		return false;
+	}
 	
 	render ({ isCurrentTrack }) {
 		return (
-			<div class={styles.root}>
+			<div class={styles.root} ref={e => (this.baseEl = e)}>
 				<div class={`prel ${styles.container}`}>
 					<div className={styles.waveform} ref={e => this.containerEl = e}></div>
 					<div class={styles['waveform-timeline--root']} ref={e => this.timelineRoot = e}></div>
