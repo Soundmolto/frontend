@@ -40,7 +40,7 @@ export class QueueController {
 		let currentIndex = tracks.length;
 		let temporaryValue;
 		let randomIndex;
-  
+
 		// While there remain elements to shuffle...
 		while (0 !== currentIndex) {
 	
