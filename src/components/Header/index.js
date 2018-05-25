@@ -51,7 +51,7 @@ export default class Header extends Component {
 	shortcutsPanelRef = dialog => (this.shortcutsPanel = dialog);
 
 	linkTo = path => () => {
-		route(path);
+		route(path, true);
 		this.closeDrawer();
 	};
 

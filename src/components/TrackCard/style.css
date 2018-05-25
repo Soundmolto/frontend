@@ -4,7 +4,7 @@
     text-overflow: ellipsis;
     font-size: 1.0rem;
     margin-top: 0;
-    max-width: calc(100% - 48px);
+    max-width: calc(100% - 123px);
 }
 
 .centered {

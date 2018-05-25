@@ -10,13 +10,13 @@ let linGrad = '#5D8CAE';
 let linGradProgress = '#334b5c';
 
 if (typeof window !== "undefined") {
-       linGrad = document.createElement('canvas').getContext('2d').createLinearGradient(0, 0, 0, 95);
-       linGrad.addColorStop(0, '#5D8CAE');
-       linGrad.addColorStop(1, '#c67dcb');
+	linGrad = document.createElement('canvas').getContext('2d').createLinearGradient(0, 0, 0, 95);
+	linGrad.addColorStop(0, '#5D8CAE');
+	linGrad.addColorStop(1, '#c67dcb');
 
-       linGradProgress = document.createElement('canvas').getContext('2d').createLinearGradient(0, 0, 0, 95);
-       linGradProgress.addColorStop(0, '#334b5c');
-       linGradProgress.addColorStop(1, '#7b4180');
+	linGradProgress = document.createElement('canvas').getContext('2d').createLinearGradient(0, 0, 0, 95);
+	linGradProgress.addColorStop(0, '#334b5c');
+	linGradProgress.addColorStop(1, '#7b4180');
 }
 
 export class Waveform extends Component {
@@ -44,14 +44,21 @@ export class Waveform extends Component {
 					this.subscribed = true;
 					window.document.querySelector('audio').addEventListener('timeupdate', this.onTimeUpdate.bind(this));
 				}
+				
+				if (this.subscribed && state.currently_playing.track.id !== this.props.data.id) {
+					this.subscribed = false;
+					window.document.querySelector('audio').removeEventListener('timeupdate', this.onTimeUpdate.bind(this));
+				}
 			});
 		}
 	}
 
 	onTimeUpdate (e) {
-		const audio = window.document.querySelector('audio');
-		const timelineRoot = this.timelineRoot || document.querySelector(`.${styles['waveform-timeline--root']}`);
-		timelineRoot.setAttribute('style', `width: ${audio.currentTime / audio.duration * 100}%;`);
+		if (this.props.data.id === store.getState().currently_playing.track.id) {
+			const audio = window.document.querySelector('audio');
+			const timelineRoot = this.timelineRoot || this.baseEl.querySelector(`.${styles['waveform-timeline--root']}`);
+			timelineRoot.setAttribute('style', `width: ${audio.currentTime / audio.duration * 100}%;`);
+		}
 	}
 
 	componentDidMount() {
@@ -153,6 +160,7 @@ export class Waveform extends Component {
 	}
 
 	componentWillUnmount () {
+		this.subscribed = false;
 		window.document.querySelector('audio').removeEventListener('timeupdate', this.onTimeUpdate.bind(this));
 	}
 

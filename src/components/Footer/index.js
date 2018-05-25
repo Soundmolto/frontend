@@ -64,6 +64,7 @@ export default class Footer extends Component {
 
 	componentWillUpdate ({ currently_playing }) {
 		if (currently_playing.playing === true) {
+			console.log(currently_playing.playing);
 			this.audioPlayer.play();
 			this.audioPlayer.addEventListener('timeupdate', this.onPosChange.bind(this));
 		} else {

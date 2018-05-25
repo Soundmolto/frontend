@@ -61,7 +61,7 @@ export default class Profile extends Component {
 	render({ auth, user, viewedUser }) {
 		const following = this.following(viewedUser);
 		if (this.currentUrl !== getCurrentUrl()) this.updateData();
-		if (getCurrentUrl() === `/${user.profile.url}`) route('/me');
+		// if (getCurrentUrl() === `/${user.profile.url}`) route('/me', true);
 
 		return (
 			<div class={style.profile}>
