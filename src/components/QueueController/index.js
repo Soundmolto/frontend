@@ -1,0 +1,1 @@
+export { QueueController } from './QueueController';
