@@ -59,8 +59,6 @@ export default class Footer extends Component {
 		const percent = (e.pageX / e.currentTarget.clientWidth);
 		const position = percent * this.duration;
 
-		this.tracks[this.props.currently_playing.track.id] = position;
-
 		playing_now(dispatch, { playing: true, position, track: currently_playing.track, owner: currently_playing.owner });
 	}
 
@@ -78,17 +76,17 @@ export default class Footer extends Component {
 
 	componentWillUpdate ({ currently_playing }) {
 		if (currently_playing.playing === true) {
-			console.log('aa');
+			if (currently_playing.position != null) {
+				this.tracks[this.props.currently_playing.track.id] = currently_playing.position;
+			}
 			this.audioPlayer.addEventListener('timeupdate', this.onPosChange.bind(this));
 			requestAnimationFrame(_ => {
+				console.log(this.tracks[this.props.currently_playing.track.id] || currently_playing.position || 0)
 				this.audioPlayer.play();
-				this.audioPlayer.currentTime = this.tracks[this.props.currently_playing.track.id] || 0;
-				console.log(
-					this.audioPlayer.currentTime,
-					this.tracks
-				)
+				this.audioPlayer.currentTime = this.tracks[this.props.currently_playing.track.id] || currently_playing.position || 0;
 			});
 		} else {
+			this.tracks[this.props.currently_playing.track.id] = this.audioPlayer.currentTime;
 			this.audioPlayer.pause();
 		}
 	}

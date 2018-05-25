@@ -118,3 +118,7 @@ export function playing_now (dispatch, { playing, position, track, owner }) {
 	delete track.peaks;
 	return dispatch({ type: type, payload: { position, track, owner } })
 }
+
+export function update_position (dispatch, { playing, position, track, owner }) {
+	return dispatch({ type: TRACK.POS_CHANGE, payload: { position, track, owner } })
+}

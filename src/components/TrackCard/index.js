@@ -181,6 +181,14 @@ export class TrackCard extends Component {
 						key={track.id}
 						parentPlaying={this.state.playing}
 						isCurrentTrack={isCurrentTrack}
+						onClickContainer={position => {
+							playing_now(this.props.dispatch, {
+								position,
+								playing: true,
+								track: this.props.track,
+								owner: this.props.user
+							});
+						}}
 					/>
 					<div>
 						<p class={styles.centered}>

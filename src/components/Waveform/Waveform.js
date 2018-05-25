@@ -180,6 +180,11 @@ export class Waveform extends Component {
 		e.currentTarget.querySelector(`.${styles.tooltip}`).classList.remove(styles.show);
 	}
 
+	onClickContainer (e) {
+		const percentage = e.layerX / e.currentTarget.clientWidth;
+		this.props.onClickContainer(this.props.data.duration * percentage);
+	}
+
 	componentWillUnmount () {
 		this.subscribed = false;
 		window.document.querySelector('audio').removeEventListener('timeupdate', this.onTimeUpdate.bind(this));
@@ -192,7 +197,7 @@ export class Waveform extends Component {
 	render ({ isCurrentTrack }) {
 		return (
 			<div class={styles.root} ref={e => (this.baseEl = e)}>
-				<div class={`prel ${styles.container}`} onMouseMove={this.onMouseMove.bind(this)} onMouseOut={this.onMouseOut.bind(this)}>
+				<div class={`prel ${styles.container}`} onMouseMove={this.onMouseMove.bind(this)} onMouseOut={this.onMouseOut.bind(this)} onClick={this.onClickContainer.bind(this)}>
 					<div class={styles.tooltip}></div>
 					<div className={styles.waveform} ref={e => this.containerEl = e}></div>
 					<div class={styles['waveform-timeline--root']} ref={e => this.timelineRoot = e}></div>

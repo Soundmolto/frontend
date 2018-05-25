@@ -28,6 +28,7 @@
 .container {
     display: block;
     width: 100%;
+    cursor: pointer;
 }
 
 .root {
