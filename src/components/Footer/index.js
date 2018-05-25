@@ -59,10 +59,21 @@ export default class Footer extends Component {
 		const percent = (e.pageX / e.currentTarget.clientWidth);
 		const position = percent * this.duration;
 
-		// this.audioPlayer.currentTime = position;
 		this.tracks[this.props.currently_playing.track.id] = position;
 
 		playing_now(dispatch, { playing: true, position, track: currently_playing.track, owner: currently_playing.owner });
+	}
+
+	componentDidMount () {
+		if (this.props.currently_playing.track != null) {
+			const { currently_playing, dispatch } = this.props;
+			const position = 0;
+
+			this.audioPlayer.addEventListener('ended', e => {
+				this.tracks[currently_playing.track.id] = 0;
+				playing_now(dispatch, { playing: false, position, track: currently_playing.track, owner: currently_playing.owner });
+			});
+		}
 	}
 
 	componentWillUpdate ({ currently_playing }) {
