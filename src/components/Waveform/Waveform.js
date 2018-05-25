@@ -2,6 +2,7 @@ import { Component } from 'preact';
 import { THEMES } from '../../enums/themes';
 import { connect } from 'preact-redux';
 import { WaveformGenerator } from './WaveformGenerator';
+import { seconds_to_time } from "../../utils/seconds-to-time";
 import store from '../../store';
 import styles from './style.css';
 
@@ -160,6 +161,25 @@ export class Waveform extends Component {
 		}
 	}
 
+	onMouseMove (e) {
+		const percentage = e.layerX / e.currentTarget.clientWidth;
+		const tooltip = e.currentTarget.querySelector(`.${styles.tooltip}`);
+		tooltip.classList.add(styles.show);
+		// console.log(`${percentage * 100}%`,this.props.data.duration * percentage);
+		tooltip.innerText = seconds_to_time(this.props.data.duration * percentage).rendered;
+		if (tooltip.getAttribute('style') != null && parseInt(tooltip.getAttribute('style').split('transform: translateX(')[1].split('px)')) === e.layerX) {
+			return;
+		}
+
+		if (e.currentTarget.clientWidth - e.layerX < tooltip.clientWidth) { return; }
+
+		tooltip.setAttribute('style', `transform: translateX(${e.layerX}px)`);
+	}
+
+	onMouseOut (e) {
+		e.currentTarget.querySelector(`.${styles.tooltip}`).classList.remove(styles.show);
+	}
+
 	componentWillUnmount () {
 		this.subscribed = false;
 		window.document.querySelector('audio').removeEventListener('timeupdate', this.onTimeUpdate.bind(this));
@@ -172,7 +192,8 @@ export class Waveform extends Component {
 	render ({ isCurrentTrack }) {
 		return (
 			<div class={styles.root} ref={e => (this.baseEl = e)}>
-				<div class={`prel ${styles.container}`}>
+				<div class={`prel ${styles.container}`} onMouseMove={this.onMouseMove.bind(this)} onMouseOut={this.onMouseOut.bind(this)}>
+					<div class={styles.tooltip}></div>
 					<div className={styles.waveform} ref={e => this.containerEl = e}></div>
 					<div class={styles['waveform-timeline--root']} ref={e => this.timelineRoot = e}></div>
 				</div>
