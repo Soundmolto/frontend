@@ -29,6 +29,8 @@ export class TrackCard extends Component {
 	played = false;
 	deleting = false;
 
+	state = { playing: false };
+
 	editTrackRef = dialog => (this.editTrackPanel = dialog);
 
 	componentDidMount () {
@@ -41,13 +43,10 @@ export class TrackCard extends Component {
 		this.played = false;
 	}
 
-	state = { playing: false };
-
 	onFinish () {
 		this.setState({ playing: false, pos: 0 });
 		playing_now(this.props.dispatch, {
 			playing: this.state.playing,
-			position: 0,
 			track: this.props.track,
 			owner: this.props.user
 		});
@@ -55,14 +54,17 @@ export class TrackCard extends Component {
 
 	onClickPlayPause (e) {
 		this.setState({ playing: !this.state.playing });
-		this.waveform._component.handleTogglePlay.bind(this.waveform._component)();
+		playing_now(this.props.dispatch, {
+			playing: this.state.playing,
+			track: this.props.track,
+			owner: this.props.user
+		});
 	}
 
 	onTogglePlay (playing, pos) {
 		this.setState({ playing, pos });
 		playing_now(this.props.dispatch, {
 			playing: this.state.playing,
-			position: pos,
 			track: this.props.track,
 			owner: this.props.user
 		});
@@ -72,7 +74,6 @@ export class TrackCard extends Component {
 		this.setState({ playing: false, pos });
 		playing_now(this.props.dispatch, {
 			playing: this.state.playing,
-			position: pos,
 			track: this.props.track,
 			owner: this.props.user
 		});
@@ -85,7 +86,6 @@ export class TrackCard extends Component {
 			this.played = true;
 			playing_now(this.props.dispatch, {
 				playing: this.state.playing,
-				position: 0,
 				track: this.props.track,
 				owner: this.props.user
 			});
@@ -124,9 +124,7 @@ export class TrackCard extends Component {
 	render ({ track, user, currentUser, currently_playing, isCurrentTrack }, { pos }) {
 		const postedAt = dayjs(parseInt(track.createdAt));
 		let posted = postedAt.format('DD-MM-YYYY');
-		if (posted.indexOf("NaN") !== -1) {
-			posted = "Unavaliable - Parsing error";
-		}
+		if (posted.indexOf("NaN") !== -1) posted = "Unavaliable - Parsing error";
 		if (this.played === false ) this.plays = track.plays;
 		if (this.state.playing === false && currently_playing.track != null && track.id === currently_playing.track.id && currently_playing.playing === true) {
 			this.setState({ playing: true });
@@ -134,8 +132,15 @@ export class TrackCard extends Component {
 
 		if (this.state.playing && track.id !== currently_playing.track.id) {
 			this.setState({ playing: false });
-			this.waveform._component.onPause();
 		}
+
+		if (currently_playing.playing && this.state.playing === false && this.state.playing && track.id === currently_playing.track.id) {
+			this.setState({ playing: true });
+		}
+
+		console.log(
+			currently_playing
+		)
 
 		return (
 			<div class={styles.card}>
@@ -148,70 +153,60 @@ export class TrackCard extends Component {
 							</Icon>
 						</Button>
 					</div>
-					<div style={{ position: "relative" }}>
-						{isCurrentTrack === true && (
-							<h4 class={className(styles.displayName)}>
-								<a class={styles.link} href={`/${user.profile.url}`}>
-									{user.profile.displayName || user.profile.url || "N/A"}
-								</a>
-							</h4>
-						)}
+					{isCurrentTrack === true && (
+						<h4 class={className(styles.displayName)}>
+							<a class={styles.link} href={`/${user.profile.url}`}>
+								{user.profile.displayName || user.profile.url || "N/A"}
+							</a>
+						</h4>
+					)}
+					{isCurrentTrack == false && (
+						<h4 class={className(styles.displayName)}>{user.profile.displayName || user.profile.url || "N/A"}</h4>
+					)}
+					<TimeAgo
+						datetime={postedAt.toDate()} 
+						locale='en_AU'
+						className={styles.date}
+						title={`${posted}`}
+					/>
+					<h2 class={className(`mdc-typography--title ${styles.username}`)}>
 						{isCurrentTrack == false && (
-							<h4 class={className(styles.displayName)}>{user.profile.displayName || user.profile.url || "N/A"}</h4>
+							<a class={styles.link} href={`/${user.profile.url}/${track.url}`}>
+								{track.name}
+							</a>
 						)}
-						<TimeAgo
-							datetime={postedAt.toDate()} 
-							locale='en_AU'
-							className={styles.date}
-							title={`${posted}`}
-						/>
-						<h2 class={className(`mdc-typography--title ${styles.username}`)}>
-							{isCurrentTrack == false && (
-								<a class={styles.link} href={`/${user.profile.url}/${track.url}`}>
-									{track.name}
-								</a>
-							)}
-							{isCurrentTrack == true && (
-								track.name
-							)}
-						</h2>
-						<Waveform
-							ref={e => (this.waveform = e)}
-							data={track}
-							onFinish={this.onFinish.bind(this)}
-							onTogglePlay={this.onTogglePlay.bind(this)}
-							onPause={this.onPause.bind(this)}
-							onStartPlay={this.onStartPlay.bind(this)}
-							key={track.id}
-							onPosChange={pos => {
-								this.props.footer._component.onPosChange(pos);
-							}}
-							audioContext={this.props.audioContext}
-							parentPlaying={this.state.playing}
-							isCurrentTrack={isCurrentTrack}
-						/>
-						<div>
-							<p class={styles.centered}>
-								<Icon>headset</Icon> {this.plays}
+						{isCurrentTrack == true && (
+							track.name
+						)}
+					</h2>
+					<Waveform
+						ref={e => (this.waveform = e)}
+						data={track}
+						key={track.id}
+						parentPlaying={this.state.playing}
+						isCurrentTrack={isCurrentTrack}
+					/>
+					<div>
+						<p class={styles.centered}>
+							<Icon>headset</Icon> {this.plays}
+						</p>
+						<span style={{ 'font-size': '0.9rem', float: 'right' }}>
+							<p class={`${styles.centered} prel ${styles.w100}`} >
+								<span>
+									{seconds_to_time(track.duration).rendered}
+								</span>
 							</p>
-							<span style={{ 'font-size': '0.9rem', float: 'right' }}>
-								<p class={`${styles.centered} prel ${styles.w100}`} >
-									<span>
-										{seconds_to_time(track.duration).rendered}
-									</span>
+						</span>
+						{user.profile.id === currentUser.profile.id && (
+							<span>
+								<p class={className(`${styles.centered} ${styles.actionable}`)} style={{ 'float': 'right' }} onClick={this.onClickDeleteTrack.bind(this)}>
+									<Icon style={{ margin: 0 }}>delete</Icon>
+								</p>
+								<p class={className(`${styles.centered} ${styles.actionable}`)} style={{ 'float': 'right' }} onClick={this.onClickEditTrack.bind(this)}>
+									<Icon style={{ margin: 0 }}>edit</Icon>
 								</p>
 							</span>
-							{user.profile.id === currentUser.profile.id && (
-								<span>
-									<p class={className(`${styles.centered} ${styles.actionable}`)} style={{ 'float': 'right' }} onClick={this.onClickDeleteTrack.bind(this)}>
-										<Icon style={{ margin: 0 }}>delete</Icon>
-									</p>
-									<p class={className(`${styles.centered} ${styles.actionable}`)} style={{ 'float': 'right' }} onClick={this.onClickEditTrack.bind(this)}>
-										<Icon style={{ margin: 0 }}>edit</Icon>
-									</p>
-								</span>
-							)}
-						</div>
+						)}
 					</div>
 				</Card>
 

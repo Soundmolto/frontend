@@ -1,7 +1,7 @@
 import { Component } from 'preact';
 import { THEMES } from '../../enums/themes';
 import { connect } from 'preact-redux';
-import { SoundCloudWaveform } from './WaveformGenerator';
+import { WaveformGenerator } from './WaveformGenerator';
 import store from '../../store';
 import styles from './style.css';
 
@@ -28,22 +28,33 @@ export class Waveform extends Component {
 		let initialState = Object.assign({}, store.getState());
 		if (typeof window !== "undefined") {
 			window.addEventListener('resize', e => {
-				this.removeCanvas();
 				this.loadData();
 			});
 
 			store.subscribe(_ => {
 				const state = Object.assign({}, store.getState());
+
 				if (state.UI.theme !== initialState.UI.theme) {
 					initialState = state;
-					this.removeCanvas();
 					this.loadData();
+				}
+
+				if (state.currently_playing.playing === true) {
+					const audio = window.document.querySelector('audio');
+
+					audio.addEventListener('timeupdate', this.onTimeUpdate.call(this, audio));
 				}
 			});
 		}
 	}
 
+	onTimeUpdate (e) {
+		const timelineRoot = this.timelineRoot || document.querySelector(`.${styles['waveform-timeline--root']}`);
+		timelineRoot.setAttribute('style', `width: ${e.currentTime / e.duration * 100}%;`);
+	}
+
 	componentDidMount() {
+		this.removeCanvas();
 		this.loadData();
 	}
 	
@@ -56,6 +67,7 @@ export class Waveform extends Component {
 	}
 	
 	loadData () {
+		this.removeCanvas();
 		this.renderCanvas(this.props.data);
 	}
 
@@ -63,24 +75,12 @@ export class Waveform extends Component {
 		try { el.remove(); } catch (e) {}
 	}
 	
-	removeCanvas() {
-		let containerEl = this.containerEl || document.querySelector(`.${styles.waveform}`);
-		let timelineRoot = this.timelineRoot || document.querySelector(`.${styles['waveform-timeline--root']}`);
-		if (containerEl) {
-			let canvas = containerEl.querySelectorAll('canvas');
-			let otherCanvas = timelineRoot.querySelectorAll('canvas');
+	removeCanvas () {
+		const el = document.querySelector(`.${styles.container}`);
+		const allCanvas = el != null && el.querySelectorAll('canvas') || [];
 
-			if (canvas) {
-				for (let el of canvas) {
-					this.tryRemove(el);
-				}
-			}
-
-			if (otherCanvas) {
-				for (let el of otherCanvas) {
-					this.tryRemove(el);
-				}
-			}
+		for (const _el of allCanvas) {
+			try { _el.remove(); } catch (e) { console.log(e) }
 		}
 	}
 
@@ -98,81 +98,54 @@ export class Waveform extends Component {
 		let containerEl = this.containerEl || document.querySelector(`.${styles.waveform}`);
 		let timelineRoot = this.timelineRoot || document.querySelector(`.${styles['waveform-timeline--root']}`);
 
+
 		const canvas = this.createCanvas(containerEl.parentElement.clientWidth);
 		const timeline = this.createCanvas(timelineRoot.parentElement.clientWidth);
+
 		try {
+
 			if (this.buffer == null) {
 				const _get = await fetch(data.waveform_url);
 				const bod = await _get.json();
 
 				this.buffer = bod.concat([]);
-
-				const wave = new SoundCloudWaveform({
-					canvas,
-					bar_width: 2,
-					bar_gap : 0.35,
-					wave_color: linGrad,
-					audioContext,
-					onComplete (_buffer) {
-						const tline = new SoundCloudWaveform({ canvas: timeline, bar_width: 2, bar_gap : 0.35, wave_color: linGradProgress, audioContext });
-						if (that.buffer == null) {
-							tline.extractBuffer(bod);
-							that.buffer = bod;
-						} else {
-							tline.extractBuffer(that.buffer);
-						}
-					}
-				});
-			} else {
 			}
-			const wave = new SoundCloudWaveform({
+
+			const wave = new WaveformGenerator({
 				canvas,
 				bar_width: 2,
 				bar_gap : 0.35,
 				wave_color: linGrad,
 				audioContext,
 				onComplete () {
-					const tline = new SoundCloudWaveform({ canvas: timeline, bar_width: 2, bar_gap : 0.35, wave_color: linGradProgress, audioContext });
+					const tline = new WaveformGenerator({ canvas: timeline, bar_width: 2, bar_gap : 0.35, wave_color: linGradProgress, audioContext });
 					tline.extractBuffer(that.buffer);
 				}
 			});
+
 			wave.extractBuffer(that.buffer);
-			containerEl.appendChild(canvas);
-			timelineRoot.appendChild(timeline);
 
-			window.__getContext = () => { return audioContext; };
+			if (containerEl.firstChild == null) {
+				containerEl.appendChild(canvas);
+			} else {
+				containerEl.replaceChild(canvas, containerEl.firstChild);
+			}
 
-			window.__playSong = () => {
-				// Get an AudioBufferSourceNode.
-				// This is the AudioNode to use when we want to play an AudioBuffer
-				var source = audioContext.createBufferSource();
-				var scriptNode = audioContext.createScriptProcessor(1024, 1, 1);
+			if (timelineRoot.firstChild == null) {
+				timelineRoot.appendChild(timeline);
+			} else {
+				timelineRoot.replaceChild(timeline, timelineRoot.firstChild);
+			}
 
-				// console.log(source, audioContext.buffer.duration)
-
-				scriptNode.onaudioprocess = function(e) {
-					timelineRoot.setAttribute('style', `width: ${audioContext.currentTime / source.buffer.duration * 100}%`)
-					var output = e.outputBuffer.getChannelData(0);
-					var input = e.inputBuffer.getChannelData(0);
-					for (var i = 0; i < input.length; i++) {
-						output[i] = input[i];
-					}
-				};
-
-				// set the buffer in the AudioBufferSourceNode
-				source.buffer = this.buffer;
-
-				// connect the AudioBufferSourceNode to the
-				// destination so we can hear the sound
-				source.connect(scriptNode);
-				scriptNode.connect(audioContext.destination);
-
-				// start the source playing
-				source.start(0);
-			};
 		} catch (e) {
 			console.log(e);
 		}
+	}
+
+	componentWillUnmount () {
+		const audio = window.document.querySelector('audio');
+
+		audio.removeEventListener('timeupdate', this.onTimeUpdate.call(this, audio));
 	}
 	
 	render ({ isCurrentTrack }) {

@@ -58,6 +58,14 @@ export default class Footer extends Component {
 		playing_now(dispatch, { playing: true, position, track: currently_playing.track, owner: currently_playing.owner });
 	}
 
+	componentWillUpdate ({ currently_playing }) {
+		if (currently_playing.playing === true) {
+			this.audioPlayer.play();
+		} else {
+			this.audioPlayer.pause();
+		}
+	}
+
 	render ({ currently_playing }) {
 		let amount = 0;
 		let duration = 0;
@@ -157,6 +165,9 @@ export default class Footer extends Component {
 						</div>
 					</div>
 				</div>
+				{currently_playing != null && currently_playing.track != null && (
+					<audio src={currently_playing.track.stream_url} ref={e => (this.audioPlayer = e)} />
+				)}
 			</div>
 		);
 	}

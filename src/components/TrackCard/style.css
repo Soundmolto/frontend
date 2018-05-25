@@ -85,8 +85,8 @@
 
 .date {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 10px;
+    top: 10px;
     padding: 10px;
     background: rgba(0, 0, 0, 0.3);
     border-radius: 10px;

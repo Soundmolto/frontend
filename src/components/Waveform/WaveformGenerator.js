@@ -1,5 +1,5 @@
 // Refactored
-export class SoundCloudWaveform {
+export class WaveformGenerator {
 
 	buffer = [];
 
