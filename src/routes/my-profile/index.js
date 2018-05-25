@@ -22,6 +22,17 @@ export default class MyProfile extends Component {
 		fetch_user(this.props.dispatch.bind(this), { token: auth.token, vanity_url: user.profile.url });
 	}
 
+	componentWillUpdate (props) {
+		props.user.tracks.sort((first, second) => {
+			return parseInt(first.createdAt) - parseInt(second.createdAt);
+		});
+		props.user.tracks.reverse();
+	}
+
+	componentWillMount () {
+		this.props.user.tracks.reverse();
+	}
+
 	// Note: `user` comes from the URL, courtesy of our router
 	render({ auth, user }) {
 		if (!auth.logged_in) return route("/", true);
