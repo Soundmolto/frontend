@@ -56,7 +56,7 @@ export default class Header extends Component {
 	};
 
 	goHome = this.linkTo('/');
-	goToMyProfile = this.linkTo('/me');
+	goToMyProfile = this.linkTo(`/${this.props.user.profile.url}`);
 	goToLogin = this.linkTo('/login');
 	goToRegister = this.linkTo('/register');
 

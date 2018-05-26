@@ -8,6 +8,7 @@ import { connect } from "preact-redux";
 import { seconds_to_time } from "../../utils/seconds-to-time";
 import { playing_now } from '../../actions/track';
 import { ENOLCK } from "constants";
+import { QueueController } from "../QueueController/QueueController";
 
 @connect(({ currently_playing }) => ({ currently_playing }))
 export default class Footer extends Component {
@@ -16,6 +17,12 @@ export default class Footer extends Component {
 	duration = 0;
 	__currentPos = 0;
 	tracks = {};
+
+	constructor (opts) {
+		super (opts);
+
+		this.queueController = new QueueController();
+	}
 
 	onPosChange () {
 		const pos = this.audioPlayer.currentTime;
@@ -90,6 +97,55 @@ export default class Footer extends Component {
 		}
 	}
 
+	onMouseMove (e) {
+		const { currently_playing, dispatch } = this.props;
+		const duration = currently_playing.track.duration || 0;
+		const percentage = e.pageX / this.desktopTrackbar.clientWidth;
+		const time = duration * percentage;
+		const tooltip = this.desktopTrackbar.querySelector(`.${styles.tooltip}`);
+		const rendered = seconds_to_time(time).rendered;
+		this.__renderedTime = rendered;
+		tooltip.classList.add(styles.show);
+		tooltip.innerText = rendered;
+
+		if (this.mouseDown === true) {
+			playing_now(dispatch, { playing: true, position: time, track: currently_playing.track, owner: currently_playing.owner });
+		}
+
+		if (tooltip.getAttribute('style') != null && parseInt(tooltip.getAttribute('style').split('transform: translateX(')[1].split('px)')) === e.pageX) {
+			return;
+		}
+
+		if (this.desktopTrackbar.clientWidth - e.pageX < tooltip.clientWidth) { return; }
+
+		tooltip.setAttribute('style', `transform: translateX(${e.pageX}px)`);
+	}
+
+	onMouseOut (e) {
+		if (e.relatedTarget.parentElement == this.desktopTrackbar || e.relatedTarget.parentElement.parentElement == this.desktopFooter) return;
+		this.mouseDown = false;
+		e.currentTarget.querySelector(`.${styles.tooltip}`).classList.remove(styles.show);
+	}
+
+	onMouseDown (e) {
+		if (e.which !== 1) return;
+		this.mouseDown = true;
+		const { currently_playing, dispatch } = this.props;
+		const duration = currently_playing.track.duration || 0;
+		const percentage = e.pageX / e.currentTarget.clientWidth;
+
+		playing_now(dispatch, {
+			playing: true,
+			position: duration * percentage,
+			track: currently_playing.track,
+			owner: currently_playing.owner
+		});
+	}
+
+	onMouseUp () {
+		this.mouseDown = false;
+	}
+
 	render ({ currently_playing }) {
 		let amount = 0;
 		let duration = 0;
@@ -112,7 +168,7 @@ export default class Footer extends Component {
 						<div class={styles.start}>
 							<div class={styles.songInfo}>
 								<p>
-									<span>{currently_playing.owner && currently_playing.owner.profile && currently_playing.owner.profile.displayName}</span>
+									<span>{currently_playing.owner && currently_playing.owner.profile && (currently_playing.owner.profile.displayName || currently_playing.owner.profile.url)}</span>
 									<span>{currently_playing && currently_playing.track && currently_playing.track.name}</span>
 								</p>
 							</div>
@@ -133,9 +189,14 @@ export default class Footer extends Component {
 					</div>
 				</div>
 				<div class={styles.notMobile}>
-					<div class={styles.footer}>
+					<div class={styles.footer} ref={e => (this.desktopFooter = e)}>
 						<div class={styles.start}>
-							<div class={styles.trackBar} onClick={this.onClickTrackBar.bind(this)}>
+							<div class={styles.trackBar} onClick={this.onClickTrackBar.bind(this)}
+								onMouseMove={this.onMouseMove.bind(this)} onMouseOut={this.onMouseOut.bind(this)}
+								onMouseDown={this.onMouseDown.bind(this)} onMouseUp={this.onMouseUp.bind(this)}
+								ref={e => (this.desktopTrackbar = e)}
+							>
+								<div class={styles.tooltip}>{this.__renderedTime != null && this.__renderedTime}</div>
 								<div class={styles.progress} style={{
 									'transform': `translateX(${amount}%)`
 								}} ref={e => (this.progressBar = e)}></div>

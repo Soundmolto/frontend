@@ -58,6 +58,11 @@ export default class Profile extends Component {
 		}
 	}
 
+	// Handle the queue here.
+	onStartPlay (track) {
+
+	}
+
 	render({ auth, user, viewedUser }) {
 		const following = this.following(viewedUser);
 		if (this.currentUrl !== getCurrentUrl()) this.updateData();
@@ -90,9 +95,13 @@ export default class Profile extends Component {
 								<h1 class={style.mainHeader} style={{ 'margin-top': "0" }}>
 									Tracks <small class={style.smolButNotSwol}>{viewedUser.tracks.length}</small>
 								</h1>
-								{tracks.length >= 1 && tracks.map( track => <div key={'parent-' + track.id}>
-									<TrackCard track={track} user={viewedUser} currentUser={user} key={track.id} footer={this.props.footer} audioContext={this.props.audioContext} isCurrentTrack={false} />
-								</div>)}
+								{tracks.length >= 1 && tracks.map(track => (
+									<div key={'parent-' + track.id}>
+										<TrackCard track={track} user={viewedUser} currentUser={user}
+											key={track.id} audioContext={this.props.audioContext}
+											isCurrentTrack={false} onStartPlay={this.onStartPlay.bind(this)} />
+									</div>
+								))}
 								{tracks.length <= 0 && <h1>No tracks</h1>}
 							</LayoutGrid.Cell>
 							<LayoutGrid.Cell desktopCols="3" tabletCols="12">

@@ -47,7 +47,9 @@ export default class MyProfile extends Component {
 								</h1>
 								<div key={'user-tracks-' + user.id}>
 									{tracks.length >= 1 && tracks.map(track => (
-										<TrackCard track={track} user={user} currentUser={user} key={track.id} footer={this.props.footer} audioContext={this.props.audioContext} isCurrentTrack={false} />
+										<TrackCard track={track} user={user} currentUser={user} key={track.id}
+											audioContext={this.props.audioContext} isCurrentTrack={false}
+											onStartPlay={this.onStartPlay.bind(this)} />
 									))}
 									{tracks.length <= 0 && <h1>No tracks</h1>}
 								</div>

@@ -58,11 +58,12 @@
 }
 
 .footer:hover .trackBar, .footer:active .trackBar, .footer:focus .trackBar {
-	height: 6px;
+	height: 10px;
 }
 
 .footer:hover .trackBar .thumb, .footer:active .trackBar .thumb, .footer:focus .trackBar .thumb {
-	transform: scale(1.3);
+	height: 15px;
+	width: 15px;
 }
 
 .footer .trackBar .progress {
@@ -75,6 +76,7 @@
 }
 
 .footer .trackBar .thumb {
+	transition: height 0.3s ease-in-out, width 0.3s ease-in-out;
 	background: var(--mdc-theme-complementary-color);
 	transform: translateX(0);
 	position: absolute;
@@ -167,4 +169,24 @@
 
 .footer .songInfo a:hover, .footer .songInfo a:active, .footer .songInfo a:focus {
     color: var(--mdc-theme-complementary-color);
+}
+
+.tooltip {
+    position: absolute;
+    left: 0;
+    top: -35px;
+    transform: translateX(0);
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    z-index: 3;
+    color: white;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    will-change: opacity;
+}
+
+.tooltip.show {
+    opacity: 1;
 }

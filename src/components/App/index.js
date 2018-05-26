@@ -71,9 +71,9 @@ export default class App extends Component {
 						For the sake of simplicity during dev of alpha, this was setup as 2 routes.
 						We should look at re-merging these routes in the future.
 					*/}
-					<MyProfile path="/me" key="my-profile" footer={this.footer} audioContext={this.audioContext} />
-					<Profile path="/:vanity_url" key="profile" footer={this.footer} audioContext={this.audioContext} />
-					<Track path="/:vanity_url/:track_url" key="track" footer={this.footer} audioContext={this.audioContext} />
+					{/* <MyProfile path="/me" key="my-profile" audioContext={this.audioContext} /> */}
+					<Profile path="/:vanity_url" key="profile" audioContext={this.audioContext} />
+					<Track path="/:vanity_url/:track_url" key="track" audioContext={this.audioContext} />
 				</Router>
 				<Footer ref={e => (this.footer = e)} audioContext={this.audioContext} />
 			</div>
