@@ -182,17 +182,13 @@ export class Waveform extends Component {
 	}
 
 	onMouseOut (e) {
-		if (e.relatedTarget.parentElement.parentElement == this.baseEl.firstChild || e.relatedTarget == this.baseEl.firstChild) return;
+		if (e.relatedTarget && (e.relatedTarget.parentElement.parentElement == this.baseEl.firstChild || e.relatedTarget == this.baseEl.firstChild)) return;
 		this.mouseDown = false;
 		e.currentTarget.querySelector(`.${styles.tooltip}`).classList.remove(styles.show);
 	}
 
-	onClickContainer (e) {
-		// const percentage = e.layerX / e.currentTarget.clientWidth;
-		// this.props.onClickContainer(this.props.data.duration * percentage);
-	}
-
 	onMouseDown (e) {
+		if (e.which !== 1) return;
 		this.mouseDown = true;
 		const percentage = e.layerX / e.currentTarget.clientWidth;
 		this.props.onClickContainer(this.props.data.duration * percentage);
@@ -214,7 +210,7 @@ export class Waveform extends Component {
 	render ({ isCurrentTrack }) {
 		return (
 			<div class={styles.root} ref={e => (this.baseEl = e)}>
-				<div class={`prel ${styles.container}`} onMouseMove={this.onMouseMove.bind(this)} onMouseOut={this.onMouseOut.bind(this)} onClick={this.onClickContainer.bind(this)} onMouseDown={this.onMouseDown.bind(this)} onMouseUp={this.onMouseUp.bind(this)}>
+				<div class={`prel ${styles.container}`} onMouseMove={this.onMouseMove.bind(this)} onMouseOut={this.onMouseOut.bind(this)} onMouseDown={this.onMouseDown.bind(this)} onMouseUp={this.onMouseUp.bind(this)}>
 					<div class={styles.tooltip}></div>
 					<div className={styles.waveform} ref={e => this.containerEl = e}></div>
 					<div class={styles['waveform-timeline--root']} ref={e => this.timelineRoot = e}></div>
