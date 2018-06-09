@@ -78,3 +78,33 @@
 .goto-panel a:hover {
     transform: translateX(5px);
 }
+
+.shortcuts {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.shortcuts li {
+    width: calc(100% / 3);
+    width: calc(33.333% - 20px);
+    background: rgba(0, 0, 0, 0.3);
+    margin: 10px;
+    display: block;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: var(--mdc-theme--box-shadow--floating);
+}
+
+.shortcuts li pre {
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--mdc-theme-primary-font);
+    display: inline-block;
+    padding: 0 5px;
+    border-radius: 5px;
+}
+
+.shortcuts li p {
+    margin: 0;
+}

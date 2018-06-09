@@ -229,11 +229,11 @@ export default class Header extends Component {
 					<Dialog ref={this.shortcutsPanelRef} onCancel={e => this.closeShortcutsPanel()}>
 						<Dialog.Header>Shortcuts</Dialog.Header>
 						<Dialog.Body class={style["goto-panel"]}>
-							<ul>
+							<ul class={style["shortcuts"]}>
 								{shortcuts.map(shortcut => (
 									<li>
 										<pre>{shortcut.keys}</pre>
-										{shortcut.description}
+										<p>{shortcut.description}</p>
 									</li>
 								))}
 							</ul>

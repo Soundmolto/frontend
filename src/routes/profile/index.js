@@ -48,9 +48,9 @@ export default class Profile extends Component {
 	toggle_following () {
 		const { auth, dispatch, viewedUser } = this.props;
 		if (_following) {
-			unfollow_user(this.props.dispatch.bind(this), { token: auth.token, user: viewedUser });
+			unfollow_user(dispatch.bind(this), { token: auth.token, user: viewedUser });
 		} else {
-			follow_user(this.props.dispatch.bind(this), { token: auth.token, user: viewedUser });
+			follow_user(dispatch.bind(this), { token: auth.token, user: viewedUser });
 		}
 	}
 

@@ -5,7 +5,6 @@ import Header from '../Header';
 import Footer from '../Footer';
 import Home from 'async!../../routes/home';
 import Profile from 'async!../../routes/profile';
-import MyProfile from 'async!../../routes/my-profile';
 import Login from 'async!../../routes/login';
 import Users from 'async!../../routes/users';
 import Register from 'async!../../routes/register';

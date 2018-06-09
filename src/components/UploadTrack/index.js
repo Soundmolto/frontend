@@ -6,11 +6,12 @@ import { API_ENDPOINT } from "../../api";
 import { prefill_auth } from "../../prefill-authorized-route";
 import { connect } from "preact-redux";
 import { USER } from "../../enums/user";
+import { EditTrack } from "../EditTrack";
 
 @connect(({ auth }) => ({ auth }))
 export class UploadTrack extends Component {
 
-	state = { active: false, imageSrc: '', loaded: false, loading: false };
+	state = { active: false, imageSrc: '', loaded: false, loading: false, editing: false, track_editing: null };
 
 	onDragEnter(e) {
 		this.setState({ active: true });
@@ -36,6 +37,7 @@ export class UploadTrack extends Component {
 		const { token } = this.props.auth;
 		data.append('file', file, file.name);
 		this.setState({ loading: true });
+		let track = {};
 
 		const post = await fetch(`${API_ENDPOINT}/tracks`, { method: "POST", headers: { ...prefill_auth(token) }, body: data });
 		const payload = await post.json();
@@ -44,18 +46,19 @@ export class UploadTrack extends Component {
 
 		// TODO; Edit after uploaded
 		for (const id of payload.created) {
-			console.log()
+			const filtered = payload.user.tracks.filter(_track => _track.id === id);
+			if (filtered.length >= 1) track = filtered[0];
 		}
 
-		this.setState({ loaded: true, loading: false })
+		this.setState({ loaded: true, loading: false, editing: true, track_editing: track })
 	}
 
-	render (props, { loading, active }) {
+	render (props, { loading, active, editing, track_editing }) {
 		let className = `${style.uploader} ${style.center}`;
 
 		return (
 			<div class={style.root}>
-			{loading == false && (
+			{loading === false && editing === false && (
 				<label className={className}
 					onDragEnter={this.onDragEnter.bind(this)}
 					onDragLeave={this.onDragLeave.bind(this)}
@@ -67,8 +70,11 @@ export class UploadTrack extends Component {
 					<input type="file" accept="audio/*" onChange={this.onFileChange.bind(this)} />
 				</label>
 			)}
-			{loading == true && (
+			{loading === true && editing === false && (
 				<LinearProgress indeterminate={true} />
+			)}
+			{loading === false && editing === true && (
+				<EditTrack track={track_editing} />
 			)}
 			</div>
 		);

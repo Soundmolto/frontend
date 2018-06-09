@@ -9,6 +9,8 @@
   --mdc-layout-grid-margin-phone: 0 !important;
   --mdc-theme--footer-background: #cfcfcf;
   --mdc-theme-primary-font--darker: #ccc;
+
+  --mdc-theme--box-shadow--floating: 0 15px 20px -15px rgba(0, 0, 0, 0.35);
 }
 
 .mdc-theme--dark {
