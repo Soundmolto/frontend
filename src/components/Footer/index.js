@@ -82,8 +82,12 @@ export default class Footer extends Component {
 				playing_now(dispatch, { playing: false, position, track: currently_playing.track, owner: currently_playing.owner });
 				requestAnimationFrame(_ => {
 					const track = this.queue.next();
+					let owner = currently_playing.owner;
 					if (track != null) {
-						playing_now(dispatch, { playing: true, position, track, owner: track.owner });
+						if (currently_playing.owner.id !== track.owner) {
+							owner = null;
+						}
+						playing_now(dispatch, { playing: true, position, track, owner });
 					}
 				})
 			});
