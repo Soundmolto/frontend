@@ -44,6 +44,9 @@ export class TrackCard extends Component {
 	}
 
 	onClickPlayPause (e) {
+		e.preventDefault();
+		e.stopImmediatePropagation();
+		e.currentTarget.blur();
 		this.setState({ playing: !this.state.playing });
 		this.props.onStartPlay(this.props.track);
 		this.played = true;

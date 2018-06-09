@@ -67,6 +67,7 @@ export const shortcuts = [
 		action: e => {
 			const state = store.getState();
 			e.preventDefault();
+			e.stopImmediatePropagation();
 
 			if (state.currently_playing.track != null) {
 				let track = Object.assign({}, state.currently_playing);
