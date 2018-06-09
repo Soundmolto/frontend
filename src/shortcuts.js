@@ -1,5 +1,7 @@
 import store from './store';
 import { TRACK } from './enums/track';
+import { QueueController } from './components/QueueController';
+const queue = new QueueController();
 
 export const shortcuts = [
 	{
@@ -108,5 +110,47 @@ export const shortcuts = [
 		keys: 'left',
 		name: 'skip:backward',
 		description: 'Skip backward 5 seconds'
+	},
+	{
+		action: e => {
+			const state = store.getState();
+			const next = queue.next();
+			e.preventDefault();
+			let owner = {};
+			
+			if (next != null) {
+				if (next.owner === state.currently_playing.owner.id) owner = state.currently_playing.owner;
+				store.dispatch({
+					type: TRACK.PLAYING_TRACK,
+					payload: {
+						position: 0, track: next, owner
+					}
+				})
+			}
+		},
+		keys: 'shift+right',
+		name: 'next:track',
+		description: 'Skip to next song'
+	},
+	{
+		action: e => {
+			const state = store.getState();
+			const next = queue.previous();
+			e.preventDefault();
+			let owner = {};
+			
+			if (next != null) {
+				if (next.owner === state.currently_playing.owner.id) owner = state.currently_playing.owner;
+				store.dispatch({
+					type: TRACK.PLAYING_TRACK,
+					payload: {
+						position: 0, track: next, owner
+					}
+				})
+			}
+		},
+		keys: 'shift+left',
+		name: 'previous:track',
+		description: 'Skip to previous song'
 	}
 ];
