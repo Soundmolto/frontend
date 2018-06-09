@@ -73,12 +73,17 @@ export default class Footer extends Component {
 
 	componentDidMount () {
 		if (this.props.currently_playing.track != null) {
+			console.log(this.queue.first())
 			const { currently_playing, dispatch } = this.props;
 			const position = 0;
 
 			this.audioPlayer.addEventListener('ended', e => {
 				this.tracks[currently_playing.track.id] = 0;
 				playing_now(dispatch, { playing: false, position, track: currently_playing.track, owner: currently_playing.owner });
+				requestAnimationFrame(_ => {
+					const track = this.queue.next();
+					playing_now(dispatch, { playing: true, position, track, owner: track.owner });
+				})
 			});
 		}
 	}
