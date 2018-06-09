@@ -7,8 +7,6 @@ import 'preact-material-components/Button/style.css';
 import { connect } from "preact-redux";
 import { seconds_to_time } from "../../utils/seconds-to-time";
 import { playing_now } from '../../actions/track';
-import { ENOLCK } from "constants";
-import { QueueController } from "../QueueController/QueueController";
 
 @connect(({ currently_playing }) => ({ currently_playing }))
 export default class Footer extends Component {
@@ -20,8 +18,12 @@ export default class Footer extends Component {
 
 	constructor (opts) {
 		super (opts);
+		this.queue = this.props.queue;
+		this.queue.on('set:tracks', tracks => {
+			console.log(tracks);
+		})
 
-		this.queueController = new QueueController();
+		console.log(this.queue.events);
 	}
 
 	onPosChange () {

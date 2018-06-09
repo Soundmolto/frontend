@@ -13,9 +13,11 @@ import Track from 'async!../../routes/track';
 import Helmet from 'preact-helmet';
 import { request_new_data } from '../../actions/user';
 import { THEMES } from '../../enums/themes';
+import { QueueController } from '../QueueController';
 
 let onRender = (UI) => {};
 let MainAudioContext;
+const queue = new QueueController();
 
 if (typeof window !== "undefined") {
 	onRender = (UI) => {
@@ -72,10 +74,10 @@ export default class App extends Component {
 						We should look at re-merging these routes in the future.
 					*/}
 					{/* <MyProfile path="/me" key="my-profile" audioContext={this.audioContext} /> */}
-					<Profile path="/:vanity_url" key="profile" audioContext={this.audioContext} />
-					<Track path="/:vanity_url/:track_url" key="track" audioContext={this.audioContext} />
+					<Profile path="/:vanity_url" key="profile" audioContext={this.audioContext} queue={queue} />
+					<Track path="/:vanity_url/:track_url" key="track" audioContext={this.audioContext} queue={queue} />
 				</Router>
-				<Footer ref={e => (this.footer = e)} audioContext={this.audioContext} />
+				<Footer ref={e => (this.footer = e)} audioContext={this.audioContext} queue={queue} />
 			</div>
 		);
 	}

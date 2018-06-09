@@ -43,17 +43,10 @@ export class TrackCard extends Component {
 		this.played = false;
 	}
 
-	onFinish () {
-		this.setState({ playing: false, pos: 0 });
-		playing_now(this.props.dispatch, {
-			playing: this.state.playing,
-			track: this.props.track,
-			owner: this.props.user
-		});
-	}
-
 	onClickPlayPause (e) {
 		this.setState({ playing: !this.state.playing });
+		this.props.onStartPlay(this.props.track);
+		this.played = true;
 		playing_now(this.props.dispatch, {
 			playing: this.state.playing,
 			track: this.props.track,
@@ -63,33 +56,15 @@ export class TrackCard extends Component {
 
 	onTogglePlay (playing, pos) {
 		this.setState({ playing, pos });
+		this.props.onStartPlay(this.props.track);
+		this.played = true;
+
 		playing_now(this.props.dispatch, {
 			playing: this.state.playing,
+			position: pos || 0,
 			track: this.props.track,
 			owner: this.props.user
 		});
-	}
-
-	onPause (pos) {
-		this.setState({ playing: false, pos });
-		playing_now(this.props.dispatch, {
-			playing: this.state.playing,
-			track: this.props.track,
-			owner: this.props.user
-		});
-	}
-
-	onStartPlay () {
-		if (this.played === false) {
-			this.plays++;
-			this.setState({ playing: true });
-			this.played = true;
-			playing_now(this.props.dispatch, {
-				playing: this.state.playing,
-				track: this.props.track,
-				owner: this.props.user
-			});
-		}
 	}
 
 	onClickEditTrack (e) {
@@ -181,14 +156,7 @@ export class TrackCard extends Component {
 						key={track.id}
 						parentPlaying={this.state.playing}
 						isCurrentTrack={isCurrentTrack}
-						onClickContainer={position => {
-							playing_now(this.props.dispatch, {
-								position,
-								playing: true,
-								track: this.props.track,
-								owner: this.props.user
-							});
-						}}
+						onClickContainer={position => this.onTogglePlay(true, position)}
 					/>
 					<div>
 						<p class={styles.centered}>

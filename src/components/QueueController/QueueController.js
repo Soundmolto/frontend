@@ -2,6 +2,12 @@ let position = 0;
 let tracks = [];
 
 export class QueueController {
+
+	events = { 'set:tracks': tracks => {} };
+
+	on (event, handler) {
+		this.events[event] = handler;
+	}
 	
 	get tracks () {
 		return tracks.concat([]);
@@ -12,6 +18,7 @@ export class QueueController {
 			throw new Error('Tracks must be an array.');
 		}
 		tracks = t;
+		this.events['set:tracks'](tracks);
 	}
 
 	get current () {

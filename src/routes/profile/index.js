@@ -20,10 +20,6 @@ export default class Profile extends Component {
 
 	currentUrl = getCurrentUrl();
 
-	constructor (opts) {
-		super(opts);
-	}
-
 	componentDidMount () {
 		this.updateData();
 	}
@@ -60,7 +56,19 @@ export default class Profile extends Component {
 
 	// Handle the queue here.
 	onStartPlay (track) {
-
+		const { queue } = this.props;
+		const tracks = [].concat(this.tracks);
+		let i = 0;
+		for (const index in tracks) {
+			if (tracks[index].id === track.id) {
+				i = index;
+			}
+		}
+		if (i !== 0) {
+			tracks.splice(0, i);
+		}
+		queue.tracks = [].concat(tracks);
+		console.log(tracks);
 	}
 
 	render({ auth, user, viewedUser }) {
@@ -70,6 +78,8 @@ export default class Profile extends Component {
 		const tracks = viewedUser.tracks.sort((first, second) => {
 			return parseInt(second.createdAt) - parseInt(first.createdAt);
 		});
+
+		this.tracks = tracks.concat([]);
 
 		return (
 			<div class={style.profile}>
