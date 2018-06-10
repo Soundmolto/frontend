@@ -13,7 +13,6 @@ import { getCurrentUrl, route } from 'preact-router';
 import { UserFollowing } from '../../components/UserFollowing';
 import { TrackCard } from '../../components/TrackCard';
 import { USER } from '../../enums/user';
-import { compare } from '@jakejarrett/compare';
 
 let _following = false;
 
