@@ -52,7 +52,7 @@
 }
 
 .cardRoot {
-    padding: 20px 20px 10px 226px;
+    padding: 20px;
     box-shadow: 0 15px 20px -15px rgba(0, 0, 0, 0.35);
     border-radius: 10px;
     position: relative;
@@ -84,7 +84,6 @@
 }
 
 .date {
-    position: absolute;
     right: 20px;
     top: 20px;
     padding: 10px;
@@ -93,10 +92,10 @@
     font-size: 0.9rem;
     font-weight: 600;
     line-height: 0.9rem;
+    z-index: 2;
 }
 
 .cardRoot .image {
-    position: absolute;
     left: 0;
     top: 0;
     height: 100%;
@@ -114,4 +113,89 @@
     font-size: 3rem;
     text-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
     color: white;
+}
+
+@media screen and (min-width: 840px) {
+    .cardRoot {
+        padding: 20px 20px 10px 226px;
+    }
+
+    .date, .cardRoot .image {
+        position: absolute;
+    }
+
+    .overlayImage {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 839px) {
+    .cardRoot {
+        flex-direction: row;
+        flex-wrap: wrap;
+        min-height: 200px;
+        overflow: hidden;
+    }
+
+    .cardRoot .image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .cardRoot .image button {
+        display: none;
+    }
+
+    .displayName, .cardRoot .image {
+        display: inline;
+    }
+
+    .displayName {
+        padding: 10px;
+        border-radius: 10px;
+        display: inline;
+        margin-right: 10px;
+    }
+
+    .date {
+        margin-left: 10px;
+        text-align: right;
+    }
+
+    .displayName, .date {
+        max-width: 50%;
+        width: calc(50% - 10px);
+        margin-bottom: 0;
+        opacity: 1;
+        z-index: 3;
+        color: white;
+        background: transparent;
+    }
+
+    .hiddenMobile {
+        display: none;
+    }
+
+    .username {
+        width: 100%;
+        z-index: 3;
+        opacity: 1;
+        background: transparent;
+        max-width: 100%;
+        color: white;
+    }
+
+    .overlayImage {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 2;
+    }
 }

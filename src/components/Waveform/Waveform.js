@@ -200,7 +200,11 @@ export class Waveform extends Component {
 
 	componentWillUnmount () {
 		this.subscribed = false;
-		window.document.querySelector('audio').removeEventListener('timeupdate', this.onTimeUpdate.bind(this));
+		try {
+			window.document.querySelector('audio').removeEventListener('timeupdate', this.onTimeUpdate.bind(this));
+		} catch (e) {
+			console.error(e);
+		}
 	}
 
 	shouldComponentUpdate () {

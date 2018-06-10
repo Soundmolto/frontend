@@ -119,6 +119,7 @@ export class TrackCard extends Component {
 		return (
 			<div class={styles.card}>
 				<Card class={styles.cardRoot}>
+					<div class={styles.overlayImage} onClick={this.onClickPlayPause.bind(this)}></div>
 					<div class={styles.image} style={{ 'background-image': `url(${Goku})` }}>
 						<Button class={styles['play-button']} onClick={this.onClickPlayPause.bind(this)}>
 							<Icon>
@@ -161,7 +162,7 @@ export class TrackCard extends Component {
 						isCurrentTrack={isCurrentTrack}
 						onClickContainer={position => this.onTogglePlay(true, position)}
 					/>
-					<div>
+					<div class={styles.hiddenMobile}>
 						<p class={styles.centered}>
 							<Icon>headset</Icon> {this.plays}
 						</p>
