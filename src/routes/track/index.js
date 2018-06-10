@@ -52,7 +52,7 @@ export default class Profile extends Component {
 		queue.tracks = [].concat(tracks);
 	}
 
-	render({ auth, user, viewedUser, track }) {
+	render({ user, viewedUser, track }) {
 		const viewedTrack = track.track;
 		const trackOwner = track.user;
 		const tracks = viewedUser.tracks.sort((first, second) => parseInt(second.createdAt) - parseInt(first.createdAt));
