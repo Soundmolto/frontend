@@ -11,27 +11,18 @@ import { EditTrack } from "../EditTrack";
 @connect(({ auth }) => ({ auth }))
 export class UploadTrack extends Component {
 
-	state = { active: false, imageSrc: '', loaded: false, loading: false, editing: false, track_editing: null };
+	state = { imageSrc: '', loaded: false, loading: false, editing: false, track_editing: null };
 
-	onDragEnter(e) {
-		this.setState({ active: true });
-	}
-
-	onDragLeave(e) {
-		this.setState({ active: false });
-	}
-
-	onDragOver(e) { 
+	onDragOver (e) { 
 		e.preventDefault(); 
 	}
 
-	onDrop(e) {
+	onDrop (e) {
 		e.preventDefault();
-		this.setState({ active: false });
 		this.onFileChange(e, e.dataTransfer.files[0]);
 	}
 
-	async onFileChange(e, f) {
+	async onFileChange (e, f) {
 		const file = f || e.target.files[0];
 		const data = new FormData();
 		const { token } = this.props.auth;
@@ -53,15 +44,13 @@ export class UploadTrack extends Component {
 		this.setState({ loaded: true, loading: false, editing: true, track_editing: track })
 	}
 
-	render (props, { loading, active, editing, track_editing }) {
+	render (props, { loading, editing, track_editing }) {
 		let className = `${style.uploader} ${style.center}`;
 
 		return (
 			<div class={style.root}>
 			{loading === false && editing === false && (
 				<label className={className}
-					onDragEnter={this.onDragEnter.bind(this)}
-					onDragLeave={this.onDragLeave.bind(this)}
 					onDragOver={this.onDragOver.bind(this)}
 					onDrop={this.onDrop.bind(this)}>
 					
