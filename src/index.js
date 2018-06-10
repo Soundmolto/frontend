@@ -48,7 +48,7 @@ class HotKeysHOC extends Component {
 const Main = () => (
 	<Provider store={store}>
 		<HotKeysHOC>
-			<App />
+			<App store={store} />
 		</HotKeysHOC>
 	</Provider>
 );

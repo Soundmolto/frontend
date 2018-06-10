@@ -41,12 +41,10 @@
     "preact-redux": "^2.0.3",
     "preact-router": "^2.5.5",
     "react-hotkeys": "^1.1.4",
-    "react-wavesurfer": "^0.8.6",
     "redux": "^3.7.2",
     "redux-localstorage": "^0.4.1",
     "redux-promise-middleware": "^5.0.0",
     "timeago-react": "^2.0.0",
-    "timeago.js": "^3.0.2",
-    "wavesurfer.js": "^1.4.0"
+    "timeago.js": "^3.0.2"
   }
 }

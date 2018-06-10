@@ -55,7 +55,7 @@ export default class App extends Component {
 		return this.currentUrl;
 	}
 
-	render ({ UI }) {
+	render ({ UI, store }) {
 		const url = this.get_current_route.bind(this);
 
 		onRender(UI);
@@ -73,7 +73,7 @@ export default class App extends Component {
 						We should look at re-merging these routes in the future.
 					*/}
 					{/* <MyProfile path="/me" key="my-profile" audioContext={this.audioContext} /> */}
-					<Profile path="/:vanity_url" key="profile" audioContext={this.audioContext} queue={queue} />
+					<Profile path="/:vanity_url" key="profile" audioContext={this.audioContext} queue={queue} store={store} />
 					<Track path="/:vanity_url/:track_url" key="track" audioContext={this.audioContext} queue={queue} />
 				</Router>
 				<Footer ref={e => (this.footer = e)} audioContext={this.audioContext} queue={queue} />

@@ -12,6 +12,8 @@ import { UserFollowers } from '../../components/UserFollowers';
 import { getCurrentUrl, route } from 'preact-router';
 import { UserFollowing } from '../../components/UserFollowing';
 import { TrackCard } from '../../components/TrackCard';
+import { USER } from '../../enums/user';
+import { compare } from '@jakejarrett/compare';
 
 let _following = false;
 
@@ -25,11 +27,16 @@ export default class Profile extends Component {
 	}
 
 	updateData () {
-		const { auth, dispatch, vanity_url } = this.props;
+		const { auth, vanity_url } = this.props;
 		fetch_user(this.props.dispatch.bind(this), { token: auth.token, vanity_url });
 		this.currentUrl = getCurrentUrl();
 	}
 
+	/**
+	 * Check whether you are currently following this user.
+	 * 
+	 * @param {Object} user - You / The currently logged in user.
+	 */
 	following (user) {
 		let r = false;
 		if (user.followers.length >= 1) {
@@ -45,16 +52,23 @@ export default class Profile extends Component {
 		return r;
 	}
 
+	/**
+	 * Toggle the following status.
+	 */
 	toggle_following () {
-		const { auth, dispatch, viewedUser } = this.props;
+		const { auth, viewedUser } = this.props;
 		if (_following) {
-			unfollow_user(dispatch.bind(this), { token: auth.token, user: viewedUser });
+			unfollow_user(this.props.dispatch.bind(this), { token: auth.token, user: viewedUser });
 		} else {
-			follow_user(dispatch.bind(this), { token: auth.token, user: viewedUser });
+			follow_user(this.props.dispatch.bind(this), { token: auth.token, user: viewedUser });
 		}
 	}
 
-	// Handle the queue here.
+	/**
+	 * When the user starts playing a track.
+	 * 
+	 * @param {Object} track - Currently playing track
+	 */
 	onStartPlay (track) {
 		const { queue } = this.props;
 		const tracks = [].concat(this.tracks);
@@ -68,17 +82,27 @@ export default class Profile extends Component {
 			tracks.splice(0, i);
 		}
 		queue.tracks = [].concat(tracks);
-		console.log(tracks);
+	}
+
+	componentWillUpdate () {
+		const state = this.props.store.getState();
+		const viewed = Object.assign({}, state.viewedUser);
+		const user = Object.assign({}, state.user);
+		delete viewed.found;
+		const are_same = JSON.stringify(viewed) === JSON.stringify(user); // lol..
+		if (state.user.profile.url === this.props.vanity_url && false === are_same) {
+			console.log('ay woah');
+			this.props.dispatch({
+                type: USER.VIEW_PROFILE,
+                payload: state.user
+            });
+		}
 	}
 
 	render({ auth, user, viewedUser }) {
 		const following = this.following(viewedUser);
 		if (this.currentUrl !== getCurrentUrl()) this.updateData();
-		
-		const tracks = viewedUser.tracks.sort((first, second) => {
-			return parseInt(second.createdAt) - parseInt(first.createdAt);
-		});
-
+		const tracks = viewedUser.tracks.sort((first, second) => parseInt(second.createdAt) - parseInt(first.createdAt));
 		this.tracks = tracks.concat([]);
 
 		return (
