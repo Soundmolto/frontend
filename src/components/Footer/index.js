@@ -217,7 +217,7 @@ export default class Footer extends Component {
 									'transform': `translateX(${this.__currentPos / this.duration* parentWidth}px)`
 								}} ref={e => (this.thumb = e)}></div>
 							</div>
-							<div class={styles.artwork}><img src={currently_playing.owner.profile.profilePicture || Goku} /></div>
+							<div class={styles.artwork}><img src={currently_playing && currently_playing.owner && currently_playing.owner.profile.profilePicture || Goku} /></div>
 							<div class={styles.songInfo}>
 								<p>
 									<span>{currently_playing.owner && currently_playing.owner.profile && (
