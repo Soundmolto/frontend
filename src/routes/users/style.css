@@ -27,4 +27,6 @@
 .profile > div > [class="mdc-card"] {
 	border-radius: 10px;
 	padding: 20px;
+	position: relative;
+	overflow: hidden;
 }
