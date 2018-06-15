@@ -88,6 +88,8 @@ export default class Footer extends Component {
 							owner = null;
 						}
 						playing_now(dispatch, { playing: true, position, track, owner });
+					} else {
+						playing_now(dispatch, { playing: false, position, track: currently_playing.track, owner });
 					}
 				})
 			});
@@ -107,7 +109,6 @@ export default class Footer extends Component {
 			this.audioPlayer.addEventListener('timeupdate', this.onPosChange.bind(this));
 			requestAnimationFrame(_ => {
 				this.audioPlayer.play();
-				console.log(currently_playing.track);
 				this.audioPlayer.currentTime = this.tracks[currently_playing.track.id] || currently_playing.position || 0;
 			});
 		} else {
