@@ -13,10 +13,10 @@ export class UserCard extends Component {
                     <div class={styles.overlayImage}></div>
                     <div class={styles.profile} style={{ "background-image": `url(${user.profile.profilePicture})` }}></div>
                     <div style={{ 'z-index': 3 }}>
-                        <h2 class=" mdc-typography--title">
+                        <h2 class={`mdc-typography--title ${styles.typography}`}>
                             {user.profile.displayName || "Untitled user"}
                         </h2>
-                        <div class=" mdc-typography--caption" style={{ 'word-break': 'break-all' }}>
+                        <div class={`mdc-typography--caption ${styles.typography}`} style={{ 'word-break': 'break-all' }}>
                             {user.profile.description || "No description"}
                         </div>
                     </div>

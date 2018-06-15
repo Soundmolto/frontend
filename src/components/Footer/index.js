@@ -20,10 +20,10 @@ export default class Footer extends Component {
 		super (opts);
 		this.queue = this.props.queue;
 		this.queue.on('set:tracks', tracks => {
-			console.log(tracks);
-		})
-
-		console.log(this.queue.events);
+			// for (const track of tracks) {
+			// 	this.tracks[track.id] = 0;
+			// }
+		});
 	}
 
 	onPosChange () {
@@ -94,18 +94,24 @@ export default class Footer extends Component {
 		}
 	}
 
-	componentWillUpdate ({ currently_playing }) {
+	componentDidUpdate () {
+		const { currently_playing } = this.props;
+		let { audioPlayer } = this;
+		if (audioPlayer == null && window.document.querySelector('audio') != null) {
+			audioPlayer = window.document.querySelector('audio');
+		}
 		if (currently_playing.playing === true) {
 			if (currently_playing.position != null) {
-				this.tracks[this.props.currently_playing.track.id] = currently_playing.position;
+				this.tracks[currently_playing.track.id] = currently_playing.position;
 			}
 			this.audioPlayer.addEventListener('timeupdate', this.onPosChange.bind(this));
 			requestAnimationFrame(_ => {
 				this.audioPlayer.play();
-				this.audioPlayer.currentTime = this.tracks[this.props.currently_playing.track.id] || currently_playing.position || 0;
+				console.log(currently_playing.track);
+				this.audioPlayer.currentTime = this.tracks[currently_playing.track.id] || currently_playing.position || 0;
 			});
 		} else {
-			this.tracks[this.props.currently_playing.track.id] = this.audioPlayer.currentTime;
+			this.tracks[currently_playing.track.id] = this.audioPlayer.currentTime;
 			this.audioPlayer.pause();
 		}
 	}

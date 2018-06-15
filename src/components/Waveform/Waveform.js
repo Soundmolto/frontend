@@ -35,22 +35,30 @@ export class Waveform extends Component {
 			});
 
 			store.subscribe(_ => {
-				const state = Object.assign({}, store.getState());
+				window.requestAnimationFrame(_ => {
+					const state = Object.assign({}, store.getState());
+					const audioEl = window.document.querySelector('audio');
 
-				if (state.UI.theme !== initialState.UI.theme) {
-					initialState = state;
-					this.loadData();
-				}
+					if (state.UI.theme !== initialState.UI.theme) {
+						initialState = state;
+						this.loadData();
+					}
 
-				if (state.currently_playing.playing === true && state.currently_playing.track.id === this.props.data.id) {
-					this.subscribed = true;
-					window.document.querySelector('audio').addEventListener('timeupdate', this.onTimeUpdate.bind(this));
-				}
-				
-				if (this.subscribed && state.currently_playing.track.id !== this.props.data.id) {
-					this.subscribed = false;
-					window.document.querySelector('audio').removeEventListener('timeupdate', this.onTimeUpdate.bind(this));
-				}
+					if (state.currently_playing.playing === true && state.currently_playing.track.id === this.props.data.id) {
+						this.subscribed = true;
+						
+						if (audioEl != null) {
+							audioEl.addEventListener('timeupdate', this.onTimeUpdate.bind(this));
+						}
+					}
+					
+					if (this.subscribed && state.currently_playing.track.id !== this.props.data.id) {
+						this.subscribed = false;
+						if (audioEl != null) {
+							audioEl.removeEventListener('timeupdate', this.onTimeUpdate.bind(this));
+						}
+					}
+				});
 			});
 		}
 	}
@@ -201,7 +209,10 @@ export class Waveform extends Component {
 	componentWillUnmount () {
 		this.subscribed = false;
 		try {
-			window.document.querySelector('audio').removeEventListener('timeupdate', this.onTimeUpdate.bind(this));
+			const audioEl = window.document.querySelector('audio');
+			if (audioEl != null) {
+				audioEl.removeEventListener('timeupdate', this.onTimeUpdate.bind(this));
+			}
 		} catch (e) {
 			console.error(e);
 		}
