@@ -26,7 +26,7 @@
 
 @media screen and (max-width: 768px) {
 	.home > a {
-		width: calc(100% - 40px);
+		width: 100%;
 	}
 }
 
