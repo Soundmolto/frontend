@@ -3,7 +3,7 @@
 	min-height: 100%;
 	width: 100%;
 	display: flex;
-	justify-content: center;
+	justify-content: flex-start;
 	align-content: center;
 	flex-wrap: wrap;
 }
