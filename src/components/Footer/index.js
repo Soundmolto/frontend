@@ -87,7 +87,6 @@ export default class Footer extends Component {
 
 	componentDidMount () {
 		if (this.props.currently_playing.track != null) {
-			console.log(this.queue.first())
 			const { currently_playing, dispatch } = this.props;
 			const position = 0;
 
@@ -257,7 +256,7 @@ export default class Footer extends Component {
 									'transform': `translateX(${this.__currentPos / this.duration* parentWidth}px)`
 								}} ref={e => (this.thumb = e)}></div>
 							</div>
-							<div class={styles.artwork}><img src={currently_playing && currently_playing.owner && currently_playing.track.user.profilePicture || Goku} /></div>
+							<div class={styles.artwork}><img src={currently_playing && currently_playing.track && currently_playing.track.user && currently_playing.track.user.profilePicture || Goku} /></div>
 							<div class={styles.songInfo}>
 								<p>
 									<span>{currently_playing.owner && currently_playing.track.user && (
