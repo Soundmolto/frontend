@@ -17,12 +17,23 @@
 }
 
 .home > a {
-	width: calc(calc(100% / 4) - 40px);
 	margin: 20px;
 	text-decoration: none;
 	display: block;
 	transform: translateY(0);
 	transition: transform 0.3s ease-in-out;
+}
+
+@media screen and (max-width: 768px) {
+	.home > a {
+		width: calc(100% - 40px);
+	}
+}
+
+@media screen and (min-width: 768px) {
+	.home > a {
+		width: calc(calc(100% / 4) - 40px);
+	}
 }
 
 .home > a:hover {
