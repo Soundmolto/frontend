@@ -29,6 +29,7 @@ export default class Footer extends Component {
 	}
 
 	updateQueue (queue) {
+		console.log(queue);
 		// Dispatch to server that queue has been updated, and the list of track ids.
 	}
 

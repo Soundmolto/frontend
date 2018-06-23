@@ -1,20 +1,16 @@
 import { h, Component } from 'preact';
-import Button from 'preact-material-components/Button';
-import LayoutGrid from 'preact-material-components/LayoutGrid';
 import 'preact-material-components/LayoutGrid/style.css';
 import 'preact-material-components/Button/style.css';
 import { connect } from 'preact-redux';
 import { get_track } from '../../actions/track';
 import style from './style';
-import { UserDescription } from '../../components/UserDescription';
-import { UserPictureName } from '../../components/UserPictureName';
-import { UserFollowers } from '../../components/UserFollowers';
 import { getCurrentUrl, route } from 'preact-router';
-import { UserFollowing } from '../../components/UserFollowing';
 import { TrackCard } from '../../components/TrackCard';
 
 @connect(state => state)
 export default class Profile extends Component {
+
+	tracks = [];
 
 	currentUrl = getCurrentUrl();
 
@@ -50,13 +46,17 @@ export default class Profile extends Component {
 			tracks.splice(0, i);
 		}
 		queue.tracks = [].concat(tracks);
+
+		console.log(queue.tracks);
 	}
 
 	render({ user, viewedUser, track }) {
 		const viewedTrack = track.track;
 		const trackOwner = track.user;
 		const tracks = viewedUser.tracks.sort((first, second) => parseInt(second.createdAt) - parseInt(first.createdAt));
-		this.tracks = tracks.concat([]);
+		this.tracks = [track.track].concat(tracks);
+
+		console.log(this.tracks);
 
 		return (
 			<div class={style.profile}>
