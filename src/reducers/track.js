@@ -1,4 +1,5 @@
 import { USER } from '../enums/user';
+import { TRACK } from '../enums/track';
 
 export default function reducer (state = { track: null, user: null }, action) {
     switch (action.type) {

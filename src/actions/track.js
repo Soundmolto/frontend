@@ -122,3 +122,33 @@ export function playing_now (dispatch, { playing, position, track, owner }) {
 export function update_position (dispatch, { playing, position, track, owner }) {
 	return dispatch({ type: TRACK.POS_CHANGE, payload: { position, track, owner } })
 }
+
+export async function get_discover_tracks (dispatch) {
+    let returnObject = {};
+    let error = {};
+
+    try {
+        const data = await fetch(`${API_ENDPOINT}/discover`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (data.status === 200) {
+            returnObject = {
+                type: TRACK.HAS_DISCOVER_TRACKS,
+                payload: await data.json()
+            }
+        } else {
+            error = data;
+            throw new Error(data.statusText);
+        }
+    } catch (error) {
+        console.error(error);
+    } finally {
+        console.log(returnObject);
+        dispatch(returnObject);
+    }
+
+}

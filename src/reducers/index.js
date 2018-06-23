@@ -6,6 +6,7 @@ import viewedUser from './viewed-user';
 import UI from './ui';
 import currently_playing from './currently-playing';
 import track from './track';
+import discover from './discover';
 
 export default combineReducers({
     auth,
@@ -15,4 +16,5 @@ export default combineReducers({
 	UI,
     currently_playing,
     track,
+    discover
 });

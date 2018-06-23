@@ -2,6 +2,10 @@
 	padding: 20px;
 	min-height: 100%;
 	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	flex-wrap: wrap;
 }
 
 .cardHeader {
@@ -10,4 +14,26 @@
 
 .cardBody {
 	padding: 16px
+}
+
+.home > div {
+	width: calc(50% - 40px);
+	margin: 20px;
+}
+
+.home {
+	padding: 0 20px 20px;
+}
+
+.home h1.mainHeader {
+	font-size: 1.3rem;
+}
+
+.home [class="mdc-card"] {
+	padding: 20px;
+}
+
+.home [class="mdc-card"] h2 {
+	margin-top: 0;
+	font-size: 0.9rem !important;
 }
