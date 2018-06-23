@@ -240,6 +240,17 @@ export default class Footer extends Component {
 								))}
 							</ul>
 						)}
+						{this.queue.tracks.length <= 0 && (
+							<ul>
+								<li>
+									<div class={styles.flex}>
+										<div>
+											Nothing present in the queue yet!
+										</div>
+									</div>
+								</li>
+							</ul>
+						)}
 					</div>
 					<div class={styles.footer} ref={e => (this.desktopFooter = e)}>
 						<div class={styles.start}>
