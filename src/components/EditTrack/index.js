@@ -29,6 +29,9 @@ export class EditTrack extends Component {
 		e.preventDefault();
 		const id = this.props.track.id;
 		edit_track(this.props.dispatch, { token: this.props.auth.token, track: { ...state }, id });
+		if (this.props.onSubmit) {
+			this.props.onSubmit();
+		}
 		return true;
 	}
 

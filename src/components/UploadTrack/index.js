@@ -8,10 +8,12 @@ import { connect } from "preact-redux";
 import { USER } from "../../enums/user";
 import { EditTrack } from "../EditTrack";
 
+const get_default_state = () => Object.assign({}, { imageSrc: '', loaded: false, loading: false, editing: false, track_editing: null });
+
 @connect(({ auth }) => ({ auth }))
 export class UploadTrack extends Component {
 
-	state = { imageSrc: '', loaded: false, loading: false, editing: false, track_editing: null };
+	state = get_default_state();
 
 	onDragOver (e) { 
 		e.preventDefault(); 
@@ -63,7 +65,7 @@ export class UploadTrack extends Component {
 				<LinearProgress indeterminate={true} />
 			)}
 			{loading === false && editing === true && (
-				<EditTrack track={track_editing} />
+				<EditTrack track={track_editing} onSubmit={e => this.setState(get_default_state())} />
 			)}
 			</div>
 		);

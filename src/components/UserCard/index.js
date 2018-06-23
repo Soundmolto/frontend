@@ -2,11 +2,12 @@ import { Component } from 'preact';
 import Card from 'preact-material-components/Card';
 import 'preact-material-components/Card/style.css';
 import 'preact-material-components/Button/style.css';
-import { Link } from 'preact-router';
+import { Link, route } from 'preact-router';
 import styles from './style.css';
 
 export class UserCard extends Component {
     render ({ user }) {
+		const buttonClass = `mdc-card__action mdc-button mdc-card__action--button`;
         return (
             <div>
                 <Card>
@@ -21,7 +22,7 @@ export class UserCard extends Component {
                         </div>
                     </div>
                     <Card.Actions style={{ 'z-index': 3 }}>
-                        <Link className="mdc-card__action mdc-button mdc-card__action--button" style="width: 100%" href={`/${user.profile.url}`}>View Profile</Link>
+                        <Link className={buttonClass} style="width: 100%" href={`/${user.profile.url}`}>View Profile</Link>
                     </Card.Actions>
                 </Card>
             </div>

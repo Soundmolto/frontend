@@ -16,14 +16,24 @@ export default class Footer extends Component {
 	__currentPos = 0;
 	tracks = {};
 
+	queuePanelRef = e => (this.queuePanel = e);
+
 	constructor (opts) {
 		super (opts);
 		this.queue = this.props.queue;
-		this.queue.on('set:tracks', tracks => {
-			// for (const track of tracks) {
-			// 	this.tracks[track.id] = 0;
-			// }
-		});
+		this.queue.on('set:tracks', tracks => this.updateQueue(tracks));
+	}
+
+	isCurrentlyPlayingNotEmpty (currently_playing) {
+		return currently_playing.track != null;
+	}
+
+	updateQueue (queue) {
+		// Dispatch to server that queue has been updated, and the list of track ids.
+	}
+
+	toggleQueuePanel () {
+		this.queuePanel.classList.toggle(styles.show);
 	}
 
 	onPosChange () {
@@ -45,22 +55,26 @@ export default class Footer extends Component {
 
 	onClickPlay () {
 		const { currently_playing, dispatch } = this.props;
-		playing_now(dispatch, {
-			playing: true,
-			position: currently_playing.position,
-			track: currently_playing.track,
-			owner: currently_playing.owner
-		});
+		if (this.isCurrentlyPlayingNotEmpty(currently_playing)) {
+			playing_now(dispatch, {
+				playing: true,
+				position: currently_playing.position,
+				track: currently_playing.track,
+				owner: currently_playing.owner
+			});
+		}
 	}
 
 	onClickPause () {
 		const { currently_playing, dispatch } = this.props;
-		playing_now(dispatch, {
-			playing: false,
-			position: this.__currentPos,
-			track: currently_playing.track,
-			owner: currently_playing.owner
-		})
+		if (this.isCurrentlyPlayingNotEmpty(currently_playing)) {
+			playing_now(dispatch, {
+				playing: false,
+				position: this.__currentPos,
+				track: currently_playing.track,
+				owner: currently_playing.owner
+			});
+		}
 	}
 
 	onClickTrackBar (e) {
@@ -188,7 +202,7 @@ export default class Footer extends Component {
 						<div class={styles.start}>
 							<div class={styles.songInfo}>
 								<p>
-									<span>{currently_playing.owner && currently_playing.owner.profile && (currently_playing.owner.profile.displayName || currently_playing.owner.profile.url)}</span>
+									<span>{currently_playing.owner && currently_playing.track.user && (currently_playing.track.user.displayName || currently_playing.track.user.url)}</span>
 									<span>{currently_playing && currently_playing.track && currently_playing.track.name}</span>
 								</p>
 							</div>
@@ -196,19 +210,38 @@ export default class Footer extends Component {
 						<div class={styles.end}>
 						{!playing && (
 							<Button ripple className={`${styles.button}`} onClick={this.onClickPlay.bind(this)}>
-									<Icon style={{ margin: 0 }} >play_arrow</Icon>
+								<Icon style={{ margin: 0 }} >play_arrow</Icon>
 							</Button>
 						)}
 
 						{playing && (
 							<Button ripple className={`${styles.button}`} onClick={this.onClickPause.bind(this)}>
-									<Icon style={{ margin: 0 }} >pause</Icon>
+								<Icon style={{ margin: 0 }} >pause</Icon>
 							</Button>
 						)}
 						</div>
 					</div>
 				</div>
 				<div class={styles.notMobile}>
+					<div class={styles.queuePanel} ref={this.queuePanelRef}>
+						{this.queue.tracks.length >= 1 && (
+							<ul>
+								{this.queue.tracks.map(track => (
+									<li>
+										<div class={styles.flex}>
+											<a title={track.name} href={`/${track.user.url}/${track.url}`}>
+												{track.name}
+											</a>
+											-
+											<a href={`/${track.user.url}`}>
+												{track.user && (track.user.displayName || track.user.url || "N/A")}
+											</a>
+										</div>
+									</li>
+								))}
+							</ul>
+						)}
+					</div>
 					<div class={styles.footer} ref={e => (this.desktopFooter = e)}>
 						<div class={styles.start}>
 							<div class={styles.trackBar} onClick={this.onClickTrackBar.bind(this)}
@@ -224,16 +257,16 @@ export default class Footer extends Component {
 									'transform': `translateX(${this.__currentPos / this.duration* parentWidth}px)`
 								}} ref={e => (this.thumb = e)}></div>
 							</div>
-							<div class={styles.artwork}><img src={currently_playing && currently_playing.owner && currently_playing.owner.profile.profilePicture || Goku} /></div>
+							<div class={styles.artwork}><img src={currently_playing && currently_playing.owner && currently_playing.track.user.profilePicture || Goku} /></div>
 							<div class={styles.songInfo}>
 								<p>
-									<span>{currently_playing.owner && currently_playing.owner.profile && (
-										<a href={`/${currently_playing.owner.profile.url}`} class={styles.artist}>
-											{currently_playing.owner.profile.displayName}
+									<span>{currently_playing.owner && currently_playing.track.user && (
+										<a href={`/${currently_playing.track.user.url}`} class={styles.artist}>
+											{currently_playing.track.user.displayName || currently_playing.track.user.url || "N/A"}
 										</a>
 									)}</span>
 									<span>{currently_playing && currently_playing.track && (
-										<a href={`/${currently_playing.owner.profile.url}/${currently_playing.track.url}`}>
+										<a href={`/${currently_playing.track.user.url}/${currently_playing.track.url}`}>
 											{currently_playing.track.name}
 										</a>
 									)}</span>
@@ -251,13 +284,13 @@ export default class Footer extends Component {
 							
 							{!playing && (
 								<Button ripple className={`${styles.button}`} onClick={this.onClickPlay.bind(this)}>
-										<Icon style={{ margin: 0 }} >play_arrow</Icon>
+									<Icon style={{ margin: 0 }}>play_arrow</Icon>
 								</Button>
 							)}
 
 							{playing && (
 								<Button ripple className={`${styles.button}`} onClick={this.onClickPause.bind(this)}>
-										<Icon style={{ margin: 0 }} >pause</Icon>
+									<Icon style={{ margin: 0 }}>pause</Icon>
 								</Button>
 							)}
 							<Button ripple className={`${styles.button}`}>
@@ -266,7 +299,15 @@ export default class Footer extends Component {
 							<p>{seconds_to_time(duration).rendered}</p>
 						</div>
 						<div class={styles.end}>
-							[Placeholder for extra controls]
+							<Button ripple className={`${styles.button}`} onClick={e => console.log(e)}>
+								<Icon style={{ margin: 0 }}>volume_up</Icon>
+							</Button>
+							<Button ripple className={`${styles.button}`} onClick={this.toggleQueuePanel.bind(this)}>
+								<Icon style={{ margin: 0 }}>queue_music</Icon>
+							</Button>
+							<Button ripple className={`${styles.button}`} onClick={e => console.log(e)}>
+								<Icon style={{ margin: 0 }}>shuffle</Icon>
+							</Button>
 						</div>
 					</div>
 				</div>

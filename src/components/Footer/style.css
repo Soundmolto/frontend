@@ -111,14 +111,14 @@
 	justify-content: center;
 }
 
-.footer .middle .button {
+.footer .button {
 	width: 48px;
 	height: 48px;
 	color: var(--mdc-theme-primary-font);
 	display: flex;
 }
 
-.footer .middle .button i {
+.footer .button i {
 	color: var(--mdc-theme-primary-font);
 }
 
@@ -168,25 +168,69 @@
 }
 
 .footer .songInfo a:hover, .footer .songInfo a:active, .footer .songInfo a:focus {
-    color: var(--mdc-theme-complementary-color);
+	color: var(--mdc-theme-complementary-color);
 }
 
 .tooltip {
-    position: absolute;
-    left: 0;
-    top: -35px;
-    transform: translateX(0);
-    background: rgba(0, 0, 0, 0.7);
-    padding: 10px;
-    z-index: 3;
-    color: white;
-    font-size: 0.9rem;
-    border-radius: 10px;
-    opacity: 0;
-    transition: opacity 0.2s ease-in-out;
-    will-change: opacity;
+	position: absolute;
+	left: 0;
+	top: -35px;
+	transform: translateX(0);
+	background: rgba(0, 0, 0, 0.7);
+	padding: 10px;
+	z-index: 3;
+	color: white;
+	font-size: 0.9rem;
+	border-radius: 10px;
+	opacity: 0;
+	transition: opacity 0.2s ease-in-out;
+	will-change: opacity;
 }
 
 .tooltip.show {
-    opacity: 1;
+	opacity: 1;
+}
+
+.queuePanel {
+	height: calc(100vh - 148px);
+	z-index: 3;
+	width: 350px;
+	background: var(--mdc-theme-background);
+	position: fixed;
+	top: 64px;
+	right: 0;
+	box-shadow: -2px 0 4px rgba(0, 0, 0, 0.2);
+	transition: transform 0.3s ease-in-out;
+	transform: translateX(350px);
+}
+
+.queuePanel li {
+	list-style: decimal;
+	font-size: 0.8rem;
+	font-weight: 600;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+	padding: 10px 0;
+}
+
+.queuePanel li .flex {
+	display: flex;
+	align-content: center;
+	width: 100%;
+}
+
+.queuePanel li .flex > a {
+	max-width: calc(50% - 5px);
+	display: inline-block;
+	width: calc(50% - 5px);
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: pre;
+	padding: 0 10px;
+	color: var(--mdc-theme-text-primary-on-background);
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.queuePanel.show {
+	transform: translateX(0);
 }
