@@ -8,6 +8,7 @@ import { Link } from 'preact-router';
 import { shortcuts } from '../../shortcuts';
 import { get_discover_tracks } from '../../actions/track';
 import { connect } from 'preact-redux';
+import { DiscoverCard } from '../../components/DiscoverCard';
 
 @connect(({ discover }) => ({ discover }))
 export default class Home extends Component {
@@ -16,23 +17,17 @@ export default class Home extends Component {
 		get_discover_tracks(this.props.dispatch);
 	}
 
-	onStartPlay (e) {
-		console.log("wooo");
-	}
-
 	render ({ discover }) {
 		return (
 			<div>
 				<div class="header">
 					<h1>
-						Home
+						Discover
 					</h1>
 				</div>
 				<div class={style.home}>
-					{console.log(discover)}
 					{discover.map(track => (
-						<TrackCard track={track} user={{ profile: track.user }} currentUser={{ profile: {} }} key={track.id} onStartPlay={this.onStartPlay.bind(this)}
-							isCurrentTrack={false} />
+						<DiscoverCard track={track} user={track.user} />
 					))}
 				</div>
 			</div>
