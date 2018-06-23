@@ -259,12 +259,12 @@ export default class Footer extends Component {
 							<div class={styles.artwork}><img src={currently_playing && currently_playing.track && currently_playing.track.user && currently_playing.track.user.profilePicture || Goku} /></div>
 							<div class={styles.songInfo}>
 								<p>
-									<span>{currently_playing.owner && currently_playing.track.user && (
+									<span>{currently_playing.track && currently_playing.track.user && (
 										<a href={`/${currently_playing.track.user.url}`} class={styles.artist}>
 											{currently_playing.track.user.displayName || currently_playing.track.user.url || "N/A"}
 										</a>
 									)}</span>
-									<span>{currently_playing && currently_playing.track && (
+									<span>{currently_playing && currently_playing.track && currently_playing.track.user && (
 										<a href={`/${currently_playing.track.user.url}/${currently_playing.track.url}`}>
 											{currently_playing.track.name}
 										</a>
