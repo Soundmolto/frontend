@@ -18,6 +18,7 @@ export default class Home extends Component {
 	}
 
 	render ({ discover }) {
+		const sorted = discover.sort((aTrack, bTrack) => parseInt(bTrack.createdAt) - parseInt(aTrack.createdAt));
 		return (
 			<div>
 				<div class="header">
@@ -26,7 +27,7 @@ export default class Home extends Component {
 					</h1>
 				</div>
 				<div class={style.home}>
-					{discover.map(track => (
+					{sorted.map(track => (
 						<DiscoverCard track={track} user={track.user} />
 					))}
 				</div>

@@ -3,7 +3,9 @@ import Goku from '../../assets/goku.png';
 import styles from './style';
 import Icon from 'preact-material-components/Icon';
 import Button from 'preact-material-components/Button';
+import Slider from 'preact-material-components/Slider';
 import 'preact-material-components/Button/style.css';
+import 'preact-material-components/Slider/style.css';
 import { connect } from "preact-redux";
 import { seconds_to_time } from "../../utils/seconds-to-time";
 import { playing_now } from '../../actions/track';
@@ -15,8 +17,11 @@ export default class Footer extends Component {
 	duration = 0;
 	__currentPos = 0;
 	tracks = {};
+	volume = 1;
 
 	queuePanelRef = e => (this.queuePanel = e);
+	volumePanelRef = e => (this.volumePanel = e);
+	volumeSliderRef = e => (this.volumeSlider = e);
 
 	constructor (opts) {
 		super (opts);
@@ -180,6 +185,13 @@ export default class Footer extends Component {
 		this.mouseDown = false;
 	}
 
+	getArtwork () {
+		const currently_playing = this.props.currently_playing || {};
+		const userAvatar = currently_playing.track && currently_playing.track.user && currently_playing.track.user.profilePicture;
+		const trackArtwork = currently_playing.track && currently_playing.track.artwork;
+		return trackArtwork || userAvatar || Goku;
+	}
+
 	render ({ currently_playing }) {
 		let amount = 0;
 		let duration = 0;
@@ -268,7 +280,7 @@ export default class Footer extends Component {
 									'transform': `translateX(${this.__currentPos / this.duration* parentWidth}px)`
 								}} ref={e => (this.thumb = e)}></div>
 							</div>
-							<div class={styles.artwork}><img src={currently_playing && currently_playing.track && currently_playing.track.user && currently_playing.track.user.profilePicture || Goku} /></div>
+							<div class={styles.artwork}><img src={this.getArtwork()} /></div>
 							<div class={styles.songInfo}>
 								<p>
 									<span>{currently_playing.track && currently_playing.track.user && (
@@ -310,7 +322,15 @@ export default class Footer extends Component {
 							<p>{seconds_to_time(duration).rendered}</p>
 						</div>
 						<div class={styles.end}>
-							<Button ripple className={`${styles.button}`} onClick={e => console.log(e)}>
+							<div class={styles.volumePanel} ref={this.volumePanelRef}>
+								<Slider step={2} value={this.volume * 100} max={100} discrete={true} ref={this.volumeSliderRef} onInput={e => {
+									this.volume = this.volumeSlider.getValue() / 100;
+									this.audioPlayer.volume = this.volume;
+								}} />
+							</div>
+							<Button ripple className={`${styles.button}`} onClick={e => {
+								this.volumePanel.classList.toggle(styles.show);
+							}}>
 								<Icon style={{ margin: 0 }}>volume_up</Icon>
 							</Button>
 							<Button ripple className={`${styles.button}`} onClick={this.toggleQueuePanel.bind(this)}>
@@ -323,7 +343,7 @@ export default class Footer extends Component {
 					</div>
 				</div>
 				{currently_playing != null && currently_playing.track != null && (
-					<audio src={currently_playing.track.stream_url} ref={e => (this.audioPlayer = e)} />
+					<audio src={currently_playing.track.stream_url} ref={e => (this.audioPlayer = e)} volume={this.volume} />
 				)}
 			</div>
 		);

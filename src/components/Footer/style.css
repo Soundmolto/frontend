@@ -91,7 +91,7 @@
 .footer .start, .footer .middle, .footer .end {
 	display: flex;
 	color: var(--mdc-theme-primary-font);
-	overflow: hidden;
+	overflow: visible;
 }
 
 .notMobile .start, .notMobile .middle, .notMobile .end {
@@ -233,4 +233,15 @@
 
 .queuePanel.show {
 	transform: translateX(0);
+}
+
+.volumePanel {
+	margin-right: 10px;
+	width: 200px;
+	opacity: 0;
+	transition: all 0.3s ease-in-out;
+}
+
+.volumePanel.show {
+	opacity: 1;
 }

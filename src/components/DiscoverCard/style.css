@@ -32,10 +32,19 @@
 	font-weight: 600;
 }
 
-h2.typography {
+h2.typography, h3.typography {
 	margin: 0 0 10px;
 }
 
-h3.typography {
-	margin: 0;
+
+p.typography {
+    display: flex;
+    align-content: center;
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+p.typography > i {
+    font-size: 0.9rem;
+    margin-right: 5px;
 }
