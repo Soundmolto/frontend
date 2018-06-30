@@ -3,6 +3,8 @@ import raf from 'raf';
 import debounce from 'lodash.debounce';
 import { API_ENDPOINT } from "../../api";
 import styles from './style.css';
+import { prefill_auth } from "../../prefill-authorized-route";
+import Goku from '../../assets/goku.png';
 
 export class Search extends Component {
 
@@ -21,7 +23,8 @@ export class Search extends Component {
 				method: "POST",
 				headers: {
 					'Accept': 'application/json',
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
+					...prefill_auth(this.props.token)
 				}
 			});
 
@@ -49,8 +52,14 @@ export class Search extends Component {
 		if (e.key === 'Escape') return this.close();
 		debounce(_ => {
 			raf(_ => {
-				this.setState({ loading: true });
-				this.searchValue(value);
+				if (value.trim() !== "") {
+					this.setState({ loading: true });
+					this.searchValue(value);
+				}
+
+				if (value.length === 0) {
+					this.close();
+				}
 			})
 		}, 16)();
 	}
@@ -67,7 +76,6 @@ export class Search extends Component {
 
 	onBlur (e) {
 		raf(_ => {
-			console.log(this.shouldClose);
 			if (this.shouldClose) {
 				this.close()
 			}
@@ -91,6 +99,11 @@ export class Search extends Component {
 		this.close();
 	}
 
+	getPicture (track) {
+		console.log(track);
+		return track.artwork || track.profile.profilePicture || Goku;
+	}
+
 	render (props, { loading, items, hasItems, shouldShow }) {
 		return (
 			<div class={`search-container ${styles.container}`}>
@@ -104,12 +117,34 @@ export class Search extends Component {
 				{hasItems && shouldShow && (
 					<div class={styles.dropdown}>
 						<h3>Users</h3>
-						{items.users.map(profile => (
+						{items.users.length !== 0 && items.users.map(profile => (
 							<a href={`/${profile.url}`} onClick={this.onClickUrl.bind(this)} onFocus={e => (this.shouldClose = false)} onBlur={e => this.onBlurLink.bind(this)}>
 								<div class={styles.image} style={{ backgroundImage: `url(${profile.profilePicture})` }} />
-								<p>{profile.displayName || profile.url || 'wot'}</p>
+								<p>
+									{profile.displayName || profile.url}
+									{profile.youFollow && (<span class={styles.youFollow}>You follow this user</span>)}
+									{profile.followingYou && (<span class={styles.youFollow}>This user follows you</span>)}
+								</p>
+								<p class={styles.followerDetails}>
+									<span>
+										Following: {profile.followingAmount}
+									</span>
+									<span>
+										Followers: {profile.followersAmount}
+									</span>
+								</p>
 							</a>
 						))}
+						{items.users.length === 0 && (<p>No users found</p>)}
+
+						<h3>Tracks</h3>
+						{items.tracks.length <= 1 && items.tracks.map(track => (
+							<a href={`/${track.profile.url}/${track.url}`} onClick={this.onClickUrl.bind(this)} onFocus={e => (this.shouldClose = false)} onBlur={e => this.onBlurLink.bind(this)}>
+								<div class={styles.image} style={{ backgroundImage: `url(${this.getPicture(track)})` }} />
+								<p>{track.name || track.url || 'wot'}</p>
+							</a>
+						))}
+						{items.tracks.length === 0 && (<p>No tracks found</p>)}
 					</div>
 				)}
 			</div>

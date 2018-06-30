@@ -159,7 +159,7 @@ export default class Header extends Component {
 								</Toolbar.Title>
 							</Toolbar.Section>
 							<Toolbar.Section align-center>
-								<Search />
+								<Search token={auth.token} />
 							</Toolbar.Section>
 							<Toolbar.Section align-end={true} style={{ 'margin-right': '10px' }}>
 								{auth.logged_in === true && (

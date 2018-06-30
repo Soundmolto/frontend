@@ -142,7 +142,7 @@ export class TrackCard extends Component {
 						datetime={postedAt.toDate()} 
 						locale='en_AU'
 						className={styles.date}
-						title={`${posted}`}
+						title={`Posted on ${postedAt.format('DD MMMM YYYY')}`}
 					/>
 					<h2 class={className(`mdc-typography--title ${styles.username}`)}>
 						{isCurrentTrack == false && (
