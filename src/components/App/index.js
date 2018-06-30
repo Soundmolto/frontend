@@ -63,19 +63,21 @@ export default class App extends Component {
 		return (
 			<div id="app">
 				<Header get_url={url} />
-				<Router onChange={this.handleRoute}>
-					<Home path="/" />
-					<Login path="/login" key="login" />
-					<Register path="/register" key="register" />
-					<Users path="/users" />
-					{/* 
-						For the sake of simplicity during dev of alpha, this was setup as 2 routes.
-						We should look at re-merging these routes in the future.
-					*/}
-					{/* <MyProfile path="/me" key="my-profile" audioContext={this.audioContext} /> */}
-					<Profile path="/:vanity_url" key="profile" audioContext={this.audioContext} queue={queue} store={store} />
-					<Track path="/:vanity_url/:track_url" key="track" audioContext={this.audioContext} queue={queue} />
-				</Router>
+				<div class="route-container">
+					<Router onChange={this.handleRoute} class="ahh">
+						<Home path="/" className="route-page" />
+						<Login path="/login" key="login" className="route-page" />
+						<Register path="/register" key="register" className="route-page" />
+						<Users path="/users" className="route-page" />
+						{/* 
+							For the sake of simplicity during dev of alpha, this was setup as 2 routes.
+							We should look at re-merging these routes in the future.
+						*/}
+						{/* <MyProfile path="/me" key="my-profile" audioContext={this.audioContext} /> */}
+						<Profile path="/:vanity_url" key="profile" audioContext={this.audioContext} queue={queue} store={store} class="route-page" />
+						<Track path="/:vanity_url/:track_url" key="track" audioContext={this.audioContext} queue={queue} class="route-page" />
+					</Router>
+				</div>
 				<Footer ref={e => (this.footer = e)} audioContext={this.audioContext} queue={queue} />
 			</div>
 		);

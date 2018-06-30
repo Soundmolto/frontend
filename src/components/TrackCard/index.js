@@ -163,7 +163,7 @@ export class TrackCard extends Component {
 						onClickContainer={position => this.onTogglePlay(true, position)}
 					/>
 					<div class={styles.hiddenMobile}>
-						<p class={styles.centered}>
+						<p class={`${styles.centered} ${styles.plays}`}>
 							<Icon>headset</Icon> {this.plays}
 						</p>
 						<span style={{ 'font-size': '0.9rem', float: 'right' }}>

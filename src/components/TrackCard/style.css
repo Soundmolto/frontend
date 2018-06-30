@@ -12,14 +12,18 @@
     align-items: center;
     margin: 0 0 0;
     font-weight: 600;
-    padding: 10px 0;
+    padding:0;
     border-radius: 4px;
+}
+
+.plays {
+    margin-top: 5px;
 }
 
 .actionable {
     cursor: pointer;
     user-select: none;
-    padding: 10px;
+    padding: 5px;
     margin: 0 10px 0;
 }
 
@@ -72,6 +76,7 @@
     border-radius: 10px;
     line-height: 0.8rem;
     font-size: 0.8rem;
+    margin-top: 2px;
 }
 
 .link {
@@ -85,7 +90,7 @@
 
 .date {
     right: 20px;
-    top: 20px;
+    top: 15px;
     padding: 10px;
     background: rgba(0, 0, 0, 0.3);
     border-radius: 10px;
@@ -117,7 +122,7 @@
 
 @media screen and (min-width: 840px) {
     .cardRoot {
-        padding: 20px 20px 10px 226px;
+        padding: 15px 20px 10px 226px;
     }
 
     .date, .cardRoot .image {

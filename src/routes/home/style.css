@@ -30,7 +30,13 @@
 	}
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (max-width: 1200px) and (min-width: 768px) {
+	.home > a {
+		width: calc(calc(100% / 2) - 40px);
+	}
+}
+
+@media screen and (min-width: 1200px) {
 	.home > a {
 		width: calc(calc(100% / 4) - 40px);
 	}

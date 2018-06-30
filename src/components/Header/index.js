@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import { route, Link } from 'preact-router';
+import { route, Link, getCurrentUrl } from 'preact-router';
 import { connect } from 'preact-redux';
 import Toolbar from 'preact-material-components/Toolbar';
 import Drawer from 'preact-material-components/Drawer';
@@ -24,15 +24,13 @@ import { THEMES } from '../../enums/themes';
 import { dark_theme, light_theme } from '../../actions/ui';
 import { logout } from '../../actions/logout';
 import { UploadTrack } from '../UploadTrack';
+import { ActionButton } from 'preact-material-components/Card';
+import { APP } from '../../enums/app';
 
 @connect(state => state)
 export default class Header extends Component {
 
-	closeDrawer() {
-		this.drawer.MDComponent.open = false;
-	}
-
-	openDrawer = () => (this.drawer.MDComponent.open = true);
+	currentUrl = '/';
 
 	openSettings = () => this.settingsModal.MDComponent.show();
 	openEditProfileModal = () => this.editProfileModal.MDComponent.show();
@@ -42,7 +40,6 @@ export default class Header extends Component {
 	openShortcutsPanel = () => this.shortcutsPanel.MDComponent.show();
 	closeShortcutsPanel = () => { this.shortcutsPanel.MDComponent.close(); this.props.dispatch({ type: "HIDE_SHORTCUTS_PANEL" }); };
 
-	drawerRef = drawer => (this.drawer = drawer);
 	settingsDialogRef = dialog => (this.settingsModal = dialog);
 	editProfileDialogRef = dialog => (this.editProfileModal = dialog);
 	editProfileRef = editProfile => (this.editProfile = editProfile);
@@ -52,7 +49,6 @@ export default class Header extends Component {
 
 	linkTo = path => () => {
 		route(path, false);
-		this.closeDrawer();
 	};
 
 	goHome = this.linkTo('/');
@@ -76,18 +72,17 @@ export default class Header extends Component {
 	}
 
 	logout () {
-		this.closeDrawer();
 		this.props.dispatch(logout());
 	}
 
 	login_or_logout () {
 		let defaultVal = (
 			<div>
-				<Drawer.DrawerItem onClick={this.goToLogin}>
+				<Drawer.DrawerItem onClick={this.goToLogin} class={this.isActive('/login')}>
 					<List.ItemGraphic>vpn_key</List.ItemGraphic>
 					Login
 				</Drawer.DrawerItem>
-				<Drawer.DrawerItem onClick={this.goToRegister}>
+				<Drawer.DrawerItem onClick={this.goToRegister} class={this.isActive('/register')}>
 					<List.ItemGraphic>person_add</List.ItemGraphic>
 					Register
 				</Drawer.DrawerItem>
@@ -97,11 +92,11 @@ export default class Header extends Component {
 		if (this.props.auth.logged_in) {
 			defaultVal = (
 				<div>
-					<Drawer.DrawerItem onClick={this.goToMyProfile}>
+					<Drawer.DrawerItem onClick={this.goToMyProfile} class={this.isActive(`/${this.props.user.profile.url}`)}>
 						<List.ItemGraphic>account_circle</List.ItemGraphic>
 						Profile
 					</Drawer.DrawerItem>
-					<Drawer.DrawerItem onClick={this.logout.bind(this)}>
+					<Drawer.DrawerItem onClick={this.logout.bind(this)} class={`align-end ${this.isActive('/logout')}`}>
 						<List.ItemGraphic>vpn_key</List.ItemGraphic>
 						Logout
 					</Drawer.DrawerItem>
@@ -112,7 +107,14 @@ export default class Header extends Component {
 		return defaultVal;
 	}
 
+	isActive (url) {
+		let className = '';
+		if (url === this.currentUrl) className = 'active';
+		return className;
+	}
+
 	render ({ auth, user, UI }) {
+		this.currentUrl = getCurrentUrl();
 		try {
 			if (UI.settings_open === true) {
 				this.openSettings();
@@ -133,12 +135,14 @@ export default class Header extends Component {
 					<Toolbar className="toolbar">
 						<Toolbar.Row>
 							<Toolbar.Section align-start>
-								<Toolbar.Icon menu onClick={this.openDrawer}>
-									menu
-								</Toolbar.Icon>
 								<Toolbar.Title>
-									Music streaming app
+									{APP.NAME}
 								</Toolbar.Title>
+							</Toolbar.Section>
+							<Toolbar.Section align-center>
+								<div class="search-container">
+									<input type="text" className="search-input" placeholder="Search for artists, songs or playlists" />
+								</div>
 							</Toolbar.Section>
 							<Toolbar.Section align-end={true} style={{ 'margin-right': '10px' }}>
 								{auth.logged_in === true && (
@@ -155,9 +159,6 @@ export default class Header extends Component {
 											</div>
 											<Menu.Anchor>
 												<Menu ref={menu => { this.menu = menu; }} class={style.menu}>
-													<p class={style.padding}>
-														{user.profile.displayName || user.profile.url || ""}
-													</p>
 													<Menu.Item onClick={this.goToMyProfile}>
 														<Icon class={style.icon}>person</Icon>
 														Profile
@@ -181,19 +182,16 @@ export default class Header extends Component {
 							</Toolbar.Section>
 						</Toolbar.Row>
 					</Toolbar>
-					<Drawer.TemporaryDrawer ref={this.drawerRef}>
-						<Drawer.DrawerHeader>
-							Welcome {user.profile.displayName || user.profile.url || ""}
-						</Drawer.DrawerHeader>
+					<Drawer.PermanentDrawer>
 						<Drawer.DrawerContent>
-							<Drawer.DrawerItem onClick={this.goHome}>
-								<List.ItemGraphic>home</List.ItemGraphic>
-								Home
+							<Drawer.DrawerItem onClick={this.goHome} class={this.isActive('/')}>
+								<List.ItemGraphic>music_note</List.ItemGraphic>
+								Discover
 							</Drawer.DrawerItem>
 							
 							{this.login_or_logout()}
 						</Drawer.DrawerContent>
-					</Drawer.TemporaryDrawer>
+					</Drawer.PermanentDrawer>
 					<Dialog ref={this.settingsDialogRef} onCancel={e => this.props.dispatch({ type: "HIDE_SETTINGS_PANEL" } )}>
 						<Dialog.Header>Settings</Dialog.Header>
 						<Dialog.Body>
