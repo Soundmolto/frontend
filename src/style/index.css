@@ -195,7 +195,7 @@ body.mdc-theme--dark .mdc-card {
 }
 
 .header {
-	height: 160px;
+	height: 170px;
 	width: 100vw;
 	display: flex;
 	padding: 64px 20px 0;
@@ -268,6 +268,7 @@ body.mdc-theme--dark .mdc-card {
 .mdc-drawer--permanent .mdc-list .mdc-list-item.active {
 	background: rgba(0, 0, 0, 0.3);
 	font-weight: 600;
+	transform: translateX(5px);
 }
 
 .search-container {
@@ -317,4 +318,15 @@ input, .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
 
 input[disabled] {
 	cursor: not-allowed;
+}
+
+.mdc-drawer--permanent .mdc-list-item {
+	transition: transform 0.3s ease-in-out;
+	transform: translateX(0);
+	border-radius: 10px 0 0 10px;
+	margin-bottom: 5px;
+}
+
+.mdc-drawer--permanent .mdc-list-item:hover {
+	transform: translateX(5px);
 }

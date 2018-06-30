@@ -199,7 +199,7 @@ export default class Header extends Component {
 							</Toolbar.Section>
 						</Toolbar.Row>
 					</Toolbar>
-					<Drawer.PermanentDrawer>
+					<Drawer.PermanentDrawer class={style.drawer}>
 						<Drawer.DrawerContent>
 							<Drawer.DrawerItem onClick={this.goHome} class={this.isActive('/')}>
 								<List.ItemGraphic>music_note</List.ItemGraphic>
