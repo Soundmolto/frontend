@@ -33,7 +33,7 @@ export class Search extends Component {
 				// 	let initial = 0;
 				// 	if (first.following)
 				// });
-				console.log(users);
+				// console.log(users);
 				this.setState({ items: { tracks, users }, hasItems, loading: false });
 			} else {
 				throw new Error(data.statusText);
@@ -96,7 +96,11 @@ export class Search extends Component {
 			<div class={`search-container ${styles.container}`}>
 				<input type="text" className="search-input" onKeyUp={this.onKeyUp.bind(this)} onBlur={this.onBlur.bind(this)}
 				onFocus={this.onFocus.bind(this)} placeholder="Search for artists, songs or playlists" />
-				{loading && shouldShow && (<div class={styles.dropdown}>Loading results...</div>)}
+				{loading && shouldShow && (
+					<div class={styles.dropdown}>
+						<p>Loading results...</p>
+					</div>
+				)}
 				{hasItems && shouldShow && (
 					<div class={styles.dropdown}>
 						<h3>Users</h3>

@@ -21,6 +21,13 @@
     font-weight: 500;
 }
 
+.dropdown p {
+    padding: 10px;
+    text-decoration: none;
+    font-weight: 500;
+    margin: 0;
+}
+
 .dropdown a:hover {
     background: rgba(0, 0, 0, 0.3);
 }
