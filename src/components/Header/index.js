@@ -26,6 +26,7 @@ import { logout } from '../../actions/logout';
 import { UploadTrack } from '../UploadTrack';
 import { ActionButton } from 'preact-material-components/Card';
 import { APP } from '../../enums/app';
+import { Search } from '../Search';
 
 @connect(state => state)
 export default class Header extends Component {
@@ -158,9 +159,7 @@ export default class Header extends Component {
 								</Toolbar.Title>
 							</Toolbar.Section>
 							<Toolbar.Section align-center>
-								<div class="search-container">
-									<input type="text" className="search-input" placeholder="Search for artists, songs or playlists (Coming soon)" disabled />
-								</div>
+								<Search />
 							</Toolbar.Section>
 							<Toolbar.Section align-end={true} style={{ 'margin-right': '10px' }}>
 								{auth.logged_in === true && (
