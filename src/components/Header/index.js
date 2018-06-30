@@ -96,6 +96,24 @@ export default class Header extends Component {
 						<List.ItemGraphic>account_circle</List.ItemGraphic>
 						Profile
 					</Drawer.DrawerItem>
+					<div class="section">
+						<h1 class={style['subtitle-header']}>
+							My Music
+							<small>Coming soon</small>
+							</h1>
+						<Drawer.DrawerItem onClick={e => console.log(e)} class={this.isActive(`/${this.props.user.profile.url}/playlists`)}>
+							<List.ItemGraphic>person</List.ItemGraphic>
+							Artists
+						</Drawer.DrawerItem>
+						<Drawer.DrawerItem onClick={e => console.log(e)} class={this.isActive(`/${this.props.user.profile.url}/playlists`)}>
+							<List.ItemGraphic>music_note</List.ItemGraphic>
+							Songs
+						</Drawer.DrawerItem>
+						<Drawer.DrawerItem onClick={e => console.log(e)} class={this.isActive(`/${this.props.user.profile.url}/playlists`)}>
+							<List.ItemGraphic>playlist_play</List.ItemGraphic>
+							Playlists
+						</Drawer.DrawerItem>
+					</div>
 					<Drawer.DrawerItem onClick={this.logout.bind(this)} class={`align-end ${this.isActive('/logout')}`}>
 						<List.ItemGraphic>vpn_key</List.ItemGraphic>
 						Logout
@@ -141,7 +159,7 @@ export default class Header extends Component {
 							</Toolbar.Section>
 							<Toolbar.Section align-center>
 								<div class="search-container">
-									<input type="text" className="search-input" placeholder="Search for artists, songs or playlists" />
+									<input type="text" className="search-input" placeholder="Search for artists, songs or playlists (Coming soon)" disabled />
 								</div>
 							</Toolbar.Section>
 							<Toolbar.Section align-end={true} style={{ 'margin-right': '10px' }}>
