@@ -49,7 +49,6 @@ export default class Header extends Component {
 	shortcutsPanelRef = dialog => (this.shortcutsPanel = dialog);
 
 	linkTo = path => () => {
-		console.log('wtf');
 		if (this.closeMenu) this.closeMenu();
 		raf(_ => {
 			console.log('moving on');
@@ -76,6 +75,13 @@ export default class Header extends Component {
 			window.document.querySelector(`.${style.drawerCloseContainer}`).classList.toggle(style.visible);
 			window.document.querySelector('.mdc-drawer--permanent').classList.toggle('open');
 		}
+	}
+
+	toggleDropdownMenu () {
+		const currentState = this.menu.MDComponent.open;
+		let nextState = true;
+		if (null != currentState) nextState = !currentState;
+		this.menu.MDComponent.open = nextState;
 	}
 
 	closeMenu () {
@@ -191,7 +197,7 @@ export default class Header extends Component {
 								<div class={style.header}>
 									{auth.logged_in === true && (
 										<div>
-											<div onClick={this.toggleMenu.bind(this)} class={style.clickable}>
+											<div onClick={this.toggleDropdownMenu.bind(this)} class={style.clickable}>
 												<UserPictureName user={user.profile} />
 											</div>
 											<Menu.Anchor>
