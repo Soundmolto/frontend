@@ -101,7 +101,7 @@ export class Search extends Component {
 
 	getPicture (track) {
 		console.log(track);
-		return track.artwork || track.profile.profilePicture || Goku;
+		return track.artwork || track.user.profilePicture || Goku;
 	}
 
 	render (props, { loading, items, hasItems, shouldShow }) {
@@ -139,7 +139,7 @@ export class Search extends Component {
 
 						<h3>Tracks</h3>
 						{items.tracks.length <= 1 && items.tracks.map(track => (
-							<a href={`/${track.profile.url}/${track.url}`} onClick={this.onClickUrl.bind(this)} onFocus={e => (this.shouldClose = false)} onBlur={e => this.onBlurLink.bind(this)}>
+							<a href={`/${track.user.url}/${track.url}`} onClick={this.onClickUrl.bind(this)} onFocus={e => (this.shouldClose = false)} onBlur={e => this.onBlurLink.bind(this)}>
 								<div class={styles.image} style={{ backgroundImage: `url(${this.getPicture(track)})` }} />
 								<p>{track.name || track.url || 'wot'}</p>
 							</a>
