@@ -325,6 +325,7 @@ input[disabled] {
 	transform: translateX(0);
 	border-radius: 10px 0 0 10px;
 	margin-bottom: 5px;
+	cursor: pointer;
 }
 
 .mdc-drawer--permanent .mdc-list-item:hover {

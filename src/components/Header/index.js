@@ -79,11 +79,11 @@ export default class Header extends Component {
 	login_or_logout () {
 		let defaultVal = (
 			<div>
-				<Drawer.DrawerItem onClick={this.goToLogin} class={this.isActive('/login')}>
+				<Drawer.DrawerItem onClick={this.goToLogin} class={this.isActive('/login')} href={`/login`}>
 					<List.ItemGraphic>vpn_key</List.ItemGraphic>
 					Login
 				</Drawer.DrawerItem>
-				<Drawer.DrawerItem onClick={this.goToRegister} class={this.isActive('/register')}>
+				<Drawer.DrawerItem onClick={this.goToRegister} class={this.isActive('/register')} href={`/register`}>
 					<List.ItemGraphic>person_add</List.ItemGraphic>
 					Register
 				</Drawer.DrawerItem>
@@ -93,7 +93,7 @@ export default class Header extends Component {
 		if (this.props.auth.logged_in) {
 			defaultVal = (
 				<div>
-					<Drawer.DrawerItem onClick={this.goToMyProfile} class={this.isActive(`/${this.props.user.profile.url}`)}>
+					<Drawer.DrawerItem onClick={this.goToMyProfile} class={this.isActive(`/${this.props.user.profile.url}`)} href={`/${this.props.user.profile.url}`}>
 						<List.ItemGraphic>account_circle</List.ItemGraphic>
 						Profile
 					</Drawer.DrawerItem>
@@ -101,12 +101,12 @@ export default class Header extends Component {
 						<h1 class={style['subtitle-header']}>
 							My Music
 							<small>Coming soon</small>
-							</h1>
-						<Drawer.DrawerItem onClick={e => console.log(e)} class={this.isActive(`/${this.props.user.profile.url}/playlists`)}>
+						</h1>
+						<Drawer.DrawerItem onClick={e => console.log(e)} class={this.isActive(`/${this.props.user.profile.url}/artists`)}>
 							<List.ItemGraphic>person</List.ItemGraphic>
 							Artists
 						</Drawer.DrawerItem>
-						<Drawer.DrawerItem onClick={e => console.log(e)} class={this.isActive(`/${this.props.user.profile.url}/playlists`)}>
+						<Drawer.DrawerItem onClick={e => console.log(e)} class={this.isActive(`/${this.props.user.profile.url}/songs`)}>
 							<List.ItemGraphic>music_note</List.ItemGraphic>
 							Songs
 						</Drawer.DrawerItem>
@@ -168,7 +168,6 @@ export default class Header extends Component {
 									</div>
 								)}
 								<div class={style.header}>
-									
 									{auth.logged_in === true && (
 										<div>
 											<div onClick={this.toggleMenu.bind(this)} class={style.clickable}>
@@ -201,7 +200,7 @@ export default class Header extends Component {
 					</Toolbar>
 					<Drawer.PermanentDrawer class={style.drawer}>
 						<Drawer.DrawerContent>
-							<Drawer.DrawerItem onClick={this.goHome} class={this.isActive('/')}>
+							<Drawer.DrawerItem onClick={this.goHome} class={this.isActive('/')} href={`/`}>
 								<List.ItemGraphic>music_note</List.ItemGraphic>
 								Discover
 							</Drawer.DrawerItem>
