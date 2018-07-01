@@ -124,5 +124,53 @@ h1.subtitle-header > small {
 }
 
 .drawer {
+    display: block;
     padding-top: 5px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.menuIcon {
+    display: none;
+}
+
+@media screen and (max-width: 1200px) {
+    .drawer {
+        transform: translateX(-100%);
+        z-index: 100 !important;
+        top: 56px !important;
+        height: calc(100vh - 124px) !important;
+    }
+
+    .appName, .hideMobile {
+        display: none;
+    }
+
+    .menuIcon {
+        display: block;
+        margin-left: 10px;
+    }
+
+    .drawerCloseContainer {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.7);
+        height: 100vh;
+        width: 100vw;
+        display: none;
+    }
+
+    .drawerContent {
+        position: relative;
+        z-index: 2;
+    }
+
+    .container {
+        position: relative;
+    }
+
+    .drawerCloseContainer.visible {
+        display: block;
+    }
 }

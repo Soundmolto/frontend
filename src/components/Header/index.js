@@ -26,6 +26,7 @@ import { logout } from '../../actions/logout';
 import { UploadTrack } from '../UploadTrack';
 import { APP } from '../../enums/app';
 import { Search } from '../Search';
+import raf from 'raf';
 
 @connect(state => state)
 export default class Header extends Component {
@@ -48,8 +49,13 @@ export default class Header extends Component {
 	shortcutsPanelRef = dialog => (this.shortcutsPanel = dialog);
 
 	linkTo = path => () => {
-		this.setState({ currentUrl: path });
-		route(path, false);
+		console.log('wtf');
+		if (this.closeMenu) this.closeMenu();
+		raf(_ => {
+			console.log('moving on');
+			this.setState({ currentUrl: path });
+			route(path, false);
+		});
 	};
 
 	goHome = this.linkTo('/');
@@ -66,10 +72,21 @@ export default class Header extends Component {
 	}
 
 	toggleMenu () {
-		const currentState = this.menu.MDComponent.open;
-		let nextState = true;
-		if (null != currentState) nextState = !currentState;
-		this.menu.MDComponent.open = nextState;
+		if (typeof window !== "undefined") {
+			window.document.querySelector(`.${style.drawerCloseContainer}`).classList.toggle(style.visible);
+			window.document.querySelector('.mdc-drawer--permanent').classList.toggle('open');
+		}
+	}
+
+	closeMenu () {
+		if (typeof window !== "undefined") {
+			console.log('closing');
+			const closeContainer = window.document.querySelector(`.${style.drawerCloseContainer}`);
+			const drawer = window.document.querySelector('.mdc-drawer--permanent');
+			if (closeContainer) closeContainer.classList.remove(style.visible);
+			if (drawer) drawer.classList.remove('open');
+			console.log('closed');
+		}
 	}
 
 	logout () {
@@ -134,7 +151,7 @@ export default class Header extends Component {
 
 	render ({ auth, user, UI }) {
 		this.currentUrl = getCurrentUrl();
-		console.log(this.currentUrl);
+
 		try {
 			if (UI.settings_open === true) {
 				this.openSettings();
@@ -156,10 +173,13 @@ export default class Header extends Component {
 						<Toolbar.Row>
 							<Toolbar.Section align-start>
 								<Toolbar.Title>
-									{APP.NAME}
+									<span class={style.appName}>{APP.NAME}</span>
 								</Toolbar.Title>
+								<span class={style.menuIcon} onClick={this.toggleMenu}>
+									<Icon class={style.icon}>menu</Icon>
+								</span>
 							</Toolbar.Section>
-							<Toolbar.Section align-center>
+							<Toolbar.Section align-center class={style.hideMobile}>
 								<Search token={auth.token} />
 							</Toolbar.Section>
 							<Toolbar.Section align-end={true} style={{ 'margin-right': '10px' }}>
@@ -199,6 +219,7 @@ export default class Header extends Component {
 							</Toolbar.Section>
 						</Toolbar.Row>
 					</Toolbar>
+					<div class={style.drawerCloseContainer} onClick={this.closeMenu}></div>
 					<Drawer.PermanentDrawer class={style.drawer}>
 						<Drawer.DrawerContent>
 							<Drawer.DrawerItem onClick={this.goHome} class={this.isActive('/')} href={`/`}>

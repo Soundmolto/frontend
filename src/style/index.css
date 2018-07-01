@@ -91,7 +91,16 @@ body.mdc-theme--dark .mdc-card {
 
 .route-container {
 	width: 100%;
-	padding-left: 200px;
+}
+
+@media screen and (min-width: 1200px) {
+	.route-container {
+		padding-left: 200px;
+	}
+
+	.header > .vertical-center {
+		max-width: calc(100vw - 220px);
+	}
 }
 
 .mdc-theme--dark {
@@ -329,4 +338,14 @@ input[disabled] {
 
 .mdc-drawer--permanent .mdc-list-item:hover {
 	transform: translateX(5px);
+}
+
+@media screen and (max-width: 479px) {
+	.mdc-layout-grid__cell {
+		padding: 15px;
+	}
+}
+
+.mdc-drawer--permanent.open {
+	transform: translateX(0);
 }

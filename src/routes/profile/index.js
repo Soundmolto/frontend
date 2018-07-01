@@ -112,7 +112,6 @@ export default class Profile extends Component {
 					<UserPictureName user={viewedUser.profile} show_location={true} style={{
 							width: '100%',
 							position: 'relative',
-							'max-width': 'calc(100vw - 220px)',
 							'overflow': 'hidden',
 						}} h1_class={style.username_custom}>
 						{auth.logged_in != null && user.profile.id !== viewedUser.profile.id && 
