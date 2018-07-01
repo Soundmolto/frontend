@@ -265,7 +265,7 @@ body.mdc-theme--dark .mdc-card {
 }
 
 .mdc-drawer--permanent .mdc-list .mdc-list-item.active {
-	background: rgba(0, 0, 0, 0.3);
+	background: rgba(0, 0, 0, 0.25);
 	font-weight: 600;
 	transform: translateX(5px);
 }
