@@ -5,8 +5,9 @@
     width: 100%;
     min-height: 32px;
     padding: 0;
-    background: var(--mdc-theme-background);
-    color: var(--mdc-theme-text-primary-on-background);
+    background: rgb(78, 96, 125);
+	background: linear-gradient(rgb(78, 96, 125) 0%, rgb(78, 96, 125) 100%);
+    color: #FFF;
     box-shadow: var(--mdc-theme--box-shadow--floating);
     border-radius: 0 0 10px 10px;
     overflow: hidden;
@@ -20,7 +21,7 @@
     padding: 10px;
     text-decoration: none;
     font-weight: 500;
-    color: var(--mdc-theme-text-primary-on-background);
+    color: #FFF;
 }
 
 .dropdown p {
@@ -37,19 +38,19 @@
     background: rgba(0, 0, 0, 0.3);
     margin-left: 10px;
     border-radius: 10px;
-    color: var(--mdc-theme-text-primary-on-background);
+    color: #FFF;
 }
 
 .dropdown p.followerDetails {
     width: 100%;
     font-size: 0.9rem;
     opacity: 0.75;
-    color: var(--mdc-theme-text-primary-on-background);
+    color: #FFF;
 }
 
 .dropdown p.followerDetails span {
     margin-right: 10px;
-    color: var(--mdc-theme-text-primary-on-background);
+    color: #FFF;
 }
 
 .dropdown a:hover {
