@@ -19,7 +19,6 @@ import dayjs from 'dayjs';
 import TimeAgo from 'timeago-react';
 import Goku from '../../assets/goku.png';
 
-const new_line_br = (text = '') => text.replace('\n', '<br />');
 let className = (e) => (e);
 
 @connect(({ auth, currently_playing }) => ({ auth, currently_playing }))
@@ -70,7 +69,7 @@ export class TrackCard extends Component {
 		});
 	}
 
-	onClickEditTrack (e) {
+	onClickEditTrack () {
 		this.editTrackPanel.MDComponent.show();
 	}
 
@@ -99,7 +98,7 @@ export class TrackCard extends Component {
 		}, 2750);
 	}
 
-	render ({ track, user, currentUser, currently_playing, isCurrentTrack }, { pos }) {
+	render ({ track, user, currentUser, currently_playing, isCurrentTrack }) {
 		const postedAt = dayjs(parseInt(track.createdAt));
 		let posted = postedAt.format('DD-MM-YYYY');
 		if (posted.indexOf("NaN") !== -1) posted = "Unavaliable - Parsing error";

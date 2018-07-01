@@ -1,4 +1,3 @@
-// Refactored
 export class WaveformGenerator {
 
 	buffer = [];

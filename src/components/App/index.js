@@ -9,7 +9,6 @@ import Login from 'async!../../routes/login';
 import Users from 'async!../../routes/users';
 import Register from 'async!../../routes/register';
 import Track from 'async!../../routes/track';
-import Helmet from 'preact-helmet';
 import { request_new_data } from '../../actions/user';
 import { THEMES } from '../../enums/themes';
 import { QueueController } from '../QueueController';
@@ -69,11 +68,6 @@ export default class App extends Component {
 						<Login path="/login" key="login" className="route-page" />
 						<Register path="/register" key="register" className="route-page" />
 						<Users path="/users" className="route-page" />
-						{/* 
-							For the sake of simplicity during dev of alpha, this was setup as 2 routes.
-							We should look at re-merging these routes in the future.
-						*/}
-						{/* <MyProfile path="/me" key="my-profile" audioContext={this.audioContext} /> */}
 						<Profile path="/:vanity_url" key="profile" audioContext={this.audioContext} queue={queue} store={store} class="route-page" />
 						<Track path="/:vanity_url/:track_url" key="track" audioContext={this.audioContext} queue={queue} class="route-page" />
 					</Router>

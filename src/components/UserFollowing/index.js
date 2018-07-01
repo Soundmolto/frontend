@@ -3,16 +3,14 @@ import Card from 'preact-material-components/Card';
 import 'preact-material-components/Card/style.css';
 import 'preact-material-components/Button/style.css';
 import { UserPictureName } from '../UserPictureName';
-import { Link, route } from 'preact-router';
+import { Link } from 'preact-router';
 import styles from './style';
 import { connect } from 'preact-redux';
-import { fetch_user } from '../../actions/user';
 
 @connect(state => state)
 export class UserFollowing extends Component {
 
     render ({ viewedUser, style = {} }) {
-        let className = `mdc-typography--title ${styles.username}`;
         return (
             <div style={style}>
                 <Card class={styles.card}>

@@ -32,11 +32,6 @@ export class Search extends Component {
 	
 			if (data.status === 200) {
 				const hasItems = tracks.length !== 0 || users.length !== 0;
-				// users.sort((first, second) => {
-				// 	let initial = 0;
-				// 	if (first.following)
-				// });
-				// console.log(users);
 				this.setState({ items: { tracks, users }, hasItems, loading: false });
 			} else {
 				throw new Error(data.statusText);

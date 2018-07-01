@@ -1,6 +1,4 @@
 import { Component } from 'preact';
-import { THEMES } from '../../enums/themes';
-import { connect } from 'preact-redux';
 import { WaveformGenerator } from './WaveformGenerator';
 import { seconds_to_time } from "../../utils/seconds-to-time";
 import store from '../../store';

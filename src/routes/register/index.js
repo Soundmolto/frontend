@@ -11,6 +11,8 @@ import 'preact-material-components/Card/style.css';
 import 'preact-material-components/Button/style.css';
 import 'preact-material-components/TextField/style.css';
 import style from './style';
+import Helmet from 'preact-helmet';
+import { APP } from '../../enums/app';
 
 // State outside of the component.
 let state = {};
@@ -62,12 +64,13 @@ export default class Login extends Component {
 
 		return (
 			<div>
+				<Helmet title={`${APP.NAME} - Register`} />
 				<div class="header">
 					<h1>Register</h1>
 				</div>
 				<div class={style.home}>
 					<Card className={style.card}>
-						<form class={style.cardBody} onSubmit={this.onLogin.bind(this)}>
+						<form class={style.cardBody} onSubmit={this.onLogin.bind(this)} key={"registration-form"}>
 							<TextField label="Enter your email address" type="email" autofocus onChange={this.onEmailChange.bind(this)} key="registration-email" />
 							<TextField type="password" label="Enter a password" onChange={this.onPasswordChange.bind(this)} key="registration-password" />
 							<div className={style.buttonContainer}>

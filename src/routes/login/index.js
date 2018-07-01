@@ -11,6 +11,8 @@ import 'preact-material-components/Card/style.css';
 import 'preact-material-components/Button/style.css';
 import 'preact-material-components/TextField/style.css';
 import style from './style';
+import Helmet from 'preact-helmet';
+import { APP } from '../../enums/app';
 
 // State outside of the component.
 let state = { email: '', password: '' };
@@ -62,14 +64,15 @@ export default class Login extends Component {
 
 		return (
 			<div>
+				<Helmet title={`${APP.NAME} - Login`} />
 				<div class="header">
 					<h1>Login</h1>
 				</div>
 				<div class={style.home}>
 					<Card className={style.card}>
-						<form class={style.cardBody} onSubmit={this.onLogin.bind(this)}>
-							<TextField name="login_email" label="Enter your email address" type="email" autofocus onChange={this.onEmailChange.bind(this)} onBlur={this.onEmailChange.bind(this)} key="login-email" />
-							<TextField name="login_password" type="password" label="Enter a password" onChange={this.onPasswordChange.bind(this)} onBlur={this.onPasswordChange.bind(this)} key="login-password" />
+						<form class={style.cardBody} onSubmit={this.onLogin.bind(this)} key="login-form">
+							<TextField name="login_email" label="Enter your email address" type="email" autofocus onChange={this.onEmailChange.bind(this)} onBlur={this.onEmailChange.bind(this)} key="login-email" value="" />
+							<TextField name="login_password" type="password" label="Enter a password" onChange={this.onPasswordChange.bind(this)} onBlur={this.onPasswordChange.bind(this)} key="login-password"  value="" />
 							<div className={style.buttonContainer}>
 								<Button raised onClick={this.onLogin.bind(this)} type="submit">
 									{!logged_in && !loading && "Login"}

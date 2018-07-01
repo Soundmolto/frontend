@@ -2,7 +2,7 @@ import { Component } from 'preact';
 import Card from 'preact-material-components/Card';
 import 'preact-material-components/Card/style.css';
 import 'preact-material-components/Button/style.css';
-import { Link, route } from 'preact-router';
+import { Link } from 'preact-router';
 import styles from './style.css';
 
 export class UserCard extends Component {

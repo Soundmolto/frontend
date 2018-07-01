@@ -37,7 +37,6 @@ export class UploadTrack extends Component {
 
 		this.props.dispatch({ type: USER.HAS_NEW_DATA, payload: payload.user });
 
-		// TODO; Edit after uploaded
 		for (const id of payload.created) {
 			const filtered = payload.user.tracks.filter(_track => _track.id === id);
 			if (filtered.length >= 1) track = filtered[0];

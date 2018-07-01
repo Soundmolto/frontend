@@ -24,7 +24,6 @@ import { THEMES } from '../../enums/themes';
 import { dark_theme, light_theme } from '../../actions/ui';
 import { logout } from '../../actions/logout';
 import { UploadTrack } from '../UploadTrack';
-import { ActionButton } from 'preact-material-components/Card';
 import { APP } from '../../enums/app';
 import { Search } from '../Search';
 
@@ -49,6 +48,7 @@ export default class Header extends Component {
 	shortcutsPanelRef = dialog => (this.shortcutsPanel = dialog);
 
 	linkTo = path => () => {
+		this.setState({ currentUrl: path });
 		route(path, false);
 	};
 
@@ -79,11 +79,11 @@ export default class Header extends Component {
 	login_or_logout () {
 		let defaultVal = (
 			<div>
-				<Drawer.DrawerItem onClick={this.goToLogin} class={this.isActive('/login')} href={`/login`}>
+				<Drawer.DrawerItem onClick={this.goToLogin} class={this.isActive('/login')} href="/login">
 					<List.ItemGraphic>vpn_key</List.ItemGraphic>
 					Login
 				</Drawer.DrawerItem>
-				<Drawer.DrawerItem onClick={this.goToRegister} class={this.isActive('/register')} href={`/register`}>
+				<Drawer.DrawerItem onClick={this.goToRegister} class={this.isActive('/register')} href="/register">
 					<List.ItemGraphic>person_add</List.ItemGraphic>
 					Register
 				</Drawer.DrawerItem>
@@ -128,12 +128,13 @@ export default class Header extends Component {
 
 	isActive (url) {
 		let className = '';
-		if (url === this.currentUrl) className = 'active';
+		if (url === getCurrentUrl()) className = 'active';
 		return className;
 	}
 
 	render ({ auth, user, UI }) {
 		this.currentUrl = getCurrentUrl();
+		console.log(this.currentUrl);
 		try {
 			if (UI.settings_open === true) {
 				this.openSettings();

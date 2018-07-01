@@ -9,10 +9,12 @@ import style from './style';
 import { UserDescription } from '../../components/UserDescription';
 import { UserPictureName } from '../../components/UserPictureName';
 import { UserFollowers } from '../../components/UserFollowers';
-import { getCurrentUrl, route } from 'preact-router';
+import { getCurrentUrl } from 'preact-router';
 import { UserFollowing } from '../../components/UserFollowing';
 import { TrackCard } from '../../components/TrackCard';
 import { USER } from '../../enums/user';
+import Helmet from 'preact-helmet';
+import { APP } from '../../enums/app';
 
 let _following = false;
 
@@ -105,6 +107,7 @@ export default class Profile extends Component {
 
 		return (
 			<div class={style.profile}>
+				<Helmet title={`${APP.NAME} - ${viewedUser.profile.displayName || viewedUser.profile.url}`} />
 				<div class={"header " + style.header}>
 					<UserPictureName user={viewedUser.profile} show_location={true} style={{
 							width: '100%',

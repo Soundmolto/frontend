@@ -6,12 +6,10 @@ import { UserPictureName } from '../UserPictureName';
 import { Link, route } from 'preact-router';
 import styles from './style';
 import { connect } from 'preact-redux';
-import { fetch_user } from '../../actions/user';
 
 @connect(state => state)
 export class UserFollowers extends Component {
     render ({ viewedUser, style = {} }) {
-        let className = `mdc-typography--title ${styles.username}`;
         return (
             <div style={style}>
                 <Card class={styles.card}>
