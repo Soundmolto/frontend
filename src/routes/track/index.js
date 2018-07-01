@@ -63,7 +63,7 @@ export default class Track extends Component {
 
 		return (
 			<div class={style.profile}>
-				<Helmet title={`${APP.NAME} - ${viewedTrack && viewedTrack.name}`} />
+				<Helmet title={`${APP.NAME} - ${(viewedTrack && viewedTrack.name) || "Loading..."}`} />
 				<div class={"header " + style.header}>
 					<h1>
 						{viewedTrack != null && viewedTrack.id != null && viewedTrack.owner != null && (
