@@ -1,9 +1,8 @@
 import { API_ENDPOINT } from '../api';
 import { USER } from '../enums/user';
-import { route } from 'preact-router';
 
 export function begin_register () {
-    localStorage.clear();
+	if (typeof window !== "undefined") localStorage.clear();
     return {
         type: USER.LOADING
     }

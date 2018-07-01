@@ -2,7 +2,7 @@ import { API_ENDPOINT } from '../api';
 import { USER } from '../enums/user';
 
 export function begin_login () {
-    localStorage.clear();
+	if (typeof window !== "undefined") localStorage.clear();
     return {
         type: USER.LOADING
     }
