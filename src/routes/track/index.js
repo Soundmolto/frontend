@@ -11,7 +11,7 @@ import Helmet from 'preact-helmet';
 import { APP } from '../../enums/app';
 
 @connect(state => state)
-export default class Profile extends Component {
+export default class Track extends Component {
 
 	tracks = [];
 
@@ -63,7 +63,7 @@ export default class Profile extends Component {
 
 		return (
 			<div class={style.profile}>
-				<Helmet title={`${APP.NAME} - ${viewedTrack.name}`} />
+				<Helmet title={`${APP.NAME} - ${viewedTrack && viewedTrack.name}`} />
 				<div class={"header " + style.header}>
 					<h1>
 						{viewedTrack != null && viewedTrack.id != null && viewedTrack.owner != null && (
