@@ -46,10 +46,6 @@
 	transform: translateY(-5px);
 }
 
-.home {
-	padding: 0 20px 20px;
-}
-
 .home h1.mainHeader {
 	font-size: 1.3rem;
 }

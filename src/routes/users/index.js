@@ -20,7 +20,7 @@ export default class Users extends Component {
 		return (
 			<div>
 				<Helmet title={`${APP.NAME} - Users`} />
-				<div class="header"><h1>Users</h1></div>
+				<div class="header"><h1>Users <small style={{ fontSize: '0.8rem'}}>being deprecated</small></h1></div>
 				<div class={style.profile}>
 					{users.map(user => (<UserCard user={user} />))}
 				</div>

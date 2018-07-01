@@ -201,7 +201,6 @@ body.mdc-theme--dark .mdc-card {
 	padding: 64px 20px 0;
 	background: #5D8CAE;
 	background: linear-gradient(var(--mdc-theme-primary) 0%, var(--mdc-theme-complementary-color) 150%);
-	margin-bottom: 20px;
 }
 
 .header h1 {

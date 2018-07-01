@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import LayoutGrid from 'preact-material-components/LayoutGrid';
 import 'preact-material-components/LayoutGrid/style.css';
 import 'preact-material-components/Button/style.css';
 import { connect } from 'preact-redux';
@@ -65,20 +66,26 @@ export default class Profile extends Component {
 				<Helmet title={`${APP.NAME} - ${viewedTrack.name}`} />
 				<div class={"header " + style.header}>
 					<h1>
-					{viewedTrack != null && viewedTrack.id != null && viewedTrack.owner != null && (
-						viewedTrack.name
-					)}
+						{viewedTrack != null && viewedTrack.id != null && viewedTrack.owner != null && (
+							viewedTrack.name
+						)}
 					</h1>
 				</div>
-				<div class={style.profile_contents}>
-					{viewedTrack != null && viewedTrack.id != null && viewedTrack.owner != null && (
-						<TrackCard track={viewedTrack} user={trackOwner} currentUser={user} key={viewedTrack.id} audioContext={this.props.audioContext} isCurrentTrack={true}
-							onStartPlay={this.onStartPlay.bind(this)} />
-					)}
-					{(viewedTrack == null || viewedTrack != null && viewedTrack.id == null && viewedTrack.owner == null) && (
-						<div>Oopsie doopsie me no findy the tracky wacky!!!</div>
-					)}
-				</div>
+				<LayoutGrid>
+					<LayoutGrid.Inner>
+						<LayoutGrid.Cell desktopCols="12" tabletCols="12" tabletOrder="1">
+							<div class={style.profile_contents}>
+								{viewedTrack != null && viewedTrack.id != null && viewedTrack.owner != null && (
+									<TrackCard track={viewedTrack} user={trackOwner} currentUser={user} key={viewedTrack.id} audioContext={this.props.audioContext} isCurrentTrack={true}
+										onStartPlay={this.onStartPlay.bind(this)} />
+								)}
+								{(viewedTrack == null || viewedTrack != null && viewedTrack.id == null && viewedTrack.owner == null) && (
+									<div>Oopsie doopsie me no findy the tracky wacky!!!</div>
+								)}
+							</div>
+						</LayoutGrid.Cell>
+					</LayoutGrid.Inner>
+				</LayoutGrid>
 			</div>
 		);
 	}
