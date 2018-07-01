@@ -236,25 +236,21 @@ export default class Footer extends Component {
 				</div>
 				<div class={styles.notMobile}>
 					<div class={styles.queuePanel} ref={this.queuePanelRef}>
-						{this.queue.tracks.length >= 1 && (
 							<ul>
-								{this.queue.tracks.map(track => (
-									<li>
-										<div class={styles.flex}>
-											<a title={track.name} href={`/${track.user.url}/${track.url}`}>
-												{track.name}
-											</a>
-											-
-											<a href={`/${track.user.url}`}>
-												{track.user && (track.user.displayName || track.user.url || "N/A")}
-											</a>
-										</div>
-									</li>
-								))}
-							</ul>
-						)}
-						{this.queue.tracks.length <= 0 && (
-							<ul>
+							{this.queue.tracks.length >= 1 && this.queue.tracks.map(track => (
+								<li>
+									<div class={styles.flex}>
+										<a title={track.name} href={`/${track.user.url}/${track.url}`}>
+											{track.name}
+										</a>
+										-
+										<a href={`/${track.user.url}`}>
+											{track.user && (track.user.displayName || track.user.url || "N/A")}
+										</a>
+									</div>
+								</li>
+							))}
+							{this.queue.tracks.length <= 0 && (
 								<li>
 									<div class={styles.flex}>
 										<div>
@@ -262,8 +258,8 @@ export default class Footer extends Component {
 										</div>
 									</div>
 								</li>
-							</ul>
-						)}
+							)}
+						</ul>
 					</div>
 					<div class={styles.footer} ref={e => (this.desktopFooter = e)}>
 						<div class={styles.start}>
