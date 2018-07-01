@@ -284,7 +284,6 @@ body.mdc-theme--dark .mdc-card {
 	justify-content: center;
 	align-items: center;
 	width: 100%;
-	height: 100%;
 	color: #333333;
 }
 
@@ -348,4 +347,8 @@ input[disabled] {
 
 .mdc-drawer--permanent.open {
 	transform: translateX(0);
+}
+
+.mdc-toolbar__section {
+	align-items: center;
 }
