@@ -95,7 +95,7 @@ export class TrackCard extends Component {
 					id: this.props.track.id
 				})
 			}
-		}, 2750);
+		}, 5500);
 	}
 
 	render ({ track, user, currentUser, currently_playing, isCurrentTrack }) {
