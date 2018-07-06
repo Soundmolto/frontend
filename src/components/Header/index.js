@@ -51,7 +51,6 @@ export default class Header extends Component {
 	linkTo = path => () => {
 		if (this.closeMenu) this.closeMenu();
 		raf(_ => {
-			console.log('moving on');
 			this.setState({ currentUrl: path });
 			route(path, false);
 		});
@@ -86,12 +85,10 @@ export default class Header extends Component {
 
 	closeMenu () {
 		if (typeof window !== "undefined") {
-			console.log('closing');
 			const closeContainer = window.document.querySelector(`.${style.drawerCloseContainer}`);
 			const drawer = window.document.querySelector('.mdc-drawer--permanent');
 			if (closeContainer) closeContainer.classList.remove(style.visible);
 			if (drawer) drawer.classList.remove('open');
-			console.log('closed');
 		}
 	}
 

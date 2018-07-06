@@ -25,16 +25,16 @@ let state = { profile: {} };
 export default class EditProfile extends Component {
 
 	state = { loading: false, loaded: true }
-    
-    get values () {
-        return Object.assign({}, state);
-    }
+	
+	get values () {
+		return Object.assign({}, state);
+	}
 
-    onSubmit (e) {
-        e.preventDefault();
-        const id = this.props.user.id;
-        edit_profile(this.props.dispatch, { token: this.props.auth.token, profile: { ...state }, id });
-        return true;
+	onSubmit (e) {
+		e.preventDefault();
+		const id = this.props.user.id;
+		edit_profile(this.props.dispatch, { token: this.props.auth.token, profile: { ...state }, id });
+		return true;
 	}
 	
 	onDragOver (e) { 
@@ -46,9 +46,9 @@ export default class EditProfile extends Component {
 		this.onFileChange(e, e.dataTransfer.files[0]);
 	}
 
-    onInputChange (e, val) {
-        let _opt = { [val]: e.currentTarget.value };
-        state.profile = {...state.profile, ..._opt };
+	onInputChange (e, val) {
+		let _opt = { [val]: e.currentTarget.value };
+		state.profile = {...state.profile, ..._opt };
 	}
 
 	async onFileChange(e, f) {
@@ -67,10 +67,10 @@ export default class EditProfile extends Component {
 		this.setState({ loaded: true, loading: false })
 	}
 
-    render ({ user }, { loading, loaded }) {
-        state.profile = Object.assign({}, user.profile);
-        return (
-            <form onSubmit={this.onSubmit.bind(this)} class={styles.form}>
+	render ({ user }, { loading, loaded }) {
+		state.profile = Object.assign({}, user.profile);
+		return (
+			<form onSubmit={this.onSubmit.bind(this)} class={styles.form}>
 				<label className={styles['upload-image']}
 					onDragOver={this.onDragOver.bind(this)}
 					onDrop={this.onDrop.bind(this)}
@@ -79,12 +79,12 @@ export default class EditProfile extends Component {
 					<Icon class={styles.icon}>cloud_upload</Icon>
 					<input type="file" accept="image/*" onChange={this.onFileChange.bind(this)} />
 				</label>
-                <TextField label="Your display name" type="text" autofocus value={user.profile.displayName} style={full_width} onChange={e => this.onInputChange(e, 'displayName')} className={styles.username} />
-                <TextField label="Your profile URL" type="text" value={user.profile.url} style={full_width} onChange={e => this.onInputChange(e, 'url')} />
-                <TextField label="Your location" type="text" value={user.profile.location} style={full_width} onChange={e => this.onInputChange(e, 'location')} />
-                <TextField label="Description" textarea value={user.profile.description} style={full_width} onChange={e => this.onInputChange(e, 'description')} />
-                <Button type="submit">Submit</Button>
-            </form>
-        );
-    }
+				<TextField label="Your display name" type="text" autofocus value={user.profile.displayName} style={full_width} onChange={e => this.onInputChange(e, 'displayName')} className={styles.username} />
+				<TextField label="Your profile URL" type="text" value={user.profile.url} style={full_width} onChange={e => this.onInputChange(e, 'url')} />
+				<TextField label="Your location" type="text" value={user.profile.location} style={full_width} onChange={e => this.onInputChange(e, 'location')} />
+				<TextField label="Description" textarea value={user.profile.description} style={full_width} onChange={e => this.onInputChange(e, 'description')} />
+				<Button type="submit">Submit</Button>
+			</form>
+		);
+	}
 }
