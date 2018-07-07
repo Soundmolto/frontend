@@ -38,10 +38,15 @@ export class EditTrack extends Component {
 		return true;
 	}
 
+	ensureURLSafeCharacters (value) {
+		let r = value.split(' ').join('-');
+		return r;
+	}
+
 	onInputChange (e, val) {
 		let value = e.currentTarget.value;
 		if (val === 'url') {
-			value = value.split(' ').join('-');
+			value = this.ensureURLSafeCharacters(value);
 			e.currentTarget.value = value;
 		}
 		let _opt = { [val]: value };
@@ -65,7 +70,7 @@ export class EditTrack extends Component {
 		this.setState({ loading: true, loaded: false });
 		let track = {};
 
-		const post = await fetch(`${API_ENDPOINT}/tracks/${this.props.track.id}/artwork`, { method: "POST", headers: { ...prefill_auth(token) }, body: data });
+		const post = await fetch(`${API_ENDPOINT}/tracks/${this.props.track.id}/track-artwork`, { method: "POST", headers: { ...prefill_auth(token) }, body: data });
 		const payload = await post.json();
 
 		this.props.dispatch({ type: USER.HAS_NEW_DATA, payload });
@@ -82,7 +87,6 @@ export class EditTrack extends Component {
 
 	render ({ track }) {
 		state = Object.assign({}, track);
-		// console.log(track);
 		return (
 			<form onSubmit={this.onSubmit.bind(this)} class={styles.form}>
 				<label className={styles['upload-image']}
