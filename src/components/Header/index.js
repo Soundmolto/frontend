@@ -12,7 +12,6 @@ import EditProfile from '../EditProfile';
 import 'preact-material-components/Switch/style.css';
 import 'preact-material-components/Dialog/style.css';
 import 'preact-material-components/Drawer/style.css';
-import 'preact-material-components/List/style.css';
 import 'preact-material-components/Toolbar/style.css';
 import 'preact-material-components/List/style.css';
 import 'preact-material-components/Menu/style.css';
@@ -100,6 +99,7 @@ export default class Header extends Component {
 	}
 
 	login_or_logout () {
+		const { auth, user } = this.props;
 		let defaultVal = (
 			<div>
 				<Drawer.DrawerItem onClick={this.goToLogin} class={this.isActive('/login')} href="/login">
@@ -113,10 +113,10 @@ export default class Header extends Component {
 			</div>
 		);
 
-		if (this.props.auth.logged_in) {
+		if (auth.logged_in) {
 			defaultVal = (
 				<div>
-					<Drawer.DrawerItem onClick={this.goToMyProfile} class={this.isActive(`/${this.props.user.profile.url}`)} href={`/${this.props.user.profile.url}`}>
+					<Drawer.DrawerItem onClick={this.goToMyProfile} class={this.isActive(`/${user.profile.url}`)} href={`/${user.profile.url}`}>
 						<List.ItemGraphic>account_circle</List.ItemGraphic>
 						Profile
 					</Drawer.DrawerItem>
@@ -125,19 +125,30 @@ export default class Header extends Component {
 							My Music
 							<small>Coming soon</small>
 						</h1>
-						<Drawer.DrawerItem onClick={e => console.log(e)} class={this.isActive(`/${this.props.user.profile.url}/artists`)}>
+						<Drawer.DrawerItem onClick={e => console.log(e)} class={this.isActive(`/${user.profile.url}/artists`)}>
 							<List.ItemGraphic>person</List.ItemGraphic>
 							Artists
 						</Drawer.DrawerItem>
-						<Drawer.DrawerItem onClick={e => console.log(e)} class={this.isActive(`/${this.props.user.profile.url}/songs`)}>
+						<Drawer.DrawerItem onClick={e => console.log(e)} class={this.isActive(`/${user.profile.url}/songs`)}>
 							<List.ItemGraphic>music_note</List.ItemGraphic>
 							Songs
 						</Drawer.DrawerItem>
-						<Drawer.DrawerItem onClick={e => console.log(e)} class={this.isActive(`/${this.props.user.profile.url}/playlists`)}>
+						<Drawer.DrawerItem onClick={e => console.log(e)} class={this.isActive(`/${user.profile.url}/playlists`)}>
 							<List.ItemGraphic>playlist_play</List.ItemGraphic>
 							Playlists
 						</Drawer.DrawerItem>
 					</div>
+					{user.role != null && user.role === "admin" && (
+						<div class="section">
+							<h1 class={style['subtitle-header']}>
+								Administration
+							</h1>
+							<Drawer.DrawerItem onClick={this.goToAdmin} class={this.isActive(`/admin`)} href="/admin">
+								<List.ItemGraphic>supervisor_account</List.ItemGraphic>
+								Admin panel
+							</Drawer.DrawerItem>
+						</div>
+					)}
 					<Drawer.DrawerItem onClick={this.logout.bind(this)} class={`align-end ${this.isActive('/logout')}`}>
 						<List.ItemGraphic>vpn_key</List.ItemGraphic>
 						Logout

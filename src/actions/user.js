@@ -37,7 +37,7 @@ export async function request_new_data (dispatch, { token, vanity_url }) {
     }
 }
 
-export async function fetch_users (dispatch) {
+export async function fetch_users (dispatch, token) {
     let returnObject = {};
 
     try {
@@ -45,6 +45,7 @@ export async function fetch_users (dispatch) {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                ...prefill_auth(token)
             }
         });
 

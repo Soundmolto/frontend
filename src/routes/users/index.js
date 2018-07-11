@@ -7,12 +7,12 @@ import style from './style';
 import Helmet from 'preact-helmet';
 import { APP } from '../../enums/app';
 
-@connect(({ users }) => ({ users }))
+@connect(({ users, auth }) => ({ users, auth }))
 export default class Users extends Component {
 
 	// gets called when this route is navigated to
 	componentDidMount() {
-        fetch_users(this.props.dispatch.bind(this));
+        fetch_users(this.props.dispatch.bind(this), this.props.auth.token);
 	}
 
 	// Note: `user` comes from the URL, courtesy of our router
