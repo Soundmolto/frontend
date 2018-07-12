@@ -49,17 +49,16 @@ export default class Track extends Component {
 			tracks.splice(0, i);
 		}
 		queue.tracks = [].concat(tracks);
-
-		console.log(queue.tracks);
 	}
 
 	render({ user, viewedUser, track }) {
 		const viewedTrack = track.track;
 		const trackOwner = track.user;
+		for (const track of viewedUser.tracks) {
+			track.user = viewedUser.profile;
+		}
 		const tracks = viewedUser.tracks.sort((first, second) => parseInt(second.createdAt) - parseInt(first.createdAt));
 		this.tracks = [track.track].concat(tracks);
-
-		console.log(this.tracks);
 
 		return (
 			<div class={style.profile}>

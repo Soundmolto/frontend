@@ -95,7 +95,6 @@ export class Search extends Component {
 	}
 
 	getPicture (track) {
-		console.log(track);
 		return track.artwork || track.user.profilePicture || Goku;
 	}
 

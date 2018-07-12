@@ -26,8 +26,9 @@ if (typeof window !== "undefined") {
 			document.body.classList.remove('mdc-theme--dark');
 		}
 	};
+	
 
-	MainAudioContext = new AudioContext();
+	MainAudioContext = new (window.AudioContext || window.webkitAudioContext)();
 }
 
 @connect(state => state)

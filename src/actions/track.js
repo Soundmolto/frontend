@@ -147,7 +147,6 @@ export async function get_discover_tracks (dispatch) {
     } catch (error) {
         console.error(error);
     } finally {
-        console.log(returnObject);
         dispatch(returnObject);
     }
 

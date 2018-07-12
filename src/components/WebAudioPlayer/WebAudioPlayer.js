@@ -21,41 +21,38 @@ export class WebAudioPlayer {
 		this.stopped = false;
 
 		this.startedAt = this.audioContext.currentTime - offset;
-        thsi.pausedAt = 0;
+		thsi.pausedAt = 0;
 	}
 
 	pause () {
-        this.pausedAt = this.audioContext.currentTime - this.startedAt;
-        this.stop();
+		this.pausedAt = this.audioContext.currentTime - this.startedAt;
+		this.stop();
 	}
 
 	stop () {
 		this.stopped = true;
-		if (this.source) {          
-            this.source.disconnect();
+		if (this.source) {
+			this.source.disconnect();
 			this.source.stop(0);
 			this.source = null;
-        }
-        this.pausedAt = 0;
-        this.startedAt = 0;
-        this.playing = false;
+		}
+		this.pausedAt = 0;
+		this.startedAt = 0;
+		this.playing = false;
 	}
 
 	getPlaying () {
-        return playing;
-    }
+		return playing;
+	}
 
-    getCurrentTime () {
-        if(pausedAt) {
-            return pausedAt;
-        }
-        if(startedAt) {
-            return context.currentTime - startedAt;
-        }
-        return 0;
-    }
+	getCurrentTime () {
+		let r = 0;
+		if (this.pausedAt) r = this.pausedAt;
+		if (this.startedAt) r = this.audioContext.currentTime - this.startedAt;
+		return 0;
+	}
 
-    getDuration () {
-      return buffer.duration;
-    }
+	getDuration () {
+	  return buffer.duration;
+	}
 }

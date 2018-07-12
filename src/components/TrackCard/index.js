@@ -95,7 +95,7 @@ export class TrackCard extends Component {
 					id: this.props.track.id
 				})
 			}
-		}, 2750);
+		}, 5500);
 	}
 
 	render ({ track, user, currentUser, currently_playing, isCurrentTrack }) {
@@ -119,7 +119,7 @@ export class TrackCard extends Component {
 			<div class={styles.card}>
 				<Card class={styles.cardRoot}>
 					<div class={styles.overlayImage} onClick={this.onClickPlayPause.bind(this)}></div>
-					<div class={styles.image} style={{ 'background-image': `url(${Goku})` }}>
+					<div class={styles.image} style={{ 'background-image': `url(${track.artwork || Goku})` }}>
 						<Button class={styles['play-button']} onClick={this.onClickPlayPause.bind(this)}>
 							<Icon>
 								{!this.state.playing && 'play_arrow'}
