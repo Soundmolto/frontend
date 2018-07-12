@@ -45,7 +45,7 @@ export default class Admin extends Component {
 		return (
 			<div>
 				<Helmet title={`${APP.NAME} - Admin Panel`} />
-				<div class="header"><h1>Users <small style={{ fontSize: '0.8rem'}}>being deprecated</small></h1></div>
+				<div class="header"><h1>Admin panel</h1></div>
 				<LayoutGrid>
 					<LayoutGrid.Inner>
 						<LayoutGrid.Cell cols="6">
