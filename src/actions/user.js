@@ -177,3 +177,33 @@ export async function unfollow_user (dispatch, { token, user }) {
         return dispatch(returnObject);
     }
 }
+
+export async function delete_user (dispatch, { token, user_id }) {
+    let returnObject = {};
+    let error = {};
+    let data;
+
+    try {
+        data = await fetch(`${API_ENDPOINT}/users/${user_id}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                ...prefill_auth(token)
+            },
+            method: "DELETE"
+        });
+
+        if (data.status !== 204) {
+            error = await data.json();
+            throw new Error(data.statusText);
+        }
+
+    } catch (e) {
+        console.log(e);
+    } finally {
+        if (data.status === 204) {
+            await fetch_users (dispatch, token);
+        }
+        return dispatch(returnObject);
+    }
+}

@@ -3,6 +3,24 @@
 	padding: 0 20px;
 }
 
+.profile h3 {
+	margin: 0;
+}
+
+.height-fix {
+	height: auto !important;
+	padding: 10px;
+}
+
+.height-fix i {
+	cursor: pointer;
+}
+
+.margin-top {
+	border-top: 1px solid rgba(0, 0, 0, 0.3);
+	margin-top: 5px;
+}
+
 @media screen and (min-width: 1200px) {
 	.profile {
 		display: flex;
