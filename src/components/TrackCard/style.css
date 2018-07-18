@@ -20,6 +20,10 @@
     margin-top: 5px;
 }
 
+.favorites {
+    margin: 5px 0 0 15px;
+}
+
 .actionable {
     cursor: pointer;
     user-select: none;

@@ -165,6 +165,9 @@ export class TrackCard extends Component {
 						<p class={`${styles.centered} ${styles.plays}`}>
 							<Icon>headset</Icon> {this.plays}
 						</p>
+						<p class={`${styles.centered} ${styles.favorites}`}>
+							<Icon>favorite</Icon> {track.amountOfLikes}
+						</p>
 						<span style={{ 'font-size': '0.9rem', float: 'right' }}>
 							<p class={`${styles.centered} prel ${styles.w100}`} >
 								<span>

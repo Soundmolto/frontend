@@ -62,13 +62,12 @@ export class EditTrack extends Component {
 		this.onFileChange(e, e.dataTransfer.files[0]);
 	}
 
-	async onFileChange(e, f) {
+	async onFileChange (e, f) {
 		const file = f || e.target.files[0];
 		const data = new FormData();
 		const { token } = this.props.auth;
 		data.append('file', file, file.name);
 		this.setState({ loading: true, loaded: false });
-		let track = {};
 
 		const post = await fetch(`${API_ENDPOINT}/tracks/${this.props.track.id}/track-artwork`, { method: "POST", headers: { ...prefill_auth(token) }, body: data });
 		const payload = await post.json();
