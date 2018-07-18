@@ -99,6 +99,7 @@ export class TrackCard extends Component {
 	}
 
 	render ({ track, user, currentUser, currently_playing, isCurrentTrack }) {
+		const userLikesTrack = user.likes && user.likes.filter(like => like.id === track.id).length != 0;
 		const postedAt = dayjs(parseInt(track.createdAt));
 		let posted = postedAt.format('DD-MM-YYYY');
 		if (posted.indexOf("NaN") !== -1) posted = "Unavaliable - Parsing error";
@@ -166,7 +167,9 @@ export class TrackCard extends Component {
 							<Icon>headset</Icon> {this.plays}
 						</p>
 						<p class={`${styles.centered} ${styles.favorites}`}>
-							<Icon>favorite</Icon> {track.amountOfLikes}
+							{userLikesTrack === true && (<Icon>favorite</Icon>)}
+							{userLikesTrack === false && (<Icon>favorite_border</Icon>)}
+							{track.amountOfLikes || 0}
 						</p>
 						<span style={{ 'font-size': '0.9rem', float: 'right' }}>
 							<p class={`${styles.centered} prel ${styles.w100}`} >
