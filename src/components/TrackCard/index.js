@@ -167,6 +167,11 @@ export class TrackCard extends Component {
 							<Icon>headset</Icon> {this.plays}
 						</p>
 						<p class={`${styles.centered} ${styles.favorites}`}>
+							{/*
+								TODO;
+
+								Use Icon toggle here instead.
+							*/}
 							{userLikesTrack === true && (<Icon>favorite</Icon>)}
 							{userLikesTrack === false && (<Icon>favorite_border</Icon>)}
 							{track.amountOfLikes || 0}
