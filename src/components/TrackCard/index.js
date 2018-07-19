@@ -6,13 +6,15 @@ import Snackbar from 'preact-material-components/Snackbar';
 import { Waveform } from '../Waveform';
 import { EditTrack } from '../EditTrack';
 import Icon from 'preact-material-components/Icon';
+import IconToggle from 'preact-material-components/IconToggle';
+import 'preact-material-components/IconToggle/style.css';
 import 'preact-material-components/Button/style.css';
 import 'preact-material-components/Card/style.css';
 import 'preact-material-components/Button/style.css';
 import 'preact-material-components/Dialog/style.css';
 import 'preact-material-components/Snackbar/style.css';
 import styles from './style';
-import { playing_now, delete_track } from '../../actions/track';
+import { playing_now, delete_track, toggle_like } from '../../actions/track';
 import { connect } from 'preact-redux';
 import { seconds_to_time } from '../../utils/seconds-to-time';
 import dayjs from 'dayjs';
@@ -101,9 +103,18 @@ export class TrackCard extends Component {
 	render ({ track, user, currentUser, currently_playing, isCurrentTrack }) {
 		const userLikesTrack = user.likes && user.likes.filter(like => like.id === track.id).length != 0;
 		const postedAt = dayjs(parseInt(track.createdAt));
+		const toggleOnIcon = { content: "favorite", label: "Remove From Favorites" };
+		const toggleOffIcon = { content: "favorite_border", label: "Add to Favorites" };
 		let posted = postedAt.format('DD-MM-YYYY');
-		if (posted.indexOf("NaN") !== -1) posted = "Unavaliable - Parsing error";
-		if (this.played === false ) this.plays = track.plays;
+
+		if (posted.indexOf("NaN") !== -1) {
+			posted = "Unavaliable - Parsing error";
+		}
+
+		if (this.played === false ) {
+			this.plays = track.plays;
+		}
+
 		if (this.state.playing === false && currently_playing.track != null && track.id === currently_playing.track.id && currently_playing.playing === true) {
 			this.setState({ playing: true });
 		}
@@ -167,13 +178,17 @@ export class TrackCard extends Component {
 							<Icon>headset</Icon> {this.plays}
 						</p>
 						<p class={`${styles.centered} ${styles.favorites}`}>
-							{/*
-								TODO;
-
-								Use Icon toggle here instead.
-							*/}
-							{userLikesTrack === true && (<Icon>favorite</Icon>)}
-							{userLikesTrack === false && (<Icon>favorite_border</Icon>)}
+							<IconToggle
+								role="button"
+								tabindex="0"
+								aria-pressed={userLikesTrack}
+								aria-label="Add to favorites"
+								data-toggle-on={toggleOnIcon}
+								data-toggle-off={toggleOffIcon}
+								onClick={e => toggle_like(this.props.dispatch, { token: this.props.auth.token, id: track.id })}>
+								{userLikesTrack === true && "favorite"}
+								{userLikesTrack === false && "favorite_border"}
+							</IconToggle>
 							{track.amountOfLikes || 0}
 						</p>
 						<span style={{ 'font-size': '0.9rem', float: 'right' }}>

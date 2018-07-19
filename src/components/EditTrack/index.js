@@ -13,6 +13,7 @@ import { edit_track } from '../../actions/track';
 import { API_ENDPOINT } from '../../api';
 import { prefill_auth } from '../../prefill-authorized-route';
 import { USER } from '../../enums/user';
+import { onKeyDown } from '../../utils/onKeyDown';
 
 const full_width = Object.freeze({ width: '100%' });
 
@@ -77,24 +78,6 @@ export class EditTrack extends Component {
 		this.setState({ loaded: true, loading: false })
 	}
 
-	/**
-	 * When the user presses a key down, check if it's space then translate that into a hyphen.
-	 * 
-	 * @param {KeyboardEvent} e - Keydown Event
-	 */
-	onKeyDown (e) {
-		if (e.key === 'Space' || e.key === ' ') {
-			e.preventDefault();
-			const index = e.currentTarget.selectionStart;
-			const newIndex = index + 1;
-			const currentValue = e.currentTarget.value;
-			const value = `${currentValue.substring(0, index)}-${currentValue.substring(index, currentValue.length)}`;
-
-			e.currentTarget.value = value;
-			e.currentTarget.setSelectionRange(newIndex, newIndex);
-		}
-	}
-
 	render ({ track }) {
 		state = Object.assign({}, track);
 		return (
@@ -108,7 +91,7 @@ export class EditTrack extends Component {
 					<input type="file" accept="image/*" onChange={this.onFileChange.bind(this)} />
 				</label>
 				<TextField label="Track name" type="text" autofocus value={track.name} style={full_width} onChange={e => this.onInputChange(e, 'name')} class={styles['track-name']} />
-				<TextField label="Track URL" type="text" autofocus value={track.url} style={full_width} onChange={e => this.onInputChange(e, 'url')} onKeyDown={this.onKeyDown.bind(this)} />
+				<TextField label="Track URL" type="text" autofocus value={track.url} style={full_width} onChange={e => this.onInputChange(e, 'url')} onKeyDown={onKeyDown} />
 				<Button type="submit">Submit</Button>
 			</form>
 		);

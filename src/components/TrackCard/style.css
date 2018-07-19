@@ -24,6 +24,10 @@
     margin: 5px 0 0 15px;
 }
 
+.favorites > i {
+    color: var(--mdc-theme-text-primary-on-background);
+}
+
 .actionable {
     cursor: pointer;
     user-select: none;

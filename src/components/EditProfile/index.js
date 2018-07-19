@@ -13,6 +13,7 @@ import { edit_profile } from '../../actions/profile';
 import { API_ENDPOINT } from '../../api';
 import { prefill_auth } from '../../prefill-authorized-route';
 import { USER } from '../../enums/user';
+import { onKeyDown } from '../../utils/onKeyDown';
 
 const full_width = Object.freeze({ width: '100%' });
 
@@ -80,7 +81,7 @@ export default class EditProfile extends Component {
 					<input type="file" accept="image/*" onChange={this.onFileChange.bind(this)} />
 				</label>
 				<TextField label="Your display name" type="text" autofocus value={user.profile.displayName} style={full_width} onChange={e => this.onInputChange(e, 'displayName')} className={styles.username} />
-				<TextField label="Your profile URL" type="text" value={user.profile.url} style={full_width} onChange={e => this.onInputChange(e, 'url')} />
+				<TextField label="Your profile URL" type="text" value={user.profile.url} style={full_width} onChange={e => this.onInputChange(e, 'url')} onKeyDown={onKeyDown} />
 				<TextField label="Your location" type="text" value={user.profile.location} style={full_width} onChange={e => this.onInputChange(e, 'location')} />
 				<TextField label="Description" textarea value={user.profile.description} style={full_width} onChange={e => this.onInputChange(e, 'description')} />
 				<Button type="submit">Submit</Button>
