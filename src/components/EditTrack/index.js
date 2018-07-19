@@ -77,10 +77,21 @@ export class EditTrack extends Component {
 		this.setState({ loaded: true, loading: false })
 	}
 
+	/**
+	 * When the user presses a key down, check if it's space then translate that into a hyphen.
+	 * 
+	 * @param {KeyboardEvent} e - Keydown Event
+	 */
 	onKeyDown (e) {
-		console.log(e.key);
 		if (e.key === 'Space' || e.key === ' ') {
 			e.preventDefault();
+			const index = e.currentTarget.selectionStart;
+			const newIndex = index + 1;
+			const currentValue = e.currentTarget.value;
+			const value = `${currentValue.substring(0, index)}-${currentValue.substring(index, currentValue.length)}`;
+
+			e.currentTarget.value = value;
+			e.currentTarget.setSelectionRange(newIndex, newIndex);
 		}
 	}
 
