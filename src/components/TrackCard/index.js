@@ -185,7 +185,7 @@ export class TrackCard extends Component {
 								aria-label="Add to favorites"
 								data-toggle-on={toggleOnIcon}
 								data-toggle-off={toggleOffIcon}
-								onClick={e => toggle_like(this.props.dispatch, { token: this.props.auth.token, id: track.id })}>
+								onClick={e => toggle_like(this.props.dispatch, { token: this.props.auth.token, id: track.id, user: this.props.user })}>
 								{userLikesTrack === true && "favorite"}
 								{userLikesTrack === false && "favorite_border"}
 							</IconToggle>

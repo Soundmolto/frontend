@@ -359,3 +359,9 @@ input[disabled] {
 .mdc-toolbar__section {
 	align-items: center;
 }
+
+@media screen and (max-width: 960px) {
+	.mdc-toolbar__row {
+		min-height: 64px;
+	}
+}

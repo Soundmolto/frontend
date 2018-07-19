@@ -151,7 +151,7 @@ export async function get_discover_tracks (dispatch) {
 	}
 }
 
-export async function toggle_like (dispatch, { token, id }) {
+export async function toggle_like (dispatch, { token, id, user }) {
 	let returnObject = {};
 
 	try {
@@ -165,10 +165,13 @@ export async function toggle_like (dispatch, { token, id }) {
 		});
 
 		if (data.status === 200) {
-			returnObject = {
-				type: USER.HAS_NEW_DATA,
-				payload: await data.json()
+			const payload = await data.json();
+
+			for (const track of payload.tracks) {
+				track.user = user;
 			}
+
+			returnObject = { type: USER.HAS_NEW_DATA, payload };
 		} else {
 			throw new Error(data.statusText);
 		}

@@ -137,8 +137,6 @@ h1.subtitle-header > small {
     .drawer {
         transform: translateX(-100%);
         z-index: 100 !important;
-        top: 56px !important;
-        height: calc(100vh - 124px) !important;
     }
 
     .appName, .hideMobile {
@@ -172,5 +170,19 @@ h1.subtitle-header > small {
 
     .drawerCloseContainer.visible {
         display: block;
+    }
+}
+
+@media screen and (max-width: 1200px) and (min-width: 769px) {
+    .drawer {
+        top: 64px !important;
+        height: calc(100vh - 148px) !important;
+    }
+}
+
+@media screen and (max-width: 769px) {
+    .drawer {
+        top: 64px !important;
+        height: calc(100vh - 132px) !important;
     }
 }
