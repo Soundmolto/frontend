@@ -162,6 +162,10 @@
 	.notMobile {
 		display: none;
 	}
+
+	.footer {
+		background: rgb(101, 101, 140);
+	}
 }
 
 @media screen and (min-width: 769px) {

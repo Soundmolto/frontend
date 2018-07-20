@@ -258,9 +258,15 @@ body.mdc-theme--dark .mdc-card {
 	top: 64px;
 	position: fixed;
 	border: none;
-	/* background: var(--mdc-theme-background, "#fff") !important; */
 	background: linear-gradient(rgb(78, 96, 125) 0%, var(--mdc-theme-complementary-color) 500%) !important;
 	box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.35) !important;
+}
+
+
+@media screen and (max-width: 769px) {
+	.mdc-drawer--permanent {
+		box-shadow: none !important;
+	}
 }
 
 .mdc-drawer--permanent .mdc-drawer__content a, .mdc-drawer--permanent .mdc-drawer__content i {
