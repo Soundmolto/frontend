@@ -38,7 +38,8 @@ export default class Footer extends Component {
 		// Dispatch to server that queue has been updated, and the list of track ids.
 	}
 
-	toggleQueuePanel () {
+	toggleQueuePanel (e) {
+		e.currentTarget.classList.toggle(styles.active);
 		this.queuePanel.classList.toggle(styles.show);
 	}
 
@@ -368,6 +369,7 @@ export default class Footer extends Component {
 								}} />
 							</div>
 							<Button ripple className={`${styles.button}`} onClick={e => {
+								e.currentTarget.classList.toggle(styles.active);
 								this.volumePanel.classList.toggle(styles.show);
 							}}>
 								<Icon style={{ margin: 0 }}>volume_up</Icon>

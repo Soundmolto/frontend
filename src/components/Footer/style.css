@@ -379,3 +379,7 @@
 .volumePanel.show {
 	opacity: 1;
 }
+
+.footer .end .active > i {
+	color: var(--mdc-theme-complementary-color);
+}
