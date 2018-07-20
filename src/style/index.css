@@ -253,7 +253,7 @@ body.mdc-theme--dark .mdc-card {
 }
 
 .mdc-drawer--permanent {
-	height: calc(100vh - 148px);
+	height: calc(100vh - 146px);
 	width: 200px;
 	top: 64px;
 	position: fixed;

@@ -176,13 +176,13 @@ h1.subtitle-header > small {
 @media screen and (max-width: 1200px) and (min-width: 769px) {
     .drawer {
         top: 64px !important;
-        height: calc(100vh - 148px) !important;
+        height: calc(100vh - 146px) !important;
     }
 }
 
 @media screen and (max-width: 769px) {
     .drawer {
         top: 64px !important;
-        height: calc(100% - 132px) !important;
+        height: calc(100% - 140px) !important;
     }
 }

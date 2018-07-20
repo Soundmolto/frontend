@@ -141,7 +141,7 @@ export default class Footer extends Component {
 	onMouseMove (e) {
 		const { currently_playing, dispatch } = this.props;
 		const duration = currently_playing.track.duration || 0;
-		const percentage = e.pageX / this.desktopTrackbar.clientWidth;
+		const percentage = (e.pageX - 200) / this.desktopTrackbar.clientWidth;
 		const time = duration * percentage;
 		const tooltip = this.desktopTrackbar.querySelector(`.${styles.tooltip}`);
 		const rendered = seconds_to_time(time).rendered;
@@ -159,7 +159,7 @@ export default class Footer extends Component {
 
 		if (this.desktopTrackbar.clientWidth - e.pageX < tooltip.clientWidth) { return; }
 
-		tooltip.setAttribute('style', `transform: translateX(${e.pageX}px)`);
+		tooltip.setAttribute('style', `transform: translateX(${e.pageX - 200}px)`);
 	}
 
 	onMouseOut (e) {
@@ -173,7 +173,7 @@ export default class Footer extends Component {
 		this.mouseDown = true;
 		const { currently_playing, dispatch } = this.props;
 		const duration = currently_playing.track.duration || 0;
-		const percentage = e.pageX / e.currentTarget.clientWidth;
+		const percentage = ( e.pageX - 200) / e.currentTarget.clientWidth;
 
 		playing_now(dispatch, {
 			playing: true,
@@ -308,6 +308,12 @@ export default class Footer extends Component {
 					</div>
 					<div class={styles.footer} ref={e => (this.desktopFooter = e)}>
 						<div class={styles.start}>
+							<div class={styles.artwork}>
+								<div class={styles.blurred} style={{'background-image': `url(${this.getArtwork(currently_playing.track || {})})`}}></div>
+								<div class={styles.overlay}>
+									<img src={this.getArtwork(currently_playing.track || {})} />
+								</div>
+							</div>
 							<div class={styles.trackBar} onClick={this.onClickTrackBar.bind(this)}
 								onMouseMove={this.onMouseMove.bind(this)} onMouseOut={this.onMouseOut.bind(this)}
 								onMouseDown={this.onMouseDown.bind(this)} onMouseUp={this.onMouseUp.bind(this)}
@@ -321,7 +327,7 @@ export default class Footer extends Component {
 									'transform': `translateX(${this.__currentPos / this.duration* parentWidth}px)`
 								}} ref={e => (this.thumb = e)}></div>
 							</div>
-							<div class={styles.artwork}><img src={this.getArtwork(currently_playing.track || {})} /></div>
+							
 							<div class={styles.songInfo}>
 								<p>
 									<span>{currently_playing.track && currently_playing.track.user && (
