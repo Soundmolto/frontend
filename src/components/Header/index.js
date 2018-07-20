@@ -234,7 +234,7 @@ export default class Header extends Component {
 						</Toolbar.Row>
 					</Toolbar>
 					<div class={style.drawerCloseContainer} onClick={this.closeMenu}></div>
-					<Drawer.PermanentDrawer class={style.drawer}>
+					<Drawer.PermanentDrawer class={`${style.drawer} ${auth.logged_in !== true && style.loggedOut}`}>
 						<Drawer.DrawerContent>
 							<Drawer.DrawerItem onClick={this.goHome} class={this.isActive('/')} href={`/`}>
 								<List.ItemGraphic>music_note</List.ItemGraphic>

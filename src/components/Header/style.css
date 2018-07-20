@@ -129,6 +129,10 @@ h1.subtitle-header > small {
     transition: transform 0.3s ease-in-out;
 }
 
+.drawer.loggedOut {
+    height: calc(100vh - 135px) !important;
+}
+
 .menuIcon {
     display: none;
 }
@@ -184,5 +188,9 @@ h1.subtitle-header > small {
     .drawer {
         top: 64px !important;
         height: calc(100% - 140px) !important;
+    }
+
+    .drawer.loggedOut {
+        height: calc(100% - 132px) !important;
     }
 }

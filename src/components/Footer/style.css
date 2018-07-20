@@ -116,7 +116,7 @@
 	width: 12px;
 	border-radius: 100%;
 	display: block;
-	z-index: 3;
+	z-index: 300;
 }
 
 .footer .start, .footer .middle, .footer .end {
