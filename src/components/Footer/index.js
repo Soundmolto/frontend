@@ -41,6 +41,7 @@ export default class Footer extends Component {
 	toggleQueuePanel (e) {
 		e.currentTarget.classList.toggle(styles.active);
 		this.queuePanel.classList.toggle(styles.show);
+		e.currentTarget.blur();
 	}
 
 	onPosChange () {
@@ -371,6 +372,7 @@ export default class Footer extends Component {
 							<Button ripple className={`${styles.button}`} onClick={e => {
 								e.currentTarget.classList.toggle(styles.active);
 								this.volumePanel.classList.toggle(styles.show);
+								e.currentTarget.blur();
 							}}>
 								<Icon style={{ margin: 0 }}>volume_up</Icon>
 							</Button>

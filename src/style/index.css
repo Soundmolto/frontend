@@ -1,5 +1,6 @@
 :root {
 	--mdc-theme-primary: #5D8CAE;
+	--mdc-theme-secondary: #c67dcb;
 	--mdc-theme-primary-font: #FFFFFF;
 	--mdc-theme--error-message: #b64040;
 	--mdc-theme--error-message-color: #FFFFFF;
@@ -37,6 +38,10 @@ html, body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	overflow-x: hidden;
+}
+
+.mdc-slider:not(.mdc-slider--disabled) .mdc-slider__track-container {
+	background-color: #726894
 }
 
 .mdc-theme--dark a {
