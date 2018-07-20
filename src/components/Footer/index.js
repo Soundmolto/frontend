@@ -185,10 +185,9 @@ export default class Footer extends Component {
 		this.mouseDown = false;
 	}
 
-	getArtwork () {
-		const currently_playing = this.props.currently_playing || {};
-		const userAvatar = currently_playing.track && currently_playing.track.user && currently_playing.track.user.profilePicture;
-		const trackArtwork = currently_playing.track && currently_playing.track.artwork;
+	getArtwork (track) {
+		const userAvatar = track && track.user && track.user.profilePicture;
+		const trackArtwork = track && track.artwork;
 		return trackArtwork || userAvatar || Goku;
 	}
 
@@ -197,6 +196,7 @@ export default class Footer extends Component {
 		let duration = 0;
 		let playing = currently_playing != null && currently_playing.playing;
 		let parentWidth = 1;
+		const owner = currently_playing.owner && currently_playing.track.user && (currently_playing.track.user.displayName || currently_playing.track.user.url);
 
 		if (currently_playing != null && currently_playing.track != null) {
 			amount = this.calculate_amount(currently_playing);
@@ -214,7 +214,7 @@ export default class Footer extends Component {
 						<div class={styles.start}>
 							<div class={styles.songInfo}>
 								<p>
-									<span>{currently_playing.owner && currently_playing.track.user && (currently_playing.track.user.displayName || currently_playing.track.user.url)}</span>
+									<span>{owner}</span>
 									<span>{currently_playing && currently_playing.track && currently_playing.track.name}</span>
 								</p>
 							</div>
@@ -236,17 +236,60 @@ export default class Footer extends Component {
 				</div>
 				<div class={styles.notMobile}>
 					<div class={styles.queuePanel} ref={this.queuePanelRef}>
-							<ul>
+						{this.queue.tracks.length >= 1 && (
+							<div>
+								<div class={styles.mainHeader}>
+									<div class={styles.images}>
+										{this.queue.tracks.slice(0, 4).map(track => (<img src={this.getArtwork(track)} />))}
+									</div>
+									<div class={styles.overlay}>
+										<p>Playing from:</p>
+										<p class={styles.bold}>{owner}'s profile</p>
+									</div>
+								</div>
+								<div class={`${styles.flex} ${styles.header}`} style={{ 'justify-content': 'space-between' }}>
+									<div class={styles.placeholder}></div>
+									<div style={{ width: '100%' }}>
+										<p>Song</p>
+									</div>
+									<div style={{ width: 'auto', 'flex-direction': 'row' }}>
+										<span>
+											<Icon>access_time</Icon>
+										</span>
+										<span>
+											<Icon>favorite</Icon>
+										</span>
+										<span>
+											<Icon>headset</Icon>
+										</span>
+									</div>
+								</div>
+							</div>
+						)}
+						<ul>
 							{this.queue.tracks.length >= 1 && this.queue.tracks.map(track => (
 								<li>
-									<div class={styles.flex}>
-										<a title={track.name} href={`/${track.user.url}/${track.url}`}>
-											{track.name}
-										</a>
-										-
-										<a href={`/${track.user.url}`}>
-											{track.user && (track.user.displayName || track.user.url || "N/A")}
-										</a>
+									<div class={styles.flex} style={{ 'justify-content': 'space-between' }}>
+										<img src={this.getArtwork(track)} />
+										<div style={{ width: '100%' }}>
+											<a title={track.name} href={`/${track.user.url}/${track.url}`}>
+												{track.name}
+											</a>
+											<a href={`/${track.user.url}`} style={{ 'font-weight': '500', 'font-size': '0.75rem' }}>
+												{track.user && (track.user.displayName || track.user.url || "N/A")}
+											</a>
+										</div>
+										<div style={{ width: 'auto', 'flex-direction': 'row' }}>
+											<span>
+												{seconds_to_time(track.duration).rendered || '00:00'}
+											</span>
+											<span>
+												{track.amountOfLikes || 0}
+											</span>
+											<span>
+												{track.plays || 0}
+											</span>
+										</div>
 									</div>
 								</li>
 							))}
@@ -276,7 +319,7 @@ export default class Footer extends Component {
 									'transform': `translateX(${this.__currentPos / this.duration* parentWidth}px)`
 								}} ref={e => (this.thumb = e)}></div>
 							</div>
-							<div class={styles.artwork}><img src={this.getArtwork()} /></div>
+							<div class={styles.artwork}><img src={this.getArtwork(currently_playing.track || {})} /></div>
 							<div class={styles.songInfo}>
 								<p>
 									<span>{currently_playing.track && currently_playing.track.user && (
