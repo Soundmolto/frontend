@@ -4,11 +4,18 @@ import Icon from 'preact-material-components/Icon';
 import 'preact-material-components/Card/style.css';
 import styles from './style.css';
 import Goku from '../../assets/goku.png';
+import { route } from "preact-router";
 
 export class DiscoverCard extends Component {
+
+	goTo (e, path) {
+		e.preventDefault();
+		route(path);
+	}
+
 	render ({ track, user }) {
 		return (
-			<a href={`${user.url}/${track.url}`}>
+			<a href={`${user.url}/${track.url}`} onClick={e => this.goTo(e, `${user.url}/${track.url}`)}>
 				<Card class={styles.root}>
 					<div class={styles.overlayImage}></div>
 					<div class={styles.profile} style={{ "background-image": `url(${track.artwork || user.profilePicture || Goku})` }}></div>
