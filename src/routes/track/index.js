@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import Goku from '../../assets/goku.png';
 import LayoutGrid from 'preact-material-components/LayoutGrid';
 import 'preact-material-components/LayoutGrid/style.css';
 import 'preact-material-components/Button/style.css';
@@ -51,6 +52,13 @@ export default class Track extends Component {
 		queue.tracks = [].concat(tracks);
 	}
 
+	getArtwork (track, user) {
+		const userAvatar = user && user.profilePicture;
+		const trackArtwork = track && track.artwork;
+		console.log(trackArtwork || userAvatar || Goku)
+		return trackArtwork || userAvatar || Goku;
+	}
+
 	render({ user, viewedUser, track }) {
 		const viewedTrack = track.track;
 		const trackOwner = track.user;
@@ -64,11 +72,14 @@ export default class Track extends Component {
 			<div class={style.profile}>
 				<Helmet title={`${APP.NAME} - ${(viewedTrack && viewedTrack.name) || "Loading..."}`} />
 				<div class={"header " + style.header}>
-					<h1>
-						{viewedTrack != null && viewedTrack.id != null && viewedTrack.owner != null && (
-							viewedTrack.name
-						)}
-					</h1>
+					<div class={style.background} style={{ 'background-image': `url(${this.getArtwork(viewedTrack, viewedUser.profile)})` }}></div>
+					<div class={style.overlay}>
+						<h1>
+							{viewedTrack != null && viewedTrack.id != null && viewedTrack.owner != null && (
+								viewedTrack.name
+							)}
+						</h1>
+					</div>
 				</div>
 				<LayoutGrid>
 					<LayoutGrid.Inner>
@@ -79,7 +90,7 @@ export default class Track extends Component {
 										onStartPlay={this.onStartPlay.bind(this)} />
 								)}
 								{(viewedTrack == null || viewedTrack != null && viewedTrack.id == null && viewedTrack.owner == null) && (
-									<div>Oopsie doopsie me no findy the tracky wacky!!!</div>
+									<div>Track not found...</div>
 								)}
 							</div>
 						</LayoutGrid.Cell>

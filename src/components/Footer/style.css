@@ -62,8 +62,9 @@
 }
 
 .footer:hover .trackBar .thumb, .footer:active .trackBar .thumb, .footer:focus .trackBar .thumb {
-	height: 15px;
-	width: 15px;
+	height: 18px;
+	width: 18px;
+	top: -4px;
 }
 
 .footer .trackBar .progress {
@@ -80,8 +81,8 @@
 	background: var(--mdc-theme-complementary-color);
 	transform: translateX(0);
 	position: absolute;
-	left: 0px;
-	top: -3px;
+	left: -6px;
+	top: -4px;
 	height: 12px;
 	width: 12px;
 	border-radius: 100%;

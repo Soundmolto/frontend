@@ -61,3 +61,37 @@
 .header h1 {
 	white-space: pre;
 }
+
+.header {
+	position: relative;
+	background: none;
+	overflow: hidden;
+}
+
+.header .background {
+	position: absolute;
+	left: -10px;
+	top: 0;
+	z-index: 1;
+	filter: blur(10px);
+	height: calc(100% + 20px);
+	width: calc(100% + 20px);
+	background-size: cover;
+}
+
+.header .overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	z-index: 2;
+	background: rgba(0, 0, 0, 0.7);
+	height: 100%;
+	width: 100%;
+	justify-content: flex-start;
+	align-items: flex-end;
+}
+
+.header .overlay h1 {
+	margin: 100px 20px auto;
+}
