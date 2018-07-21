@@ -85,6 +85,10 @@ p.typography > i {
     margin: 0 10px 0 -10px;
 }
 
+.flexible > button {
+    color: var(--mdc-theme-text-primary-on-background) !important;
+}
+
 .flex > div, .flex span {
     display: flex;
     align-items: center;

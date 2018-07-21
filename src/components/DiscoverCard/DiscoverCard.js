@@ -30,7 +30,7 @@ export class DiscoverCard extends Component {
 		this.setState({ playing: !this.state.playing });
 		onClick(track);
 		this.played = true;
-		if (track.id === currently_playing.track.id) {
+		if (currently_playing.track && track.id === currently_playing.track.id) {
 			const audio = document.querySelector('audio') || { currentTime: currently_playing.position };
 			position = audio.currentTime;
 		}
