@@ -76,9 +76,10 @@ export default class Footer extends Component {
 	onClickPause () {
 		const { currently_playing, dispatch } = this.props;
 		if (this.isCurrentlyPlayingNotEmpty(currently_playing)) {
+			const audio = document.querySelector('audio') || { currentTime: this.__currentPos };
 			playing_now(dispatch, {
 				playing: false,
-				position: this.__currentPos,
+				position: audio.currentTime,
 				track: currently_playing.track,
 				owner: currently_playing.owner
 			});

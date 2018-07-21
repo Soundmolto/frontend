@@ -47,9 +47,10 @@ export const shortcuts = [
 
 			if (state.currently_playing.track != null) {
 				if (state.currently_playing.playing === true) {
+					const audio = document.querySelector('audio') || { currentTime: currently_playing.position };
 					store.dispatch({
 						type: TRACK.PAUSED_TRACK,
-						payload: state.currently_playing
+						payload: Object.assign({}, state.currently_playing, { position: audio.currentTime })
 					})
 				} else {
 					store.dispatch({

@@ -22,16 +22,23 @@ export class DiscoverCard extends Component {
 	}
 
 	onStartPlay (e) {
+		const { currently_playing, dispatch, track, user, onClick } = this.props;
+		let position = 0;
 		e.preventDefault();
 		e.stopImmediatePropagation();
 		e.currentTarget.blur();
 		this.setState({ playing: !this.state.playing });
-		this.props.onClick(this.props.track);
+		onClick(track);
 		this.played = true;
-		playing_now(this.props.dispatch, {
+		if (track.id === currently_playing.track.id) {
+			const audio = document.querySelector('audio') || { currentTime: currently_playing.position };
+			position = audio.currentTime;
+		}
+		playing_now(dispatch, {
 			playing: this.state.playing,
-			track: this.props.track,
-			owner: this.props.user
+			track,
+			owner: user,
+			position
 		});
 	}
 
