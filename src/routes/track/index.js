@@ -49,13 +49,13 @@ export default class Track extends Component {
 		if (i !== 0) {
 			tracks.splice(0, i);
 		}
+		queue.title = `${track.name}'s recommendations`
 		queue.tracks = [].concat(tracks);
 	}
 
 	getArtwork (track, user) {
 		const userAvatar = user && user.profilePicture;
 		const trackArtwork = track && track.artwork;
-		console.log(trackArtwork || userAvatar || Goku)
 		return trackArtwork || userAvatar || Goku;
 	}
 

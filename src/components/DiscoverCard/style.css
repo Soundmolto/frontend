@@ -143,3 +143,15 @@ p.typography > i {
     height: 100%;
     z-index: 3;
 }
+
+.paddingAll a {
+    transition: transform 0.3s ease-in-out;
+    display: block;
+    transform: translate(0);
+    color: var(--mdc-theme-text-primary-on-background) !important;
+    text-decoration: none;
+}
+
+.paddingAll a:hover {
+    transform: translateX(5px);
+}

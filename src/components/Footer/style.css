@@ -269,11 +269,19 @@
 
 .queuePanel ul {
 	margin: 0;
-	padding: 10px;
+	padding: 10px 0;
 	height: calc(100% - 120px);
 	overflow-x: hidden;
 	overflow-y: auto;
 	border-radius: 0 0 10px 10px;
+}
+
+.queuePanel li {
+	padding: 10px 20px;
+}
+
+.queuePanel li.active {
+	background: rgba(0, 0, 0, 0.4);
 }
 
 .queuePanel li, .queuePanel .header.flex p {

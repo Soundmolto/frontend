@@ -64,12 +64,16 @@ export class DiscoverCard extends Component {
 						{playing === false && (<Icon>play_arrow</Icon>)}
 						{playing === true && (<Icon>pause</Icon>)}
 					</Button>
-					<div style={{ display: 'block' }}>
+					<div style={{ display: 'block', width: '100%' }}>
 						<h2 class={`mdc-typography--title ${styles.noOverflow}`}>
-							{user.displayName || "Untitled user"}
+							<a href={`/${user.url}`}>
+								{user.displayName || "Untitled user"}
+							</a>
 						</h2>
 						<div class={`mdc-typography--caption ${styles.noOverflow}`}>
-							{track.name}
+							<a href={`/${user.url}/${track.url}`}>
+								{track.name}
+							</a>
 						</div>
 					</div>
 				</div>

@@ -86,6 +86,32 @@ export default class Footer extends Component {
 		}
 	}
 
+	onClickNext () {
+		const { currently_playing, dispatch } = this.props;
+		if (this.isCurrentlyPlayingNotEmpty(currently_playing)) {
+			const next = this.queue.next();
+			playing_now(dispatch, {
+				playing: true,
+				position: 0,
+				track: next,
+				owner: next.owner
+			});
+		}
+	}
+
+	onClickPrevious () {
+		const { currently_playing, dispatch } = this.props;
+		if (this.isCurrentlyPlayingNotEmpty(currently_playing)) {
+			const next = this.queue.previous();
+			playing_now(dispatch, {
+				playing: true,
+				position: 0,
+				track: next,
+				owner: next.owner
+			});
+		}
+	}
+
 	onClickTrackBar (e) {
 		const { currently_playing, dispatch } = this.props;
 		const percent = (e.pageX / e.currentTarget.clientWidth);
@@ -271,7 +297,7 @@ export default class Footer extends Component {
 						)}
 						<ul>
 							{this.queue.tracks.length >= 1 && this.queue.tracks.map(track => (
-								<li>
+								<li class={`${currently_playing.track && track.id === currently_playing.track.id ? styles.active : ''}`}>
 									<div class={styles.flex} style={{ 'justify-content': 'space-between' }}>
 										<img src={this.getArtwork(track)} />
 										<div style={{ width: '100%' }}>
@@ -349,7 +375,7 @@ export default class Footer extends Component {
 								{this.__currentTime == null && seconds_to_time(amount).rendered}
 								{this.__currentTime != null && this.__currentTime}
 							</p>
-							<Button ripple className={`${styles.button}`}>
+							<Button ripple className={`${styles.button}`} onClick={this.onClickPrevious.bind(this)}>
 								<Icon style={{ margin: 0 }}>skip_previous</Icon>
 							</Button>
 							
@@ -364,7 +390,7 @@ export default class Footer extends Component {
 									<Icon style={{ margin: 0 }}>pause</Icon>
 								</Button>
 							)}
-							<Button ripple className={`${styles.button}`}>
+							<Button ripple className={`${styles.button}`} onClick={this.onClickNext.bind(this)}>
 								<Icon style={{ margin: 0 }}>skip_next</Icon>
 							</Button>
 							<p>{seconds_to_time(duration).rendered}</p>
