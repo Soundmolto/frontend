@@ -246,7 +246,7 @@ export default class Footer extends Component {
 									</div>
 									<div class={styles.overlay}>
 										<p>Playing from:</p>
-										<p class={styles.bold}>{owner}'s profile</p>
+										<p class={styles.bold}>{this.queue.title}</p>
 									</div>
 								</div>
 								<div class={`${styles.flex} ${styles.header}`} style={{ 'justify-content': 'space-between' }}>

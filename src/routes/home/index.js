@@ -1,7 +1,6 @@
 import { h, Component } from 'preact';
-import 'preact-material-components/Card/style.css';
-import 'preact-material-components/Button/style.css';
-import style from './style';
+import LayoutGrid from 'preact-material-components/LayoutGrid';
+import 'preact-material-components/LayoutGrid/style.css';
 import { get_discover_tracks } from '../../actions/track';
 import { connect } from 'preact-redux';
 import { DiscoverCard } from '../../components/DiscoverCard';
@@ -15,8 +14,24 @@ export default class Home extends Component {
 		get_discover_tracks(this.props.dispatch);
 	}
 
+	onStartPlay (track) {
+		const { queue } = this.props;
+		const tracks = [].concat(this.sorted);
+		let i = 0;
+		for (const index in tracks) {
+			if (tracks[index].id === track.id) {
+				i = index;
+			}
+		}
+		if (i !== 0) {
+			tracks.splice(0, i);
+		}
+		queue.title = `Discover`;
+		queue.tracks = [].concat(tracks);
+	}
+
 	render ({ discover }) {
-		const sorted = discover.sort((aTrack, bTrack) => parseInt(bTrack.createdAt) - parseInt(aTrack.createdAt));
+		this.sorted = discover.sort((aTrack, bTrack) => parseInt(bTrack.createdAt) - parseInt(aTrack.createdAt));
 		return (
 			<div>
 				<Helmet title={`${APP.NAME} - Discover`} />
@@ -25,11 +40,15 @@ export default class Home extends Component {
 						Discover
 					</h1>
 				</div>
-				<div class={style.home}>
-					{sorted.map(track => (
-						<DiscoverCard track={track} user={track.user} />
-					))}
-				</div>
+				<LayoutGrid>
+					<LayoutGrid.Inner>
+						{this.sorted.map(track => (
+							<LayoutGrid.Cell desktopCols="3" tabletCols="4" phoneCols="12">
+								<DiscoverCard track={track} user={track.user} onClick={this.onStartPlay.bind(this)} />
+							</LayoutGrid.Cell>
+						))}
+					</LayoutGrid.Inner>
+				</LayoutGrid>
 			</div>
 		);
 	}

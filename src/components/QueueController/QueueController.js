@@ -1,5 +1,6 @@
 let position = 0;
 let tracks = [];
+let title = "Untitled queue";
 
 export class QueueController {
 
@@ -19,6 +20,18 @@ export class QueueController {
 		}
 		tracks = t;
 		this.events['set:tracks'](tracks);
+	}
+
+	get title () {
+		return title;
+	}
+
+	set title (t = "Untitled queue") {
+		if (typeof t !== "string") {
+			t = "Untitled queue";
+		}
+
+		title = t;
 	}
 
 	get current () {

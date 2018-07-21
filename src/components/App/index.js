@@ -65,8 +65,8 @@ export default class App extends Component {
 			<div id="app">
 				<Header get_url={url} />
 				<div class="route-container">
-					<Router onChange={this.handleRoute} class="ahh">
-						<Home path="/" className="route-page" />
+					<Router onChange={this.handleRoute}>
+						<Home path="/" className="route-page" queue={queue} />
 						<Login path="/login" key="login" className="route-page" />
 						<Register path="/register" key="register" className="route-page" />
 						<Admin path="/admin" className="route-page" />

@@ -50,10 +50,6 @@
 	font-size: 1.3rem;
 }
 
-.home [class="mdc-card"] {
-	padding: 20px;
-}
-
 .home [class="mdc-card"] h2 {
 	margin-top: 0;
 	font-size: 0.9rem !important;

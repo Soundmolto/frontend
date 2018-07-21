@@ -51,3 +51,91 @@ p.typography > i {
     font-size: 0.9rem;
     margin-right: 5px;
 }
+
+.padding {
+    padding: 10px 20px 0;
+}
+
+.paddingAll {
+    padding: 10px 20px;
+}
+
+.padding, .paddingAll {
+    font-size: 0.9rem;
+}
+
+.paddingAll h2 {
+    margin: 0;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.flexible {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.flexible > button {
+    margin: 0 10px 0 -10px;
+}
+
+.flex > div, .flex span {
+    display: flex;
+    align-items: center;
+}
+
+.flex > div {
+    padding: 0 0 10px 0;
+}
+
+.flex span {
+    margin-right: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.flex span > i { 
+    margin-right: 5px;
+}
+
+.noOverflow {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.blur {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    height: calc(100% + 20px);
+    width: calc(100% + 20px);
+    background-size: cover;
+    filter: blur(10px);
+    z-index: 1
+}
+
+.overlay {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+}
+
+.overlay > img {
+    max-width: 100%;
+    height: 100%;
+    z-index: 3;
+}

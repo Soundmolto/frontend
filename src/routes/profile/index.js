@@ -71,7 +71,8 @@ export default class Profile extends Component {
 	 * @param {Object} track - Currently playing track
 	 */
 	onStartPlay (track) {
-		const { queue } = this.props;
+		const { queue, viewedUser } = this.props;
+		const name = viewedUser.profile.displayName || viewedUser.profile.url;
 		const tracks = [].concat(this.tracks);
 		let i = 0;
 		for (const index in tracks) {
@@ -82,6 +83,7 @@ export default class Profile extends Component {
 		if (i !== 0) {
 			tracks.splice(0, i);
 		}
+		queue.title = `${name}'s profile`;
 		queue.tracks = [].concat(tracks);
 	}
 
