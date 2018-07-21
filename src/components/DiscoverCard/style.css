@@ -66,6 +66,7 @@ p.typography > i {
 
 .paddingAll h2 {
     margin: 0;
+    font-size: 0.9rem;
 }
 
 .flex {
