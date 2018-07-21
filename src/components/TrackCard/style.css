@@ -26,8 +26,6 @@
 
 .favorites > i {
     color: var(--mdc-theme-text-primary-on-background);
-    height: 32px;
-    width: 32px;
 }
 
 .actionable {
