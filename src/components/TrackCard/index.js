@@ -191,7 +191,7 @@ export class TrackCard extends Component {
 							</IconToggle>
 							{track.amountOfLikes || 0}
 						</p>
-						<span style={{ 'font-size': '0.9rem', float: 'right' }}>
+						<span style={{ 'font-size': '0.9rem', float: 'right', 'margin-top': '14px' }}>
 							<p class={`${styles.centered} prel ${styles.w100}`} >
 								<span>
 									{seconds_to_time(track.duration).rendered}
@@ -200,10 +200,10 @@ export class TrackCard extends Component {
 						</span>
 						{user.profile.id === currentUser.profile.id && (
 							<span>
-								<p class={className(`${styles.centered} ${styles.actionable}`)} style={{ 'float': 'right' }} onClick={this.onClickDeleteTrack.bind(this)}>
+								<p class={className(`${styles.centered} ${styles.actionable}`)} style={{ 'float': 'right', 'margin-top': '14px' }} onClick={this.onClickDeleteTrack.bind(this)}>
 									<Icon style={{ margin: 0 }}>delete</Icon>
 								</p>
-								<p class={className(`${styles.centered} ${styles.actionable}`)} style={{ 'float': 'right' }} onClick={this.onClickEditTrack.bind(this)}>
+								<p class={className(`${styles.centered} ${styles.actionable}`)} style={{ 'float': 'right', 'margin-top': '14px' }} onClick={this.onClickEditTrack.bind(this)}>
 									<Icon style={{ margin: 0 }}>edit</Icon>
 								</p>
 							</span>
