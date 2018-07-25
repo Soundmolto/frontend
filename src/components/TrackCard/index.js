@@ -156,12 +156,19 @@ export class TrackCard extends Component {
 					{isCurrentTrack == false && (
 						<h4 class={className(styles.displayName)}>{user.profile.displayName || user.profile.url || "N/A"}</h4>
 					)}
-					<TimeAgo
-						datetime={postedAt.toDate()} 
-						locale='en_AU'
-						className={styles.date}
-						title={`Posted on ${postedAt.format('DD MMMM YYYY')}`}
-					/>
+					<span class={styles.dateContainer}>
+						{track.genres != null && track.genres.length >= 1 && (
+							<div class={styles.genres}>
+								{track.genres.map(genre => (<span>{genre}</span>))}
+							</div>
+						)}
+						<TimeAgo
+							datetime={postedAt.toDate()} 
+							locale='en_AU'
+							className={styles.date}
+							title={`Posted on ${postedAt.format('DD MMMM YYYY')}`}
+						/>
+					</span>
 					<h2 class={className(`mdc-typography--title ${styles.username}`)}>
 						{isCurrentTrack == false && (
 							<a class={styles.link} href={`/${user.profile.url}/${track.url}`}>
