@@ -20,6 +20,7 @@ import { seconds_to_time } from '../../utils/seconds-to-time';
 import dayjs from 'dayjs';
 import TimeAgo from 'timeago-react';
 import Goku from '../../assets/goku.png';
+import { route } from 'preact-router';
 
 let className = (e) => (e);
 
@@ -220,7 +221,10 @@ export class TrackCard extends Component {
 				<Dialog ref={this.editTrackRef}>
 					<Dialog.Header>Edit Track</Dialog.Header>
 					<Dialog.Body>
-						<EditTrack track={track} />
+						<EditTrack track={track} onSubmit={newTrack => {
+							track = newTrack;
+							route(`/${track.user.url}/${newTrack.url}`, true);
+						}} />
 					</Dialog.Body>
 				</Dialog>
 				<Snackbar ref={bar=>{this.bar=bar;}}/>

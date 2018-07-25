@@ -34,7 +34,7 @@ export class EditTrack extends Component {
 		const id = this.props.track.id;
 		edit_track(this.props.dispatch, { token: this.props.auth.token, track: { ...state }, id });
 		if (this.props.onSubmit) {
-			this.props.onSubmit();
+			this.props.onSubmit(state);
 		}
 		return true;
 	}
