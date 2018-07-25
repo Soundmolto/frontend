@@ -184,7 +184,7 @@ export default class Footer extends Component {
 			return;
 		}
 
-		if (this.desktopTrackbar.clientWidth - e.pageX < tooltip.clientWidth) { return; }
+		if ((this.desktopTrackbar.clientWidth - e.pageX) + 200 < tooltip.clientWidth) { return; }
 
 		tooltip.setAttribute('style', `transform: translateX(${e.pageX - 200}px)`);
 	}

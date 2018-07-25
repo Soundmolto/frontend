@@ -209,9 +209,9 @@
 .tooltip {
 	position: absolute;
 	left: 0;
-	top: -35px;
+	top: -40px;
 	transform: translateX(0);
-	background: rgba(0, 0, 0, 0.7);
+	background: linear-gradient(rgb(101, 101, 140) 0%, rgb(78, 96, 125) 100%);
 	padding: 10px;
 	z-index: 3;
 	color: white;
