@@ -10,12 +10,16 @@
 	width: 100%;
 }
 
+.form > div:first-of-type {
+	width: calc(100% - 200px) !important;
+}
+
 .form textarea {
 	max-height: 300px;
 }
 
 .form .track-name {
-	width: calc(100% - 200px);
+	width: calc(100% - 200px) !important;
 }
 
 .form .icon {

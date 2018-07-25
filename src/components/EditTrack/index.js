@@ -90,7 +90,7 @@ export class EditTrack extends Component {
 					<Icon class={styles.icon}>cloud_upload</Icon>
 					<input type="file" accept="image/*" onChange={this.onFileChange.bind(this)} />
 				</label>
-				<TextField label="Track name" type="text" autofocus value={track.name} style={full_width} onChange={e => this.onInputChange(e, 'name')} class={styles['track-name']} />
+				<TextField class={styles['track-name']} label="Track name" type="text" autofocus value={track.name} style={full_width} onChange={e => this.onInputChange(e, 'name')} />
 				<TextField label="Track URL" type="text" autofocus value={track.url} style={full_width} onChange={e => this.onInputChange(e, 'url')} onKeyDown={onKeyDown} />
 				<Button type="submit">Submit</Button>
 			</form>
