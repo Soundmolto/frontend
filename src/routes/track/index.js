@@ -53,8 +53,8 @@ export default class Track extends Component {
 		queue.tracks = [].concat(tracks);
 	}
 
-	getArtwork (track, user) {
-		const userAvatar = user && user.profilePicture;
+	getArtwork (track) {
+		const userAvatar = track && track.user && track.user.profilePicture;
 		const trackArtwork = track && track.artwork;
 		return trackArtwork || userAvatar || Goku;
 	}
@@ -72,7 +72,7 @@ export default class Track extends Component {
 			<div class={style.profile}>
 				<Helmet title={`${APP.NAME} - ${(viewedTrack && viewedTrack.name) || "Loading..."}`} />
 				<div class={"header " + style.header}>
-					<div class={style.background} style={{ 'background-image': `url(${this.getArtwork(viewedTrack, viewedUser.profile)})` }}></div>
+					<div class={style.background} style={{ 'background-image': `url(${this.getArtwork(viewedTrack)})` }}></div>
 					<div class={style.overlay}>
 						<h1>
 							{viewedTrack != null && viewedTrack.id != null && viewedTrack.owner != null && (

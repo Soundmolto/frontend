@@ -100,6 +100,12 @@ export class TrackCard extends Component {
 		}, 5500);
 	}
 
+	getArtwork (track, user) {
+		const userAvatar = user && user.profilePicture;
+		const trackArtwork = track && track.artwork;
+		return trackArtwork || userAvatar || Goku;
+	}
+
 	render ({ track, user, currentUser, currently_playing, isCurrentTrack }) {
 		const userLikesTrack = user.likes && user.likes.filter(like => like.id === track.id).length != 0;
 		const postedAt = dayjs(parseInt(track.createdAt));
@@ -131,7 +137,7 @@ export class TrackCard extends Component {
 			<div class={styles.card}>
 				<Card class={styles.cardRoot}>
 					<div class={styles.overlayImage} onClick={this.onClickPlayPause.bind(this)}></div>
-					<div class={styles.image} style={{ 'background-image': `url(${track.artwork || Goku})` }}>
+					<div class={styles.image} style={{ 'background-image': `url(${this.getArtwork(track, track.user)})` }}>
 						<Button class={styles['play-button']} onClick={this.onClickPlayPause.bind(this)}>
 							<Icon>
 								{!this.state.playing && 'play_arrow'}
