@@ -155,15 +155,22 @@ export default class Footer extends Component {
 			if (currently_playing.position != null) {
 				this.tracks[currently_playing.track.id] = currently_playing.position;
 			}
-			this.audioPlayer.addEventListener('timeupdate', this.onPosChange.bind(this));
+			audioPlayer.addEventListener('timeupdate', this.onPosChange.bind(this));
 			requestAnimationFrame(_ => {
-				this.audioPlayer.play();
-				this.audioPlayer.currentTime = this.tracks[currently_playing.track.id] || currently_playing.position || 0;
+				audioPlayer.play();
+				audioPlayer.currentTime = this.tracks[currently_playing.track.id] || currently_playing.position || 0;
 			});
 		} else {
-			this.tracks[currently_playing.track.id] = this.audioPlayer.currentTime;
-			this.audioPlayer.pause();
+			this.tracks[currently_playing.track.id] = audioPlayer.currentTime;
+			audioPlayer.pause();
 		}
+	}
+
+	componentWillUpdate () {
+		const { audioPlayer } = this;
+		const { currently_playing } = this.props;
+		this.tracks[currently_playing.track.id] = audioPlayer.currentTime;
+		audioPlayer.removeEventListener('timeupdate', this.onPosChange.bind(this));
 	}
 
 	onMouseMove (e) {

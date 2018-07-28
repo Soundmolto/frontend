@@ -72,26 +72,4 @@ export class QueueController {
 		this.tracks = a.concat([]);
 	}
 
-	// shuffle () {
-	// 	let currentIndex = tracks.length;
-	// 	let temporaryValue;
-	// 	let randomIndex;
-	// 	let arr = [];
-
-	// 	while (arr.length !== tracks.length) {
-	// 		randomIndex = Math.floor(Math.random() * currentIndex);
-	// 		currentIndex -= 1;
-	// 		temporaryValue = tracks[currentIndex];
-	// 		if (arr.filter(track => track.id === temporaryValue.id).length === 0) {
-	// 			tracks[currentIndex] = tracks[randomIndex];
-	// 			tracks[randomIndex] = temporaryValue;
-	// 			arr.push(temporaryValue);
-	// 		} else {
-	// 			currentIndex++;
-	// 		}
-	// 	}
-	
-	// 	this.tracks = arr.concat([]);
-	// }
-
 }
