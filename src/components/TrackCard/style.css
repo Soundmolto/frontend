@@ -136,12 +136,15 @@
     width: 200px;
     background-position: center;
     background-size: cover;
+    border-radius: 10px 0 0 10px;
+    overflow: hidden;
 }
 
 .play-button {
-    width: 100%;
-    height: calc(100% + 2px);
+    width: calc(100% + 2px);
+    height: calc(100%);
     background-color: rgba(0, 0, 0, 0.7) !important;
+    border-radius: 0 !important;
 }
 
 .play-button i {
