@@ -1,6 +1,7 @@
 let position = 0;
 let tracks = [];
 let title = "Untitled queue";
+let unshuffled = [];
 
 export class QueueController {
 
@@ -19,6 +20,7 @@ export class QueueController {
 			throw new Error('Tracks must be an array.');
 		}
 		tracks = t;
+		unshuffled = t;
 		this.events['set:tracks'](tracks);
 	}
 
@@ -62,6 +64,7 @@ export class QueueController {
 
 	shuffle () {
 		const a = this.tracks;
+		const b = [].concat(this.tracks);
 		for (let i = a.length - 1; i > 0; i--) {
 			const j = Math.floor(Math.random() * (i + 1));
 			if (j !== this.currentPosition && i !== this.currentPosition) {
@@ -70,6 +73,12 @@ export class QueueController {
 			
 		}
 		this.tracks = a.concat([]);
+		unshuffled = b;
+	}
+
+	resetShuffle () {
+		this.tracks = [].concat(unshuffled);
+		unshuffled = [];
 	}
 
 }
