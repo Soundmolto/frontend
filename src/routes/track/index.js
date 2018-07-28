@@ -47,10 +47,18 @@ export default class Track extends Component {
 				i = index;
 			}
 		}
+		console.log(
+			queue.tracks,
+			queue.tracks.filter(_track => _track.id !== track.id).length
+		)
+		if (queue.tracks.filter(_track => _track.id !== track.id).length === 0) {
+			queue.title = `${track.name}'s recommendations`
+			queue.tracks = [].concat(tracks);
+			queue.position = 0;
+		} else {
+			queue.position = i;
+		}
 
-		queue.title = `${track.name}'s recommendations`
-		queue.tracks = [].concat(tracks);
-		queue.position = 0;
 	}
 
 	getArtwork (track) {
