@@ -18,6 +18,7 @@ export default class Footer extends Component {
 	__currentPos = 0;
 	tracks = {};
 	volume = 1;
+	state = { shuffled: false };
 
 	queuePanelRef = e => (this.queuePanel = e);
 	volumePanelRef = e => (this.volumePanel = e);
@@ -214,6 +215,11 @@ export default class Footer extends Component {
 		this.mouseDown = false;
 	}
 
+	shuffle () {
+		this.queue.shuffle();
+		this.setState({ shuffled: true });
+	}
+
 	getArtwork (track) {
 		const userAvatar = track && track.user && track.user.profilePicture;
 		const trackArtwork = track && track.artwork;
@@ -245,7 +251,7 @@ export default class Footer extends Component {
 								<p>
 									<span>{owner}</span>
 									<span>{currently_playing && currently_playing.track && currently_playing.track.name}</span>
-								</p>
+								</p>this.queue.shuffle()
 							</div>
 						</div>
 						<div class={styles.end}>
@@ -412,7 +418,7 @@ export default class Footer extends Component {
 							<Button ripple className={`${styles.button}`} onClick={this.toggleQueuePanel.bind(this)}>
 								<Icon style={{ margin: 0 }}>queue_music</Icon>
 							</Button>
-							<Button ripple className={`${styles.button}`} onClick={e => console.log(e)}>
+							<Button ripple className={`${styles.button}`} onClick={this.shuffle.bind(this)}>
 								<Icon style={{ margin: 0 }}>shuffle</Icon>
 							</Button>
 						</div>

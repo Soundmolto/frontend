@@ -56,20 +56,42 @@ export class QueueController {
 		return tracks[position];
 	}
 
-	shuffle () {
-		let currentIndex = tracks.length;
-		let temporaryValue;
-		let randomIndex;
-
-		while (0 !== currentIndex) {
-			randomIndex = Math.floor(Math.random() * currentIndex);
-			currentIndex -= 1;
-			temporaryValue = tracks[currentIndex];
-			tracks[currentIndex] = tracks[randomIndex];
-			tracks[randomIndex] = temporaryValue;
-		}
-	
-		tracks = array.concat([]);
+	get currentPosition () {
+		return position;
 	}
+
+	shuffle () {
+		const a = this.tracks;
+		for (let i = a.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			if (j !== this.currentPosition && i !== this.currentPosition) {
+				[a[i], a[j]] = [a[j], a[i]]; // Always
+			}
+			
+		}
+		this.tracks = a.concat([]);
+	}
+
+	// shuffle () {
+	// 	let currentIndex = tracks.length;
+	// 	let temporaryValue;
+	// 	let randomIndex;
+	// 	let arr = [];
+
+	// 	while (arr.length !== tracks.length) {
+	// 		randomIndex = Math.floor(Math.random() * currentIndex);
+	// 		currentIndex -= 1;
+	// 		temporaryValue = tracks[currentIndex];
+	// 		if (arr.filter(track => track.id === temporaryValue.id).length === 0) {
+	// 			tracks[currentIndex] = tracks[randomIndex];
+	// 			tracks[randomIndex] = temporaryValue;
+	// 			arr.push(temporaryValue);
+	// 		} else {
+	// 			currentIndex++;
+	// 		}
+	// 	}
+	
+	// 	this.tracks = arr.concat([]);
+	// }
 
 }

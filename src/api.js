@@ -1,2 +1,2 @@
 // TODO - Refactor this shit.
-export const API_ENDPOINT = "http://localhost:1344";
+export const API_ENDPOINT = "https://api.musicstreaming.dev:1344";

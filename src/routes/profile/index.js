@@ -87,13 +87,17 @@ export default class Profile extends Component {
 		queue.tracks = [].concat(tracks);
 	}
 
+	massageObject (object) {
+		delete object.found;
+		delete object.error;
+		return Object.assign({}, object);
+	}
+
 	componentWillUpdate () {
 		const state = this.props.store.getState();
-		const viewed = Object.assign({}, state.viewedUser);
-		const user = Object.assign({}, state.user);
-		delete viewed.found;
-		delete viewed.error;
-		const are_same = JSON.stringify(viewed) === JSON.stringify(user); // lol..
+		const viewed = this.massageObject(state.viewedUser);
+		const user = this.massageObject(state.user);
+		const are_same = JSON.stringify(viewed) === JSON.stringify(user);
 		if (state.user.profile.url === this.props.vanity_url && false === are_same) {
 			this.props.dispatch({
 				type: USER.VIEW_PROFILE,
