@@ -315,8 +315,8 @@ body.mdc-theme--dark .mdc-card {
 	width: 100%;
 	display: block;
 	border: 0;
-	background: var(--mdc-theme-background);
-	color: var(--mdc-theme-text-primary-on-background);
+	background: rgba(0, 0, 0, 0.2);
+	color: #FFF;
 	padding: 10px;
 	border-radius: 10px;
 	box-shadow: var(--mdc-theme--box-shadow--floating);
@@ -324,7 +324,7 @@ body.mdc-theme--dark .mdc-card {
 
 .search-container > .search-input:focus {
 	outline: none;
-	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 .mdc-text-field__input {
