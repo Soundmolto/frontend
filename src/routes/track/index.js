@@ -47,10 +47,7 @@ export default class Track extends Component {
 				i = index;
 			}
 		}
-		console.log(
-			queue.tracks,
-			queue.tracks.filter(_track => _track.id !== track.id).length
-		)
+
 		if (queue.tracks.filter(_track => _track.id !== track.id).length === 0) {
 			queue.title = `${track.name}'s recommendations`
 			queue.tracks = [].concat(tracks);
@@ -70,6 +67,7 @@ export default class Track extends Component {
 	render({ user, viewedUser, track }) {
 		const viewedTrack = track.track;
 		const trackOwner = track.user;
+		if (this.currentUrl !== getCurrentUrl()) this.updateData();
 		for (const track of viewedUser.tracks) {
 			track.user = viewedUser.profile;
 		}
