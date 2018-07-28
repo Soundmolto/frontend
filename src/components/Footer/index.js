@@ -91,6 +91,7 @@ export default class Footer extends Component {
 		const { currently_playing, dispatch } = this.props;
 		if (this.isCurrentlyPlayingNotEmpty(currently_playing)) {
 			const next = this.queue.next();
+			console.log(this.queue.tracks);
 			playing_now(dispatch, {
 				playing: true,
 				position: 0,

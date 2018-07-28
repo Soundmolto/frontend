@@ -62,13 +62,12 @@ export class QueueController {
 	}
 
 	next () {
-		position += 1;
+		// don't use "+=" as it somehow got cast to a string somewhere??
+		position++;
 
 		if (this.repeat === true && (tracks.length === position || tracks[position] == null)) {
 			position = 0;
 		}
-
-		console.log(this.repeat);
 
 		return tracks[position];
 	}

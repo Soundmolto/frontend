@@ -21,13 +21,13 @@ export default class Home extends Component {
 
 		for (const index in tracks) {
 			if (tracks[index].id === track.id) {
-				i = index;
+				i = parseInt(index);
 			}
 		}
 
 		queue.title = `Discover`;
 		queue.tracks = [].concat(tracks);
-		queue.position = i;
+		queue.position = i || 0;
 	}
 
 	render ({ discover }) {
