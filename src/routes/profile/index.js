@@ -75,16 +75,16 @@ export default class Profile extends Component {
 		const name = viewedUser.profile.displayName || viewedUser.profile.url;
 		const tracks = [].concat(this.tracks);
 		let i = 0;
+
 		for (const index in tracks) {
 			if (tracks[index].id === track.id) {
 				i = index;
 			}
 		}
-		if (i !== 0) {
-			tracks.splice(0, i);
-		}
+
 		queue.title = `${name}'s profile`;
 		queue.tracks = [].concat(tracks);
+		queue.position = i;
 	}
 
 	massageObject (object) {

@@ -18,7 +18,7 @@ export default class Footer extends Component {
 	__currentPos = 0;
 	tracks = {};
 	volume = 1;
-	state = { shuffled: false };
+	state = { shuffled: false, repeat: false };
 
 	queuePanelRef = e => (this.queuePanel = e);
 	volumePanelRef = e => (this.volumePanel = e);
@@ -166,8 +166,20 @@ export default class Footer extends Component {
 		}
 	}
 
-	componentWillUpdate () {
+	componentWillUpdate (nextProps) {
 		const { audioPlayer } = this;
+		const currently_playing = nextProps.currently_playing || this.props.currently_playing;
+
+		if (audioPlayer.currentTime > this.tracks[currently_playing.track.id]) {
+			this.tracks[currently_playing.track.id] = audioPlayer.currentTime;
+		} else {
+			this.tracks[currently_playing.track.id] = currently_playing.position;
+		}
+
+		if (currently_playing.position > audioPlayer.currentTime) {
+			this.tracks[currently_playing.track.id] = currently_playing.position;
+		}
+
 		audioPlayer.removeEventListener('timeupdate', this.onPosChange.bind(this));
 	}
 
@@ -235,6 +247,18 @@ export default class Footer extends Component {
 			track: currently_playing.track,
 			owner: currently_playing.owner
 		});
+	}
+
+	repeat () {
+		const { dispatch, currently_playing } = this.props;
+		const { track, owner } = currently_playing;
+		const position = this.audioPlayer.currentTime;
+		const playing = true;
+		const willRepeat = !this.state.repeat;
+
+		this.queue.repeat = willRepeat;
+		this.setState({ repeat: willRepeat });
+		playing_now(dispatch, { playing, position, track, owner });
 	}
 
 	getArtwork (track) {
@@ -434,6 +458,9 @@ export default class Footer extends Component {
 							</Button>
 							<Button ripple className={`${styles.button}`} onClick={this.toggleQueuePanel.bind(this)}>
 								<Icon style={{ margin: 0 }}>queue_music</Icon>
+							</Button>
+							<Button ripple className={`${styles.button} ${this.state.repeat === true && styles.active}`} onClick={this.repeat.bind(this)}>
+								<Icon style={{ margin: 0 }}>repeat</Icon>
 							</Button>
 							<Button ripple className={`${styles.button} ${this.state.shuffled === true && styles.active}`} onClick={this.shuffle.bind(this)}>
 								<Icon style={{ margin: 0 }}>shuffle</Icon>

@@ -2,6 +2,7 @@ let position = 0;
 let tracks = [];
 let title = "Untitled queue";
 let unshuffled = [];
+let repeat = false;
 
 export class QueueController {
 
@@ -24,6 +25,10 @@ export class QueueController {
 		this.events['set:tracks'](tracks);
 	}
 
+	set position (pos = 0) {
+		position = pos;
+	}
+
 	get title () {
 		return title;
 	}
@@ -40,6 +45,14 @@ export class QueueController {
 		return tracks[position];
 	}
 
+	get repeat () {
+		return repeat;
+	}
+
+	set repeat (shouldRepeat) {
+		repeat = shouldRepeat;
+	}
+
 	first () {
 		return tracks[0];
 	}
@@ -50,6 +63,13 @@ export class QueueController {
 
 	next () {
 		position += 1;
+
+		if (this.repeat === true && (tracks.length === position || tracks[position] == null)) {
+			position = 0;
+		}
+
+		console.log(this.repeat);
+
 		return tracks[position];
 	}
 

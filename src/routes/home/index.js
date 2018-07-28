@@ -18,16 +18,16 @@ export default class Home extends Component {
 		const { queue } = this.props;
 		const tracks = [].concat(this.sorted);
 		let i = 0;
+
 		for (const index in tracks) {
 			if (tracks[index].id === track.id) {
 				i = index;
 			}
 		}
-		if (i !== 0) {
-			tracks.splice(0, i);
-		}
+
 		queue.title = `Discover`;
 		queue.tracks = [].concat(tracks);
+		queue.position = i;
 	}
 
 	render ({ discover }) {

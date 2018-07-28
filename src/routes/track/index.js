@@ -39,18 +39,18 @@ export default class Track extends Component {
 	 */
 	onStartPlay (track) {
 		const { queue } = this.props;
-		const tracks = [].concat(this.tracks);
+		const tracks = [this.tracks[0]].concat(this.tracks.filter(track => this.tracks[0].id !== track.id));
 		let i = 0;
+
 		for (const index in tracks) {
 			if (tracks[index].id === track.id) {
 				i = index;
 			}
 		}
-		if (i !== 0) {
-			tracks.splice(0, i);
-		}
+
 		queue.title = `${track.name}'s recommendations`
 		queue.tracks = [].concat(tracks);
+		queue.position = 0;
 	}
 
 	getArtwork (track) {
