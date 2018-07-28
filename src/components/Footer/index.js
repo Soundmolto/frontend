@@ -166,20 +166,8 @@ export default class Footer extends Component {
 		}
 	}
 
-	componentWillUpdate (nextProps) {
+	componentWillUpdate () {
 		const { audioPlayer } = this;
-		const currently_playing = nextProps.currently_playing || this.props.currently_playing;
-
-		if (audioPlayer.currentTime > this.tracks[currently_playing.track.id]) {
-			this.tracks[currently_playing.track.id] = audioPlayer.currentTime;
-		} else {
-			this.tracks[currently_playing.track.id] = currently_playing.position;
-		}
-
-		if (currently_playing.position > audioPlayer.currentTime) {
-			this.tracks[currently_playing.track.id] = currently_playing.position;
-		}
-
 		audioPlayer.removeEventListener('timeupdate', this.onPosChange.bind(this));
 	}
 
@@ -233,15 +221,20 @@ export default class Footer extends Component {
 	}
 
 	shuffle () {
-		console.log(
-			this.state.shuffled
-		)
+		const { dispatch, currently_playing } = this.props;
 		if (!this.state.shuffled) {
 			this.queue.shuffle();
 		} else {
 			this.queue.resetShuffle();
 		}
 		this.setState({ shuffled: !this.state.shuffled });
+
+		playing_now(dispatch, {
+			playing: true,
+			position: this.audioPlayer.currentTime,
+			track: currently_playing.track,
+			owner: currently_playing.owner
+		});
 	}
 
 	getArtwork (track) {
