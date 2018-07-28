@@ -55,10 +55,22 @@ export default class Header extends Component {
 		});
 	};
 
-	goHome = this.linkTo('/');
-	goToMyProfile = this.linkTo(`/${this.props.user.profile.url}`);
-	goToLogin = this.linkTo('/login');
-	goToRegister = this.linkTo('/register');
+	goHome = e => {
+		e.preventDefault();
+		this.linkTo('/');
+	};
+	goToMyProfile = e => {
+		e.preventDefault();
+		this.linkTo(`/${this.props.user.profile.url}`);
+	}
+	goToLogin = e => {
+		e.preventDefault();
+		this.linkTo('/login');
+	};
+	goToRegister = e => {
+		e.preventDefault();
+		this.linkTo('/register');
+	}
 
 	toggleDarkTheme = () => {
 		if (this.props.UI.theme === THEMES.dark) {
