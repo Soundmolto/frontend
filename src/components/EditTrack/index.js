@@ -79,7 +79,6 @@ export class EditTrack extends Component {
 	}
 
 	render ({ track }) {
-		delete state;
 		state = Object.assign({}, track);
 		return (
 			<form onSubmit={this.onSubmit.bind(this)} class={styles.form}>

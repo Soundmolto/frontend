@@ -92,12 +92,13 @@ export default class Profile extends Component {
 		const viewed = Object.assign({}, state.viewedUser);
 		const user = Object.assign({}, state.user);
 		delete viewed.found;
+		delete viewed.error;
 		const are_same = JSON.stringify(viewed) === JSON.stringify(user); // lol..
 		if (state.user.profile.url === this.props.vanity_url && false === are_same) {
 			this.props.dispatch({
-                type: USER.VIEW_PROFILE,
-                payload: state.user
-            });
+				type: USER.VIEW_PROFILE,
+				payload: state.user
+			});
 		}
 	}
 

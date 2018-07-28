@@ -60,6 +60,7 @@ export default class Header extends Component {
 		this.linkTo('/');
 	};
 	goToMyProfile = e => {
+		console.log(e);
 		e.preventDefault();
 		this.linkTo(`/${this.props.user.profile.url}`);
 	}
@@ -222,7 +223,7 @@ export default class Header extends Component {
 											</div>
 											<Menu.Anchor>
 												<Menu ref={menu => { this.menu = menu; }} class={style.menu}>
-													<Menu.Item onClick={this.goToMyProfile}>
+													<Menu.Item onClick={e => route(`/${this.props.user.profile.url}`, false)}>
 														<Icon class={style.icon}>person</Icon>
 														Profile
 													</Menu.Item>
