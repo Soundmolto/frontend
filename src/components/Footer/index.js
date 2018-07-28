@@ -152,7 +152,7 @@ export default class Footer extends Component {
 			audioPlayer = window.document.querySelector('audio');
 		}
 		if (currently_playing.playing === true) {
-			if (currently_playing.position != null) {
+			if (currently_playing.position != null && currently_playing.position < this.tracks[currently_playing.track.id]) {
 				this.tracks[currently_playing.track.id] = currently_playing.position;
 			}
 			audioPlayer.addEventListener('timeupdate', this.onPosChange.bind(this));
@@ -166,10 +166,20 @@ export default class Footer extends Component {
 		}
 	}
 
-	componentWillUpdate () {
+	componentWillUpdate (nextProps) {
 		const { audioPlayer } = this;
-		const { currently_playing } = this.props;
-		this.tracks[currently_playing.track.id] = audioPlayer.currentTime;
+		const currently_playing = nextProps.currently_playing || this.props.currently_playing;
+
+		if (audioPlayer.currentTime > this.tracks[currently_playing.track.id]) {
+			this.tracks[currently_playing.track.id] = audioPlayer.currentTime;
+		} else {
+			this.tracks[currently_playing.track.id] = currently_playing.position;
+		}
+
+		if (currently_playing.position > audioPlayer.currentTime) {
+			this.tracks[currently_playing.track.id] = currently_playing.position;
+		}
+
 		audioPlayer.removeEventListener('timeupdate', this.onPosChange.bind(this));
 	}
 
