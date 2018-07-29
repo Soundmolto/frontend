@@ -52,10 +52,15 @@ export class TrackCard extends Component {
 		this.setState({ playing: !this.state.playing });
 		this.props.onStartPlay(this.props.track);
 		this.played = true;
+		const position = this.props.currently_playing.position;
+		const audio = document.querySelector('audio') || { currentTime: position };
+		
+
 		playing_now(this.props.dispatch, {
 			playing: this.state.playing,
 			track: this.props.track,
-			owner: this.props.user
+			owner: this.props.user,
+			position: audio.currentTime
 		});
 	}
 
