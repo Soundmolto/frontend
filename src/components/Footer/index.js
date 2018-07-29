@@ -9,7 +9,8 @@ import 'preact-material-components/Slider/style.css';
 import { connect } from "preact-redux";
 import { seconds_to_time } from "../../utils/seconds-to-time";
 import { playing_now } from '../../actions/track';
-import { QueuePanel } from "../QueuePanel/QueuePanel";
+import { QueuePanel } from "../QueuePanel";
+import { MobileFooter } from "../MobileFooter";
 
 @connect(({ currently_playing }) => ({ currently_playing }))
 export default class Footer extends Component {
@@ -290,6 +291,7 @@ export default class Footer extends Component {
 		let playing = currently_playing != null && currently_playing.playing;
 		let parentWidth = 1;
 		const owner = currently_playing.owner && currently_playing.track.user && (currently_playing.track.user.displayName || currently_playing.track.user.url);
+		const trackName = (currently_playing && currently_playing.track && currently_playing.track.name || "");
 
 		if (currently_playing != null && currently_playing.track != null) {
 			amount = this.calculate_amount(currently_playing);
@@ -302,31 +304,14 @@ export default class Footer extends Component {
 
 		return (
 			<div>
-				<div class={styles.mobile}>
-					<div class={styles.footer}>
-						<div class={styles.start}>
-							<div class={styles.songInfo}>
-								<p>
-									<span>{owner}</span>
-									<span>{currently_playing && currently_playing.track && currently_playing.track.name}</span>
-								</p>
-							</div>
-						</div>
-						<div class={styles.end}>
-						{!playing && (
-							<Button ripple className={`${styles.button}`} onClick={this.onClickPlay.bind(this)}>
-								<Icon style={{ margin: 0 }} >play_arrow</Icon>
-							</Button>
-						)}
-
-						{playing && (
-							<Button ripple className={`${styles.button}`} onClick={this.onClickPause.bind(this)}>
-								<Icon style={{ margin: 0 }} >pause</Icon>
-							</Button>
-						)}
-						</div>
-					</div>
-				</div>
+				<MobileFooter
+					trackName={trackName}
+					owner={owner}
+					playing={playing}
+					onClickPlay={this.onClickPlay.bind(this)}
+					onClickPause={this.onClickPause.bind(this)}
+					footerClass={styles.footer}
+				/>
 				<div class={styles.notMobile}>
 					<QueuePanel ref={this.queuePanelRef} queue={this.queue} getArtwork={this.getArtwork} currently_playing={currently_playing} />
 					<div class={styles.footer} ref={e => (this.desktopFooter = e)}>

@@ -32,13 +32,40 @@ export default class Header extends Component {
 
 	currentUrl = '/';
 
-	openSettings = () => this.settingsModal.MDComponent.show();
-	openEditProfileModal = () => this.editProfileModal.MDComponent.show();
-	openGotoPanel = () => this.gotoPanel.MDComponent.show();
-	closeGoToPanel = () => { this.gotoPanel.MDComponent.close(); this.props.dispatch({ type: "HIDE_GOTO_PANEL" }); };
-	showUploadTrackModal = () => { this.uploadTrackModal.MDComponent.show(); };
-	openShortcutsPanel = () => this.shortcutsPanel.MDComponent.show();
-	closeShortcutsPanel = () => { this.shortcutsPanel.MDComponent.close(); this.props.dispatch({ type: "HIDE_SHORTCUTS_PANEL" }); };
+	openSettings = () => {
+		this.closeMenu();
+		this.settingsModal.MDComponent.show();
+	};
+
+	openEditProfileModal = () => {
+		this.closeMenu();
+		this.editProfileModal.MDComponent.show();
+	};
+
+	openGotoPanel = () => {
+		this.closeMenu();
+		this.gotoPanel.MDComponent.show();
+	};
+
+	closeGoToPanel = () => {
+		this.gotoPanel.MDComponent.close();
+		this.props.dispatch({ type: "HIDE_GOTO_PANEL" });
+	};
+
+	showUploadTrackModal = () => {
+		this.closeMenu();
+		this.uploadTrackModal.MDComponent.show();
+	};
+
+	openShortcutsPanel = () => {
+		this.closeMenu();
+		this.shortcutsPanel.MDComponent.show();
+	};
+
+	closeShortcutsPanel = () => {
+		this.shortcutsPanel.MDComponent.close();
+		this.props.dispatch({ type: "HIDE_SHORTCUTS_PANEL" });
+	};
 
 	settingsDialogRef = dialog => (this.settingsModal = dialog);
 	editProfileDialogRef = dialog => (this.editProfileModal = dialog);
@@ -59,15 +86,18 @@ export default class Header extends Component {
 		e.preventDefault();
 		this.linkTo('/');
 	};
+
 	goToMyProfile = e => {
 		console.log(e);
 		e.preventDefault();
 		this.linkTo(`/${this.props.user.profile.url}`);
-	}
+	};
+
 	goToLogin = e => {
 		e.preventDefault();
 		this.linkTo('/login');
 	};
+
 	goToRegister = e => {
 		e.preventDefault();
 		this.linkTo('/register');
