@@ -249,11 +249,11 @@ body.mdc-theme--dark .mdc-card {
 }
 
 .mdc-drawer--permanent {
-	z-index: 3;
+	z-index: 1;
 }
 
 .mdc-drawer--permanent {
-	height: calc(100vh - 146px);
+	height: calc(100vh - 148px);
 	width: 200px;
 	top: 64px;
 	position: fixed;
