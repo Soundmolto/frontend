@@ -136,13 +136,26 @@ export const shortcuts = [
 	},
 	{
 		action: e => {
+			const audio = document.querySelector('audio') || { currentTime: 0 };
 			const state = store.getState();
-			const next = queue.previous();
 			e.preventDefault();
 			let owner = {};
-			
-			if (next != null) {
-				if (next.owner === state.currently_playing.owner.id) owner = state.currently_playing.owner;
+			const time = audio.currentTime;
+
+			if (time >= 3) {
+				store.dispatch({
+					type: TRACK.PLAYING_TRACK,
+					payload: {
+						position: 0, track: state.currently_playing.track, owner: state.currently_playing.track.owner
+					}
+				})
+			} else {
+				const next = queue.previous();
+
+				if (next.owner === state.currently_playing.owner.id) {
+					owner = state.currently_playing.owner;
+				}
+
 				store.dispatch({
 					type: TRACK.PLAYING_TRACK,
 					payload: {

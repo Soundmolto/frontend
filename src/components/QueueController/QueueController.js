@@ -74,6 +74,15 @@ export class QueueController {
 
 	previous () {
 		position -= 1;
+
+		if (this.repeat === true && (tracks.length === position || tracks[position] == null)) {
+			position = tracks.length - 1;
+		}
+
+		if (this.repeat === false && (tracks.length === position || tracks[position] == null)) {
+			position = 0;
+		}
+
 		return tracks[position];
 	}
 

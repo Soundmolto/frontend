@@ -141,10 +141,16 @@
 }
 
 .play-button {
+    transition: opacity 0.3s ease-in-out;
     width: calc(100% + 2px);
     height: calc(100%);
     background-color: rgba(0, 0, 0, 0.7) !important;
     border-radius: 0 !important;
+    opacity: 0.5;
+}
+
+.cardRoot .image:hover .play-button {
+    opacity: 1;
 }
 
 .play-button i {

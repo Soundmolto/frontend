@@ -9,6 +9,7 @@ import 'preact-material-components/Slider/style.css';
 import { connect } from "preact-redux";
 import { seconds_to_time } from "../../utils/seconds-to-time";
 import { playing_now } from '../../actions/track';
+import { QueuePanel } from "../QueuePanel/QueuePanel";
 
 @connect(({ currently_playing }) => ({ currently_playing }))
 export default class Footer extends Component {
@@ -34,6 +35,11 @@ export default class Footer extends Component {
 		return currently_playing.track != null;
 	}
 
+	get audioPlayerCurrentTime () {
+		let audioPlayer = this.audioPlayer || { currentTime: 0 };
+		return audioPlayer.currentTime;
+	}
+
 	updateQueue (queue) {
 		console.log(queue);
 		// Dispatch to server that queue has been updated, and the list of track ids.
@@ -41,7 +47,7 @@ export default class Footer extends Component {
 
 	toggleQueuePanel (e) {
 		e.currentTarget.classList.toggle(styles.active);
-		this.queuePanel.classList.toggle(styles.show);
+		this.queuePanel.toggle();
 		e.currentTarget.blur();
 	}
 
@@ -91,7 +97,6 @@ export default class Footer extends Component {
 		const { currently_playing, dispatch } = this.props;
 		if (this.isCurrentlyPlayingNotEmpty(currently_playing)) {
 			const next = this.queue.next();
-			console.log(this.queue.tracks);
 			playing_now(dispatch, {
 				playing: true,
 				position: 0,
@@ -104,13 +109,24 @@ export default class Footer extends Component {
 	onClickPrevious () {
 		const { currently_playing, dispatch } = this.props;
 		if (this.isCurrentlyPlayingNotEmpty(currently_playing)) {
-			const next = this.queue.previous();
-			playing_now(dispatch, {
-				playing: true,
-				position: 0,
-				track: next,
-				owner: next.owner
-			});
+
+			if (this.audioPlayerCurrentTime >= 3) {
+				const { track } = currently_playing;
+				playing_now(dispatch, {
+					playing: true,
+					position: 0,
+					track: track,
+					owner: track.owner
+				});
+			} else {
+				const next = this.queue.previous();
+				playing_now(dispatch, {
+					playing: true,
+					position: 0,
+					track: next,
+					owner: next.owner
+				});
+			}
 		}
 	}
 
@@ -312,75 +328,7 @@ export default class Footer extends Component {
 					</div>
 				</div>
 				<div class={styles.notMobile}>
-					<div class={styles.queuePanel} ref={this.queuePanelRef}>
-						{this.queue.tracks.length >= 1 && (
-							<div>
-								<div class={styles.mainHeader}>
-									<div class={styles.images}>
-										{this.queue.tracks.slice(0, 4).map(track => (<img src={this.getArtwork(track)} />))}
-									</div>
-									<div class={styles.overlay}>
-										<p>Playing from:</p>
-										<p class={styles.bold}>{this.queue.title}</p>
-									</div>
-								</div>
-								<div class={`${styles.flex} ${styles.header}`} style={{ 'justify-content': 'space-between' }}>
-									<div class={styles.placeholder}></div>
-									<div style={{ width: '100%' }}>
-										<p>Song</p>
-									</div>
-									<div style={{ width: 'auto', 'flex-direction': 'row' }}>
-										<span>
-											<Icon>access_time</Icon>
-										</span>
-										<span>
-											<Icon>favorite</Icon>
-										</span>
-										<span>
-											<Icon>headset</Icon>
-										</span>
-									</div>
-								</div>
-							</div>
-						)}
-						<ul>
-							{this.queue.tracks.length >= 1 && this.queue.tracks.map(track => (
-								<li class={`${currently_playing.track && track.id === currently_playing.track.id ? styles.active : ''}`}>
-									<div class={styles.flex} style={{ 'justify-content': 'space-between' }}>
-										<img src={this.getArtwork(track)} />
-										<div style={{ width: '100%' }}>
-											<a title={track.name} href={`/${track.user.url}/${track.url}`}>
-												{track.name}
-											</a>
-											<a href={`/${track.user.url}`} style={{ 'font-weight': '500', 'font-size': '0.75rem' }}>
-												{track.user && (track.user.displayName || track.user.url || "N/A")}
-											</a>
-										</div>
-										<div style={{ width: 'auto', 'flex-direction': 'row' }}>
-											<span>
-												{seconds_to_time(track.duration).rendered || '00:00'}
-											</span>
-											<span>
-												{track.amountOfLikes || 0}
-											</span>
-											<span>
-												{track.plays || 0}
-											</span>
-										</div>
-									</div>
-								</li>
-							))}
-							{this.queue.tracks.length <= 0 && (
-								<li>
-									<div class={styles.flex}>
-										<div>
-											Nothing present in the queue yet!
-										</div>
-									</div>
-								</li>
-							)}
-						</ul>
-					</div>
+					<QueuePanel ref={this.queuePanelRef} queue={this.queue} getArtwork={this.getArtwork} currently_playing={currently_playing} />
 					<div class={styles.footer} ref={e => (this.desktopFooter = e)}>
 						<div class={styles.start}>
 							<div class={styles.artwork}>
