@@ -187,8 +187,9 @@ export default class Footer extends Component {
 					audioPlayer.src = currently_playing.track.stream_url;
 				}
 
-				if (audioPlayer.currentTime !== updatedTime || audioPlayer.playing === false) {
-					
+				console.log(audioPlayer);
+
+				if (audioPlayer.currentTime !== updatedTime || audioPlayer.paused === true) {
 					audioPlayer.play();
 					audioPlayer.currentTime = updatedTime;
 				}

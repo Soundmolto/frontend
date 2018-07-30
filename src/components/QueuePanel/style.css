@@ -179,7 +179,7 @@
 
 .queuePanel li .flex > div > span, .queuePanel .header.flex > div > span {
 	margin: 0 10px;
-	width: 58px;
+	width: 60px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	display: block;
