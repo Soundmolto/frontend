@@ -114,6 +114,14 @@ p.typography > i {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    max-width: calc(100% - 38px);
+}
+
+.noOverflow > a {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
 .blur {
@@ -124,7 +132,8 @@ p.typography > i {
     width: calc(100% + 20px);
     background-size: cover;
     filter: blur(10px);
-    z-index: 1
+    z-index: 1;
+    background-position: center;
 }
 
 .overlay {

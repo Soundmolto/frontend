@@ -38,6 +38,7 @@
 	filter: blur(10px);
 	height: calc(100% + 40px);
 	width: calc(100% + 40px);
+	background-position: center;
 }
 
 .footer .artwork div.overlay {

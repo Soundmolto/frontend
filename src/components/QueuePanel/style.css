@@ -137,6 +137,7 @@
 .queuePanel li .flex img {
 	max-width: 56px;
 	max-height: 56px;
+	min-height: 30px;
 }
 
 .queuePanel .header.flex p {
