@@ -306,7 +306,6 @@ export default class Footer extends Component {
 		let parentWidth = 1;
 		const owner = currently_playing.owner && currently_playing.track.user && (currently_playing.track.user.displayName || currently_playing.track.user.url);
 		const trackName = (currently_playing && currently_playing.track && currently_playing.track.name || "");
-		console.log(audioPlayer)
 		this.audioPlayer = audioPlayer;
 
 		if (currently_playing != null && currently_playing.track != null) {
