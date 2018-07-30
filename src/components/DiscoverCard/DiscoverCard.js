@@ -2,14 +2,16 @@ import { Component } from "preact";
 import Button from "preact-material-components/Button";
 import Card from 'preact-material-components/Card';
 import Icon from 'preact-material-components/Icon';
-import 'preact-material-components/Card/style.css';
-import 'preact-material-components/Button/style.css';
-import styles from './style.css';
 import Goku from '../../assets/goku.png';
 import { route } from "preact-router";
 import { seconds_to_time } from "../../utils/seconds-to-time";
 import { playing_now } from "../../actions/track";
 import { connect } from 'preact-redux';
+import dayjs from 'dayjs';
+import TimeAgo from 'timeago-react';
+import 'preact-material-components/Card/style.css';
+import 'preact-material-components/Button/style.css';
+import styles from './style.css';
 
 @connect( ({ auth, currently_playing }) => ({ auth, currently_playing }))
 export class DiscoverCard extends Component {
@@ -41,6 +43,7 @@ export class DiscoverCard extends Component {
 
 	render ({ currently_playing, track, user }, { playing }) {
 		const artwork = track.artwork || user.profilePicture || Goku;
+		const postedAt = dayjs(parseInt(track.createdAt));
 
 		if (this.state.playing === false && currently_playing.track != null && track.id === currently_playing.track.id && currently_playing.playing === true) {
 			this.setState({ playing: true });
@@ -61,7 +64,7 @@ export class DiscoverCard extends Component {
 						{playing === false && (<Icon>play_arrow</Icon>)}
 						{playing === true && (<Icon>pause</Icon>)}
 					</Button>
-					<div style={{ display: 'block', width: '100%', position: 'relative' }}>
+					<div style={{ display: 'block', width: 'calc(100% - 64px)', position: 'relative' }}>
 						<h2 class={`mdc-typography--title ${styles.noOverflow}`}>
 							<a href={`/${user.url}`}>
 								{user.displayName || "Untitled user"}
@@ -72,13 +75,19 @@ export class DiscoverCard extends Component {
 								{track.name}
 							</a>
 						</div>
-						{track.genres && track.genres.length !== 0 && (
-							<span class={styles.genre}>{track.genres[0]}</span>
-						)}
+						<TimeAgo
+							datetime={postedAt.toDate()} 
+							locale='en_AU'
+							className={styles.date}
+							title={`Posted on ${postedAt.format('DD MMMM YYYY')}`}
+						/>
 					</div>
 				</div>
-				<Card.Media className="card-media" style={{ height: '150px', overflow: 'hidden' }}>
+				<Card.Media className="card-media" style={{ height: '150px', overflow: 'hidden', position: 'relative' }}>
 					<div class={styles.blur} style={{ 'background-image': `url(${artwork})` }}></div>
+					{track.genres && track.genres.length !== 0 && (
+						<span class={styles.genre}>{track.genres[0]}</span>
+					)}
 					<div class={styles.overlay}>
 						<img src={artwork} />
 					</div>
