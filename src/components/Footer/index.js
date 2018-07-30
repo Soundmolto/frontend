@@ -140,11 +140,17 @@ export default class Footer extends Component {
 	}
 
 	componentDidMount () {
+		let { audioPlayer } = this;
+
 		if (this.props.currently_playing.track != null) {
 			const { currently_playing, dispatch } = this.props;
 			const position = 0;
 
-			this.audioPlayer.addEventListener('ended', e => {
+			if (audioPlayer == null && window.document.querySelector('audio') != null) {
+				audioPlayer = window.document.querySelector('audio');
+			}
+
+			audioPlayer.addEventListener('ended', e => {
 				this.tracks[currently_playing.track.id] = 0;
 				playing_now(dispatch, { playing: false, position, track: currently_playing.track, owner: currently_playing.owner });
 				requestAnimationFrame(_ => {
@@ -175,8 +181,12 @@ export default class Footer extends Component {
 			}
 			audioPlayer.addEventListener('timeupdate', this.onPosChange.bind(this));
 			requestAnimationFrame(_ => {
-				audioPlayer.play();
-				audioPlayer.currentTime = this.tracks[currently_playing.track.id] || currently_playing.position || 0;
+				const updatedTime = this.tracks[currently_playing.track.id] || currently_playing.position || 0;
+				if (audioPlayer.src != currently_playing.track.stream_url || audioPlayer.currentTime !== updatedTime || audioPlayer.playing === false) {
+					audioPlayer.src = currently_playing.track.stream_url;
+					audioPlayer.play();
+					audioPlayer.currentTime = updatedTime;
+				}
 			});
 		} else {
 			this.tracks[currently_playing.track.id] = audioPlayer.currentTime;
@@ -185,8 +195,12 @@ export default class Footer extends Component {
 	}
 
 	componentWillUpdate (nextProps) {
-		const { audioPlayer } = this;
+		let { audioPlayer } = this;
 		const currently_playing = nextProps.currently_playing || this.props.currently_playing;
+		
+		if (audioPlayer == null && window.document.querySelector('audio') != null) {
+			audioPlayer = window.document.querySelector('audio');
+		}
 
 		if (audioPlayer.currentTime > this.tracks[currently_playing.track.id]) {
 			this.tracks[currently_playing.track.id] = audioPlayer.currentTime;
@@ -285,13 +299,15 @@ export default class Footer extends Component {
 		return trackArtwork || userAvatar || Goku;
 	}
 
-	render ({ currently_playing }) {
+	render ({ currently_playing, audioPlayer }) {
 		let amount = 0;
 		let duration = 0;
 		let playing = currently_playing != null && currently_playing.playing;
 		let parentWidth = 1;
 		const owner = currently_playing.owner && currently_playing.track.user && (currently_playing.track.user.displayName || currently_playing.track.user.url);
 		const trackName = (currently_playing && currently_playing.track && currently_playing.track.name || "");
+		console.log(audioPlayer)
+		this.audioPlayer = audioPlayer;
 
 		if (currently_playing != null && currently_playing.track != null) {
 			amount = this.calculate_amount(currently_playing);
@@ -402,9 +418,9 @@ export default class Footer extends Component {
 						</div>
 					</div>
 				</div>
-				{currently_playing != null && currently_playing.track != null && (
+				{/* {currently_playing != null && currently_playing.track != null && (
 					<audio src={currently_playing.track.stream_url} ref={e => (this.audioPlayer = e)} volume={this.volume} />
-				)}
+				)} */}
 			</div>
 		);
 	}

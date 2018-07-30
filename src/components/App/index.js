@@ -34,8 +34,10 @@ if (typeof window !== "undefined") {
 @connect(state => state)
 export default class App extends Component {
 
+	audioPlayer = null;
 	footer = null;
 	audioContext = MainAudioContext;
+	audioPlayerRef = e => (this.audioPlayer = e);
 
 	componentDidMount () {
 		const { auth, dispatch, user, UI } = this.props;
@@ -75,7 +77,8 @@ export default class App extends Component {
 						<Track path="/:vanity_url/:track_url" key="track" audioContext={this.audioContext} queue={queue} class="route-page" />
 					</Router>
 				</div>
-				<Footer ref={e => (this.footer = e)} audioContext={this.audioContext} queue={queue} />
+				<audio ref={this.audioPlayerRef} />
+				<Footer ref={e => (this.footer = e)} audioContext={this.audioContext} queue={queue} audioPlayer={this.audioPlayer} />
 			</div>
 		);
 	}
