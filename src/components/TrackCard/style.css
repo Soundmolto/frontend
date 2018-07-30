@@ -112,7 +112,7 @@
     font-size: 0.9rem;
     font-weight: 600;
     line-height: 0.9rem;
-    z-index: 2;
+    z-index: 1;
     float: right;
 }
 
@@ -124,7 +124,7 @@
     font-size: 0.9rem;
     font-weight: 600;
     line-height: 0.9rem;
-    z-index: 2;
+    z-index: 1;
     width: auto;
     margin-right: 10px;
 }

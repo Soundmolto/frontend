@@ -17,25 +17,26 @@ import { onKeyDown } from '../../utils/onKeyDown';
 
 const full_width = Object.freeze({ width: '100%' });
 
-let state = {};
-
 /**
  * The login page / component
  */
 @connect(({ auth }) => ({ auth }))
 export class EditTrack extends Component {
+
+	localState = {};
 	
 	get values () {
-		return Object.assign({}, state);
+		return Object.assign({}, this.localState);
 	}
 
 	onSubmit (e) {
 		e.preventDefault();
 		const id = this.props.track.id;
-		edit_track(this.props.dispatch, { token: this.props.auth.token, track: { ...state }, id });
+		edit_track(this.props.dispatch, { token: this.props.auth.token, track: { ...this.localState }, id });
 		if (this.props.onSubmit) {
-			this.props.onSubmit(state);
+			this.props.onSubmit(this.localState);
 		}
+		this.localState = {};
 		return true;
 	}
 
@@ -51,7 +52,7 @@ export class EditTrack extends Component {
 			e.currentTarget.value = value;
 		}
 		let _opt = { [val]: value };
-		state = {...state, ..._opt };
+		this.localState = {...this.localState, ..._opt };
 	}
 
 	onDragOver (e) { 
@@ -79,7 +80,7 @@ export class EditTrack extends Component {
 	}
 
 	render ({ track }) {
-		state = Object.assign({}, track);
+		this.localState = Object.assign({}, track);
 		return (
 			<form onSubmit={this.onSubmit.bind(this)} class={styles.form}>
 				<label className={styles['upload-image']}
