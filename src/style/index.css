@@ -124,7 +124,7 @@ body.mdc-theme--dark .mdc-card {
 .mdc-toolbar {
 	position: fixed;
 	top: 0;
-	z-index: 4;
+	z-index: 5;
 	background: rgb(78, 96, 125);
 	background: linear-gradient(rgb(78, 96, 125) 0%, rgb(78, 96, 125) 100%);
 	color: initial;
