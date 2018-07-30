@@ -182,8 +182,13 @@ export default class Footer extends Component {
 			audioPlayer.addEventListener('timeupdate', this.onPosChange.bind(this));
 			requestAnimationFrame(_ => {
 				const updatedTime = this.tracks[currently_playing.track.id] || currently_playing.position || 0;
-				if (audioPlayer.src != currently_playing.track.stream_url || audioPlayer.currentTime !== updatedTime || audioPlayer.playing === false) {
+
+				if (audioPlayer.src !== currently_playing.track.stream_url) {
 					audioPlayer.src = currently_playing.track.stream_url;
+				}
+
+				if (audioPlayer.currentTime !== updatedTime || audioPlayer.playing === false) {
+					
 					audioPlayer.play();
 					audioPlayer.currentTime = updatedTime;
 				}
