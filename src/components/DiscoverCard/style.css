@@ -194,3 +194,9 @@ span.genre {
     z-index: 4;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
+
+.cardMedia {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}

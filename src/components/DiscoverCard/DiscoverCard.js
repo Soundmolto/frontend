@@ -83,7 +83,7 @@ export class DiscoverCard extends Component {
 						/>
 					</div>
 				</div>
-				<Card.Media className="card-media" style={{ height: '150px', overflow: 'hidden', position: 'relative' }}>
+				<Card.Media className={`card-media ${styles.cardMedia}`}>
 					<div class={styles.blur} style={{ 'background-image': `url(${artwork})` }}></div>
 					{track.genres && track.genres.length !== 0 && (
 						<span class={styles.genre}>{track.genres[0]}</span>

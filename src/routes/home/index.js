@@ -43,7 +43,7 @@ export default class Home extends Component {
 				<LayoutGrid>
 					<LayoutGrid.Inner>
 						{this.sorted.map(track => (
-							<LayoutGrid.Cell desktopCols="3" tabletCols="4" phoneCols="12">
+							<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="12">
 								<DiscoverCard track={track} user={track.user} onClick={this.onStartPlay.bind(this)} />
 							</LayoutGrid.Cell>
 						))}
