@@ -149,6 +149,13 @@
 	overflow-y: auto;
 }
 
+.queuePanel li .flex > div {
+	width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
 .queuePanel li .flex a, .queuePanel .header.flex p {
 	display: inline-block;
 	text-overflow: ellipsis;
@@ -158,6 +165,10 @@
 	color: var(--mdc-theme-text-primary-on-background);
 	text-decoration: none;
 	font-weight: 600;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	width: 100%;
 }
 
 .queuePanel li .flex > div, .queuePanel .header.flex > div {

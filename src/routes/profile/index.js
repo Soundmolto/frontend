@@ -110,6 +110,11 @@ export default class Profile extends Component {
 		const following = this.following(viewedUser);
 		if (this.currentUrl !== getCurrentUrl()) this.updateData();
 		const tracks = viewedUser.tracks.sort((first, second) => parseInt(second.createdAt) - parseInt(first.createdAt));
+		for (const track of tracks) {
+			if (track.user == null) {
+				track.user = viewedUser.profile;
+			}
+		}
 		this.tracks = tracks.concat([]);
 
 		return (
