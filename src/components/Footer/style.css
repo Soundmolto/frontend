@@ -1,6 +1,6 @@
 .footer {
 	position: fixed;
-	z-index: 2;
+	z-index: 3;
 	bottom: 0;
 	width: 100vw;
 	background: rgb(78, 96, 125);
