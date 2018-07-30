@@ -30,16 +30,13 @@ export class DiscoverCard extends Component {
 		this.setState({ playing: !this.state.playing });
 		onClick(track);
 		this.played = true;
+
 		if (currently_playing.track && track.id === currently_playing.track.id) {
 			const audio = document.querySelector('audio') || { currentTime: currently_playing.position };
 			position = audio.currentTime;
 		}
-		playing_now(dispatch, {
-			playing: this.state.playing,
-			track,
-			owner: user,
-			position
-		});
+
+		playing_now(dispatch, { playing: this.state.playing, track, owner: user, position });
 	}
 
 	render ({ currently_playing, track, user }, { playing }) {
@@ -64,7 +61,7 @@ export class DiscoverCard extends Component {
 						{playing === false && (<Icon>play_arrow</Icon>)}
 						{playing === true && (<Icon>pause</Icon>)}
 					</Button>
-					<div style={{ display: 'block', width: '100%' }}>
+					<div style={{ display: 'block', width: '100%', position: 'relative' }}>
 						<h2 class={`mdc-typography--title ${styles.noOverflow}`}>
 							<a href={`/${user.url}`}>
 								{user.displayName || "Untitled user"}
@@ -75,6 +72,9 @@ export class DiscoverCard extends Component {
 								{track.name}
 							</a>
 						</div>
+						{track.genres && track.genres.length !== 0 && (
+							<span class={styles.genre}>{track.genres[0]}</span>
+						)}
 					</div>
 				</div>
 				<Card.Media className="card-media" style={{ height: '150px', overflow: 'hidden' }}>

@@ -114,7 +114,7 @@ p.typography > i {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: calc(100% - 38px);
+    max-width: calc(100% - 100px);
 }
 
 .noOverflow > a {
@@ -164,4 +164,17 @@ p.typography > i {
 
 .paddingAll a:hover {
     transform: translateX(5px);
+}
+
+span.genre {
+    position: absolute;
+    top: 0;
+    right: -10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 5px 10px;
+    max-width: 110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

@@ -4,7 +4,6 @@ import { seconds_to_time } from "../../utils/seconds-to-time";
 import store from '../../store';
 import styles from './style.css';
 
-
 let linGrad = '#5D8CAE';
 let linGradProgress = '#334b5c';
 
@@ -111,7 +110,6 @@ export class Waveform extends Component {
 	async renderCanvas (data) {
 		const that = this;
 		const { audioContext } = this.props;
-		let j = 0;
 		let containerEl = this.containerEl || this.baseEl.querySelector(`.${styles.waveform}`);
 		let timelineRoot = this.timelineRoot || this.baseEl.querySelector(`.${styles['waveform-timeline--root']}`);
 
@@ -220,7 +218,7 @@ export class Waveform extends Component {
 		return false;
 	}
 	
-	render ({ isCurrentTrack }) {
+	render () {
 		return (
 			<div class={styles.root} ref={e => (this.baseEl = e)}>
 				<div class={`prel ${styles.container}`} onMouseMove={this.onMouseMove.bind(this)} onMouseOut={this.onMouseOut.bind(this)} onMouseDown={this.onMouseDown.bind(this)} onMouseUp={this.onMouseUp.bind(this)}>
