@@ -14,14 +14,13 @@ import style from './style';
 import Helmet from 'preact-helmet';
 import { APP } from '../../enums/app';
 
-// State outside of the component.
-let state = { email: '', password: '' };
-
 /**
  * The login page / component
  */
 @connect(({ auth }) => auth)
 export default class Login extends Component {
+
+	__state = { email: '', password: '' };
 
 	/**
 	 * When the user submits the login form.
@@ -38,7 +37,7 @@ export default class Login extends Component {
 		/** This will update the UI to indicate we're logging in */
 		dispatch(begin_login());
 		/** This will update our state to indicate we've either logged in or failed login */
-		login(state, dispatch, _ => state = {});
+		login(this.__state, dispatch, _ => this.__state = {});
 	}
 
 	/**
@@ -47,7 +46,7 @@ export default class Login extends Component {
 	 * @param {Event|Object} event - The change event
 	 */
 	onEmailChange (event) {
-		state = Object.assign({}, state, {  email: event.currentTarget.value || "" });
+		this.__state = Object.assign({}, this.__state, {  email: event.currentTarget.value || "" });
 	}
 
 	/**
@@ -56,7 +55,7 @@ export default class Login extends Component {
 	 * @param {Event|Object} event - The change event
 	 */
 	onPasswordChange (event) {
-		state = Object.assign({}, state, { password: event.currentTarget.value || "" });
+		this.__state = Object.assign({}, this.__state, { password: event.currentTarget.value || "" });
 	}
 
 	render ({ loading, logged_in, error, errorMessage }) {
@@ -71,8 +70,8 @@ export default class Login extends Component {
 				<div class={style.home}>
 					<Card className={style.card}>
 						<form class={style.cardBody} onSubmit={this.onLogin.bind(this)} key="login-form">
-							<TextField name="login_email" label="Enter your email address" type="email" autofocus onChange={this.onEmailChange.bind(this)} onBlur={this.onEmailChange.bind(this)} key="login-email" value="" />
-							<TextField name="login_password" type="password" label="Enter a password" onChange={this.onPasswordChange.bind(this)} onBlur={this.onPasswordChange.bind(this)} key="login-password"  value="" />
+							<TextField name="login_email" label="Enter your email address" type="email" autofocus onChange={this.onEmailChange.bind(this)} onBlur={this.onEmailChange.bind(this)} key="login-email" value={this.__state.email} />
+							<TextField name="login_password" type="password" label="Enter a password" onChange={this.onPasswordChange.bind(this)} onBlur={this.onPasswordChange.bind(this)} key="login-password" value={this.__state.password} />
 							<div className={style.buttonContainer}>
 								<Button raised onClick={this.onLogin.bind(this)} type="submit">
 									{!logged_in && !loading && "Login"}

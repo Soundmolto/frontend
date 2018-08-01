@@ -88,9 +88,15 @@ export default class Profile extends Component {
 	}
 
 	massageObject (object) {
-		delete object.found;
-		delete object.error;
-		return Object.assign({}, object);
+		let newObject = {};
+		newObject.followers = object.followers;
+		newObject.following = object.following;
+		newObject.id = object.id;
+		newObject.likes = object.likes;
+		newObject.profile = object.profile;
+		newObject.tracks = object.tracks;
+		newObject.verified = object.verified;
+		return newObject;
 	}
 
 	componentWillUpdate () {
@@ -98,7 +104,10 @@ export default class Profile extends Component {
 		const viewed = this.massageObject(state.viewedUser);
 		const user = this.massageObject(state.user);
 		const are_same = JSON.stringify(viewed) === JSON.stringify(user);
+
 		if (state.user.profile.url === this.props.vanity_url && false === are_same) {
+			console.log(viewed);
+			console.log(user);
 			this.props.dispatch({
 				type: USER.VIEW_PROFILE,
 				payload: state.user
