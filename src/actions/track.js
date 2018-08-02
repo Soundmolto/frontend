@@ -123,15 +123,17 @@ export function update_position (dispatch, { playing, position, track, owner }) 
 	return dispatch({ type: TRACK.POS_CHANGE, payload: { position, track, owner } })
 }
 
-export async function get_discover_tracks (dispatch) {
+export async function get_discover_tracks (dispatch, token) {
 	let returnObject = {};
 	let error = {};
+	console.log('fuck')
 
 	try {
 		const data = await fetch(`${API_ENDPOINT}/discover`, {
 			headers: {
 				'Accept': 'application/json',
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/json',
+				...prefill_auth(token)
 			}
 		});
 

@@ -7,11 +7,11 @@ import { DiscoverCard } from '../../components/DiscoverCard';
 import Helmet from 'preact-helmet';
 import { APP } from '../../enums/app';
 
-@connect(({ discover }) => ({ discover }))
+@connect(({ auth, discover }) => ({ auth, discover }))
 export default class Home extends Component {
 
 	componentDidMount () {
-		get_discover_tracks(this.props.dispatch);
+		get_discover_tracks(this.props.dispatch, this.props.auth.token);
 	}
 
 	onStartPlay (track) {

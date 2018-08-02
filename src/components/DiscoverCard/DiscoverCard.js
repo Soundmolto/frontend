@@ -42,7 +42,7 @@ export class DiscoverCard extends Component {
 	}
 
 	render ({ currently_playing, track, user }, { playing }) {
-		const artwork = track.artwork || user.profilePicture || Goku;
+		const artwork = (track && track.artwork) || (user && user.profilePicture) || Goku;
 		const postedAt = dayjs(parseInt(track.createdAt));
 
 		if (this.state.playing === false && currently_playing.track != null && track.id === currently_playing.track.id && currently_playing.playing === true) {
@@ -66,12 +66,12 @@ export class DiscoverCard extends Component {
 					</Button>
 					<div style={{ display: 'block', width: 'calc(100% - 64px)', position: 'relative' }}>
 						<h2 class={`mdc-typography--title ${styles.noOverflow}`}>
-							<a href={`/${user.url}`}>
-								{user.displayName || "Untitled user"}
+							<a href={`/${(user && user.url || '')}`}>
+								{(user && user.displayName) || "Untitled user"}
 							</a>
 						</h2>
 						<div class={`mdc-typography--caption ${styles.noOverflow}`}>
-							<a href={`/${user.url}/${track.url}`}>
+							<a href={`/${(user && user.url)}/${track.url}`}>
 								{track.name}
 							</a>
 						</div>
@@ -109,8 +109,6 @@ export class DiscoverCard extends Component {
 					</div>
 				</div>
 			</Card>
-			// <a href={`${user.url}/${track.url}`} onClick={e => this.goTo(e, `${user.url}/${track.url}`)}>
-			// </a>
 		);
 	}
 }
