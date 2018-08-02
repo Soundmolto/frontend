@@ -185,3 +185,31 @@ export async function toggle_like (dispatch, { token, id, user }) {
 		return dispatch(returnObject);
 	}
 }
+
+export async function fetch_tracks (dispatch, token) {
+    let returnObject = {};
+
+    try {
+        const data = await fetch(`${API_ENDPOINT}/tracks`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                ...prefill_auth(token)
+            }
+        });
+
+        if (data.status === 200) {
+            returnObject = {
+                type: TRACK.GOT_ALL_TRACKS,
+                payload: await data.json()
+            }
+        } else {
+            throw new Error(data.statusText);
+        }
+
+    } catch (error) {
+        console.log(error);
+    } finally {
+        return dispatch(returnObject);
+    }
+}

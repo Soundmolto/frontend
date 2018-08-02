@@ -49,11 +49,11 @@ export class DiscoverCard extends Component {
 			this.setState({ playing: true });
 		}
 
-		if (this.state.playing && track.id !== currently_playing.track.id) {
+		if (this.state.playing && currently_playing.track != null && track.id !== currently_playing.track.id) {
 			this.setState({ playing: false });
 		}
 
-		if (currently_playing.playing === false && this.state.playing && track.id === currently_playing.track.id) {
+		if (currently_playing.playing === false && currently_playing.track != null && this.state.playing && track.id === currently_playing.track.id) {
 			this.setState({ playing: false });
 		}
 
