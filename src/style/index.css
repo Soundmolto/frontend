@@ -14,6 +14,7 @@
 	--mdc-theme-text-primary-on-background: "#333333";
 
 	--mdc-theme--box-shadow--floating: 0 15px 20px -15px rgba(0, 0, 0, 0.35);
+	--mdc-theme--card-bg: #ffffff;
 }
 
 .mdc-theme--dark {
@@ -22,6 +23,7 @@
 	--mdc-theme-background: #333;
 	--mdc-theme-link-primary-on-background: #FFFFFF;
 	--mdc-theme--footer-background: rgb(36, 36, 36);
+	--mdc-theme--card-bg: #444444;
 	/* #b64040 */
 }
 
@@ -65,8 +67,8 @@ body > div {
 	border-radius: 10px !important;
 }
 
-body.mdc-theme--dark .mdc-card {
-	background: #444444;
+.mdc-card {
+	background-color: var(--mdc-theme--card-bg) !important;
 }
 
 /* fallback */

@@ -10,6 +10,7 @@ import { getCurrentUrl } from 'preact-router';
 import { TrackCard } from '../../components/TrackCard';
 import Helmet from 'preact-helmet';
 import { APP } from '../../enums/app';
+import snarkdown from 'snarkdown';
 
 @connect(state => state)
 export default class Track extends Component {
@@ -88,19 +89,33 @@ export default class Track extends Component {
 					</div>
 				</div>
 				<LayoutGrid>
-					<LayoutGrid.Inner>
-						<LayoutGrid.Cell desktopCols="12" tabletCols="12" tabletOrder="1">
-							<div class={style.profile_contents}>
-								{viewedTrack != null && viewedTrack.id != null && viewedTrack.owner != null && (
+					{viewedTrack != null && viewedTrack.id != null && viewedTrack.owner != null && (
+						<LayoutGrid.Inner>
+							<LayoutGrid.Cell desktopCols="12" tabletCols="12" tabletOrder="1">
+								<div class={style.profile_contents}>
 									<TrackCard track={viewedTrack} user={trackOwner} currentUser={user} key={viewedTrack.id} audioContext={this.props.audioContext} isCurrentTrack={true}
 										onStartPlay={this.onStartPlay.bind(this)} />
-								)}
-								{(viewedTrack == null || viewedTrack != null && viewedTrack.id == null && viewedTrack.owner == null) && (
+								</div>
+							</LayoutGrid.Cell>
+							<LayoutGrid.Cell desktopCols="12" tabletCols="12" tabletOrder="1">
+								<div class={style.profile_contents}>
+									<h1 class={style.mainHeader} style={{ margin: '0 0 10px 0' }}>Description</h1>
+									<div class={style.card} dangerouslySetInnerHTML={{ __html: snarkdown(viewedTrack.description || 'Track has no description.') }}></div>
+								</div>
+							</LayoutGrid.Cell>
+						</LayoutGrid.Inner>
+					)}
+
+					{(viewedTrack == null || viewedTrack != null && viewedTrack.id == null && viewedTrack.owner == null) && (
+						<LayoutGrid.Inner>
+							<LayoutGrid.Cell desktopCols="12" tabletCols="12" tabletOrder="1">
+								<div class={style.profile_contents}>
 									<div>Track not found...</div>
-								)}
-							</div>
-						</LayoutGrid.Cell>
-					</LayoutGrid.Inner>
+								</div>
+							</LayoutGrid.Cell>
+						</LayoutGrid.Inner>
+					)}
+					
 				</LayoutGrid>
 			</div>
 		);

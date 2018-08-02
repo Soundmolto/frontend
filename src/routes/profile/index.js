@@ -87,16 +87,9 @@ export default class Profile extends Component {
 		queue.position = i;
 	}
 
-	massageObject (object) {
-		let newObject = {};
-		newObject.followers = object.followers;
-		newObject.following = object.following;
-		newObject.id = object.id;
-		newObject.likes = object.likes;
-		newObject.profile = object.profile;
-		newObject.tracks = object.tracks;
-		newObject.verified = object.verified;
-		return newObject;
+	massageObject ({ followers, following, id, likes, profile, tracks, verified }) {
+		// Faster than using Object.assign & less code to send to the user.
+		return { ...{ followers, following, id, likes, profile, tracks, verified } };
 	}
 
 	componentWillUpdate () {

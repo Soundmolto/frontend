@@ -92,7 +92,8 @@ export class EditTrack extends Component {
 					<input type="file" accept="image/*" onChange={this.onFileChange.bind(this)} />
 				</label>
 				<TextField class={styles['track-name']} label="Track name" type="text" autofocus value={track.name} style={full_width} onChange={e => this.onInputChange(e, 'name')} />
-				<TextField label="Track URL" type="text" autofocus value={track.url} style={full_width} onChange={e => this.onInputChange(e, 'url')} onKeyDown={onKeyDown} />
+				<TextField label="Track URL" type="text" value={track.url} style={full_width} onChange={e => this.onInputChange(e, 'url')} onKeyDown={onKeyDown} />
+				<TextField textarea label="Track description" value={track.description} style={full_width} onChange={e => this.onInputChange(e, 'description')} />
 				<Button type="submit">Submit</Button>
 			</form>
 		);

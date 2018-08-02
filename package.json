@@ -47,6 +47,7 @@
     "redux": "^3.7.2",
     "redux-localstorage": "^0.4.1",
     "redux-promise-middleware": "^5.0.0",
+    "snarkdown": "^1.2.2",
     "timeago-react": "^2.0.0",
     "timeago.js": "^3.0.2"
   }

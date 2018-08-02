@@ -11,7 +11,16 @@
 }
 
 .profile_contents {
-	padding: 0 20px 20px;
+	padding: 0 20px;
+}
+
+.profile_contents .card {
+	padding: 20px;
+	border: 0;
+	border-radius: 10px;
+	background-color: var(--mdc-theme--card-bg);
+	box-shadow: 0 15px 20px -15px rgba(0, 0, 0, 0.35) !important;
+	border-radius: 10px !important;
 }
 
 .profile_contents h1.mainHeader {
@@ -20,6 +29,10 @@
 
 .profile_contents [class="mdc-card"] {
 	padding: 20px;
+}
+
+.profile_contents > div {
+	margin: 0;
 }
 
 .profile_contents [class="mdc-card"] h2 {
