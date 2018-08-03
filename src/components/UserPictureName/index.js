@@ -16,7 +16,7 @@ export class UserPictureName extends Component {
                     {show_location && <small class={className}>{user.location || ""}</small>}
                 </h1>
 
-                { children != null && children }
+                {children != null && children}
             </div>
         );
     }

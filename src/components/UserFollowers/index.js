@@ -9,19 +9,40 @@ import { connect } from 'preact-redux';
 
 @connect(state => state)
 export class UserFollowers extends Component {
-    render ({ viewedUser, style = {} }) {
-        return (
-            <div style={style}>
-                <Card class={styles.card}>
-                    <h1 style={{ 'margin-bottom': '10px' }}>Followers {viewedUser.followers.length}</h1>
-                    {viewedUser.followers.length !== 0 && viewedUser.followers.map(follower => (
-                        <Link href={`/${follower.url}`} class={styles.link}>
-                            <UserPictureName user={follower} />
-                        </Link>
-                    ))}
-                    {viewedUser.followers.length <= 0 && (<p>No followers</p>)}
-                </Card>
-            </div>
-        );
-    }
+	
+	popovers = {};
+
+	showPopover (id) {
+		this.popovers[id].style = "display: block";
+	}
+
+	hidePopover (id) {
+		this.popovers[id].style = "display: none";
+	}
+
+	render ({ viewedUser, style = {} }) {
+
+
+		return (
+			<div style={style}>
+				<Card class={styles.card}>
+					<h1 style={{ 'margin-bottom': '10px' }}>Followers {viewedUser.followers.length}</h1>
+					{viewedUser.followers.length !== 0 && viewedUser.followers.map(follower => (
+						<div class={styles.w100}>
+							<Link href={`/${follower.url}`} class={styles.link}
+								onMouseOver={this.showPopover.bind(this, follower.id)} onMouseOut={this.hidePopover.bind(this, follower.id)}>
+								<UserPictureName user={follower} />
+							</Link>
+							<div class={`mdc-custom-card ${styles.popover}`} ref={e => this.popovers[follower.id] = e} style={{ display: 'none' }}>
+								<pre>
+									{JSON.stringify(follower, null, 2)}
+								</pre>
+							</div>
+						</div>
+					))}
+					{viewedUser.followers.length <= 0 && (<p>No followers</p>)}
+				</Card>
+			</div>
+		);
+	}
 }
