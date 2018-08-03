@@ -42,11 +42,19 @@ export default class Home extends Component {
 				</div>
 				<LayoutGrid>
 					<LayoutGrid.Inner>
-						{this.sorted.map(track => (
+						{this.sorted.length >= 1 && this.sorted.map(track => (
 							<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="12">
 								<DiscoverCard track={track} user={track.user} onClick={this.onStartPlay.bind(this)} />
 							</LayoutGrid.Cell>
 						))}
+						
+						{this.sorted.length === 0 && (
+							<LayoutGrid.Cell desktopCols="12" tabletCols="12" phoneCols="12">
+								<div class="mdc-custom-card">
+									Hmm. looks you're not following anyone who has uploaded music recently.
+								</div>
+							</LayoutGrid.Cell>
+						)}
 					</LayoutGrid.Inner>
 				</LayoutGrid>
 			</div>

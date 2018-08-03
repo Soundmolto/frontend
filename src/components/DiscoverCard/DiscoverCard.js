@@ -41,8 +41,14 @@ export class DiscoverCard extends Component {
 		playing_now(dispatch, { playing: this.state.playing, track, owner: user, position });
 	}
 
+	getArtwork (track, user) {
+		const userAvatar = user && user.profilePicture;
+		const trackArtwork = track && track.artwork;
+		return trackArtwork || userAvatar || Goku;
+	}
+
 	render ({ currently_playing, track, user }, { playing }) {
-		const artwork = (track && track.artwork) || (user && user.profilePicture) || Goku;
+		const artwork = this.getArtwork(track, (track.user || user));
 		const postedAt = dayjs(parseInt(track.createdAt));
 
 		if (this.state.playing === false && currently_playing.track != null && track.id === currently_playing.track.id && currently_playing.playing === true) {

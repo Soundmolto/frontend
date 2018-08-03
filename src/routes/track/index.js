@@ -100,7 +100,7 @@ export default class Track extends Component {
 							<LayoutGrid.Cell desktopCols="12" tabletCols="12" tabletOrder="1">
 								<div class={style.profile_contents}>
 									<h1 class={style.mainHeader} style={{ margin: '0 0 10px 0' }}>Description</h1>
-									<div class={style.card} dangerouslySetInnerHTML={{ __html: snarkdown(viewedTrack.description || 'Track has no description.') }}></div>
+									<div class="mdc-custom-card" dangerouslySetInnerHTML={{ __html: snarkdown(viewedTrack.description || 'Track has no description.') }}></div>
 								</div>
 							</LayoutGrid.Cell>
 						</LayoutGrid.Inner>
