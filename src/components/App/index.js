@@ -10,6 +10,7 @@ import Users from 'async!../../routes/users';
 import Register from 'async!../../routes/register';
 import Track from 'async!../../routes/track';
 import Admin from 'async!../../routes/admin';
+import TrackCollection from 'async!../../routes/track-collection';
 import { request_new_data } from '../../actions/user';
 import { THEMES } from '../../enums/themes';
 import { QueueController } from '../QueueController';
@@ -75,6 +76,7 @@ export default class App extends Component {
 						<Users path="/users" className="route-page" />
 						<Profile path="/:vanity_url" key="profile" audioContext={this.audioContext} queue={queue} store={store} class="route-page" />
 						<Track path="/:vanity_url/:track_url" key="track" audioContext={this.audioContext} queue={queue} class="route-page" />
+						<TrackCollection path="/collection/tracks" key="track-collection" audioContext={this.audioContext} queue={queue} class="route-page" />
 					</Router>
 				</div>
 				<audio ref={this.audioPlayerRef} />

@@ -215,3 +215,33 @@ export async function fetch_tracks (dispatch, token) {
         return dispatch(returnObject);
     }
 }
+
+export async function get_track_collection (dispatch, token) {
+	let returnObject = {};
+	let error = {};
+	console.log('fuck')
+
+	try {
+		const data = await fetch(`${API_ENDPOINT}/collection/tracks`, {
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				...prefill_auth(token)
+			}
+		});
+
+		if (data.status === 200) {
+			returnObject = {
+				type: TRACK.HAS_TRACK_COLLECTION,
+				payload: await data.json()
+			}
+		} else {
+			error = data;
+			throw new Error(data.statusText);
+		}
+	} catch (error) {
+		console.error(error);
+	} finally {
+		dispatch(returnObject);
+	}
+}

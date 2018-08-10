@@ -93,6 +93,11 @@ export default class Header extends Component {
 		this.linkTo(`/${this.props.user.profile.url}`);
 	};
 
+	goToTrackCollection = e => {
+		e.preventDefault();
+		this.linkTo(`/collection/tracks`);
+	};
+
 	goToLogin = e => {
 		e.preventDefault();
 		this.linkTo('/login');
@@ -169,7 +174,7 @@ export default class Header extends Component {
 							<List.ItemGraphic>person</List.ItemGraphic>
 							Artists
 						</Drawer.DrawerItem>
-						<Drawer.DrawerItem onClick={e => console.log(e)} class={this.isActive(`/${user.profile.url}/songs`)}>
+						<Drawer.DrawerItem onClick={this.goToTrackCollection} class={this.isActive(`/collection/tracks`)} href='/collection/tracks'>
 							<List.ItemGraphic>music_note</List.ItemGraphic>
 							Songs
 						</Drawer.DrawerItem>

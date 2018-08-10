@@ -8,6 +8,7 @@ import currently_playing from './currently-playing';
 import track from './track';
 import discover from './discover';
 import tracks from './tracks';
+import trackCollection from './track-collection';
 
 export default combineReducers({
     auth,
@@ -19,4 +20,5 @@ export default combineReducers({
     track,
 	discover,
 	tracks,
+	trackCollection
 });

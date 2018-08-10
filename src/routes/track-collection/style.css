@@ -1,0 +1,61 @@
+.home {
+	padding: 20px;
+	min-height: 100%;
+	width: 100%;
+}
+
+.cardHeader {
+	padding: 16px;
+}
+
+.cardBody {
+	padding: 16px
+}
+
+.home > a {
+	margin: 20px;
+	text-decoration: none;
+	display: block;
+	transform: translateY(0);
+	transition: transform 0.3s ease-in-out;
+}
+
+@media screen and (max-width: 768px) {
+	.home > a {
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 1200px) and (min-width: 768px) {
+	.home > a {
+		width: calc(calc(100% / 2) - 40px);
+	}
+}
+
+@media screen and (min-width: 1200px) {
+	.home > a {
+		width: calc(calc(100% / 4) - 40px);
+	}
+}
+
+.home > a:hover {
+	transform: translateY(-5px);
+}
+
+.home h1.mainHeader {
+	font-size: 1.3rem;
+}
+
+.home [class="mdc-card"] h2 {
+	margin-top: 0;
+	font-size: 0.9rem !important;
+}
+
+
+.header > h1 {
+	margin-left: 0 !important;
+}
+
+.hover {
+	cursor: pointer;
+}
