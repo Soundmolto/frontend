@@ -78,7 +78,8 @@ export class TrackListItem extends Component {
 					</LayoutGrid>
 				</List.TextContainer>
 				<List.ItemMeta>
-					<Icon onClick={e => this.delete_user(user)}>delete</Icon>
+					<Icon style={{ 'margin-right': 10 }}>cloud_download</Icon>
+					<Icon>check</Icon>
 				</List.ItemMeta>
 			</List.Item>
 		);

@@ -64,7 +64,10 @@ export default class TrackCollection extends Component {
 									</LayoutGrid.Inner>
 								</LayoutGrid>
 							</List.TextContainer>
-							<List.ItemMeta><Icon></Icon></List.ItemMeta>
+							<List.ItemMeta>
+								<Icon style={{ 'margin-right': 10, opacity: 0 }}>cloud_download</Icon>
+								<Icon style={{ opacity: 0 }}>check</Icon>
+							</List.ItemMeta>
 						</List.Item>
 						{this.sorted.length >= 1 && this.sorted.map(track => (
 							<TrackListItem onClick={this.onStartPlay.bind(this)} track={track} user={track.user} />
@@ -87,7 +90,8 @@ export default class TrackCollection extends Component {
 									</LayoutGrid>
 								</List.TextContainer>
 								<List.ItemMeta>
-									<Icon />
+									<Icon style={{ 'margin-right': 10, opacity: 0 }}>cloud_download</Icon>
+									<Icon style={{ opacity: 0 }}>check</Icon>
 								</List.ItemMeta>
 							</List.Item>
 						)}

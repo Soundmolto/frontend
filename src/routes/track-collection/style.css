@@ -23,7 +23,9 @@
 	padding: 10px;
 }
 
-.list-item:hover::before, .list-item:hover::after {
+.list-item:hover::before, .list-item:hover::after,
+.list-item:focus::before, .list-item:focus::after,
+.list-item:active::before, .list-item:active::after {
 	opacity: 0 !important;
 }
 
