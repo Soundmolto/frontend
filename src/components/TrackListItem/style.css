@@ -1,17 +1,3 @@
-.home {
-	padding: 20px;
-	min-height: 100%;
-	width: 100%;
-}
-
-.home a {
-	text-decoration: none;
-}
-
-.header > h1 {
-	margin-left: 0 !important;
-}
-
 .hover {
 	cursor: pointer;
 }

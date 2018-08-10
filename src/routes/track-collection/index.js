@@ -6,12 +6,12 @@ import 'preact-material-components/List/style.css';
 import 'preact-material-components/LayoutGrid/style.css';
 import { get_track_collection } from '../../actions/track';
 import { connect } from 'preact-redux';
-import { DiscoverCard } from '../../components/DiscoverCard';
 import Helmet from 'preact-helmet';
 import { APP } from '../../enums/app';
 import styles from './style';
+import { TrackListItem } from '../../components/TrackListItem/TrackListItem';
 
-@connect(({ auth, currently_playing, trackCollection }) => ({ auth, currently_playing, trackCollection }))
+@connect(({ auth, trackCollection }) => ({ auth, trackCollection }))
 export default class TrackCollection extends Component {
 
 	componentDidMount () {
@@ -29,12 +29,12 @@ export default class TrackCollection extends Component {
 			}
 		}
 
-		queue.title = `Discover`;
+		queue.title = `Songs`;
 		queue.tracks = [].concat(tracks);
 		queue.position = i || 0;
 	}
 
-	render ({ trackCollection, currently_playing }) {
+	render ({ trackCollection }) {
 		this.sorted = trackCollection.sort((aTrack, bTrack) => parseInt(bTrack.createdAt) - parseInt(aTrack.createdAt));
 		return (
 			<div>
@@ -46,41 +46,53 @@ export default class TrackCollection extends Component {
 				</div>
 				<div class={styles.home}>
 					<List>
+						<List.Item class={styles['list-item']}>
+							<List.ItemGraphic class={styles.hover}>
+								<Icon></Icon>
+							</List.ItemGraphic>
+							<List.TextContainer class={styles.container}>
+								<LayoutGrid class={styles.grid}>
+									<LayoutGrid.Inner class={styles['grid-inner']}>
+										<LayoutGrid.Cell desktopCols="6" tabletCols="6" phoneCols="6">
+											<List.PrimaryText>
+												Track
+											</List.PrimaryText>
+										</LayoutGrid.Cell>
+										<LayoutGrid.Cell desktopCols="6" tabletCols="6" phoneCols="6">
+											<Icon>access_time</Icon>
+										</LayoutGrid.Cell>
+									</LayoutGrid.Inner>
+								</LayoutGrid>
+							</List.TextContainer>
+							<List.ItemMeta><Icon></Icon></List.ItemMeta>
+						</List.Item>
 						{this.sorted.length >= 1 && this.sorted.map(track => (
-							<List.Item>
-								{console.log(currently_playing)}
+							<TrackListItem onClick={this.onStartPlay.bind(this)} track={track} user={track.user} />
+						))}
+
+						{this.sorted.length === 0 && (
+							<List.Item class={styles['list-item']}>
 								<List.ItemGraphic class={styles.hover}>
-									<Icon>
-										{(currently_playing.track && currently_playing.track.id === track.id && currently_playing.playing) ? 'pause' : 'play_arrow' }
-									</Icon>
+									<Icon />
 								</List.ItemGraphic>
-								<List.TextContainer>
-									<List.PrimaryText>
-										{track.name} - {track.user.displayName}
-									</List.PrimaryText>
-									<List.SecondaryText>
-										aa
-									</List.SecondaryText>
+								<List.TextContainer class={styles.container}>
+									<LayoutGrid class={styles.grid}>
+										<LayoutGrid.Inner class={styles['grid-inner']}>
+											<LayoutGrid.Cell desktopCols="12" tabletCols="12" phoneCols="12">
+												<List.PrimaryText>
+													Looks like you have no saved tracks!
+												</List.PrimaryText>
+											</LayoutGrid.Cell>
+										</LayoutGrid.Inner>
+									</LayoutGrid>
 								</List.TextContainer>
 								<List.ItemMeta>
-									<Icon onClick={e => this.delete_user(user)}>delete</Icon>
+									<Icon />
 								</List.ItemMeta>
 							</List.Item>
-						))}
+						)}
 					</List>
 				</div>
-				{/* <LayoutGrid>
-					<LayoutGrid.Inner>
-							
-							{this.sorted.length === 0 && (
-								<LayoutGrid.Cell desktopCols="12" tabletCols="12" phoneCols="12">
-									<div class="mdc-custom-card">
-										Hmm. looks you have no saved tracks.
-									</div>
-								</LayoutGrid.Cell>
-							)}
-					</LayoutGrid.Inner>
-				</LayoutGrid> */}
 			</div>
 		);
 	}
