@@ -41,7 +41,7 @@ export class Waveform extends Component {
 						this.loadData();
 					}
 
-					if (state.currently_playing.playing === true && currently_playing.track != null && state.currently_playing.track.id === this.props.data.id) {
+					if (state.currently_playing.playing === true && state.currently_playing.track != null && state.currently_playing.track.id === this.props.data.id) {
 						this.subscribed = true;
 						
 						if (audioEl != null) {
@@ -49,7 +49,7 @@ export class Waveform extends Component {
 						}
 					}
 					
-					if (this.subscribed && currently_playing.track != null && state.currently_playing.track.id !== this.props.data.id) {
+					if (this.subscribed && state.currently_playing && state.currently_playing.track != null && state.currently_playing.track.id !== this.props.data.id) {
 						this.subscribed = false;
 						if (audioEl != null) {
 							audioEl.removeEventListener('timeupdate', this.onTimeUpdate.bind(this));
