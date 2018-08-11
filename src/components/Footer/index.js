@@ -187,16 +187,16 @@ export default class Footer extends Component {
 					audioPlayer.src = currently_playing.track.stream_url;
 				}
 
-				console.log(audioPlayer);
-
 				if (audioPlayer.currentTime !== updatedTime || audioPlayer.paused === true) {
 					audioPlayer.play();
 					audioPlayer.currentTime = updatedTime;
 				}
 			});
 		} else {
-			this.tracks[currently_playing.track.id] = audioPlayer.currentTime;
-			audioPlayer.pause();
+			if (currently_playing.track) {
+				this.tracks[currently_playing.track.id] = audioPlayer.currentTime;
+				audioPlayer.pause();
+			}
 		}
 	}
 
@@ -208,10 +208,12 @@ export default class Footer extends Component {
 			audioPlayer = window.document.querySelector('audio');
 		}
 
-		if (audioPlayer.currentTime > this.tracks[currently_playing.track.id]) {
+		if (currently_playing.track && audioPlayer.currentTime > this.tracks[currently_playing.track.id]) {
 			this.tracks[currently_playing.track.id] = audioPlayer.currentTime;
 		} else {
-			this.tracks[currently_playing.track.id] = currently_playing.position;
+			if (currently_playing.track) {
+				this.tracks[currently_playing.track.id] = currently_playing.position;
+			}
 		}
 
 		if (currently_playing.position > audioPlayer.currentTime) {
@@ -223,7 +225,7 @@ export default class Footer extends Component {
 
 	onMouseMove (e) {
 		const { currently_playing, dispatch } = this.props;
-		const duration = currently_playing.track.duration || 0;
+		const duration = (currently_playing.track && currently_playing.track.duration) || 0;
 		const percentage = (e.pageX - 200) / this.desktopTrackbar.clientWidth;
 		const time = duration * percentage;
 		const tooltip = this.desktopTrackbar.querySelector(`.${styles.tooltip}`);
@@ -255,7 +257,7 @@ export default class Footer extends Component {
 		if (e.which !== 1) return;
 		this.mouseDown = true;
 		const { currently_playing, dispatch } = this.props;
-		const duration = currently_playing.track.duration || 0;
+		const duration = (currently_playing.track && currently_playing.track.duration) || 0;
 		const percentage = ( e.pageX - 200) / e.currentTarget.clientWidth;
 
 		playing_now(dispatch, {
@@ -310,7 +312,7 @@ export default class Footer extends Component {
 		let duration = 0;
 		let playing = currently_playing != null && currently_playing.playing;
 		let parentWidth = 1;
-		const owner = currently_playing.owner && currently_playing.track.user && (currently_playing.track.user.displayName || currently_playing.track.user.url);
+		const owner = currently_playing.owner && currently_playing.track && currently_playing.track.user && (currently_playing.track.user.displayName || currently_playing.track.user.url);
 		const trackName = (currently_playing && currently_playing.track && currently_playing.track.name || "");
 		this.audioPlayer = audioPlayer;
 
@@ -423,9 +425,6 @@ export default class Footer extends Component {
 						</div>
 					</div>
 				</div>
-				{/* {currently_playing != null && currently_playing.track != null && (
-					<audio src={currently_playing.track.stream_url} ref={e => (this.audioPlayer = e)} volume={this.volume} />
-				)} */}
 			</div>
 		);
 	}

@@ -143,6 +143,7 @@ export const shortcuts = [
 			const time = audio.currentTime;
 
 			if (time >= 3) {
+				if (currently_playing.track == null) return;
 				store.dispatch({
 					type: TRACK.PLAYING_TRACK,
 					payload: {

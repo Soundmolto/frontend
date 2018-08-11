@@ -4,18 +4,24 @@ import List from 'preact-material-components/List';
 import Icon from 'preact-material-components/Icon';
 import 'preact-material-components/List/style.css';
 import 'preact-material-components/LayoutGrid/style.css';
-import { get_track_collection } from '../../actions/track';
+import { get_track_collection, remove_track_from_collection } from '../../actions/track';
 import { connect } from 'preact-redux';
 import Helmet from 'preact-helmet';
 import { APP } from '../../enums/app';
 import styles from './style';
-import { TrackListItem } from '../../components/TrackListItem/TrackListItem';
+import { TrackListItem } from '../../components/TrackListItem';
 
 @connect(({ auth, trackCollection }) => ({ auth, trackCollection }))
 export default class TrackCollection extends Component {
 
 	componentDidMount () {
 		get_track_collection(this.props.dispatch, this.props.auth.token);
+	}
+
+	onRemoveItem (track) {
+		const { auth, dispatch } = this.props;
+		const { token } = auth;
+		remove_track_from_collection(dispatch, { token, id: track.id });
 	}
 
 	onStartPlay (track) {
@@ -35,6 +41,7 @@ export default class TrackCollection extends Component {
 	}
 
 	render ({ trackCollection }) {
+		console.log(trackCollection);
 		this.sorted = trackCollection.sort((aTrack, bTrack) => parseInt(bTrack.createdAt) - parseInt(aTrack.createdAt));
 		return (
 			<div>
@@ -70,7 +77,7 @@ export default class TrackCollection extends Component {
 							</List.ItemMeta>
 						</List.Item>
 						{this.sorted.length >= 1 && this.sorted.map(track => (
-							<TrackListItem onClick={this.onStartPlay.bind(this)} track={track} user={track.user} />
+							<TrackListItem onClick={this.onStartPlay.bind(this)} track={track} user={track.user} onRemoveItem={this.onRemoveItem.bind(this)} />
 						))}
 
 						{this.sorted.length === 0 && (

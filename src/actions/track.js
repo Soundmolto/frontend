@@ -126,7 +126,6 @@ export function update_position (dispatch, { playing, position, track, owner }) 
 export async function get_discover_tracks (dispatch, token) {
 	let returnObject = {};
 	let error = {};
-	console.log('fuck')
 
 	try {
 		const data = await fetch(`${API_ENDPOINT}/discover`, {
@@ -219,7 +218,6 @@ export async function fetch_tracks (dispatch, token) {
 export async function get_track_collection (dispatch, token) {
 	let returnObject = {};
 	let error = {};
-	console.log('fuck')
 
 	try {
 		const data = await fetch(`${API_ENDPOINT}/collection/tracks`, {
@@ -228,6 +226,36 @@ export async function get_track_collection (dispatch, token) {
 				'Content-Type': 'application/json',
 				...prefill_auth(token)
 			}
+		});
+
+		if (data.status === 200) {
+			returnObject = {
+				type: TRACK.HAS_TRACK_COLLECTION,
+				payload: await data.json()
+			}
+		} else {
+			error = data;
+			throw new Error(data.statusText);
+		}
+	} catch (error) {
+		console.error(error);
+	} finally {
+		dispatch(returnObject);
+	}
+}
+
+export async function remove_track_from_collection (dispatch, { token, id }) {
+	let returnObject = {};
+	let error = {};
+
+	try {
+		const data = await fetch(`${API_ENDPOINT}/collection/tracks/${id}`, {
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				...prefill_auth(token)
+			},
+			method: "DELETE"
 		});
 
 		if (data.status === 200) {

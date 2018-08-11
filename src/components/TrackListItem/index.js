@@ -1,1 +1,1 @@
-export { DiscoverCard } from './DiscoverCard';
+export { TrackListItem } from './TrackListItem';

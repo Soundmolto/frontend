@@ -12,7 +12,9 @@ import styles from './style.css';
 @connect( ({ auth, currently_playing }) => ({ auth, currently_playing }))
 export class TrackListItem extends Component {
 
-	state = { playing: false };
+	state = { playing: false, icon: 'check' };
+
+	listItemRef = e => (this.listItem = e);
 
 	onStartPlay (e) {
 		const { currently_playing, dispatch, track, user, onClick } = this.props;
@@ -32,18 +34,36 @@ export class TrackListItem extends Component {
 		playing_now(dispatch, { playing: this.state.playing, track, owner: user, position });
 	}
 
-	render ({ currently_playing, track, user }, { playing }) {
-		if (this.state.playing === false && currently_playing.track != null && track.id === currently_playing.track.id && currently_playing.playing === true) {
+	onClick (e) {
+		this.props.onRemoveItem(this.props.track);
+	}
+
+	mouseOver (e) {
+		this.setState({ icon: 'close' });
+	}
+
+	mouseOut (e) {
+		this.setState({ icon: 'check' });
+	}
+
+	massageState () {
+		const { currently_playing } = this.props;
+		const { playing } = this.state;
+		if (playing === false && currently_playing.track != null && track.id === currently_playing.track.id && currently_playing.playing === true) {
 			this.setState({ playing: true });
 		}
 
-		if (this.state.playing && currently_playing.track != null && track.id !== currently_playing.track.id) {
+		if (playing && currently_playing.track != null && track.id !== currently_playing.track.id) {
 			this.setState({ playing: false });
 		}
 
-		if (currently_playing.playing === false && currently_playing.track != null && this.state.playing && track.id === currently_playing.track.id) {
+		if (currently_playing.playing === false && currently_playing.track != null && playing && track.id === currently_playing.track.id) {
 			this.setState({ playing: false });
 		}
+	}
+
+	render ({ track }, { playing }) {
+		this.massageState();
 
 		return (
 			<List.Item class={styles['list-item']}>
@@ -79,7 +99,10 @@ export class TrackListItem extends Component {
 				</List.TextContainer>
 				<List.ItemMeta>
 					<Icon style={{ 'margin-right': 10 }}>cloud_download</Icon>
-					<Icon>check</Icon>
+					<Icon class={styles.hover} onMouseOver={this.mouseOver.bind(this)} onMouseOut={this.mouseOut.bind(this)}
+						onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseOut.bind(this)} onClick={this.onClick.bind(this)}>
+						{this.state.icon}
+					</Icon>
 				</List.ItemMeta>
 			</List.Item>
 		);

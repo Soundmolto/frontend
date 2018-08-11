@@ -155,7 +155,7 @@ export class Waveform extends Component {
 	
 				const state = Object.assign({}, store.getState());
 	
-				if (this.subscribed === false && state.currently_playing.playing === true && state.currently_playing.track.id === this.props.data.id) {
+				if (this.subscribed === false && currently_playing.track && state.currently_playing.playing === true && state.currently_playing.track.id === this.props.data.id) {
 					this.subscribed = true;
 					window.document.querySelector('audio').addEventListener('timeupdate', this.onTimeUpdate.bind(this));
 				}
