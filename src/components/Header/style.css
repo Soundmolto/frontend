@@ -194,3 +194,12 @@ h1.subtitle-header > small {
         height: calc(100% - 132px) !important;
     }
 }
+
+.switchContainer {
+    padding: 20px;
+}
+
+.switchContainer > label {
+    cursor: pointer;
+    margin-left: 20px;
+}

@@ -315,11 +315,17 @@ export default class Header extends Component {
 					<Dialog ref={this.settingsDialogRef} onCancel={e => this.props.dispatch({ type: "HIDE_SETTINGS_PANEL" } )}>
 						<Dialog.Header>Settings</Dialog.Header>
 						<Dialog.Body>
-							<div style={{ padding: '20px' }}>
-								Enable dark theme <Switch checked={this.props.UI.theme === THEMES.dark} onClick={this.toggleDarkTheme} />
+							<div class={style.switchContainer}>
+								<Switch checked={this.props.UI.theme === THEMES.dark} onClick={this.toggleDarkTheme} id="toggleDarkTheme" />
+								<label for="toggleDarkTheme">
+									Enable dark theme
+								</label>
 							</div>
-							<div style={{ padding: '20px' }}>
-								Enable beta features <Switch checked={this.props.settings.beta === SETTINGS.ENABLE_BETA} onClick={this.toggleBeta} />
+							<div class={style.switchContainer}>
+								<Switch checked={this.props.settings.beta === SETTINGS.ENABLE_BETA} onClick={this.toggleBeta} id="toggleBetaFeatures" />
+								<label for="toggleBetaFeatures">
+									Enable beta features
+								</label>
 							</div>
 						</Dialog.Body>
 					</Dialog>

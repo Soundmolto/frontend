@@ -12,7 +12,13 @@ import styles from './style.css';
 @connect( ({ auth, currently_playing }) => ({ auth, currently_playing }))
 export class TrackListItem extends Component {
 
-	state = { playing: false, icon: 'check' };
+	state = { playing: false, icon: 'check', opacity: 0 };
+
+	componentWillMount () {
+		if (this.props.track.downloadable === "true") {
+			this.state.opacity = 1;
+		}
+	}
 
 	listItemRef = e => (this.listItem = e);
 
@@ -62,7 +68,7 @@ export class TrackListItem extends Component {
 		}
 	}
 
-	render ({ track }, { playing }) {
+	render ({ track }, { playing, opacity }) {
 		this.massageState();
 
 		return (
@@ -98,7 +104,7 @@ export class TrackListItem extends Component {
 					</LayoutGrid>
 				</List.TextContainer>
 				<List.ItemMeta>
-					<Icon style={{ 'margin-right': 10 }}>cloud_download</Icon>
+					<Icon style={{ 'margin-right': 10, opacity }}>cloud_download</Icon>
 					<Icon class={styles.hover} onMouseOver={this.mouseOver.bind(this)} onMouseOut={this.mouseOut.bind(this)}
 						onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseOut.bind(this)} onClick={this.onClick.bind(this)}>
 						{this.state.icon}
