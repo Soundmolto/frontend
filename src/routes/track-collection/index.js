@@ -10,8 +10,10 @@ import Helmet from 'preact-helmet';
 import { APP } from '../../enums/app';
 import styles from './style';
 import { TrackListItem } from '../../components/TrackListItem';
+import { SETTINGS } from '../../enums/settings';
+import { route } from 'preact-router';
 
-@connect(({ auth, trackCollection }) => ({ auth, trackCollection }))
+@connect(({ auth, settings, trackCollection }) => ({ auth, settings, trackCollection }))
 export default class TrackCollection extends Component {
 
 	componentDidMount () {
@@ -40,8 +42,8 @@ export default class TrackCollection extends Component {
 		queue.position = i || 0;
 	}
 
-	render ({ trackCollection }) {
-		console.log(trackCollection);
+	render ({ auth, settings, trackCollection }) {
+		if (settings.beta === SETTINGS.DISABLE_BETA || auth.token == null) route('/', true);
 		this.sorted = trackCollection.sort((aTrack, bTrack) => parseInt(bTrack.createdAt) - parseInt(aTrack.createdAt));
 		return (
 			<div>

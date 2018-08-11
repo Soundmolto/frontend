@@ -1,19 +1,15 @@
 import { SETTINGS } from '../enums/settings';
 
-export function dark_theme (dispatch) {
+export function enable_beta (dispatch) {
     dispatch({
-        type: THEMES.CHANGE_THEME,
-        payload: {
-            theme: THEMES.dark
-        }
+        type: SETTINGS.ENABLE_BETA,
+        payload: {}
     })
 }
 
-export function light_theme (dispatch) {
+export function disable_beta (dispatch) {
     dispatch({
-        type: THEMES.CHANGE_THEME,
-        payload: {
-            theme: THEMES.light
-        }
+        type: SETTINGS.DISABLE_BETA,
+        payload: {}
     })
 }

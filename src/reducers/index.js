@@ -9,6 +9,7 @@ import track from './track';
 import discover from './discover';
 import tracks from './tracks';
 import trackCollection from './track-collection';
+import settings from './settings';
 
 export default combineReducers({
     auth,
@@ -20,5 +21,6 @@ export default combineReducers({
     track,
 	discover,
 	tracks,
-	trackCollection
+	trackCollection,
+	settings
 });

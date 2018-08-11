@@ -26,6 +26,8 @@ import { UploadTrack } from '../UploadTrack';
 import { APP } from '../../enums/app';
 import { Search } from '../Search';
 import raf from 'raf';
+import { SETTINGS } from '../../enums/settings';
+import { disable_beta, enable_beta } from '../../actions/settings';
 
 @connect(state => state)
 export default class Header extends Component {
@@ -116,6 +118,14 @@ export default class Header extends Component {
 		}
 	}
 
+	toggleBeta = () => {
+		if (this.props.settings.beta === SETTINGS.ENABLE_BETA) {
+			disable_beta(this.props.dispatch);
+		} else {
+			enable_beta(this.props.dispatch);
+		}
+	};
+
 	toggleMenu () {
 		if (typeof window !== "undefined") {
 			window.document.querySelector(`.${style.drawerCloseContainer}`).classList.toggle(style.visible);
@@ -144,7 +154,7 @@ export default class Header extends Component {
 	}
 
 	login_or_logout () {
-		const { auth, user } = this.props;
+		const { auth, user, settings } = this.props;
 		let defaultVal = (
 			<div>
 				<Drawer.DrawerItem onClick={this.goToLogin} class={this.isActive('/login')} href="/login">
@@ -168,16 +178,26 @@ export default class Header extends Component {
 					<div class="section">
 						<h1 class={style['subtitle-header']}>
 							My Music
-							<small>Coming soon</small>
+							<small>{settings.beta === SETTINGS.ENABLE_BETA ? "BETA" : "Coming soon"}</small>
 						</h1>
 						<Drawer.DrawerItem onClick={e => console.log(e)} class={this.isActive(`/${user.profile.url}/artists`)}>
 							<List.ItemGraphic>person</List.ItemGraphic>
 							Artists
 						</Drawer.DrawerItem>
-						<Drawer.DrawerItem onClick={this.goToTrackCollection} class={this.isActive(`/collection/tracks`)} href='/collection/tracks'>
-							<List.ItemGraphic>music_note</List.ItemGraphic>
-							Songs
-						</Drawer.DrawerItem>
+						{settings.beta === SETTINGS.ENABLE_BETA && (
+							<Drawer.DrawerItem onClick={this.goToTrackCollection} class={`mdc-list-item ${this.isActive(`/collection/tracks`)}`} href='/collection/tracks'>
+								<List.ItemGraphic>music_note</List.ItemGraphic>
+								Songs
+							</Drawer.DrawerItem>
+						)}
+
+						{settings.beta === SETTINGS.DISABLE_BETA && (
+							<Drawer.DrawerItem class={`mdc-list-item`}>
+								<List.ItemGraphic>music_note</List.ItemGraphic>
+								Songs
+							</Drawer.DrawerItem>
+						)}
+
 						<Drawer.DrawerItem onClick={e => console.log(e)} class={this.isActive(`/${user.profile.url}/playlists`)}>
 							<List.ItemGraphic>playlist_play</List.ItemGraphic>
 							Playlists
@@ -295,8 +315,11 @@ export default class Header extends Component {
 					<Dialog ref={this.settingsDialogRef} onCancel={e => this.props.dispatch({ type: "HIDE_SETTINGS_PANEL" } )}>
 						<Dialog.Header>Settings</Dialog.Header>
 						<Dialog.Body>
-							<div>
+							<div style={{ padding: '20px' }}>
 								Enable dark theme <Switch checked={this.props.UI.theme === THEMES.dark} onClick={this.toggleDarkTheme} />
+							</div>
+							<div style={{ padding: '20px' }}>
+								Enable beta features <Switch checked={this.props.settings.beta === SETTINGS.ENABLE_BETA} onClick={this.toggleBeta} />
 							</div>
 						</Dialog.Body>
 					</Dialog>

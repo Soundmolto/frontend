@@ -1,8 +1,12 @@
 export const SETTINGS = Object.freeze({
-    TOGGLE_ON_CLICK: "TOGGLE_ON_CLICK",
-    SUPPORTED: Object.freeze({
-        TOGGLE_ON_CLICK: true,
-        DARK_THEME: true
-    }),
-    RESET: "SETTINGS_RESET"
+	TOGGLE_ON_CLICK: "TOGGLE_ON_CLICK",
+	BETA: "BETA_SETTINGS",
+	SUPPORTED: Object.freeze({
+		TOGGLE_ON_CLICK: true,
+		DARK_THEME: true,
+		BETA: true
+	}),
+	RESET: "SETTINGS_RESET",
+	ENABLE_BETA: "ENABLE_BETA",
+	DISABLE_BETA: "DISABLE_BETA"
 })
