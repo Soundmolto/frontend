@@ -148,6 +148,7 @@ export async function get_discover_tracks (dispatch, token) {
 	} catch (error) {
 		console.error(error);
 	} finally {
+		console.log(returnObject);	
 		dispatch(returnObject);
 	}
 }
@@ -256,6 +257,36 @@ export async function remove_track_from_collection (dispatch, { token, id }) {
 				...prefill_auth(token)
 			},
 			method: "DELETE"
+		});
+
+		if (data.status === 200) {
+			returnObject = {
+				type: TRACK.HAS_TRACK_COLLECTION,
+				payload: await data.json()
+			}
+		} else {
+			error = data;
+			throw new Error(data.statusText);
+		}
+	} catch (error) {
+		console.error(error);
+	} finally {
+		dispatch(returnObject);
+	}
+}
+
+export async function save_track_in_collection (dispatch, { token, id }) {
+	let returnObject = {};
+	let error = {};
+
+	try {
+		const data = await fetch(`${API_ENDPOINT}/collection/tracks/${id}`, {
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				...prefill_auth(token)
+			},
+			method: "PUT"
 		});
 
 		if (data.status === 200) {

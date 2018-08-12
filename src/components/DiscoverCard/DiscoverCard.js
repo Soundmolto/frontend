@@ -5,15 +5,16 @@ import Icon from 'preact-material-components/Icon';
 import Goku from '../../assets/goku.png';
 import { route } from "preact-router";
 import { seconds_to_time } from "../../utils/seconds-to-time";
-import { playing_now } from "../../actions/track";
+import { playing_now, save_track_in_collection } from "../../actions/track";
 import { connect } from 'preact-redux';
+import { SETTINGS } from '../../enums/settings';
 import dayjs from 'dayjs';
 import TimeAgo from 'timeago-react';
 import 'preact-material-components/Card/style.css';
 import 'preact-material-components/Button/style.css';
 import styles from './style.css';
 
-@connect( ({ auth, currently_playing }) => ({ auth, currently_playing }))
+@connect( ({ auth, currently_playing, settings }) => ({ auth, currently_playing, settings }))
 export class DiscoverCard extends Component {
 
 	state = { playing: false };
@@ -47,7 +48,11 @@ export class DiscoverCard extends Component {
 		return trackArtwork || userAvatar || Goku;
 	}
 
-	render ({ currently_playing, track, user }, { playing }) {
+	saveTrackToCollection () {
+		save_track_in_collection(this.props.dispatch, { token: this.props.auth.token, id: this.props.track.id });
+	}
+
+	render ({ currently_playing, track, user, settings }, { playing }) {
 		const artwork = this.getArtwork(track, (track.user || user));
 		const postedAt = dayjs(parseInt(track.createdAt));
 
@@ -107,6 +112,11 @@ export class DiscoverCard extends Component {
 						<span>
 							<Icon>favorite</Icon> {track.amountOfLikes}
 						</span>
+						{settings.beta === SETTINGS.ENABLE_BETA && (
+							<span onClick={this.saveTrackToCollection.bind(this)} class={styles.saveTrack}>
+								<Icon>add</Icon>
+							</span>
+						)}
 					</div>
 					<div>
 						<span style={{ margin: 0 }}>

@@ -53,7 +53,7 @@ export class TrackListItem extends Component {
 	}
 
 	massageState () {
-		const { currently_playing } = this.props;
+		const { currently_playing, track } = this.props;
 		const { playing } = this.state;
 		if (playing === false && currently_playing.track != null && track.id === currently_playing.track.id && currently_playing.playing === true) {
 			this.setState({ playing: true });
@@ -70,6 +70,7 @@ export class TrackListItem extends Component {
 
 	render ({ track }, { playing, opacity }) {
 		this.massageState();
+		track.user = track.user || { url: '' };
 
 		return (
 			<List.Item class={styles['list-item']}>
