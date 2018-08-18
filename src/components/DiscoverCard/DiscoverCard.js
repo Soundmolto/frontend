@@ -50,10 +50,12 @@ export class DiscoverCard extends Component {
 
 	saveTrackToCollection () {
 		save_track_in_collection(this.props.dispatch, { token: this.props.auth.token, id: this.props.track.id });
+		this.setState({ inCollection: true });
 	}
 
 	removeTrackFromCollection () {
 		remove_track_from_collection(this.props.dispatch, { token: this.props.auth.token, id: this.props.track.id });
+		this.setState({ inCollection: false });
 	}
 
 	mouseOver (e) {
@@ -64,7 +66,15 @@ export class DiscoverCard extends Component {
 		this.setState({ icon: 'check' });
 	}
 
-	render ({ currently_playing, track, user, settings }, { playing, icon }) {
+	componentWillMount () {
+		const { track } = this.props;
+
+		this.setState({
+			inCollection: track.inCollection
+		});
+	}
+
+	render ({ currently_playing, track, user, settings }, { playing, icon, inCollection }) {
 		const artwork = this.getArtwork(track, (track.user || user));
 		const postedAt = dayjs(parseInt(track.createdAt));
 
@@ -124,12 +134,12 @@ export class DiscoverCard extends Component {
 						<span>
 							<Icon>favorite</Icon> {track.amountOfLikes}
 						</span>
-						{settings.beta === SETTINGS.ENABLE_BETA && track.inCollection === false && (
+						{settings.beta === SETTINGS.ENABLE_BETA && inCollection === false && (
 							<span onClick={this.saveTrackToCollection.bind(this)} class={styles.saveTrack}>
 								<Icon>add</Icon>
 							</span>
 						)}
-						{settings.beta === SETTINGS.ENABLE_BETA && track.inCollection === true && (
+						{settings.beta === SETTINGS.ENABLE_BETA && inCollection === true && (
 							<span onClick={this.removeTrackFromCollection.bind(this)} class={styles.saveTrack} onMouseOut={this.mouseOut.bind(this)} onMouseOver={this.mouseOver.bind(this)}>
 								<Icon>
 									{icon}
