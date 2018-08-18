@@ -18,7 +18,7 @@ import styles from './style.css';
 @connect( ({ auth, currently_playing, settings }) => ({ auth, currently_playing, settings }))
 export class DiscoverCard extends Component {
 
-	state = { playing: false, icon: 'check', inCollection: false };
+	state = { playing: false, inCollection: false };
 
 	goTo (e, path) {
 		e.preventDefault();

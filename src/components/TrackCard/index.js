@@ -14,9 +14,11 @@ import 'preact-material-components/Button/style.css';
 import 'preact-material-components/Dialog/style.css';
 import 'preact-material-components/Snackbar/style.css';
 import styles from './style';
-import { playing_now, delete_track, toggle_like } from '../../actions/track';
+import { playing_now, delete_track, toggle_like, save_track_in_collection, remove_track_from_collection } from '../../actions/track';
 import { connect } from 'preact-redux';
 import { seconds_to_time } from '../../utils/seconds-to-time';
+import { TrackCollectionIndicator } from "../TrackCollectionIndicator";
+import { SETTINGS } from '../../enums/settings';
 import dayjs from 'dayjs';
 import TimeAgo from 'timeago-react';
 import Goku from '../../assets/goku.png';
@@ -24,14 +26,14 @@ import { route } from 'preact-router';
 
 let className = (e) => (e);
 
-@connect(({ auth, currently_playing }) => ({ auth, currently_playing }))
+@connect(({ auth, currently_playing, settings }) => ({ auth, currently_playing, settings }))
 export class TrackCard extends Component {
 
 	plays = 0;
 	played = false;
 	deleting = false;
 
-	state = { playing: false };
+	state = { playing: false, inCollection: false  };
 
 	editTrackRef = dialog => (this.editTrackPanel = dialog);
 
@@ -43,6 +45,10 @@ export class TrackCard extends Component {
 		this.setState({ playing: false });
 		this.plays = 0;
 		this.played = false;
+	}
+
+	componentWillMount () {
+		this.setState({ inCollection: this.props.track.inCollection });
 	}
 
 	onClickPlayPause (e) {
@@ -112,7 +118,15 @@ export class TrackCard extends Component {
 		return trackArtwork || userAvatar || Goku;
 	}
 
-	render ({ track, user, currentUser, currently_playing, isCurrentTrack }) {
+	saveTrackToCollection () {
+		save_track_in_collection(this.props.dispatch, { token: this.props.auth.token, id: this.props.track.id });
+	}
+
+	removeTrackFromCollection () {
+		remove_track_from_collection(this.props.dispatch, { token: this.props.auth.token, id: this.props.track.id });
+	}
+
+	render ({ track, user, currentUser, currently_playing, isCurrentTrack, settings }, { inCollection }) {
 		const userLikesTrack = user.likes && user.likes.filter(like => like.id === track.id).length != 0;
 		const postedAt = dayjs(parseInt(track.createdAt));
 		const toggleOnIcon = { content: "favorite", label: "Remove From Favorites" };
@@ -209,6 +223,16 @@ export class TrackCard extends Component {
 								{userLikesTrack === false && "favorite_border"}
 							</IconToggle>
 							{track.amountOfLikes || 0}
+						</p>
+						<p class={`${styles.centered} ${styles.favorites}`}>
+							{settings.beta === SETTINGS.ENABLE_BETA && (
+								<TrackCollectionIndicator
+									track={track}
+									inCollection={inCollection}
+									onSaveTrackToCollection={this.saveTrackToCollection.bind(this)}
+									onRemoveTrackFromCollection={this.removeTrackFromCollection.bind(this)}
+								/>
+							)}
 						</p>
 						<span style={{ 'font-size': '0.9rem', float: 'right', 'margin-top': '14px' }}>
 							<p class={`${styles.centered} prel ${styles.w100}`} >
