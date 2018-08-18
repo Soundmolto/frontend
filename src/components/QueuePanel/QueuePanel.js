@@ -24,18 +24,17 @@ export class QueuePanel extends Component {
 							</div>
 						</div>
 						<div class={`${styles.flex} ${styles.header}`} style={{ 'justify-content': 'space-between' }}>
-							<div class={styles.placeholder}></div>
-							<div style={{ width: '100%' }}>
+							<div style={{ width: '100%', maxWidth: 'calc(100% - 200px)', marginLeft: '37px' }}>
 								<p>Song</p>
 							</div>
-							<div style={{ width: 'auto', 'flex-direction': 'row' }}>
-								<span>
+							<div style={{ width: 'auto', 'flex-direction': 'row', float: 'right' }}>
+								<span style={{ width: '35px' }}>
 									<Icon>access_time</Icon>
 								</span>
-								<span>
+								<span style={{ width: '35px' }}>
 									<Icon>favorite</Icon>
 								</span>
-								<span>
+								<span style={{ width: '35px' }}>
 									<Icon>headset</Icon>
 								</span>
 							</div>
@@ -56,7 +55,7 @@ export class QueuePanel extends Component {
 									</a>
 								</div>
 								<div style={{ width: 'auto', 'flex-direction': 'row' }}>
-									<span>
+									<span style={{ width: '100px' }}>
 										{seconds_to_time(track.duration).rendered || '00:00'}
 									</span>
 									<span>
