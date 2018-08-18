@@ -10,6 +10,7 @@ import { connect } from 'preact-redux';
 import { SETTINGS } from '../../enums/settings';
 import dayjs from 'dayjs';
 import TimeAgo from 'timeago-react';
+import { TrackCollectionIndicator } from "../TrackCollectionIndicator";
 import 'preact-material-components/Card/style.css';
 import 'preact-material-components/Button/style.css';
 import styles from './style.css';
@@ -17,7 +18,7 @@ import styles from './style.css';
 @connect( ({ auth, currently_playing, settings }) => ({ auth, currently_playing, settings }))
 export class DiscoverCard extends Component {
 
-	state = { playing: false, icon: 'check' };
+	state = { playing: false, icon: 'check', inCollection: false };
 
 	goTo (e, path) {
 		e.preventDefault();
@@ -50,28 +51,14 @@ export class DiscoverCard extends Component {
 
 	saveTrackToCollection () {
 		save_track_in_collection(this.props.dispatch, { token: this.props.auth.token, id: this.props.track.id });
-		this.setState({ inCollection: true });
 	}
 
 	removeTrackFromCollection () {
 		remove_track_from_collection(this.props.dispatch, { token: this.props.auth.token, id: this.props.track.id });
-		this.setState({ inCollection: false });
-	}
-
-	mouseOver (e) {
-		this.setState({ icon: 'close' });
-	}
-
-	mouseOut (e) {
-		this.setState({ icon: 'check' });
 	}
 
 	componentWillMount () {
-		const { track } = this.props;
-
-		this.setState({
-			inCollection: track.inCollection
-		});
+		this.setState({ inCollection: this.props.track.inCollection });
 	}
 
 	render ({ currently_playing, track, user, settings }, { playing, icon, inCollection }) {
@@ -134,17 +121,13 @@ export class DiscoverCard extends Component {
 						<span>
 							<Icon>favorite</Icon> {track.amountOfLikes}
 						</span>
-						{settings.beta === SETTINGS.ENABLE_BETA && inCollection === false && (
-							<span onClick={this.saveTrackToCollection.bind(this)} class={styles.saveTrack}>
-								<Icon>add</Icon>
-							</span>
-						)}
-						{settings.beta === SETTINGS.ENABLE_BETA && inCollection === true && (
-							<span onClick={this.removeTrackFromCollection.bind(this)} class={styles.saveTrack} onMouseOut={this.mouseOut.bind(this)} onMouseOver={this.mouseOver.bind(this)}>
-								<Icon>
-									{icon}
-								</Icon>
-							</span>
+						{settings.beta === SETTINGS.ENABLE_BETA && (
+							<TrackCollectionIndicator
+								track={track}
+								inCollection={inCollection}
+								onSaveTrackToCollection={this.saveTrackToCollection.bind(this)}
+								onRemoveTrackFromCollection={this.removeTrackFromCollection.bind(this)}
+							/>
 						)}
 					</div>
 					<div>

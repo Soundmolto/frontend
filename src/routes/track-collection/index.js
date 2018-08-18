@@ -44,7 +44,7 @@ export default class TrackCollection extends Component {
 
 	render ({ auth, settings, trackCollection }) {
 		if (settings.beta === SETTINGS.DISABLE_BETA || auth.token == null) route('/', true);
-		this.sorted = trackCollection.sort((aTrack, bTrack) => parseInt(bTrack.createdAt) - parseInt(aTrack.createdAt));
+		this.sorted = trackCollection;
 		return (
 			<div>
 				<Helmet title={`${APP.NAME} - Songs`} />
