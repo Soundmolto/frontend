@@ -84,12 +84,12 @@ export class TrackListItem extends Component {
 						<LayoutGrid.Inner class={styles['grid-inner']}>
 							<LayoutGrid.Cell desktopCols="6" tabletCols="6" phoneCols="6">
 								<List.PrimaryText>
-									<a href={`/${track.user.url}/${track.url}`}>
+									<a href={`/${track.user.url}/${track.url}`} class={styles.link}>
 										{track.name}
 									</a>
 								</List.PrimaryText>
 								<List.SecondaryText>
-									<a href={`/${track.user.url}`}>
+									<a href={`/${track.user.url}`} class={styles.link}>
 										{track.user.displayName}
 									</a>
 								</List.SecondaryText>

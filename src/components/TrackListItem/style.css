@@ -42,3 +42,7 @@
 	text-overflow: ellipsis;
 	white-space: pre;
 }
+
+.link {
+	color: var(--mdc-theme-link-primary-on-background);
+}

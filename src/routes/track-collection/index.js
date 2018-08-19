@@ -16,6 +16,8 @@ import { route } from 'preact-router';
 @connect(({ auth, settings, trackCollection }) => ({ auth, settings, trackCollection }))
 export default class TrackCollection extends Component {
 
+	state = { sortBy: '', sortDir: '' };
+
 	componentDidMount () {
 		get_track_collection(this.props.dispatch, this.props.auth.token);
 	}
@@ -42,9 +44,51 @@ export default class TrackCollection extends Component {
 		queue.position = i || 0;
 	}
 
-	render ({ auth, settings, trackCollection }) {
+	onClickSortByTime () {
+		let sortDir = 'asc';
+		if (this.state.sortBy === 'time' && this.state.sortDir === 'asc') sortDir = 'desc';
+		this.setState({ sortBy: 'time', sortDir });
+	}
+
+	onClickSortByTrack () {
+		let sortDir = 'asc';
+		if (this.state.sortBy === 'track' && this.state.sortDir === 'asc') sortDir = 'desc';
+		this.setState({ sortBy: 'track', sortDir });
+	}
+
+	sort (collection) {
+		const { sortBy, sortDir } = this.state;
+		let sorted = collection;
+		const getUserName = track => track.user.displayName || track.user.url;
+		if (sortBy !== 'default') {
+			switch (sortBy) {
+				case "time": {
+					sorted = sorted.sort((first, second) => first.duration - second.duration);
+					if (sortDir === 'desc') sorted = sorted.reverse();
+					break;
+				}
+
+				case "track": {
+					sorted = sorted.sort((first, second) => {
+						return `${getUserName(first)} - ${first.name}`.localeCompare(`${getUserName(second)} - ${second.name}`)
+					});
+
+					if (sortDir === 'desc') sorted = sorted.reverse();
+					break;
+				}
+
+				default: {
+					sorted = collection;
+					break;
+				}
+			}
+		}
+		return [].concat(sorted);
+	}
+
+	render ({ auth, settings, trackCollection }, { sortBy, sortDir}) {
 		if (settings.beta === SETTINGS.DISABLE_BETA || auth.token == null) route('/', true);
-		this.sorted = trackCollection;
+		this.sorted = this.sort(trackCollection);
 		return (
 			<div>
 				<Helmet title={`${APP.NAME} - Songs`} />
@@ -64,11 +108,27 @@ export default class TrackCollection extends Component {
 									<LayoutGrid.Inner class={styles['grid-inner']}>
 										<LayoutGrid.Cell desktopCols="6" tabletCols="6" phoneCols="6">
 											<List.PrimaryText>
-												Track
+												<span onClick={this.onClickSortByTrack.bind(this)} class={`${styles.hover} ${styles.centered}`}>
+													Track
+													{sortBy === 'track' && (
+														<Icon class={styles.activeSort}>
+															{sortDir === 'desc' && ('keyboard_arrow_down')}
+															{sortDir === 'asc' && ('keyboard_arrow_up')}
+														</Icon>
+													)}
+												</span>
 											</List.PrimaryText>
 										</LayoutGrid.Cell>
 										<LayoutGrid.Cell desktopCols="6" tabletCols="6" phoneCols="6">
-											<Icon>access_time</Icon>
+											<span onClick={this.onClickSortByTime.bind(this)} class={styles.hover}>
+												<Icon>access_time</Icon>
+												{sortBy === 'time' && (
+													<Icon class={styles.activeSort}>
+														{sortDir === 'desc' && ('keyboard_arrow_down')}
+														{sortDir === 'asc' && ('keyboard_arrow_up')}
+													</Icon>
+												)}
+											</span>
 										</LayoutGrid.Cell>
 									</LayoutGrid.Inner>
 								</LayoutGrid>
