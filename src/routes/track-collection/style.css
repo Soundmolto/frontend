@@ -63,5 +63,5 @@
 
 .activeSort {
 	margin-left: 5px;
-	color: var(--mdc-theme-secondary);
+	color: var(--mdc-theme-secondary) !important;
 }
