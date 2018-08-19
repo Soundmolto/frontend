@@ -5,6 +5,7 @@
 	--mdc-theme--error-message: #b64040;
 	--mdc-theme--error-message-color: #FFFFFF;
 	--mdc-theme-link-primary-on-background: #5D8CAE;
+	--mdc-theme-link-primary-on-background--hover: #c67dcb;
 	--mdc-theme-text-primary: #333;
 	--mdc-theme-complementary-color: #c67dcb;
 	--mdc-layout-grid-margin-phone: 0 !important;

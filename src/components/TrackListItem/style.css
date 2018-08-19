@@ -46,3 +46,7 @@
 .link {
 	color: var(--mdc-theme-link-primary-on-background);
 }
+
+.link:hover {
+	color: var(--mdc-theme-link-primary-on-background--hover);
+}

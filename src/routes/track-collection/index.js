@@ -16,7 +16,7 @@ import { route } from 'preact-router';
 @connect(({ auth, settings, trackCollection }) => ({ auth, settings, trackCollection }))
 export default class TrackCollection extends Component {
 
-	state = { sortBy: '', sortDir: '' };
+	state = { sortBy: 'track', sortDir: 'asc' };
 
 	componentDidMount () {
 		get_track_collection(this.props.dispatch, this.props.auth.token);
