@@ -125,7 +125,6 @@ h1.subtitle-header > small {
 
 .drawer {
     display: block;
-    padding-top: 5px;
     transition: transform 0.3s ease-in-out;
 }
 

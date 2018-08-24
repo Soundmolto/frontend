@@ -50,22 +50,25 @@ export class UploadTrack extends Component {
 
 		return (
 			<div class={style.root}>
-			{loading === false && editing === false && (
-				<label className={className}
-					onDragOver={this.onDragOver.bind(this)}
-					onDrop={this.onDrop.bind(this)}>
-					
-					<img className={style.loaded}/>
-					<Icon class={style.icon}>cloud_upload</Icon> Upload Track
-					<input type="file" accept="audio/*" onChange={this.onFileChange.bind(this)} />
-				</label>
-			)}
-			{loading === true && editing === false && (
-				<LinearProgress indeterminate={true} />
-			)}
-			{loading === false && editing === true && (
-				<EditTrack track={track_editing} onSubmit={e => this.setState(get_default_state())} />
-			)}
+				{loading === false && editing === false && (
+					<label className={className}
+						onDragOver={this.onDragOver.bind(this)}
+						onDrop={this.onDrop.bind(this)}>
+						
+						<img className={style.loaded}/>
+						<Icon class={style.icon}>cloud_upload</Icon> Upload Track
+						<input type="file" accept="audio/*" onChange={this.onFileChange.bind(this)} />
+					</label>
+				)}
+				{loading === true && editing === false && (
+					<LinearProgress indeterminate={true} />
+				)}
+				{loading === false && editing === true && (
+					<EditTrack track={track_editing} onSubmit={e => this.setState(get_default_state())} />
+				)}
+
+				<p class={style.maxFileSize}>Max file size is 5GB.</p>
+			
 			</div>
 		);
 	}

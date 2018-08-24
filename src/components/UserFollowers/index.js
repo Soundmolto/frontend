@@ -31,12 +31,11 @@ export class UserFollowers extends Component {
 						<div class={styles.w100}>
 							<Link href={`/${follower.url}`} class={styles.link}
 								onMouseOver={this.showPopover.bind(this, follower.id)} onMouseOut={this.hidePopover.bind(this, follower.id)}>
-								<UserPictureName user={follower} />
+								<UserPictureName user={follower} showUsername={false} />
 							</Link>
 							<div class={`mdc-custom-card ${styles.popover}`} ref={e => this.popovers[follower.id] = e} style={{ display: 'none' }}>
-								<pre>
-									{JSON.stringify(follower, null, 2)}
-								</pre>
+								<UserPictureName user={follower} h1_class={styles.h1Class} />
+								<p class={styles.followers}>{follower.amountOfFollowers} Follower{follower.amountOfFollowers > 1 ? 's' : ''}</p>
 							</div>
 						</div>
 					))}

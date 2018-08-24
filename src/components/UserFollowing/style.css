@@ -5,7 +5,6 @@
 .card img {
 	max-width: 24px;
 	height: 24px;
-	margin-right: 10px;
 	border-radius: 100%;
 }
 
@@ -22,12 +21,41 @@
 }
 
 .link {
+    display: inline-block;
     padding: 10px;
     text-decoration: none;
     color: var(--mdc-theme-primary);
     border-radius: 4px;
+    margin: 0 10px 0 0;
 }
 
 .link:hover, .link:active, .link:focus {
     background: rgba(0, 0, 0, 0.2);
+}
+
+.w100 {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.popover {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 20px;
+    box-shadow: 0 0 30px 10px rgba(0, 0, 0, 0.2) !important;
+}
+
+.followers {
+    margin: 10px 0 0;
+}
+
+.h1Class {
+    margin-left: 10px !important;
 }

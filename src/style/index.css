@@ -112,6 +112,7 @@ body > div {
 @media screen and (min-width: 1200px) {
 	.route-container {
 		padding-left: 200px;
+		padding-top: 64px;
 	}
 
 	.header > .vertical-center {
@@ -215,12 +216,12 @@ body > div {
 }
 
 .header {
-	height: 170px;
+	height: 100px;
 	width: 100vw;
 	display: flex;
-	padding: 64px 20px 0;
+	padding: 0 20px 0;
 	background: #5D8CAE;
-	background: linear-gradient(var(--mdc-theme-primary) 0%, var(--mdc-theme-complementary-color) 150%);
+	background: linear-gradient(var(--mdc-theme-primary) -40%, var(--mdc-theme-complementary-color) 170%);
 }
 
 .header h1 {

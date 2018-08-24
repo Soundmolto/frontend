@@ -8,7 +8,6 @@
     cursor: pointer;
     display: flex;
     justify-content: center;
-    outline: 3px dashed #ccc;
     outline-offset: 5px;
     position: relative;
     height: 150px;
@@ -41,4 +40,10 @@
     background: rgba(0, 0, 0, 0.2);
     border-radius: 2px;
     color: var(--mdc-theme-text-primary);
+}
+
+p.maxFileSize {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin: 10px 0 0;
 }

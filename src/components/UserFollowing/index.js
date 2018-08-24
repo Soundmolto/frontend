@@ -10,15 +10,32 @@ import { connect } from 'preact-redux';
 @connect(state => state)
 export class UserFollowing extends Component {
 
+	popovers = {};
+
+	showPopover (id) {
+		this.popovers[id].style = "display: block";
+	}
+
+	hidePopover (id) {
+		this.popovers[id].style = "display: none";
+	}
+
     render ({ viewedUser, style = {} }) {
         return (
             <div style={style}>
                 <Card class={styles.card}>
                     <h1 style={{ 'margin-bottom': '10px' }}>Following {viewedUser.following.length}</h1>
                     {viewedUser.following.length !== 0 && viewedUser.following.map(follower => (
-                        <Link href={`/${follower.url}`} class={styles.link}>
-                            <UserPictureName user={follower} />
-                        </Link>
+						<div class={styles.w100}>
+							<Link href={`/${follower.url}`} class={styles.link}
+								onMouseOver={this.showPopover.bind(this, follower.id)} onMouseOut={this.hidePopover.bind(this, follower.id)}>
+								<UserPictureName user={follower} showUsername={false} />
+							</Link>
+							<div class={`mdc-custom-card ${styles.popover}`} ref={e => this.popovers[follower.id] = e} style={{ display: 'none' }}>
+								<UserPictureName user={follower} h1_class={styles.h1Class} />
+								<p class={styles.followers}>{follower.amountOfFollowers} Follower{follower.amountOfFollowers > 1 ? 's' : ''}</p>
+							</div>
+						</div>
                     ))}
                     {viewedUser.following.length <= 0 && (<p>Not following anyone</p>)}
                 </Card>
