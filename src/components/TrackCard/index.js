@@ -259,7 +259,9 @@ export class TrackCard extends Component {
 					<Dialog.Body>
 						<EditTrack track={track} onSubmit={newTrack => {
 							track = newTrack;
-							route(`/${track.user.url}/${newTrack.url}`, true);
+							if (isCurrentTrack === true) {
+								route(`/${track.user.url}/${newTrack.url}`, true);
+							}
 						}} />
 					</Dialog.Body>
 				</Dialog>

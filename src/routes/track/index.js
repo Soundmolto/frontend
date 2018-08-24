@@ -25,11 +25,7 @@ export default class Track extends Component {
 
 	updateData () {
 		const { auth, dispatch, track_url, vanity_url } = this.props;
-		get_track(this.props.dispatch.bind(this), {
-			token: auth.token,
-			track_url,
-			vanity_url
-		});
+		get_track(dispatch.bind(this), { token: auth.token, track_url, vanity_url });
 		this.currentUrl = getCurrentUrl();
 	}
 
@@ -74,6 +70,10 @@ export default class Track extends Component {
 		}
 		const tracks = viewedUser.tracks.sort((first, second) => parseInt(second.createdAt) - parseInt(first.createdAt));
 		this.tracks = [track.track].concat(tracks);
+
+		console.log(
+			viewedTrack.description
+		)
 
 		return (
 			<div class={style.profile}>

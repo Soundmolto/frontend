@@ -33,6 +33,7 @@ export class EditTrack extends Component {
 		e.preventDefault();
 		const id = this.props.track.id;
 		edit_track(this.props.dispatch, { token: this.props.auth.token, track: { ...this.localState }, id });
+
 		if (this.props.onSubmit) {
 			this.props.onSubmit(this.localState);
 		}
@@ -67,11 +68,12 @@ export class EditTrack extends Component {
 	async onFileChange (e, f) {
 		const file = f || e.target.files[0];
 		const data = new FormData();
-		const { token } = this.props.auth;
+		const { auth, track } = this.props;
+		const { token } = auth;
 		data.append('file', file, file.name);
 		this.setState({ loading: true, loaded: false });
 
-		const post = await fetch(`${API_ENDPOINT}/tracks/${this.props.track.id}/track-artwork`, { method: "POST", headers: { ...prefill_auth(token) }, body: data });
+		const post = await fetch(`${API_ENDPOINT}/tracks/${track.id}/track-artwork`, { method: "POST", headers: { ...prefill_auth(token) }, body: data });
 		const payload = await post.json();
 
 		this.props.dispatch({ type: USER.HAS_NEW_DATA, payload });

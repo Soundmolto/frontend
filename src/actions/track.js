@@ -36,6 +36,14 @@ export async function edit_track (dispatch, { track, token, id }) {
 			dispatch({
 				type: USER.HAS_NEW_DATA,
 				payload: Object.assign({}, returnObject.payload)
+			});
+			console.log(returnObject.payload);
+			dispatch({
+				type: TRACK.UPDATED_TRACK,
+				payload: {
+					track,
+					user: returnObject.payload
+				}
 			})
 		}
 		return dispatch(returnObject);
