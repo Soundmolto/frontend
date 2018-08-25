@@ -42,7 +42,7 @@
     flex-wrap: wrap;
 }
 
-.popover {
+.w100 > .popover, .popover {
     position: absolute;
     top: 100%;
     left: 0;
