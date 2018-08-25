@@ -81,6 +81,12 @@ export class EditTrack extends Component {
 		this.setState({ loaded: true, loading: false })
 	}
 
+	getArtwork (track, user) {
+		const userAvatar = user && user.profilePicture;
+		const trackArtwork = track && track.artwork;
+		return trackArtwork || userAvatar || Goku;
+	}
+
 	render ({ track }) {
 		this.localState = Object.assign({}, track);
 		return (
@@ -89,7 +95,7 @@ export class EditTrack extends Component {
 					onDragOver={this.onDragOver.bind(this)}
 					onDrop={this.onDrop.bind(this)}
 					>
-					<img src={track.artwork || Goku} />
+					<img src={this.getArtwork(track, track.user)} />
 					<Icon class={styles.icon}>cloud_upload</Icon>
 					<input type="file" accept="image/*" onChange={this.onFileChange.bind(this)} />
 				</label>
