@@ -107,12 +107,12 @@ body > div {
 
 .route-container {
 	width: 100%;
+	padding-top: 64px;
 }
 
 @media screen and (min-width: 1200px) {
 	.route-container {
 		padding-left: 200px;
-		padding-top: 64px;
 	}
 
 	.header > .vertical-center {
