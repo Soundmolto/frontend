@@ -13,11 +13,19 @@ export class UserFollowing extends Component {
 	popovers = {};
 
 	showPopover (id) {
-		this.popovers[id].style = "display: block";
+		this.popovers[id].style.display = "block";
+		this.popovers[id].style.opacity = 1;
 	}
 
 	hidePopover (id) {
-		this.popovers[id].style = "display: none";
+		const ontransitionend = () => {
+			this.popovers[id].removeEventListener('transitionend', ontransitionend);
+			requestAnimationFrame(_ => {
+				this.popovers[id].style.display = "none";
+			});
+		};
+		this.popovers[id].style.opacity = 0;
+		this.popovers[id].addEventListener('transitionend', ontransitionend);
 	}
 
     render ({ viewedUser, style = {} }) {
@@ -32,7 +40,7 @@ export class UserFollowing extends Component {
 								<UserPictureName user={follower} showUsername={false} />
 							</Link>
 							<div class={`mdc-custom-card ${styles.popover}`} ref={e => this.popovers[follower.id] = e} style={{ display: 'none' }}>
-								<UserPictureName user={follower} h1_class={styles.h1Class} />
+								<UserPictureName user={follower} show_location={true} h1_class={styles.h1Class} />
 								<p class={styles.followers}>{follower.amountOfFollowers} Follower{follower.amountOfFollowers > 1 ? 's' : ''}</p>
 							</div>
 						</div>
