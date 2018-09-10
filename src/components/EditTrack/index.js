@@ -20,7 +20,7 @@ const full_width = Object.freeze({ width: '100%' });
 /**
  * The login page / component
  */
-@connect(({ auth }) => ({ auth }))
+@connect(({ auth, user }) => ({ auth, user }))
 export class EditTrack extends Component {
 
 	localState = {};
@@ -87,7 +87,7 @@ export class EditTrack extends Component {
 		return trackArtwork || userAvatar || Goku;
 	}
 
-	render ({ track }) {
+	render ({ track, user }) {
 		this.localState = Object.assign({}, track);
 		return (
 			<form onSubmit={this.onSubmit.bind(this)} class={styles.form}>
@@ -95,7 +95,7 @@ export class EditTrack extends Component {
 					onDragOver={this.onDragOver.bind(this)}
 					onDrop={this.onDrop.bind(this)}
 					>
-					<img src={this.getArtwork(track, track.user)} />
+					<img src={this.getArtwork(track, user.profile)} />
 					<Icon class={styles.icon}>cloud_upload</Icon>
 					<input type="file" accept="image/*" onChange={this.onFileChange.bind(this)} />
 				</label>

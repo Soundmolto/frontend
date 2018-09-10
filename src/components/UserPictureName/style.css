@@ -9,3 +9,8 @@
 	max-width: calc(100% - 60px);
 	text-overflow: ellipsis;
 }
+
+.usernameCustom > i {
+	font-size: 1.3rem;
+	margin-left: 10px;
+}

@@ -99,8 +99,6 @@ export default class Profile extends Component {
 		const are_same = JSON.stringify(viewed) === JSON.stringify(user);
 
 		if (state.user.profile.url === this.props.vanity_url && false === are_same) {
-			console.log(viewed);
-			console.log(user);
 			this.props.dispatch({
 				type: USER.VIEW_PROFILE,
 				payload: state.user
@@ -127,7 +125,7 @@ export default class Profile extends Component {
 							width: '100%',
 							position: 'relative',
 							'overflow': 'hidden',
-						}} h1_class={style.username_custom}>
+						}} h1_class={style.username_custom} role={viewedUser.role}>
 						{auth.logged_in != null && user.profile.id !== viewedUser.profile.id && 
 							<Button class={style.button} onClick={this.toggle_following.bind(this)}>
 								{following && "Unfollow user"}

@@ -37,7 +37,6 @@ export async function edit_track (dispatch, { track, token, id }) {
 				type: USER.HAS_NEW_DATA,
 				payload: Object.assign({}, returnObject.payload)
 			});
-			console.log(returnObject.payload);
 			dispatch({
 				type: TRACK.UPDATED_TRACK,
 				payload: {
@@ -156,7 +155,6 @@ export async function get_discover_tracks (dispatch, token) {
 	} catch (error) {
 		console.error(error);
 	} finally {
-		console.log(returnObject);	
 		dispatch(returnObject);
 	}
 }
@@ -218,7 +216,7 @@ export async function fetch_tracks (dispatch, token) {
         }
 
     } catch (error) {
-        console.log(error);
+        console.error(error);
     } finally {
         return dispatch(returnObject);
     }

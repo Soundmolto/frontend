@@ -26,7 +26,6 @@ export async function request_new_data (dispatch, { token, vanity_url }) {
         }
 
     } catch (e) {
-        console.log(e);
         if (error.status === 404 || error.status === 403 || error.status === 401) {
             returnObject = {
                 type: USER.MUST_LOGOUT
@@ -89,7 +88,6 @@ export async function fetch_user (dispatch, { token, vanity_url }) {
         }
 
     } catch (e) {
-        console.log(e);
 
         if (error.error === 'User not found') {
             returnObject = {
@@ -127,8 +125,6 @@ export async function follow_user (dispatch, { token, user }) {
         }
 
     } catch (e) {
-        console.log(e);
-
         if (error.error === 'User not found') {
             returnObject = {
                 type: USER.PROFILE_UPDATE_FAILURE,
@@ -165,8 +161,6 @@ export async function unfollow_user (dispatch, { token, user }) {
         }
 
     } catch (e) {
-        console.log(e);
-
         if (error.error === 'User not found') {
             returnObject = {
                 type: USER.PROFILE_UPDATE_FAILURE,

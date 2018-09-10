@@ -48,10 +48,6 @@ export default class Admin extends Component {
 			return className;
 		}
 
-		// if (tracks.map == undefined) tracks = [];
-
-		console.log(tracks);
-
 		return (
 			<div>
 				<Helmet title={`${APP.NAME} - Admin Panel`} />

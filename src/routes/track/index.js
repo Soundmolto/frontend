@@ -71,10 +71,6 @@ export default class Track extends Component {
 		const tracks = viewedUser.tracks.sort((first, second) => parseInt(second.createdAt) - parseInt(first.createdAt));
 		this.tracks = [track.track].concat(tracks);
 
-		console.log(
-			viewedTrack.description
-		)
-
 		return (
 			<div class={style.profile}>
 				<Helmet title={`${APP.NAME} - ${(viewedTrack && viewedTrack.name) || "Loading..."}`} />

@@ -90,7 +90,6 @@ export default class Header extends Component {
 	};
 
 	goToMyProfile = e => {
-		console.log(e);
 		e.preventDefault();
 		this.linkTo(`/${this.props.user.profile.url}`);
 	};
