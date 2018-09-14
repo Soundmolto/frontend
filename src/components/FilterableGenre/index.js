@@ -1,0 +1,1 @@
+export { FilterableGenre } from './FilterableGenre';

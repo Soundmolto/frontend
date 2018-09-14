@@ -1,14 +1,19 @@
 import { h, Component } from 'preact';
 import LayoutGrid from 'preact-material-components/LayoutGrid';
+import Icon from 'preact-material-components/Icon';
 import 'preact-material-components/LayoutGrid/style.css';
 import { get_discover_tracks } from '../../actions/track';
 import { connect } from 'preact-redux';
 import { DiscoverCard } from '../../components/DiscoverCard';
 import Helmet from 'preact-helmet';
 import { APP } from '../../enums/app';
+import styles from './style';
+import { FilterableGenre } from '../../components/FilterableGenre';
 
 @connect(({ auth, discover }) => ({ auth, discover }))
 export default class Home extends Component {
+
+	sortingBy = '';
 
 	componentDidMount () {
 		get_discover_tracks(this.props.dispatch, this.props.auth.token);
@@ -30,8 +35,43 @@ export default class Home extends Component {
 		queue.position = i || 0;
 	}
 
+	filterByGenre = (genre) => {
+		if (genre != null) {
+			this.filterBy = track => track.genres.indexOf(genre) !== -1;
+			this.sortingBy = genre;
+		} else {
+			this.filterBy = null;
+			this.sortingBy = '';
+		}
+		this.forceUpdate();
+	}
+
+	getGenres (tracks) {
+		let genres = [];
+
+		for (const track of tracks) {
+			for (const genre of track.genres) {
+				if (genres.indexOf(genre) === -1) {
+					genres.push(genre);
+				}
+			}
+		}
+		return genres;
+	}
+
+	sortTracks (discover) {
+		let sorted = discover.sort((aTrack, bTrack) => parseInt(bTrack.createdAt) - parseInt(aTrack.createdAt));
+		if (this.filterBy != null) {
+			sorted = sorted.filter(this.filterBy);
+		}
+
+		return sorted;
+	}
+
 	render ({ discover }) {
-		this.sorted = discover.sort((aTrack, bTrack) => parseInt(bTrack.createdAt) - parseInt(aTrack.createdAt));
+		const genres = this.getGenres(discover);
+		this.sorted = this.sortTracks(discover);
+
 		return (
 			<div>
 				<Helmet title={`${APP.NAME} - Discover`} />
@@ -41,6 +81,28 @@ export default class Home extends Component {
 					</h1>
 				</div>
 				<LayoutGrid>
+						{genres.length >= 1 && (
+							<LayoutGrid.Inner>
+								<LayoutGrid.Cell desktopCols="12" tabletCols="12" phoneCols="12">
+									<span class={styles.genresContainer}>
+										<span class={styles.forceLeft}>
+											{this.filterBy == null ? (
+												<Icon>filter_list</Icon>
+											): (
+												<Icon class={styles.closable} onClick={e => this.filterByGenre(null)}>close</Icon>
+											)}
+											
+											<span>Filter by genre</span>
+										</span>
+										<span>
+											{genres.map(genre => (
+												<FilterableGenre genre={genre} onFilterByGenre={this.filterByGenre} sortingBy={this.sortingBy} />
+											))}
+										</span>
+									</span>
+								</LayoutGrid.Cell>
+							</LayoutGrid.Inner>
+						)}
 					<LayoutGrid.Inner>
 						{this.sorted.length >= 1 && this.sorted.map(track => (
 							<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="12">
