@@ -1,6 +1,6 @@
 {
-  "name": "music-streaming-frontend",
-  "short_name": "music-streaming-frontend",
+  "name": "SoundMolto",
+  "short_name": "SoundMolto",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
