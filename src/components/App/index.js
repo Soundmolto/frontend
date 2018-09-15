@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import { Router } from 'preact-router';
 import { connect } from 'preact-redux';
+import ReactGA from 'react-ga';
 import Header from '../Header';
 import Footer from '../Footer';
 import Home from 'async!../../routes/home';
@@ -34,13 +35,14 @@ if (typeof window !== "undefined") {
 
 @connect(state => state)
 export default class App extends Component {
-
+	
 	audioPlayer = null;
 	footer = null;
 	audioContext = MainAudioContext;
 	audioPlayerRef = e => (this.audioPlayer = e);
-
+	
 	componentDidMount () {
+		ReactGA.initialize('UA-125828388-1');
 		const { auth, dispatch, user, UI } = this.props;
 		if (auth.logged_in) {
 			request_new_data(dispatch, { token: auth.token, vanity_url: user.profile.url })
@@ -53,6 +55,7 @@ export default class App extends Component {
 	 */
 	handleRoute = e => {
 		this.currentUrl = e.url;
+		ReactGA.pageview(window.location.pathname + window.location.search);
 	};
 
 	get_current_route () {
