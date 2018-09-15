@@ -58,11 +58,13 @@
 .genresContainer {
 	display: flex;
 	justify-content: space-between;
-	align-items: center;
+	align-items: flex-start;
 	width: 100%;
 	text-align: right;
 	margin-bottom: 20px;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.45);
+	border-radius: 10px;
+	padding: 0 10px;
+	box-shadow: var(--mdc-theme--box-shadow--floating);
 }
 
 .genresContainer > span > a {
@@ -90,7 +92,7 @@
 	display: flex;
 	align-items: center;
 	min-width: 150px;
-	margin-bottom: 10px;
+	margin: 10px 0;
 }
 
 .genresContainer .forceLeft i {

@@ -115,6 +115,7 @@ export default class Profile extends Component {
 				track.user = viewedUser.profile;
 			}
 		}
+
 		this.tracks = tracks.concat([]);
 
 		return (
@@ -128,8 +129,7 @@ export default class Profile extends Component {
 						}} h1_class={style.username_custom} role={viewedUser.role}>
 						{auth.logged_in != null && user.profile.id !== viewedUser.profile.id && 
 							<Button class={style.button} onClick={this.toggle_following.bind(this)}>
-								{following && "Unfollow user"}
-								{!following && "Follow user"}
+								{following ? "Unfollow user" : "Follow user"}
 							</Button>
 						}
 					</UserPictureName>
