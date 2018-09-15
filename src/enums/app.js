@@ -1,3 +1,3 @@
 export const APP = Object.freeze({
-	NAME: "soundmolto"
+	NAME: "SoundMolto"
 });
