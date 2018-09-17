@@ -16,6 +16,7 @@
 
 	--mdc-theme--box-shadow--floating: 0 15px 20px -15px rgba(0, 0, 0, 0.35);
 	--mdc-theme--card-bg: #ffffff;
+	--mdc-theme--volume-panel--background: rgba(0, 0, 0, 0.8);
 }
 
 .mdc-theme--dark {
@@ -25,6 +26,7 @@
 	--mdc-theme-link-primary-on-background: #FFFFFF;
 	--mdc-theme--footer-background: rgb(36, 36, 36);
 	--mdc-theme--card-bg: #444444;
+	--mdc-theme--volume-panel--background: rgba(0, 0, 0, 0.5);
 	/* #b64040 */
 }
 

@@ -214,7 +214,7 @@
 	padding: 10px 20px;
 	border-radius: 10px;
 	box-shadow: var(--mdc-theme--box-shadow--floating);
-	background: rgba(0, 0, 0, 0.5);
+	background: var(--mdc-theme--volume-panel--background);
 }
 
 .volumePanel.show {
