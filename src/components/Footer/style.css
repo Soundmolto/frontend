@@ -203,10 +203,18 @@
 }
 
 .volumePanel {
+	display: block;
 	margin-right: 10px;
 	width: 200px;
 	opacity: 0;
 	transition: all 0.3s ease-in-out;
+	position: absolute;
+	bottom: 90px;
+	right: 130px;
+	padding: 10px 20px;
+	border-radius: 10px;
+	box-shadow: var(--mdc-theme--box-shadow--floating);
+	background: rgba(0, 0, 0, 0.5);
 }
 
 .volumePanel.show {

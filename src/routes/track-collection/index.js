@@ -106,7 +106,7 @@ export default class TrackCollection extends Component {
 							<List.TextContainer class={styles.container}>
 								<LayoutGrid class={styles.grid}>
 									<LayoutGrid.Inner class={styles['grid-inner']}>
-										<LayoutGrid.Cell desktopCols="6" tabletCols="6" phoneCols="6">
+										<LayoutGrid.Cell desktopCols="6" tabletCols="6" phoneCols="2">
 											<List.PrimaryText>
 												<span onClick={this.onClickSortByTrack.bind(this)} class={`${styles.hover} ${styles.centered}`}>
 													Track
@@ -119,7 +119,7 @@ export default class TrackCollection extends Component {
 												</span>
 											</List.PrimaryText>
 										</LayoutGrid.Cell>
-										<LayoutGrid.Cell desktopCols="6" tabletCols="6" phoneCols="6">
+										<LayoutGrid.Cell desktopCols="6" tabletCols="6" phoneCols="2">
 											<span onClick={this.onClickSortByTime.bind(this)} class={styles.hover}>
 												<Icon>access_time</Icon>
 												{sortBy === 'time' && (
