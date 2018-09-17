@@ -37,7 +37,7 @@ export class UserFollowers extends Component {
 					<h1 style={{ 'margin-bottom': '10px' }}>Followers {viewedUser.followers.length}</h1>
 					<div class={styles.w100}>
 						{viewedUser.followers.length !== 0 && viewedUser.followers.map(follower => (
-							<>
+							<div>
 								<Link href={`/${follower.url}`} class={styles.link}
 									onMouseOver={this.showPopover.bind(this, follower.id)} onMouseOut={this.hidePopover.bind(this, follower.id)}>
 									<UserPictureName user={follower} showUsername={false} />
@@ -46,7 +46,7 @@ export class UserFollowers extends Component {
 									<UserPictureName user={follower} show_location={true} h1_class={styles.h1Class} />
 									<p class={styles.followers}>{follower.amountOfFollowers} Follower{follower.amountOfFollowers > 1 ? 's' : ''}</p>
 								</div>
-							</>
+							</div>
 						))}
 					</div>
 					{viewedUser.followers.length <= 0 && (<p>No followers</p>)}
