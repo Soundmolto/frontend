@@ -54,6 +54,10 @@ export default class Header extends Component {
 		this.props.dispatch({ type: "HIDE_GOTO_PANEL" });
 	};
 
+	closeProfilePanel = () => {
+		this.editProfileModal.MDComponent.close();
+	}
+
 	showUploadTrackModal = () => {
 		this.closeMenu();
 		this.uploadTrackModal.MDComponent.show();
@@ -332,7 +336,7 @@ export default class Header extends Component {
 					<Dialog ref={this.editProfileDialogRef}>
 						<Dialog.Header>Edit Profile</Dialog.Header>
 						<Dialog.Body>
-							<EditProfile ref={this.editProfileRef} onSubmit={() => this.editProfileModal.MDComponent.close()} />
+							<EditProfile ref={this.editProfileRef} onSubmit={this.closeProfilePanel} />
 						</Dialog.Body>
 					</Dialog>
 
