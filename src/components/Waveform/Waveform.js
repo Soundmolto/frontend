@@ -23,8 +23,19 @@ export class Waveform extends Component {
 	subscribed = false;
 	mouseDown = false;
 
-	constructor (opts) {
-		super(opts);
+	onTimeUpdate (e) {
+		if (this.props.data.id === store.getState().currently_playing.track.id) {
+			const audio = window.document.querySelector('audio');
+			if (this.timelineRoot == null && this.baseEl == null) return;
+			const timelineRoot = this.timelineRoot || this.baseEl.querySelector(`.${styles['waveform-timeline--root']}`);
+			timelineRoot.setAttribute('style', `width: ${(audio.currentTime / (audio.duration - 1)) * 100}%;`);
+		}
+	}
+
+	componentDidMount() {
+		this.removeCanvas();
+		this.loadData();
+
 		let initialState = Object.assign({}, store.getState());
 		if (typeof window !== "undefined") {
 			window.addEventListener('resize', e => {
@@ -58,20 +69,6 @@ export class Waveform extends Component {
 				});
 			});
 		}
-	}
-
-	onTimeUpdate (e) {
-		if (this.props.data.id === store.getState().currently_playing.track.id) {
-			const audio = window.document.querySelector('audio');
-			if (this.timelineRoot == null && this.baseEl == null) return;
-			const timelineRoot = this.timelineRoot || this.baseEl.querySelector(`.${styles['waveform-timeline--root']}`);
-			timelineRoot.setAttribute('style', `width: ${audio.currentTime / audio.duration * 100}%;`);
-		}
-	}
-
-	componentDidMount() {
-		this.removeCanvas();
-		this.loadData();
 	}
 	
 	componentWillUpdate () {

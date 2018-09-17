@@ -178,7 +178,7 @@ export class TrackCard extends Component {
 					<span class={styles.dateContainer}>
 						{track.genres != null && track.genres.length >= 1 && (
 							<div class={styles.genres}>
-								{track.genres.map(genre => (<span>{genre}</span>))}
+								{track.genres.map && track.genres.map(genre => (<span>{genre}</span>))}
 							</div>
 						)}
 						<TimeAgo
