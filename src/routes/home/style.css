@@ -42,6 +42,29 @@
 	}
 }
 
+@media screen and (min-width: 540px) {
+	.genresContainer .forceLeft {
+		min-width: 150px;
+		margin: 10px 0;
+	}
+}
+
+@media screen and (max-width: 540px) {
+	.genresContainer {
+		flex-wrap: wrap;
+	}
+
+	.genresContainer > span {
+		text-align: left;
+	}
+
+	.genresContainer .forceLeft {
+		display: block;
+		min-width: 100%;
+		margin: 10px 0 20px;
+	}
+}
+
 .home > a:hover {
 	transform: translateY(-5px);
 }
@@ -91,8 +114,6 @@
 	float: left;
 	display: flex;
 	align-items: center;
-	min-width: 150px;
-	margin: 10px 0;
 }
 
 .genresContainer .forceLeft i {
