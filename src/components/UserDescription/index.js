@@ -2,9 +2,8 @@ import { Component } from 'preact';
 import Card from 'preact-material-components/Card';
 import 'preact-material-components/Card/style.css';
 import 'preact-material-components/Button/style.css';
+import snarkdown from 'snarkdown';
 import styles from './style';
-
-const new_line_br = (text = '') => text.replace('\n', '<br />');
 
 export class UserDescription extends Component {
     render ({ user }) {
@@ -16,7 +15,7 @@ export class UserDescription extends Component {
                         <h2 class={className}>
                             {user.displayName || user.url || "Untitled user"}
                         </h2>
-                        <div class={"mdc-typography--caption " + styles.caption} dangerouslySetInnerHTML={{__html: new_line_br(user.description) || "<p>No description</p>"}}>
+                        <div class={"mdc-typography--caption " + styles.caption} dangerouslySetInnerHTML={{ __html: snarkdown(user.description) || "<p>No description</p>" }}>
                         </div>
                     </div>
                 </Card>
