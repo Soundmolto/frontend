@@ -332,7 +332,7 @@ export default class Header extends Component {
 					<Dialog ref={this.editProfileDialogRef}>
 						<Dialog.Header>Edit Profile</Dialog.Header>
 						<Dialog.Body>
-							<EditProfile ref={this.editProfileRef} />
+							<EditProfile ref={this.editProfileRef} onSubmit={() => this.editProfileModal.MDComponent.close()} />
 						</Dialog.Body>
 					</Dialog>
 

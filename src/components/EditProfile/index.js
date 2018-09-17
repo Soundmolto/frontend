@@ -35,6 +35,9 @@ export default class EditProfile extends Component {
 		e.preventDefault();
 		const id = this.props.user.id;
 		edit_profile(this.props.dispatch, { token: this.props.auth.token, profile: { ...state }, id });
+		if (this.props.onSubmit && this.state.loading === false) {
+			this.props.onSubmit();
+		}
 		return true;
 	}
 	
