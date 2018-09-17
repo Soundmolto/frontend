@@ -28,7 +28,7 @@ export class Waveform extends Component {
 			const audio = window.document.querySelector('audio');
 			if (this.timelineRoot == null && this.baseEl == null) return;
 			const timelineRoot = this.timelineRoot || this.baseEl.querySelector(`.${styles['waveform-timeline--root']}`);
-			timelineRoot.setAttribute('style', `width: ${(audio.currentTime / (audio.duration - 1)) * 100}%;`);
+			timelineRoot.setAttribute('style', `width: ${(audio.currentTime / audio.duration) * 100}%;`);
 		}
 	}
 
