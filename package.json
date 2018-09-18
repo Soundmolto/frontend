@@ -8,7 +8,8 @@
     "build": "preact build",
     "serve": "preact build && preact serve",
     "dev": "preact watch",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "server": "node server.js"
   },
   "eslintConfig": {
     "extends": "eslint-config-synacor",
@@ -49,6 +50,7 @@
     "redux-localstorage": "^0.4.1",
     "redux-promise-middleware": "^5.0.0",
     "snarkdown": "^1.2.2",
+    "superstatic": "^6.0.1",
     "timeago-react": "^2.0.0",
     "timeago.js": "^3.0.2"
   }
