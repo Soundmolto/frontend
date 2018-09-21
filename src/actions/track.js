@@ -159,6 +159,35 @@ export async function get_discover_tracks (dispatch, token) {
 	}
 }
 
+export async function get_more_discover_tracks (dispatch, nextUrl, token) {
+	let returnObject = {};
+	let error = {};
+
+	try {
+		const data = await fetch(nextUrl, {
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				...prefill_auth(token)
+			}
+		});
+
+		if (data.status === 200) {
+			returnObject = {
+				type: TRACK.HAS_MORE_DISCOVER_TRACKS,
+				payload: await data.json()
+			}
+		} else {
+			error = data;
+			throw new Error(data.statusText);
+		}
+	} catch (error) {
+		console.error(error);
+	} finally {
+		dispatch(returnObject);
+	}
+}
+
 export async function toggle_like (dispatch, { token, id, user }) {
 	let returnObject = {};
 

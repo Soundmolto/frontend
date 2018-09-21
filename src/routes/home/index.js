@@ -2,13 +2,16 @@ import { h, Component } from 'preact';
 import LayoutGrid from 'preact-material-components/LayoutGrid';
 import Icon from 'preact-material-components/Icon';
 import 'preact-material-components/LayoutGrid/style.css';
-import { get_discover_tracks } from '../../actions/track';
+import { get_discover_tracks, get_more_discover_tracks } from '../../actions/track';
 import { connect } from 'preact-redux';
 import { DiscoverCard } from '../../components/DiscoverCard';
 import Helmet from 'preact-helmet';
+import InfiniteScroll from 'react-infinite-scroller';
 import { APP } from '../../enums/app';
 import styles from './style';
 import { FilterableGenre } from '../../components/FilterableGenre';
+
+let hasMore = true;
 
 @connect(({ auth, discover }) => ({ auth, discover }))
 export default class Home extends Component {
@@ -17,6 +20,10 @@ export default class Home extends Component {
 
 	componentDidMount () {
 		get_discover_tracks(this.props.dispatch, this.props.auth.token);
+	}
+
+	loadMore (nextUrl) {
+		get_more_discover_tracks(this.props.dispatch, nextUrl, this.props.auth.token);
 	}
 
 	onStartPlay (track) {
@@ -69,8 +76,13 @@ export default class Home extends Component {
 	}
 
 	render ({ discover }) {
-		const genres = this.getGenres(discover);
-		this.sorted = this.sortTracks(discover);
+		console.log(discover)
+		const infiniteScrollStyle = { display: "inline-block", width: '100%' };
+		const tracks = discover.tracks || [];
+		const nextUrl = discover.nextUrl || '';
+		const genres = this.getGenres(tracks);
+		this.sorted = tracks;
+		hasMore = discover.hasMore;
 
 		return (
 			<div>
@@ -103,21 +115,37 @@ export default class Home extends Component {
 								</LayoutGrid.Cell>
 							</LayoutGrid.Inner>
 						)}
-					<LayoutGrid.Inner>
-						{this.sorted.length >= 1 && this.sorted.map(track => (
-							<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="12">
-								<DiscoverCard track={track} user={track.user} onClick={this.onStartPlay.bind(this)} />
-							</LayoutGrid.Cell>
-						))}
+					{this.sorted.length >= 1 && (
+						<InfiniteScroll
+							pageStart={0}
+							loadMore={() => {
+								this.loadMore(nextUrl);
+							}}
+							hasMore={hasMore}
+							loader={<div className="loader" key={0}>Loading ...</div>}
+							style={infiniteScrollStyle}
+						>
+
+							<LayoutGrid.Inner>
+								{this.sorted.map(track => (
+										<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="12">
+											<DiscoverCard track={track} user={track.user} onClick={this.onStartPlay.bind(this)} />
+										</LayoutGrid.Cell>
+								))}
+							</LayoutGrid.Inner>
+
+						</InfiniteScroll>
+					)}
 						
 						{this.sorted.length === 0 && (
-							<LayoutGrid.Cell desktopCols="12" tabletCols="12" phoneCols="12">
-								<div class="mdc-custom-card">
-									Hmm. looks you're not following anyone who has uploaded music recently.
-								</div>
-							</LayoutGrid.Cell>
+							<LayoutGrid.Inner>
+								<LayoutGrid.Cell desktopCols="12" tabletCols="12" phoneCols="12">
+									<div class="mdc-custom-card">
+										Hmm. looks you're not following anyone who has uploaded music recently.
+									</div>
+								</LayoutGrid.Cell>
+							</LayoutGrid.Inner>
 						)}
-					</LayoutGrid.Inner>
 				</LayoutGrid>
 			</div>
 		);
