@@ -7,10 +7,10 @@ import { connect } from 'preact-redux';
 import { DiscoverCard } from '../../components/DiscoverCard';
 import Helmet from 'preact-helmet';
 import InfiniteScroll from 'react-infinite-scroller';
+import Stretch from 'styled-loaders/lib/components/Stretch';
 import { APP } from '../../enums/app';
 import styles from './style';
 import { FilterableGenre } from '../../components/FilterableGenre';
-import Stretch from 'styled-loaders/lib/components/Stretch';
 
 let hasMore = true;
 const loader = (<div key={0}><Stretch color="#c67dcb" /></div>);
