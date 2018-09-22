@@ -25,7 +25,7 @@ let state = { profile: {} };
 @connect(({ user, auth }) => ({ user, auth }))
 export default class EditProfile extends Component {
 
-	state = { loading: false, loaded: true }
+	state = { loading: false, loaded: true, error: null }
 	
 	get values () {
 		return Object.assign({}, state);
@@ -33,11 +33,23 @@ export default class EditProfile extends Component {
 
 	onSubmit (e) {
 		e.preventDefault();
+		if (state.password === '' || state.password == null) delete state.password;
+
+		if (state.password && (state.password != null || state.password != '') && state.password.length <= 7) {
+			// handle error
+			this.setState({ error: "Password must be atleast 8 characters long." });
+			return;
+		} else {
+			this.setState({ error: null });
+		}
+
+
 		const id = this.props.user.id;
 		edit_profile(this.props.dispatch, { token: this.props.auth.token, profile: { ...state }, id });
 		if (this.props.onSubmit && this.state.loading === false) {
 			this.props.onSubmit();
 		}
+		state.password = null;
 		return true;
 	}
 	
@@ -51,8 +63,14 @@ export default class EditProfile extends Component {
 	}
 
 	onInputChange (e, val) {
-		let _opt = { [val]: e.currentTarget.value };
-		state.profile = {...state.profile, ..._opt };
+		const value = e.currentTarget.value;
+
+		if (val === 'password' && (value !== '' || value != null)) {
+			state.password = value;
+		} else {
+			let _opt = { [val]: value };
+			state.profile = {...state.profile, ..._opt };
+		}
 	}
 
 	async onFileChange(e, f) {
@@ -71,7 +89,7 @@ export default class EditProfile extends Component {
 		this.setState({ loaded: true, loading: false })
 	}
 
-	render ({ user }, { loading, loaded }) {
+	render ({ user }, { loading, loaded, error }) {
 		state.profile = Object.assign({}, user.profile);
 		return (
 			<form onSubmit={this.onSubmit.bind(this)} class={styles.form}>
@@ -87,6 +105,8 @@ export default class EditProfile extends Component {
 				<TextField label="Your profile URL" type="text" value={user.profile.url} style={full_width} onChange={e => this.onInputChange(e, 'url')} onKeyDown={onKeyDown} />
 				<TextField label="Your location" type="text" value={user.profile.location} style={full_width} onChange={e => this.onInputChange(e, 'location')} />
 				<TextField label="Description" textarea value={user.profile.description} style={full_width} onChange={e => this.onInputChange(e, 'description')} />
+				<TextField label="Password" type="password" value={state.password || undefined} style={full_width} onChange={e => this.onInputChange(e, 'password')} />
+				{error != null && <div className="error-message">{error}</div>}
 				<Button type="submit">Submit</Button>
 			</form>
 		);
