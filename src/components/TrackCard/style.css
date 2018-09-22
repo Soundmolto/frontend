@@ -114,19 +114,49 @@
     line-height: 0.9rem;
     z-index: 1;
     float: right;
+    margin: 0;
+}
+
+.privateStatus {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative !important;
+    padding: 10px;
+    font-size: 0.9rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    font-weight: 600;
+    line-height: 0.9rem;
+    z-index: 1;
+    float: right;
+    margin: 0 0 0 10px;
+}
+
+.privateStatus i {
+    font-size: 0.9rem;
+    margin-right: 5px;
 }
 
 .genres {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.genres > span {
     position: relative !important;
     padding: 10px;
-    background: rgba(0, 0, 0, 0.3);
+    background: var(--mdc-theme-primary);
+    color: #ffffff;
     border-radius: 10px;
     font-size: 0.9rem;
     font-weight: 600;
     line-height: 0.9rem;
+    margin: 0 0 0 10px;
     z-index: 1;
     width: auto;
-    margin-right: 10px;
 }
 
 .cardRoot .image {

@@ -187,6 +187,11 @@ export class TrackCard extends Component {
 							className={styles.date}
 							title={`Posted on ${postedAt.format('DD MMMM YYYY')}`}
 						/>
+						{track.visibility !== 'public' && (
+							<span className={styles.privateStatus}>
+								<Icon>lock</Icon> Private
+							</span>
+						)}
 					</span>
 					<h2 class={className(`mdc-typography--title ${styles.username}`)}>
 						{isCurrentTrack == false && (

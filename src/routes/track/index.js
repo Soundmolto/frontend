@@ -65,6 +65,7 @@ export default class Track extends Component {
 	}
 
 	render ({ user, viewedUser, track }) {
+		console.log(track);
 		const viewedTrack = track.track;
 		const trackOwner = track.user;
 		if (this.currentUrl !== getCurrentUrl()) this.updateData();
