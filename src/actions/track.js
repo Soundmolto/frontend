@@ -88,11 +88,11 @@ export async function delete_track (dispatch, { track, token, id }) {
 	}
 }
 
-export async function get_track (dispatch, { token, track_url, vanity_url }) {
+export async function get_track (dispatch, { token, track_url, vanity_url, secret }) {
 	let returnObject = {};
 
 	try {
-		const data = await fetch(`${API_ENDPOINT}/${vanity_url}/${track_url}`, {
+		const data = await fetch(`${API_ENDPOINT}/${vanity_url}/${track_url}${secret === null ? '' : `?secret=${secret}`}`, {
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',

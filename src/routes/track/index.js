@@ -26,7 +26,11 @@ export default class Track extends Component {
 
 	updateData () {
 		const { auth, dispatch, track_url, vanity_url } = this.props;
-		get_track(dispatch.bind(this), { token: auth.token, track_url, vanity_url });
+		let secret = null;
+		if (this.currentUrl.split('?secret=').length === 2) {
+			secret = this.currentUrl.split('?secret=')[1];
+		}
+		get_track(dispatch.bind(this), { token: auth.token, track_url, vanity_url, secret });
 		this.currentUrl = getCurrentUrl();
 	}
 
@@ -62,7 +66,7 @@ export default class Track extends Component {
 		return trackArtwork || userAvatar || Goku;
 	}
 
-	render({ user, viewedUser, track }) {
+	render ({ user, viewedUser, track }) {
 		const title = `${APP.NAME} - ${(viewedTrack && viewedTrack.name) || "Loading..."}`;
 		const viewedTrack = track.track;
 		const trackOwner = track.user;
