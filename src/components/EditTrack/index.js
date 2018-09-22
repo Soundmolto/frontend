@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
 import Goku from '../../assets/goku.png';
+import Formfield from 'preact-material-components/FormField';
 import TextField from 'preact-material-components/TextField';
 import Button from 'preact-material-components/Button';
 import Icon from 'preact-material-components/Icon';
@@ -54,6 +55,10 @@ export class EditTrack extends Component {
 			value = this.ensureURLSafeCharacters(value);
 			e.currentTarget.value = value;
 		}
+		if (val === 'visibility') {
+			value = e.currentTarget.checked ? 'private' : 'public';
+		}
+
 		let _opt = { [val]: value };
 		this.localState = {...this.localState, ..._opt };
 	}
@@ -105,7 +110,12 @@ export class EditTrack extends Component {
 				<TextField label="Track URL" type="text" value={track.url} style={full_width} onChange={e => this.onInputChange(e, 'url')} onKeyDown={onKeyDown} />
 				<TextField label="Genres (Comma seperated)" type="text" value={track.genres} style={full_width} onChange={e => this.onInputChange(e, 'genres')} />
 				<TextField textarea label="Track description" value={track.description} style={full_width} onChange={e => this.onInputChange(e, 'description')} />
-				<Checkbox label="Private?" />
+				<Formfield>
+					<Checkbox id="song-private" checked={track.visibility === 'private'} onChange={e => this.onInputChange(e, 'visibility')} />
+					<label for="song-private">
+						Song is private?
+					</label>
+				</Formfield>
 				<Button type="submit">Submit</Button>
 			</form>
 		);
