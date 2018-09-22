@@ -226,10 +226,10 @@ export default class Footer extends Component {
 	onMouseMove (e) {
 		const { currently_playing, dispatch } = this.props;
 		const duration = (currently_playing.track && currently_playing.track.duration) || 0;
-		const percentage = (e.pageX - 200) / this.desktopTrackbar.clientWidth;
+		const percentage = (e.pageX - 150) / this.desktopTrackbar.clientWidth;
 		const time = duration * percentage;
 		const tooltip = this.desktopTrackbar.querySelector(`.${styles.tooltip}`);
-		const rendered = seconds_to_time(time).rendered;
+		const rendered = seconds_to_time(Math.max(0, time)).rendered;
 		this.__renderedTime = rendered;
 		tooltip.classList.add(styles.show);
 		tooltip.innerText = rendered;
@@ -242,9 +242,9 @@ export default class Footer extends Component {
 			return;
 		}
 
-		if ((this.desktopTrackbar.clientWidth - e.pageX) + 200 < tooltip.clientWidth) { return; }
+		if ((this.desktopTrackbar.clientWidth - e.pageX) + 150 < tooltip.clientWidth) { return; }
 
-		tooltip.setAttribute('style', `transform: translateX(${e.pageX - 200}px)`);
+		tooltip.setAttribute('style', `transform: translateX(${e.pageX - 150}px)`);
 	}
 
 	onMouseOut (e) {
@@ -258,7 +258,7 @@ export default class Footer extends Component {
 		this.mouseDown = true;
 		const { currently_playing, dispatch } = this.props;
 		const duration = (currently_playing.track && currently_playing.track.duration) || 0;
-		const percentage = ( e.pageX - 200) / e.currentTarget.clientWidth;
+		const percentage = ( e.pageX - 150) / e.currentTarget.clientWidth;
 
 		playing_now(dispatch, {
 			playing: true,

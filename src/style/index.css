@@ -114,7 +114,7 @@ body > div {
 
 @media screen and (min-width: 1200px) {
 	.route-container {
-		padding-left: 200px;
+		padding-left: 150px;
 	}
 
 	.header > .vertical-center {
@@ -260,7 +260,7 @@ body > div {
 
 .mdc-drawer--permanent {
 	height: calc(100vh - 148px);
-	width: 200px;
+	width: 150px;
 	top: 64px;
 	position: fixed;
 	border: none;
@@ -395,4 +395,8 @@ input[disabled] {
 	background-color: var(--mdc-theme--card-bg);
 	box-shadow: 0 15px 20px -15px rgba(0, 0, 0, 0.35) !important;
 	border-radius: 10px !important;
+}
+
+.mdc-list-item__graphic {
+	margin-right: 24px !important;
 }

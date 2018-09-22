@@ -181,7 +181,7 @@ export default class Header extends Component {
 					<div class="section">
 						<h1 class={style['subtitle-header']}>
 							My Music
-							<small>{settings.beta === SETTINGS.ENABLE_BETA ? "BETA" : "Coming soon"}</small>
+							<small>{settings.beta === SETTINGS.ENABLE_BETA ? "BETA" : "Soon"}</small>
 						</h1>
 						<Drawer.DrawerItem onClick={e => console.log(e)} class={this.isActive(`/${user.profile.url}/artists`)}>
 							<List.ItemGraphic>person</List.ItemGraphic>
@@ -213,7 +213,7 @@ export default class Header extends Component {
 							</h1>
 							<Drawer.DrawerItem onClick={this.goToAdmin} class={this.isActive(`/admin`)} href="/admin">
 								<List.ItemGraphic>supervisor_account</List.ItemGraphic>
-								Admin panel
+								Users
 							</Drawer.DrawerItem>
 						</div>
 					)}

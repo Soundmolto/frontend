@@ -27,7 +27,7 @@ const httpsOptions = { key, cert };
 
 const app = connect().use(superstatic(spec));
 
-https.createServer(httpsOptions, app).listen(8081, err => {
+https.createServer(httpsOptions, app).listen(443, err => {
     if (err) {
         console.log(err);
     }
@@ -36,4 +36,4 @@ https.createServer(httpsOptions, app).listen(8081, err => {
 http.createServer((req, res) => {
 	res.writeHead(301, { "Location": `https://${req.headers['host']}${req.url}` });
 	res.end();
-}).listen(8080);
+}).listen(80);

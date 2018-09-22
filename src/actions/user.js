@@ -100,6 +100,42 @@ export async function fetch_user (dispatch, { token, vanity_url }) {
     }
 }
 
+export async function fetch_user_more_songs (dispatch, { token, nextUrl }) {
+    let returnObject = {};
+    let error = {};
+
+    try {
+        const data = await fetch(nextUrl, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                ...prefill_auth(token)
+            }
+        });
+
+        if (data.status === 200) {
+            returnObject = {
+                type: USER.MORE_TRACKS_FETCHED,
+                payload: await data.json()
+            }
+        } else {
+            error = await data.json()
+            throw new Error(data.statusText);
+        }
+
+    } catch (e) {
+
+        if (error.error === 'User not found') {
+            returnObject = {
+                type: USER.PROFILE_UPDATE_FAILURE,
+                payload: {}
+            }
+        }
+    } finally {
+        return dispatch(returnObject);
+    }
+}
+
 export async function follow_user (dispatch, { token, user }) {
     let returnObject = {};
     let error = {};

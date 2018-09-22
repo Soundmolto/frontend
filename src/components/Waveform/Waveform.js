@@ -129,11 +129,11 @@ export class Waveform extends Component {
 			const wave = new WaveformGenerator({
 				canvas,
 				bar_width: 2,
-				bar_gap : 0.35,
+				bar_gap : 0.2,
 				wave_color: linGrad,
 				audioContext,
 				onComplete () {
-					const tline = new WaveformGenerator({ canvas: timeline, bar_width: 2, bar_gap : 0.35, wave_color: linGradProgress, audioContext });
+					const tline = new WaveformGenerator({ canvas: timeline, bar_width: 2, bar_gap : 0.2, wave_color: linGradProgress, audioContext });
 					tline.extractBuffer(that.buffer);
 				}
 			});

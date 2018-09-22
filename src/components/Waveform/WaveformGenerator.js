@@ -7,11 +7,15 @@ export class WaveformGenerator {
 		bar_width: 3,
 		bar_gap : 0.2,
 		wave_color: "#666",
-		onComplete (png, pixels) {}
+		onComplete () {}
 	}) {
 		this.audioContext = settings.audioContext;
 		this.settings = settings;
-		this.settings.context = this.settings.canvas.getContext('2d');
+		this.settings.context = this.settings.canvas.getContext('2d', {
+			antialias: false,
+			depth: false
+
+		});
 	}
 
 	extractBuffer (vals = []) {
@@ -19,16 +23,26 @@ export class WaveformGenerator {
 		let len = Math.floor(vals.length / sections);
 		let maxHeight = this.settings.canvas.height;
 		vals.max = function() { return Math.max.apply(null, this); };
+		// this.settings.canvas.transferControlToOffscreen();
+		const idle = (cb) => {
+			if (requestIdleCallback) {
+				requestIdleCallback(cb);
+			} else {
+				window.setTimeout(cb, 128);
+			}
+		};
 
-		for (let j = 0; j < sections; j += this.settings.bar_width) {
-			let scale = maxHeight / vals.max();
-			let val = this.bufferMeasure(j * len, len, vals) * 50;
-			val *= scale;
-			val += 1;
-			this.drawBar(j, val);
-		}
+		idle(() => {
+			for (let j = 0; j < sections; j += this.settings.bar_width) {
+				let scale = maxHeight / vals.max();
+				let val = this.bufferMeasure(j * len, len, vals) * 50;
+				val *= scale;
+				val += 1;
+				this.drawBar(j, val);
+			}
+			if (this.settings.onComplete) this.settings.onComplete(this.buffer);
+		});
 
-		if (this.settings.onComplete) this.settings.onComplete(this.buffer);
 	}
 
 	bufferMeasure (position, length, data) {

@@ -2,10 +2,12 @@ import { h, Component } from 'preact';
 import Button from 'preact-material-components/Button';
 import LayoutGrid from 'preact-material-components/LayoutGrid';
 import Helmet from 'preact-helmet';
+import InfiniteScroll from 'react-infinite-scroller';
+import Stretch from 'styled-loaders/lib/components/Stretch';
 import 'preact-material-components/LayoutGrid/style.css';
 import 'preact-material-components/Button/style.css';
 import { connect } from 'preact-redux';
-import { fetch_user, follow_user, unfollow_user } from '../../actions/user';
+import { fetch_user, follow_user, unfollow_user, fetch_user_more_songs } from '../../actions/user';
 import { UserDescription } from '../../components/UserDescription';
 import { UserPictureName } from '../../components/UserPictureName';
 import { UserFollowers } from '../../components/UserFollowers';
@@ -17,8 +19,11 @@ import { APP } from '../../enums/app';
 import style from './style';
 
 let _following = false;
+const loader = (<div key={0}><Stretch color="#c67dcb" /></div>);
+const infiniteScrollStyle = { display: "inline-block", width: '100%' };
+let hasMore = false;
 
-@connect(state => state)
+@connect(({ auth, user, viewedUser }) => ({ auth, user, viewedUser }))
 export default class Profile extends Component {
 
 	currentUrl = getCurrentUrl();
@@ -26,6 +31,11 @@ export default class Profile extends Component {
 	componentDidMount () {
 		this.updateData();
 	}
+
+	loadMore = () => {
+		const { dispatch, auth, viewedUser } = this.props;
+		fetch_user_more_songs(dispatch, { token: auth.token, nextUrl: viewedUser.nextUrl });
+	};
 
 	updateData () {
 		const { auth, vanity_url } = this.props;
@@ -97,19 +107,18 @@ export default class Profile extends Component {
 		const viewed = this.massageObject(state.viewedUser);
 		const user = this.massageObject(state.user);
 		const are_same = JSON.stringify(viewed) === JSON.stringify(user);
-
+		console.log(are_same);
+		if (state.viewedUser.shouldForcefullyIgnoreUpdateLogic != null) return true;
 		if (state.user.profile.url === this.props.vanity_url && false === are_same) {
-			this.props.dispatch({
-				type: USER.VIEW_PROFILE,
-				payload: state.user
-			});
+			this.props.dispatch({ type: USER.VIEW_PROFILE, payload: state.user });
 		}
 	}
 
 	render({ auth, user, viewedUser }) {
 		const following = this.following(viewedUser);
+		const tracks = viewedUser.tracks;
 		if (this.currentUrl !== getCurrentUrl()) this.updateData();
-		const tracks = viewedUser.tracks.sort((first, second) => parseInt(second.createdAt) - parseInt(first.createdAt));
+
 		for (const track of tracks) {
 			if (track.user == null) {
 				track.user = viewedUser.profile;
@@ -117,6 +126,7 @@ export default class Profile extends Component {
 		}
 
 		this.tracks = tracks.concat([]);
+		hasMore = viewedUser.hasMore;
 
 		return (
 			<div class={style.profile}>
@@ -141,13 +151,21 @@ export default class Profile extends Component {
 								<h1 class={style.mainHeader} style={{ 'margin-top': "0" }}>
 									Tracks <small class={style.smolButNotSwol}>{viewedUser.tracks.length}</small>
 								</h1>
-								{tracks.length >= 1 && tracks.map(track => (
-									<div key={'parent-' + track.id}>
-										<TrackCard track={track} user={viewedUser} currentUser={user}
-											key={track.id} audioContext={this.props.audioContext}
-											isCurrentTrack={false} onStartPlay={this.onStartPlay.bind(this)} />
-									</div>
-								))}
+								{tracks.length >= 1 && (
+									<InfiniteScroll pageStart={0} loadMore={this.loadMore} hasMore={hasMore} style={infiniteScrollStyle} loader={loader}>
+										{tracks.map(track => (
+											<TrackCard
+												track={track}
+												user={viewedUser}
+												currentUser={user}
+												key={track.id}
+												audioContext={this.props.audioContext}
+												isCurrentTrack={false}
+												onStartPlay={this.onStartPlay.bind(this)}
+											/>
+										))}
+									</InfiniteScroll>
+								)}
 								{tracks.length <= 0 && <h1>No tracks</h1>}
 							</LayoutGrid.Cell>
 							<LayoutGrid.Cell desktopCols="3" tabletCols="12">

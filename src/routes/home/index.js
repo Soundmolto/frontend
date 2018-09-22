@@ -14,6 +14,7 @@ import { FilterableGenre } from '../../components/FilterableGenre';
 
 let hasMore = true;
 const loader = (<div key={0}><Stretch color="#c67dcb" /></div>);
+const infiniteScrollStyle = { display: "inline-block", width: '100%' };
 
 @connect(({ auth, discover }) => ({ auth, discover }))
 export default class Home extends Component {
@@ -76,8 +77,6 @@ export default class Home extends Component {
 	}
 
 	render ({ discover }) {
-		console.log(discover)
-		const infiniteScrollStyle = { display: "inline-block", width: '100%' };
 		const tracks = discover.tracks || [];
 		const nextUrl = discover.nextUrl || '';
 		const genres = this.getGenres(tracks);
