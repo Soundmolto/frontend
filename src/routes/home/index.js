@@ -10,6 +10,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { APP } from '../../enums/app';
 import styles from './style';
 import { FilterableGenre } from '../../components/FilterableGenre';
+import { Stretch } from 'styled-loaders';
 
 let hasMore = true;
 
@@ -22,9 +23,7 @@ export default class Home extends Component {
 		get_discover_tracks(this.props.dispatch, this.props.auth.token);
 	}
 
-	loadMore (nextUrl) {
-		get_more_discover_tracks(this.props.dispatch, nextUrl, this.props.auth.token);
-	}
+	loadMore = () => get_more_discover_tracks(this.props.dispatch, this.props.discover.nextUrl, this.props.auth.token);
 
 	onStartPlay (track) {
 		const { queue } = this.props;
@@ -118,11 +117,13 @@ export default class Home extends Component {
 					{this.sorted.length >= 1 && (
 						<InfiniteScroll
 							pageStart={0}
-							loadMore={() => {
-								this.loadMore(nextUrl);
-							}}
+							loadMore={this.loadMore}
 							hasMore={hasMore}
-							loader={<div className="loader" key={0}>Loading ...</div>}
+							loader={(
+								<div className="loader" key={0}>
+									<Stretch color="#c67dcb" />
+								</div>
+							)}
 							style={infiniteScrollStyle}
 						>
 

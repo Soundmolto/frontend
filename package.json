@@ -51,6 +51,7 @@
     "redux-localstorage": "^0.4.1",
     "redux-promise-middleware": "^5.0.0",
     "snarkdown": "^1.2.2",
+    "styled-loaders": "^0.2.1",
     "superstatic": "^6.0.1",
     "timeago-react": "^2.0.0",
     "timeago.js": "^3.0.2"
