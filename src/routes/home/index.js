@@ -10,9 +10,10 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { APP } from '../../enums/app';
 import styles from './style';
 import { FilterableGenre } from '../../components/FilterableGenre';
-import { Stretch } from 'styled-loaders';
+import Stretch from 'styled-loaders/lib/components/Stretch';
 
 let hasMore = true;
+const loader = (<div key={0}><Stretch color="#c67dcb" /></div>);
 
 @connect(({ auth, discover }) => ({ auth, discover }))
 export default class Home extends Component {
@@ -115,18 +116,7 @@ export default class Home extends Component {
 							</LayoutGrid.Inner>
 						)}
 					{this.sorted.length >= 1 && (
-						<InfiniteScroll
-							pageStart={0}
-							loadMore={this.loadMore}
-							hasMore={hasMore}
-							loader={(
-								<div className="loader" key={0}>
-									<Stretch color="#c67dcb" />
-								</div>
-							)}
-							style={infiniteScrollStyle}
-						>
-
+						<InfiniteScroll pageStart={0} loadMore={this.loadMore} hasMore={hasMore} style={infiniteScrollStyle} loader={loader}>
 							<LayoutGrid.Inner>
 								{this.sorted.map(track => (
 										<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="12">
