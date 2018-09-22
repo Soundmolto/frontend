@@ -110,14 +110,15 @@ export default class Profile extends Component {
 		const are_same = JSON.stringify(viewed) === JSON.stringify(user);
 		console.log(are_same);
 		if (state.viewedUser.shouldForcefullyIgnoreUpdateLogic != null) return true;
-		if (state.user.profile.url === this.props.vanity_url && false === are_same) {
+		if (state.user.profile && state.user.profile.url === this.props.vanity_url && false === are_same) {
 			this.props.dispatch({ type: USER.VIEW_PROFILE, payload: state.user });
 		}
 	}
 
 	render({ auth, user, viewedUser }) {
 		const following = this.following(viewedUser);
-		const title = `${APP.NAME} - ${viewedUser.profile.displayName || viewedUser.profile.url}`;
+		const _user = viewedUser.profile.displayName || (viewedUser.profile && viewedUser.profile.url);
+		const title = `${APP.NAME} - ${_user}`;
 		const tracks = viewedUser.tracks;
 		if (this.currentUrl !== getCurrentUrl()) this.updateData();
 
@@ -135,10 +136,10 @@ export default class Profile extends Component {
 				<Helmet
 					title={title}
 					meta={generateTwitterCard({
-						summary: `View ${viewedUser.profile.displayName || viewedUser.profile.url}'s profile on SoundMolto`,
+						summary: `View ${_user}'s profile on SoundMolto`,
 						site: `${APP.TWITTER_HANDLE}`,
 						title: title,
-						description: `View ${viewedUser.profile.displayName || viewedUser.profile.url}'s profile on SoundMolto`,
+						description: `View ${_user}'s profile on SoundMolto`,
 						image: viewedUser.profile.profilePicture || `https://soundmolto.com/assets/icons/android-chrome-512x512.png`,
 					})}
 				/>
