@@ -338,12 +338,14 @@ export default class Header extends Component {
 									Enable beta features
 								</label>
 							</div>
-							<div class={style.switchContainer}>
-								<Switch checked={settings.waveforms === SETTINGS.ENABLE_WAVEFORMS || settings.waveforms == null} onClick={this.toggleWaveForms} id="toggleWaveForms" />
-								<label for="toggleWaveForms">
-									Enable waveforms on profile page (slow)
-								</label>
-							</div>
+							{settings.beta === SETTINGS.ENABLE_BETA && (
+								<div class={style.switchContainer}>
+									<Switch checked={settings.waveforms === SETTINGS.ENABLE_WAVEFORMS || settings.waveforms == null} onClick={this.toggleWaveForms} id="toggleWaveForms" />
+									<label for="toggleWaveForms">
+										Enable waveforms on profile page (slow)
+									</label>
+								</div>
+							)}
 						</Dialog.Body>
 					</Dialog>
 
