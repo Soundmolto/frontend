@@ -1,9 +1,13 @@
 import { h, Component } from 'preact';
 import Button from 'preact-material-components/Button';
 import LayoutGrid from 'preact-material-components/LayoutGrid';
+import List from 'preact-material-components/List';
+import Icon from 'preact-material-components/Icon';
 import Helmet from 'preact-helmet';
 import InfiniteScroll from 'react-infinite-scroller';
 import Stretch from 'styled-loaders/lib/components/Stretch';
+import 'preact-material-components/List/style.css';
+import 'preact-material-components/LayoutGrid/style.css';
 import 'preact-material-components/LayoutGrid/style.css';
 import 'preact-material-components/Button/style.css';
 import { connect } from 'preact-redux';
@@ -18,13 +22,15 @@ import { USER } from '../../enums/user';
 import { APP } from '../../enums/app';
 import style from './style';
 import { generateTwitterCard } from '../../utils/generateTwitterCard';
+import { SETTINGS } from '../../enums/settings';
+import { TrackListItem } from '../../components/TrackListItem';
 
 let _following = false;
 const loader = (<div key={0}><Stretch color="#c67dcb" /></div>);
 const infiniteScrollStyle = { display: "inline-block", width: '100%' };
 let hasMore = false;
 
-@connect(({ auth, user, viewedUser }) => ({ auth, user, viewedUser }))
+@connect(({ auth, user, viewedUser, settings }) => ({ auth, user, viewedUser, settings }))
 export default class Profile extends Component {
 
 	currentUrl = getCurrentUrl();
@@ -108,14 +114,14 @@ export default class Profile extends Component {
 		const viewed = this.massageObject(state.viewedUser);
 		const user = this.massageObject(state.user);
 		const are_same = JSON.stringify(viewed) === JSON.stringify(user);
-		console.log(are_same);
+
 		if (state.viewedUser.shouldForcefullyIgnoreUpdateLogic != null) return true;
 		if (state.user.profile && state.user.profile.url === this.props.vanity_url && false === are_same) {
 			this.props.dispatch({ type: USER.VIEW_PROFILE, payload: state.user });
 		}
 	}
 
-	render({ auth, user, viewedUser }) {
+	render({ auth, user, viewedUser, settings }) {
 		const following = this.following(viewedUser);
 		const _user = viewedUser.profile.displayName || (viewedUser.profile && viewedUser.profile.url);
 		const title = `${APP.NAME} - ${_user}`;
@@ -130,6 +136,7 @@ export default class Profile extends Component {
 
 		this.tracks = tracks.concat([]);
 		hasMore = viewedUser.hasMore;
+		console.log(hasMore);
 
 		return (
 			<div class={style.profile}>
@@ -161,11 +168,12 @@ export default class Profile extends Component {
 						<LayoutGrid.Inner>
 						<LayoutGrid.Cell desktopCols="9" tabletCols="12" tabletOrder="2">
 								<h1 class={style.mainHeader} style={{ 'margin-top': "0" }}>
-									Tracks <small class={style.smolButNotSwol}>{viewedUser.tracks.length}</small>
+									Tracks <small class={style.smolButNotSwol}>{viewedUser.amountOfTracks}</small>
 								</h1>
 								{tracks.length >= 1 && (
 									<InfiniteScroll pageStart={0} loadMore={this.loadMore} hasMore={hasMore} style={infiniteScrollStyle} loader={loader}>
 										{tracks.map(track => (
+											(settings.waveforms === SETTINGS.ENABLE_WAVEFORMS || settings.waveforms == null) ? (
 											<TrackCard
 												track={track}
 												user={viewedUser}
@@ -174,7 +182,14 @@ export default class Profile extends Component {
 												audioContext={this.props.audioContext}
 												isCurrentTrack={false}
 												onStartPlay={this.onStartPlay.bind(this)}
-											/>
+											/>) : (<List>
+												<TrackListItem
+													showArtwork={true}
+													onClick={this.onStartPlay.bind(this)}
+													track={track}
+													user={track.user}
+												/>
+											</List>)
 										))}
 									</InfiniteScroll>
 								)}

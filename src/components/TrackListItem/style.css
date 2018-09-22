@@ -50,3 +50,10 @@
 .link:hover {
 	color: var(--mdc-theme-link-primary-on-background--hover);
 }
+
+.image {
+	display: block;
+	width: 68px;
+	height: auto;
+	margin-right: 10px;
+}

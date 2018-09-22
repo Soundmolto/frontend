@@ -68,12 +68,21 @@ export class TrackListItem extends Component {
 		}
 	}
 
-	render ({ track }, { playing, opacity }) {
+	getArtwork (track, user) {
+		const userAvatar = user && user.profilePicture;
+		const trackArtwork = track && track.artwork;
+		return trackArtwork || userAvatar || Goku;
+	}
+
+	render ({ track, showArtwork }, { playing, opacity }) {
 		this.massageState();
 		track.user = track.user || { url: '' };
 
 		return (
 			<List.Item class={styles['list-item']}>
+				{showArtwork === true && (
+					<img src={this.getArtwork(track, this.props.user)} class={styles.image} />
+				)}
 				<List.ItemGraphic class={styles.hover}>
 					<Icon onClick={this.onStartPlay.bind(this)}>
 						{(playing) ? 'pause' : 'play_arrow' }
@@ -104,13 +113,15 @@ export class TrackListItem extends Component {
 						</LayoutGrid.Inner>
 					</LayoutGrid>
 				</List.TextContainer>
-				<List.ItemMeta>
-					<Icon style={{ 'margin-right': 10, opacity }}>cloud_download</Icon>
-					<Icon class={styles.hover} onMouseOver={this.mouseOver.bind(this)} onMouseOut={this.mouseOut.bind(this)}
-						onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseOut.bind(this)} onClick={this.onClick.bind(this)}>
-						{this.state.icon}
-					</Icon>
-				</List.ItemMeta>
+				{this.props.onRemoveItem != null && (
+					<List.ItemMeta>
+						<Icon style={{ 'margin-right': 10, opacity }}>cloud_download</Icon>
+						<Icon class={styles.hover} onMouseOver={this.mouseOver.bind(this)} onMouseOut={this.mouseOut.bind(this)}
+							onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseOut.bind(this)} onClick={this.onClick.bind(this)}>
+							{this.state.icon}
+						</Icon>
+					</List.ItemMeta>
+				)}
 			</List.Item>
 		);
 	}

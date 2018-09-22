@@ -13,3 +13,17 @@ export function disable_beta (dispatch) {
         payload: {}
     })
 }
+
+export function enable_waveform (dispatch) {
+    dispatch({
+        type: SETTINGS.ENABLE_WAVEFORMS,
+        payload: {}
+    })
+}
+
+export function disable_waveform (dispatch) {
+    dispatch({
+        type: SETTINGS.DISABLE_WAVEFORMS,
+        payload: {}
+    })
+}

@@ -27,7 +27,7 @@ import { APP } from '../../enums/app';
 import { Search } from '../Search';
 import raf from 'raf';
 import { SETTINGS } from '../../enums/settings';
-import { disable_beta, enable_beta } from '../../actions/settings';
+import { disable_beta, enable_beta, enable_waveform, disable_waveform } from '../../actions/settings';
 
 @connect(state => state)
 export default class Header extends Component {
@@ -126,6 +126,14 @@ export default class Header extends Component {
 			disable_beta(this.props.dispatch);
 		} else {
 			enable_beta(this.props.dispatch);
+		}
+	};
+
+	toggleWaveForms = () => {
+		if (this.props.settings.waveforms === SETTINGS.DISABLE_WAVEFORMS) {
+			enable_waveform(this.props.dispatch);
+		} else {
+			disable_waveform(this.props.dispatch);
 		}
 	};
 
@@ -234,7 +242,7 @@ export default class Header extends Component {
 		return className;
 	}
 
-	render ({ auth, user, UI }) {
+	render ({ auth, user, UI, settings }) {
 		this.currentUrl = getCurrentUrl();
 
 		try {
@@ -325,9 +333,15 @@ export default class Header extends Component {
 								</label>
 							</div>
 							<div class={style.switchContainer}>
-								<Switch checked={this.props.settings.beta === SETTINGS.ENABLE_BETA} onClick={this.toggleBeta} id="toggleBetaFeatures" />
+								<Switch checked={settings.beta === SETTINGS.ENABLE_BETA} onClick={this.toggleBeta} id="toggleBetaFeatures" />
 								<label for="toggleBetaFeatures">
 									Enable beta features
+								</label>
+							</div>
+							<div class={style.switchContainer}>
+								<Switch checked={settings.waveforms === SETTINGS.ENABLE_WAVEFORMS || settings.waveforms == null} onClick={this.toggleWaveForms} id="toggleWaveForms" />
+								<label for="toggleWaveForms">
+									Enable waveforms on profile page (slow)
 								</label>
 							</div>
 						</Dialog.Body>

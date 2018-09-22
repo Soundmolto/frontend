@@ -133,6 +133,8 @@ export class TrackCard extends Component {
 		const toggleOffIcon = { content: "favorite_border", label: "Add to Favorites" };
 		let posted = postedAt.format('DD-MM-YYYY');
 
+		console.log(settings);
+
 		if (posted.indexOf("NaN") !== -1) {
 			posted = "Unavaliable - Parsing error";
 		}
