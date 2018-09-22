@@ -16,7 +16,7 @@ export class QueuePanel extends Component {
 					<div>
 						<div class={styles.mainHeader}>
 							<div class={styles.images}>
-								{queue.tracks.slice(0, 4).map(track => (<img src={getArtwork(track)} />))}
+								{queue.tracks.slice(0, 7).map(track => (<img src={getArtwork(track)} />))}
 							</div>
 							<div class={styles.overlay}>
 								<p>Playing from:</p>
