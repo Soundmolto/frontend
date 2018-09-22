@@ -33,19 +33,21 @@ export class UserFollowing extends Component {
             <div style={style}>
                 <Card class={styles.card}>
                     <h1 style={{ 'margin-bottom': '10px' }}>Following {viewedUser.following.length}</h1>
-                    {viewedUser.following.length !== 0 && viewedUser.following.map(follower => (
-						<div>
-							<Link href={`/${follower.url}`} class={styles.link}
-								onMouseOver={this.showPopover.bind(this, follower.id)} onMouseOut={this.hidePopover.bind(this, follower.id)}>
-								<UserPictureName user={follower} showUsername={false} />
-							</Link>
-							<div class={`mdc-custom-card ${styles.popover}`} ref={e => this.popovers[follower.id] = e} style={{ display: 'none' }}>
-								<UserPictureName user={follower} show_location={true} h1_class={styles.h1Class} />
-								<p class={styles.followers}>{follower.amountOfFollowers} Follower{follower.amountOfFollowers > 1 ? 's' : ''}</p>
+					<div class={styles.w100}>
+						{viewedUser.following.length !== 0 && viewedUser.following.map(follower => (
+							<div>
+								<Link href={`/${follower.url}`} class={styles.link}
+									onMouseOver={this.showPopover.bind(this, follower.id)} onMouseOut={this.hidePopover.bind(this, follower.id)}>
+									<UserPictureName user={follower} showUsername={false} />
+								</Link>
+								<div class={`mdc-custom-card ${styles.popover}`} ref={e => this.popovers[follower.id] = e} style={{ display: 'none' }}>
+									<UserPictureName user={follower} show_location={true} h1_class={styles.h1Class} />
+									<p class={styles.followers}>{follower.amountOfFollowers} Follower{follower.amountOfFollowers > 1 ? 's' : ''}</p>
+								</div>
 							</div>
-						</div>
-                    ))}
-                    {viewedUser.following.length <= 0 && (<p>Not following anyone</p>)}
+						))}
+						{viewedUser.following.length <= 0 && (<p>Not following anyone</p>)}
+					</div>
                 </Card>
             </div>
         );
