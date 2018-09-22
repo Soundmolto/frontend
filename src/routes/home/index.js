@@ -69,7 +69,7 @@ export default class Home extends Component {
 	}
 
 	sortTracks (discover) {
-		let sorted = discover.sort((aTrack, bTrack) => parseInt(bTrack.createdAt) - parseInt(aTrack.createdAt));
+		let sorted = discover;
 		if (this.filterBy != null) {
 			sorted = sorted.filter(this.filterBy);
 		}
@@ -80,7 +80,7 @@ export default class Home extends Component {
 	render ({ discover }) {
 		const tracks = discover.tracks || [];
 		const genres = this.getGenres(tracks);
-		this.sorted = tracks;
+		this.sorted = this.sortTracks(tracks);
 		hasMore = discover.hasMore;
 
 		return (
