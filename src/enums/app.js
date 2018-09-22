@@ -1,3 +1,4 @@
 export const APP = Object.freeze({
-	NAME: "SoundMolto"
+	NAME: "SoundMolto",
+	TWITTER_HANDLE: "@soundmolto"
 });

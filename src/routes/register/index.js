@@ -94,7 +94,16 @@ export default class Login extends Component {
 
 		return (
 			<div>
-				<Helmet title={`${APP.NAME} - Register`} />
+				<Helmet
+					title={`${APP.NAME} - Register`}
+					meta={generateTwitterCard({
+						summary: `${APP.NAME} - Register`,
+						site: `${APP.TWITTER_HANDLE}`,
+						title: `${APP.NAME} - Register`,
+						description: `${APP.NAME} Register page`,
+						image: `https://soundmolto.com/assets/icons/android-chrome-512x512.png`,
+					})}
+				/>
 				<div class="header">
 					<h1>Register</h1>
 				</div>

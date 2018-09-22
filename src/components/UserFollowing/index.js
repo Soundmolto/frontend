@@ -34,7 +34,7 @@ export class UserFollowing extends Component {
                 <Card class={styles.card}>
                     <h1 style={{ 'margin-bottom': '10px' }}>Following {viewedUser.following.length}</h1>
                     {viewedUser.following.length !== 0 && viewedUser.following.map(follower => (
-						<div class={styles.w100}>
+						<div>
 							<Link href={`/${follower.url}`} class={styles.link}
 								onMouseOver={this.showPopover.bind(this, follower.id)} onMouseOut={this.hidePopover.bind(this, follower.id)}>
 								<UserPictureName user={follower} showUsername={false} />

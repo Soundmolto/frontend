@@ -11,6 +11,7 @@ import Stretch from 'styled-loaders/lib/components/Stretch';
 import { APP } from '../../enums/app';
 import styles from './style';
 import { FilterableGenre } from '../../components/FilterableGenre';
+import { generateTwitterCard } from '../../utils/generateTwitterCard';
 
 let hasMore = true;
 const loader = (<div key={0}><Stretch color="#c67dcb" /></div>);
@@ -84,7 +85,16 @@ export default class Home extends Component {
 
 		return (
 			<div>
-				<Helmet title={`${APP.NAME} - Discover`} />
+				<Helmet
+					title={`${APP.NAME} - Discover`}
+					meta={generateTwitterCard({
+						summary: `${APP.NAME} - Discover`,
+						site: `${APP.TWITTER_HANDLE}`,
+						title: `${APP.NAME} - Discover`,
+						description: `${APP.NAME} Discovery page`,
+						image: `https://soundmolto.com/assets/icons/android-chrome-512x512.png`,
+					})}
+				/>
 				<div class="header">
 					<h1>
 						Discover

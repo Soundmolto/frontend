@@ -116,6 +116,7 @@ export default class Profile extends Component {
 
 	render({ auth, user, viewedUser }) {
 		const following = this.following(viewedUser);
+		const title = `${APP.NAME} - ${viewedUser.profile.displayName || viewedUser.profile.url}`;
 		const tracks = viewedUser.tracks;
 		if (this.currentUrl !== getCurrentUrl()) this.updateData();
 
@@ -130,7 +131,16 @@ export default class Profile extends Component {
 
 		return (
 			<div class={style.profile}>
-				<Helmet title={`${APP.NAME} - ${viewedUser.profile.displayName || viewedUser.profile.url}`} />
+				<Helmet
+					title={title}
+					meta={generateTwitterCard({
+						summary: `View ${viewedUser.profile.displayName || viewedUser.profile.url}'s profile on SoundMolto`,
+						site: `${APP.TWITTER_HANDLE}`,
+						title: title,
+						description: `View ${viewedUser.profile.displayName || viewedUser.profile.url}'s profile on SoundMolto`,
+						image: viewedUser.profile.profilePicture || `https://soundmolto.com/assets/icons/android-chrome-512x512.png`,
+					})}
+				/>
 				<div class={"header " + style.header}>
 					<UserPictureName user={viewedUser.profile} show_location={true} style={{
 							width: '100%',

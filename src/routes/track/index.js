@@ -62,6 +62,7 @@ export default class Track extends Component {
 	}
 
 	render({ user, viewedUser, track }) {
+		const title = `${APP.NAME} - ${(viewedTrack && viewedTrack.name) || "Loading..."}`;
 		const viewedTrack = track.track;
 		const trackOwner = track.user;
 		if (this.currentUrl !== getCurrentUrl()) this.updateData();
@@ -73,7 +74,16 @@ export default class Track extends Component {
 
 		return (
 			<div class={style.profile}>
-				<Helmet title={`${APP.NAME} - ${(viewedTrack && viewedTrack.name) || "Loading..."}`} />
+				<Helmet
+					title={title}
+					meta={generateTwitterCard({
+						summary: `Listen to ${(viewedTrack && viewedTrack.name)} on SoundMolto`,
+						site: `${APP.TWITTER_HANDLE}`,
+						title: title,
+						description: `Listen to ${(viewedTrack && viewedTrack.name)} on SoundMolto`,
+						image: this.getArtwork(track) || `https://soundmolto.com/assets/icons/android-chrome-512x512.png`,
+					})}
+				/>
 				<div class={"header " + style.header}>
 					<div class={style.background} style={{ 'background-image': `url(${this.getArtwork(viewedTrack)})` }}></div>
 					<div class={style.overlay}>
