@@ -78,7 +78,6 @@ export default class Home extends Component {
 
 	render ({ discover }) {
 		const tracks = discover.tracks || [];
-		const nextUrl = discover.nextUrl || '';
 		const genres = this.getGenres(tracks);
 		this.sorted = tracks;
 		hasMore = discover.hasMore;
