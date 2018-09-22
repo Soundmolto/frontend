@@ -4,7 +4,7 @@
 	width: 600px;
 	background: var(--mdc-theme-background);
 	position: fixed;
-	bottom: 100px;
+	bottom: 80px;
 	right: 20px;
 	box-shadow: 0 0 14px rgba(0, 0, 0, 0.15);
 	transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;

@@ -5,10 +5,15 @@
 	width: 100vw;
 	background: rgb(78, 96, 125);
 	background: linear-gradient(to right, rgb(101, 101, 140) 0%, rgb(78, 96, 125) 100%);
-	min-height: 84px;
+	height: 64px;
 	padding: 10px;
 	display: flex;
 	align-items: center;
+}
+
+.footer p {
+	font-size: 0.9rem;
+	font-weight: 500;
 }
 
 @media screen and (min-width: 769px) {
@@ -21,7 +26,7 @@
 .footer .artwork {
 	overflow: hidden;
 	width: 150px;
-	height: 84px;
+	height: 64px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -124,6 +129,7 @@
 	display: flex;
 	color: var(--mdc-theme-primary-font);
 	overflow: visible;
+	align-items: center;
 }
 
 .notMobile .start, .notMobile .middle, .notMobile .end {
@@ -137,13 +143,16 @@
 
 .footer .button {
 	width: 48px;
-	height: 48px;
+	height: 28px;
+	max-width: 48px;
+	min-width: 48px;
 	color: var(--mdc-theme-primary-font);
 	display: flex;
 }
 
 .footer .button i {
 	color: var(--mdc-theme-primary-font);
+	font-size: 1.1rem;
 }
 
 .footer .end {
@@ -209,8 +218,8 @@
 	opacity: 0;
 	transition: all 0.3s ease-in-out;
 	position: absolute;
-	bottom: 90px;
-	right: 130px;
+	bottom: 70px;
+	right: 100px;
 	padding: 10px 20px;
 	border-radius: 10px;
 	box-shadow: var(--mdc-theme--box-shadow--floating);

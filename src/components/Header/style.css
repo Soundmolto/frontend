@@ -129,7 +129,7 @@ h1.subtitle-header > small {
 }
 
 .drawer.loggedOut {
-    height: calc(100vh - 135px) !important;
+    height: calc(100vh - 128px) !important;
 }
 
 .menuIcon {
@@ -190,7 +190,7 @@ h1.subtitle-header > small {
     }
 
     .drawer.loggedOut {
-        height: calc(100% - 132px) !important;
+        height: calc(100% - 140px) !important;
     }
 }
 

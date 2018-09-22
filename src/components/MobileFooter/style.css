@@ -36,7 +36,7 @@
 	overflow: hidden;
 	background: rgb(78, 96, 125);
 	background: linear-gradient(to right, rgb(101, 101, 140) 0%, rgb(78, 96, 125) 100%);
-	min-height: 84px;
+	min-height: 64px;
 	padding: 10px;
 	display: flex;
 	align-items: center;
