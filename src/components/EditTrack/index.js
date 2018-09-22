@@ -4,10 +4,12 @@ import Goku from '../../assets/goku.png';
 import TextField from 'preact-material-components/TextField';
 import Button from 'preact-material-components/Button';
 import Icon from 'preact-material-components/Icon';
+import Checkbox from 'preact-material-components/Checkbox';
 import 'preact-material-components/LinearProgress/style.css';
 import 'preact-material-components/FormField/style.css';
 import 'preact-material-components/Button/style.css';
 import 'preact-material-components/TextField/style.css';
+import 'preact-material-components/Checkbox/style.css';
 import styles from './style';
 import { edit_track } from '../../actions/track';
 import { API_ENDPOINT } from '../../api';
@@ -103,6 +105,7 @@ export class EditTrack extends Component {
 				<TextField label="Track URL" type="text" value={track.url} style={full_width} onChange={e => this.onInputChange(e, 'url')} onKeyDown={onKeyDown} />
 				<TextField label="Genres (Comma seperated)" type="text" value={track.genres} style={full_width} onChange={e => this.onInputChange(e, 'genres')} />
 				<TextField textarea label="Track description" value={track.description} style={full_width} onChange={e => this.onInputChange(e, 'description')} />
+				<Checkbox label="Private?" />
 				<Button type="submit">Submit</Button>
 			</form>
 		);

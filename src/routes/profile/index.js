@@ -17,6 +17,7 @@ import { TrackCard } from '../../components/TrackCard';
 import { USER } from '../../enums/user';
 import { APP } from '../../enums/app';
 import style from './style';
+import { generateTwitterCard } from '../../utils/generateTwitterCard';
 
 let _following = false;
 const loader = (<div key={0}><Stretch color="#c67dcb" /></div>);

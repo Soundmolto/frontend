@@ -13,6 +13,7 @@ import 'preact-material-components/TextField/style.css';
 import style from './style';
 import Helmet from 'preact-helmet';
 import { APP } from '../../enums/app';
+import { generateTwitterCard } from '../../utils/generateTwitterCard';
 
 /**
  * The login page / component

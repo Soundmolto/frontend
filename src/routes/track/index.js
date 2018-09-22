@@ -11,6 +11,7 @@ import { TrackCard } from '../../components/TrackCard';
 import Helmet from 'preact-helmet';
 import { APP } from '../../enums/app';
 import snarkdown from 'snarkdown';
+import { generateTwitterCard } from '../../utils/generateTwitterCard';
 
 @connect(state => state)
 export default class Track extends Component {
