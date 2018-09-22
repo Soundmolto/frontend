@@ -1,11 +1,11 @@
 import { h, Component } from 'preact';
 import Button from 'preact-material-components/Button';
 import LayoutGrid from 'preact-material-components/LayoutGrid';
+import Helmet from 'preact-helmet';
 import 'preact-material-components/LayoutGrid/style.css';
 import 'preact-material-components/Button/style.css';
 import { connect } from 'preact-redux';
 import { fetch_user, follow_user, unfollow_user } from '../../actions/user';
-import style from './style';
 import { UserDescription } from '../../components/UserDescription';
 import { UserPictureName } from '../../components/UserPictureName';
 import { UserFollowers } from '../../components/UserFollowers';
@@ -13,8 +13,8 @@ import { getCurrentUrl } from 'preact-router';
 import { UserFollowing } from '../../components/UserFollowing';
 import { TrackCard } from '../../components/TrackCard';
 import { USER } from '../../enums/user';
-import Helmet from 'preact-helmet';
 import { APP } from '../../enums/app';
+import style from './style';
 
 let _following = false;
 
