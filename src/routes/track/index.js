@@ -27,9 +27,7 @@ export default class Track extends Component {
 	updateData () {
 		const { auth, dispatch, track_url, vanity_url } = this.props;
 		let secret = null;
-		if (this.currentUrl.split('?secret=').length === 2) {
-			secret = this.currentUrl.split('?secret=')[1];
-		}
+		if (this.currentUrl.split('?secret=').length === 2) secret = this.currentUrl.split('?secret=')[1];
 		get_track(dispatch.bind(this), { token: auth.token, track_url, vanity_url, secret });
 		this.currentUrl = getCurrentUrl();
 	}
@@ -67,7 +65,6 @@ export default class Track extends Component {
 	}
 
 	render ({ user, viewedUser, track }) {
-		const title = `${APP.NAME} - ${(viewedTrack && viewedTrack.name) || "Loading..."}`;
 		const viewedTrack = track.track;
 		const trackOwner = track.user;
 		if (this.currentUrl !== getCurrentUrl()) this.updateData();
@@ -80,12 +77,12 @@ export default class Track extends Component {
 		return (
 			<div class={style.profile}>
 				<Helmet
-					title={title}
+					title={`${APP.NAME} - ${(viewedTrack && viewedTrack.name) || "Loading..."}`}
 					meta={generateTwitterCard({
 						summary: `Listen to ${(viewedTrack && viewedTrack.name)} on SoundMolto`,
 						site: `${APP.TWITTER_HANDLE}`,
-						title: title,
-						description: `Listen to ${(viewedTrack && viewedTrack.name)} on SoundMolto`,
+						title: `${APP.NAME} - ${(viewedTrack && viewedTrack.name) || "Loading..."}`,
+						description: track.description,
 						image: this.getArtwork(track) || `https://soundmolto.com/assets/icons/android-chrome-512x512.png`,
 					})}
 				/>
