@@ -8,9 +8,16 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY package*.json ./
 
+RUN mkdir ~/.npm-global
+RUN npm config set prefix '~/.npm-global'
+ENV NPM_CONFIG_PREFIX ~/.npm-global
 RUN npm install --only=production
 # Bundle app source
 COPY . .
+
+RUN npm i preact-cli
+RUN ./node_modules/.bin/preact build --no-prerender
+
 
 EXPOSE 8080 8081
 CMD [ "node", "server.js" ]
