@@ -30,7 +30,11 @@ export default function reducer (state = {
         case USER.HAS_NEW_DATA: {
             state = Object.assign({}, state, action.payload);
             break;
-        }
+		}
+		
+		case USER.TOGGLED_LIKE_ON_TRACK: {
+			state = {};
+		}
     }
 
     return state;

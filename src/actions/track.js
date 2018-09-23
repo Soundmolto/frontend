@@ -188,7 +188,7 @@ export async function get_more_discover_tracks (dispatch, nextUrl, token) {
 	}
 }
 
-export async function toggle_like (dispatch, { token, id, user }) {
+export async function toggle_like (dispatch, { token, id, user }, done = () => {}) {
 	let returnObject = {};
 
 	try {
@@ -209,6 +209,8 @@ export async function toggle_like (dispatch, { token, id, user }) {
 			}
 
 			returnObject = { type: USER.HAS_NEW_DATA, payload };
+			dispatch({ type: USER.TOGGLED_LIKE_ON_TRACK, track: payload.filter(track => track.id === id)[0] || { id: null } })
+			done(payload.filter(track => track.id === id));
 		} else {
 			throw new Error(data.statusText);
 		}

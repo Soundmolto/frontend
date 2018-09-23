@@ -172,25 +172,55 @@ export default class Profile extends Component {
 								</h1>
 								{tracks.length >= 1 && (
 									<InfiniteScroll pageStart={0} loadMore={this.loadMore} hasMore={hasMore} style={infiniteScrollStyle} loader={loader}>
-										{tracks.map(track => (
-											(settings.waveforms === SETTINGS.ENABLE_WAVEFORMS || settings.waveforms == null) ? (
+										{(settings.waveforms === SETTINGS.ENABLE_WAVEFORMS || settings.waveforms == null) ? tracks.map(track => (
 											<TrackCard
-												track={track}
-												user={viewedUser}
-												currentUser={user}
-												key={track.id}
-												audioContext={this.props.audioContext}
-												isCurrentTrack={false}
-												onStartPlay={this.onStartPlay.bind(this)}
-											/>) : (<List>
-												<TrackListItem
-													showArtwork={true}
-													onClick={this.onStartPlay.bind(this)}
-													track={track}
-													user={track.user}
-												/>
+											track={track}
+											user={viewedUser}
+											currentUser={user}
+											key={track.id}
+											audioContext={this.props.audioContext}
+											isCurrentTrack={false}
+											onStartPlay={this.onStartPlay.bind(this)}
+										/>)) : (<List>
+												<List.Item class={style['list-item']}>
+													<div style={{ width: '100px' }}></div>
+													<List.ItemGraphic class={style.hover}>
+														<Icon></Icon>
+													</List.ItemGraphic>
+													<List.TextContainer class={style.container}>
+														<LayoutGrid class={style.grid}>
+															<LayoutGrid.Inner class={style['grid-inner']}>
+																<LayoutGrid.Cell desktopCols="6" tabletCols="6" phoneCols="2">
+																	<List.PrimaryText>
+																		<span class={style.centered}>
+																			Track
+																		</span>
+																	</List.PrimaryText>
+																</LayoutGrid.Cell>
+																<LayoutGrid.Cell desktopCols="6" tabletCols="6" phoneCols="2">
+																	<span>
+																		<Icon>access_time</Icon>
+																	</span>
+																</LayoutGrid.Cell>
+															</LayoutGrid.Inner>
+														</LayoutGrid>
+													</List.TextContainer>
+													<List.ItemMeta>
+														<Icon style={{ 'margin-right': 10, opacity: 0 }}>cloud_download</Icon>
+														<Icon style={{ opacity: 0 }}>check</Icon>
+													</List.ItemMeta>
+												</List.Item>
+												{tracks.map(track => (
+													<TrackListItem
+														showArtwork={true}
+														showExtraStats={true}
+														onClick={this.onStartPlay.bind(this)}
+														track={track}
+														user={track.user}
+													/>
+												))}
 											</List>)
-										))}
+										}
 									</InfiniteScroll>
 								)}
 								{tracks.length <= 0 && <h1>No tracks</h1>}

@@ -5,9 +5,11 @@ import LayoutGrid from 'preact-material-components/LayoutGrid';
 import 'preact-material-components/List/style.css';
 import 'preact-material-components/LayoutGrid/style.css';
 import { seconds_to_time } from "../../utils/seconds-to-time";
-import { playing_now } from "../../actions/track";
+import { playing_now, save_track_in_collection, remove_track_from_collection } from "../../actions/track";
 import { connect } from 'preact-redux';
 import styles from './style.css';
+import { TrackCollectionIndicator } from "../TrackCollectionIndicator";
+import { LikeIndicator } from "../LikeIndicator";
 
 @connect( ({ auth, currently_playing }) => ({ auth, currently_playing }))
 export class TrackListItem extends Component {
@@ -68,13 +70,21 @@ export class TrackListItem extends Component {
 		}
 	}
 
+	saveTrackToCollection () {
+		save_track_in_collection(this.props.dispatch, { token: this.props.auth.token, id: this.props.track.id });
+	}
+
+	removeTrackFromCollection () {
+		remove_track_from_collection(this.props.dispatch, { token: this.props.auth.token, id: this.props.track.id });
+	}
+
 	getArtwork (track, user) {
 		const userAvatar = user && user.profilePicture;
 		const trackArtwork = track && track.artwork;
 		return trackArtwork || userAvatar || Goku;
 	}
 
-	render ({ track, showArtwork }, { playing, opacity }) {
+	render ({ track, showArtwork, showExtraStats }, { playing, opacity }) {
 		this.massageState();
 		track.user = track.user || { url: '' };
 
@@ -120,6 +130,20 @@ export class TrackListItem extends Component {
 							onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseOut.bind(this)} onClick={this.onClick.bind(this)}>
 							{this.state.icon}
 						</Icon>
+					</List.ItemMeta>
+				)}
+				{showExtraStats == true && (
+					<List.ItemMeta class={styles.itemMeta}>
+						<LikeIndicator
+							track={track}
+							className={styles.likeContainer}
+						/>
+						<TrackCollectionIndicator
+							track={track}
+							inCollection={track.inCollection}
+							onSaveTrackToCollection={this.saveTrackToCollection.bind(this)}
+							onRemoveTrackFromCollection={this.removeTrackFromCollection.bind(this)}
+						/>
 					</List.ItemMeta>
 				)}
 			</List.Item>

@@ -55,5 +55,21 @@
 	display: block;
 	width: 68px;
 	height: auto;
-	margin-right: 10px;
+	margin-right: 20px;
+}
+
+.itemMeta > i {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.likeContainer {
+	display: flex;
+	align-items: center;
+	font-size: 0.9rem;
+}
+
+.likeContainer, .likeContainer i {
+	color: var(--mdc-theme-link-primary-on-background--hover);
 }
