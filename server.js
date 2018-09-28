@@ -43,6 +43,11 @@ app.get('*', async (request, response, next) => {
 	const possiblePaths = request.originalUrl.split("/");
 	let url;
 	let toAdd;
+
+	if (possiblePaths.length === 1) {
+		toAdd = toAddValues.HOMEPAGE;
+	}
+
 	if (possiblePaths.length === 2) {
 		const path = possiblePaths[1];
 		switch (path) {
@@ -74,20 +79,25 @@ app.get('*', async (request, response, next) => {
 		}
 	}
 	if (toAdd != null) {
+		const defImage = 'https://soundmolto.com/assets/icons/android-chrome-512x512.png';
 		let summary, site, title, description, image;
 		const file = readFileSync(__dirname + '/build/index.html');
 		const DOM = new JSDOM(file);
 		const document = DOM.window.document;
 		const head = document.head;
-		const fetched = await fetch(url);
-		const data = await fetched.json();
+		let data = {};
+		if (url != url) {
+			const fetched = await fetch(url);
+			data = await fetched.json();
+		}
+
 		switch (toAdd) {
 			case toAddValues.HOMEPAGE: {
 				summary = `${APP.NAME} - Discover`;
 				site = `${APP.TWITTER_HANDLE}`;
 				title = `${APP.NAME} - Discover`;
 				description = `${APP.NAME} Discovery page`;
-				image = `https://soundmolto.com/assets/icons/android-chrome-512x512.png`;
+				image = defImage;
 				break;
 			}
 
@@ -96,16 +106,22 @@ app.get('*', async (request, response, next) => {
 				site = `${APP.TWITTER_HANDLE}`;
 				title = `${APP.NAME} - ${data.profile.displayName || data.profile.url || data.profile.id}'s profile`;
 				description = `${data.profile.description || ''}`;
-				image = `${data.profile.profilePicture || 'https://soundmolto.com/assets/icons/android-chrome-512x512.png'}`;
+				image = `${data.profile.profilePicture || defImage}`;
 				break;
 			}
 
 			case toAddValues.TRACK: {
-				summary = `Listen to ${(data.track.name || data.track.id)} on SoundMolto`;
+				const getUserName = user => user.displayName || user.url || user.id;
+				const track = {
+					name: data.track && (`${data.track.name || data.track.id} by ${getUserName(data.track.user)}`) || "Track not found",
+					description: data.track && (data.track.description || "No description") || "No description",
+					image: data.track && (data.track.artwork || data.track.user.profilePicture || defImage) || defImage
+				}
+				summary = `Listen to ${(track.name)} on SoundMolto`;
 				site = `${APP.TWITTER_HANDLE}`;
-				title = `Listen to ${(data.track.name || data.track.id)} on SoundMolto`;
-				description = `${data.track.description || "No description"}`;
-				image = `${data.track.artwork || data.track.user.profilePicture || 'https://soundmolto.com/assets/icons/android-chrome-512x512.png'}`;
+				title = `Listen to ${(track.name)} on SoundMolto`;
+				description = track.description;
+				image = track.image;
 				break;
 			}
 		}
@@ -124,13 +140,11 @@ app.get('*', async (request, response, next) => {
 
 if (process.env.NODE_ENV === 'PRODUCTION') {
 	https.createServer(httpsOptions, app).listen(8081);
-	const httpServer = express.createServer();
+	const httpServer = express();
 	// set up a route to redirect http to https
 	httpServer.get('*', (req, res )=> res.redirect('https://' + req.headers.host + req.url));
 	// have it listen on 8080
-	httpServer.listen(8080);
+	http.createServer(httpServer).listen(8080);
 } else {
 	http.createServer(httpsOptions, app).listen(port)
 }
-
-
