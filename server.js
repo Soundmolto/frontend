@@ -44,6 +44,11 @@ app.get('*', async (request, response, next) => {
 	let url;
 	let toAdd;
 
+	console.log(
+		possiblePaths,
+		request.originalUrl
+	)
+
 	if (possiblePaths.length === 1) {
 		toAdd = toAddValues.HOMEPAGE;
 	}
@@ -75,7 +80,7 @@ app.get('*', async (request, response, next) => {
 		if (possiblePaths[1] !== 'collection') {
 			url = `${API}/${possiblePaths[1]}/${possiblePaths[2]}`;
 			toAdd = toAddValues.TRACK;
-			console.log(`${API}/${possiblePaths[1]}/${possiblePaths[2]}`)
+			console.log('url', url);
 		}
 	}
 	if (toAdd != null) {
@@ -117,9 +122,9 @@ app.get('*', async (request, response, next) => {
 					description: data.track && (data.track.description || "No description") || "No description",
 					image: data.track && (data.track.artwork || data.track.user.profilePicture || defImage) || defImage
 				}
-				summary = `Listen to ${(track.name)} on SoundMolto`;
+				summary = track.name !== 'Track not found' ? `Listen to ${(track.name)} on SoundMolto` : track.name;
 				site = `${APP.TWITTER_HANDLE}`;
-				title = `Listen to ${(track.name)} on SoundMolto`;
+				title = track.name !== 'Track not found' ? `Listen to ${(track.name)} on SoundMolto` : track.name;
 				description = track.description;
 				image = track.image;
 				break;
