@@ -109,13 +109,16 @@ app.get('*', async (request, response, next) => {
 			case toAddValues.PROFILE: {
 				const getUserName = user => user.displayName || user.url || user.id;
 				const user = {
-					name: data.profile && (getUserName(data.profile)) || 'User not found',
+					name: data.profile && (`View ${getUserName(data.profile)}'s profile on ${APP.NAME}`) || 'User not found',
 					description: data.profile && data.profile.description || '',
 					image: data.profile && data.profile.profilePicture || defImage
 				};
-				summary = user.name != 'User not found' ? `${APP.NAME} - ${user.name}'s profile` : `${APP.Name} - ${user.name}`;
+				console.log(
+					user
+				)
+				summary = user.name;
 				site = `${APP.TWITTER_HANDLE}`;
-				title = user.name != 'User not found' ? `${APP.NAME} - ${user.name}'s profile` : `${APP.Name} - ${user.name}`;
+				title = user.name;
 				description = user.description;
 				image = user.image;
 				break;
@@ -124,13 +127,14 @@ app.get('*', async (request, response, next) => {
 			case toAddValues.TRACK: {
 				const getUserName = user => user.displayName || user.url || user.id;
 				const track = {
-					name: data.track && (`${data.track.name || data.track.id} by ${getUserName(data.track.user)}`) || "Track not found",
+					name: data.track && (`Listen to ${data.track.name || data.track.id} by ${getUserName(data.track.user)} on ${APP.NAME}`) || "Track not found",
 					description: data.track && (data.track.description || "No description") || "No description",
 					image: data.track && (data.track.artwork || data.track.user.profilePicture || defImage) || defImage
 				}
-				summary = track.name !== 'Track not found' ? `Listen to ${(track.name)} on SoundMolto` : `${APP.Name} - ${track.name}`;
+				console.log(track);
+				summary = track.name;
 				site = `${APP.TWITTER_HANDLE}`;
-				title = track.name !== 'Track not found' ? `Listen to ${(track.name)} on SoundMolto` : `${APP.Name} - ${track.name}`;
+				title = track.name;
 				description = track.description;
 				image = track.image;
 				break;
