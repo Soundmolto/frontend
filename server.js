@@ -93,6 +93,7 @@ app.get('*', async (request, response, next) => {
 		const head = document.head;
 		let data = {};
 		let tags = [];
+		let ogTags = [];
 
 		if (url != null) {
 			const fetched = await fetch(url);
@@ -117,7 +118,7 @@ app.get('*', async (request, response, next) => {
 					description: data.profile != null && data.profile.description || '',
 					image: data.profile != null && data.profile.profilePicture || defImage
 				};
-				summary = 'summary';
+				summary = 'summary_large_image';
 				site = `${APP.TWITTER_HANDLE}`;
 				title = user.name;
 				description = user.description;
@@ -156,6 +157,8 @@ app.get('*', async (request, response, next) => {
 					name: 'twitter:player:height',
 					content: '100px'
 				});
+
+				ogTags.push({ name: 'og:audio', content: track.streamUrl });
 				break;
 			}
 		}
@@ -166,6 +169,14 @@ app.get('*', async (request, response, next) => {
 			meta.setAttribute('content', tag.content);
 			head.appendChild(meta);
 		}
+
+		for (const tag of ogTags) {
+			const meta = document.createElement('meta');
+			meta.setAttribute('property', tag.name);
+			meta.setAttribute('content', tag.content);
+			head.appendChild(meta);
+		}
+
 		response.send(DOM.serialize());
 	} else {
 		response.sendFile(__dirname + '/build/index.html');
