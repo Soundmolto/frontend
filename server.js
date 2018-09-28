@@ -43,9 +43,6 @@ app.get('*', async (request, response, next) => {
 	const possiblePaths = request.originalUrl.split("/");
 	let url;
 	let toAdd;
-	console.log(
-		possiblePaths.length
-	)
 	if (possiblePaths.length === 2) {
 		const path = possiblePaths[1];
 		switch (path) {
@@ -125,12 +122,15 @@ app.get('*', async (request, response, next) => {
 	}
 });
 
-// app.get('/', (req, res) => res.send('Hello World!'));
 if (process.env.NODE_ENV === 'PRODUCTION') {
-	https.createServer(httpsOptions, app).listen(port)
+	https.createServer(httpsOptions, app).listen(8081);
+	const httpServer = express.createServer();
+	// set up a route to redirect http to https
+	httpServer.get('*', (req, res )=> res.redirect('https://' + req.headers.host + req.url));
+	// have it listen on 8080
+	httpServer.listen(8080);
 } else {
 	http.createServer(httpsOptions, app).listen(port)
 }
 
-// app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
