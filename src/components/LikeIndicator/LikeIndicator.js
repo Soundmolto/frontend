@@ -3,6 +3,7 @@ import IconToggle from 'preact-material-components/IconToggle';
 import 'preact-material-components/IconToggle/style.css';
 import { toggle_like } from '../../actions/track';
 import { connect } from 'preact-redux';
+import approximateNumber from 'approximate-number';
 
 @connect(({ auth, user }) => ({ auth, user }))
 export class LikeIndicator extends Component {
@@ -27,15 +28,16 @@ export class LikeIndicator extends Component {
 		})
 	}
 
-	render ({ track, user, className }, { amountOfLikes }) {
+	render ({ track, user, className, iconLast }, { amountOfLikes }) {
 		const userLikesTrack = user.likes && user.likes.filter(like => like.id === track.id).length != 0;
 		console.log(user.likes)
 		const toggleOnIcon = { content: "favorite", label: "Remove From Favorites" };
 		const toggleOffIcon = { content: "favorite_border", label: "Add to Favorites" };
+		const likes = approximateNumber(Math.max(0, amountOfLikes), { capital: true, round: true })
 
 		return (
 			<div class={className}>
-				{Math.max(0, amountOfLikes)}
+				{iconLast ? likes : ''}
 				<IconToggle
 					role="button"
 					tabindex="0"
@@ -47,6 +49,7 @@ export class LikeIndicator extends Component {
 				>
 					{userLikesTrack ? "favorite" : "favorite_border"}
 				</IconToggle>
+				{!iconLast ? likes : ''}
 			</div>
 		);
 	}

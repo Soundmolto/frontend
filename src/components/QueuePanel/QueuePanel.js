@@ -2,6 +2,7 @@ import { Component } from "preact";
 import Icon from 'preact-material-components/Icon';
 import styles from './style';
 import { seconds_to_time } from "../../utils/seconds-to-time";
+import approximateNumber from 'approximate-number';
 
 export class QueuePanel extends Component {
 
@@ -28,13 +29,13 @@ export class QueuePanel extends Component {
 								<p>Song</p>
 							</div>
 							<div style={{ width: 'auto', 'flex-direction': 'row', float: 'right' }}>
-								<span style={{ width: '35px' }}>
+								<span style={{ width: '40px' }}>
 									<Icon>access_time</Icon>
 								</span>
-								<span style={{ width: '35px' }}>
+								<span style={{ width: '40px' }}>
 									<Icon>favorite</Icon>
 								</span>
-								<span style={{ width: '35px' }}>
+								<span style={{ width: '40px' }}>
 									<Icon>headset</Icon>
 								</span>
 							</div>
@@ -62,7 +63,7 @@ export class QueuePanel extends Component {
 										{track.amountOfLikes || 0}
 									</span>
 									<span>
-										{track.plays || 0}
+										{approximateNumber(track.plays || 0, { capital: true, round: true })}
 									</span>
 								</div>
 							</div>

@@ -7,13 +7,6 @@ import { Waveform } from '../Waveform';
 import { EditTrack } from '../EditTrack';
 import Icon from 'preact-material-components/Icon';
 import IconToggle from 'preact-material-components/IconToggle';
-import 'preact-material-components/IconToggle/style.css';
-import 'preact-material-components/Button/style.css';
-import 'preact-material-components/Card/style.css';
-import 'preact-material-components/Button/style.css';
-import 'preact-material-components/Dialog/style.css';
-import 'preact-material-components/Snackbar/style.css';
-import styles from './style';
 import { playing_now, delete_track, toggle_like, save_track_in_collection, remove_track_from_collection } from '../../actions/track';
 import { connect } from 'preact-redux';
 import { seconds_to_time } from '../../utils/seconds-to-time';
@@ -23,6 +16,14 @@ import dayjs from 'dayjs';
 import TimeAgo from 'timeago-react';
 import Goku from '../../assets/goku.png';
 import { route } from 'preact-router';
+import approximateNumber from 'approximate-number';
+import 'preact-material-components/IconToggle/style.css';
+import 'preact-material-components/Button/style.css';
+import 'preact-material-components/Card/style.css';
+import 'preact-material-components/Button/style.css';
+import 'preact-material-components/Dialog/style.css';
+import 'preact-material-components/Snackbar/style.css';
+import styles from './style';
 
 let className = (e) => (e);
 
@@ -215,7 +216,7 @@ export class TrackCard extends Component {
 					/>
 					<div class={styles.hiddenMobile}>
 						<p class={`${styles.centered} ${styles.plays}`}>
-							<Icon>headset</Icon> {this.plays}
+							<Icon>headset</Icon> {approximateNumber(this.plays, { capital: true, round: true })}
 						</p>
 						<p class={`${styles.centered} ${styles.favorites}`}>
 							<IconToggle

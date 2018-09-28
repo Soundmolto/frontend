@@ -32,6 +32,7 @@
     "preact-cli": "^2.0.0"
   },
   "dependencies": {
+    "approximate-number": "^2.0.0",
     "babel-runtime": "^6.26.0",
     "dayjs": "^1.6.0",
     "emotion": "^9.1.2",

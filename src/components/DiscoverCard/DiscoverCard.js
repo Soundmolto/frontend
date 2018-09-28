@@ -11,9 +11,11 @@ import { SETTINGS } from '../../enums/settings';
 import dayjs from 'dayjs';
 import TimeAgo from 'timeago-react';
 import { TrackCollectionIndicator } from "../TrackCollectionIndicator";
+import approximateNumber from 'approximate-number';
 import 'preact-material-components/Card/style.css';
 import 'preact-material-components/Button/style.css';
 import styles from './style.css';
+import { LikeIndicator } from "../LikeIndicator";
 
 @connect( ({ auth, currently_playing, settings }) => ({ auth, currently_playing, settings }))
 export class DiscoverCard extends Component {
@@ -116,10 +118,14 @@ export class DiscoverCard extends Component {
 				<div class={`${styles.padding} ${styles.flex}`}>
 					<div>
 						<span>
-							<Icon>headset</Icon> {track.plays}
+							<Icon>headset</Icon> {approximateNumber(track.plays, { capital: true, round: true })}
 						</span>
 						<span>
-							<Icon>favorite</Icon> {track.amountOfLikes}
+							<LikeIndicator
+								track={track}
+								className={styles.likeIndicator}
+								iconLast={false}
+							/>
 						</span>
 						{settings.beta === SETTINGS.ENABLE_BETA && (
 							<TrackCollectionIndicator

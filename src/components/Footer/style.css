@@ -92,11 +92,11 @@
 	user-select: none;
 }
 
-.footer:hover .trackBar, .footer:active .trackBar, .footer:focus .trackBar {
+.footer .trackBar:hover, .footer .trackBar:active, .footer .trackBar:focus {
 	height: 10px;
 }
 
-.footer:hover .trackBar .thumb, .footer:active .trackBar .thumb, .footer:focus .trackBar .thumb {
+.footer .trackBar:hover .thumb, .footer .trackBar:active .thumb, .footer .trackBar:focus .thumb {
 	height: 18px;
 	width: 18px;
 	top: -4px;

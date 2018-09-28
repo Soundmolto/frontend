@@ -100,7 +100,7 @@ p.typography > i {
 }
 
 .flex span {
-    margin-right: 20px;
+    margin-right: 10px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -108,6 +108,7 @@ p.typography > i {
 
 .flex span > i { 
     margin-right: 5px;
+    font-size: 1.3rem;
 }
 
 .noOverflow {
@@ -199,4 +200,19 @@ span.genre {
     height: 200px;
     overflow: hidden;
     position: relative;
+}
+
+.likeIndicator {
+    display: flex;
+    font-size: 1rem;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.likeIndicator i {
+    font-size: 1.3rem;
+    color: var(--mdc-theme-text-primary-on-background);
+    height: 32px;
+    width: 32px;
+    margin-right: 5px;
 }
