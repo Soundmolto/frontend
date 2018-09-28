@@ -3,9 +3,9 @@
  * 		Clean this up!
  */
 'use strict';
-const PRODUCTION_MODE = process.env.NODE_ENV;
 const { readFileSync } = require('fs');
 const { resolve } = require('path');
+const PRODUCTION_MODE = readFileSync(resolve(__dirname, 'mode')).toString();
 const fetch = require('node-fetch');
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
@@ -29,6 +29,15 @@ const generateTwitterCard = ({ summary, site, title, description, image }) => [
 	{ name: 'twitter:image', content: image },
 ]
 
+const generateFacebookCard = ({ type, title, description, image, url = '' }) => [
+	{ name: 'og:type', content: type },
+	{ name: 'og:title', content: title },
+	{ name: 'og:description', content: description },
+	{ name: 'og:image', content: image },
+	{ name: 'og:url', content: url },
+	{ name: 'og:site_name', content: APP.NAME }
+]
+
 const express = require('express')
 const app = express();
 const port = 8080;
@@ -44,11 +53,6 @@ app.get('*', async (request, response, next) => {
 	const possiblePaths = request.originalUrl.split("/");
 	let url;
 	let toAdd;
-
-	console.log(
-		possiblePaths,
-		request.originalUrl
-	)
 
 	if (possiblePaths.length === 1) {
 		toAdd = toAddValues.HOMEPAGE;
@@ -81,7 +85,6 @@ app.get('*', async (request, response, next) => {
 		if (possiblePaths[1] !== 'collection') {
 			url = `${API}/${possiblePaths[1]}/${possiblePaths[2]}`;
 			toAdd = toAddValues.TRACK;
-			console.log('url', url);
 		}
 	}
 	if (toAdd != null) {
@@ -108,6 +111,13 @@ app.get('*', async (request, response, next) => {
 				description = `${APP.NAME} Discovery page`;
 				image = defImage;
 				tags = generateTwitterCard({ summary, site, title, description, image });
+				ogTags = generateFacebookCard({
+					title,
+					type: 'website',
+					description,
+					image,
+					url: `https://soundmolto.com/`
+				})
 				break;
 			}
 
@@ -124,6 +134,8 @@ app.get('*', async (request, response, next) => {
 				description = user.description;
 				image = user.image;
 				tags = generateTwitterCard({ summary, site, title, description, image });
+				ogTags = generateFacebookCard({ title, type: 'profile', description, image, url: `https://soundmolto.com${request.originalUrl}` })
+				ogTags.push({ name: 'profile:username', content: user.name });
 				break;
 			}
 
@@ -133,32 +145,27 @@ app.get('*', async (request, response, next) => {
 					name: data.track != null && (`Listen to ${data.track.name || data.track.id} by ${getUserName(data.track.user)} on ${APP.NAME}`) || "Track not found",
 					description: data.track != null && (data.track.description || "No description") || "No description",
 					image: data.track != null && (data.track.artwork || data.track.user.profilePicture || defImage) || defImage,
-					streamUrl: data.track != null && (data.track.stream_url) || ''
+					streamUrl: data.track != null && (data.track.stream_url) || '',
+					duration: data.track != null && data.track.duration || 0,
+					userUrl: data.track != null && data.track.user && data.track.user.url || ''
 				}
 				site = `${APP.TWITTER_HANDLE}`;
 				title = track.name;
 				description = track.description;
 				image = track.image;
 
-				tags = generateTwitterCard({ summary: 'player', site, title, description, image });
+				tags = generateTwitterCard({ summary: 'player', site, title, description, image, url });
 				tags.push({ name: "twitter:player", content: track.streamUrl });
 				tags.push({ name: "twitter:player:stream", content: track.streamUrl });
-				tags.push({
-					name: 'twitter:player:stream:content_type',
-					content: 'audio/mpeg'
-				});
+				tags.push({ name: 'twitter:player:stream:content_type', content: 'audio/mpeg' });
+				tags.push({ name: 'twitter:player:width', content: '100px' });
+				tags.push({ name: 'twitter:player:height', content: '100px' });
 
-				tags.push({
-					name: 'twitter:player:width',
-					content: '100px'
-				});
-
-				tags.push({
-					name: 'twitter:player:height',
-					content: '100px'
-				});
-
+				ogTags = generateFacebookCard({ title, type: 'music.song', description, image, url: `https://soundmolto.com${request.originalUrl}` })
+				ogTags.push({ name: 'music:duration', content: track.duration });
+				ogTags.push({ name: 'music:musician', content: track.userUrl });
 				ogTags.push({ name: 'og:audio', content: track.streamUrl });
+				ogTags.push({ name: 'og:audio:type', content: 'audio/vnd.facebook.bridge' });
 				break;
 			}
 		}
@@ -174,6 +181,7 @@ app.get('*', async (request, response, next) => {
 			const meta = document.createElement('meta');
 			meta.setAttribute('property', tag.name);
 			meta.setAttribute('content', tag.content);
+			console.log(meta.outerHTML);
 			head.appendChild(meta);
 		}
 
