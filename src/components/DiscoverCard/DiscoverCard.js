@@ -102,7 +102,13 @@ export class DiscoverCard extends Component {
 							locale='en_AU'
 							className={styles.date}
 							title={`Posted on ${postedAt.format('DD MMMM YYYY')}`}
+							style={track.visibility !== 'public' && { marginRight: '40px' }}
 						/>
+						{track.visibility !== 'public' && (
+							<span class={styles.private}>
+								<Icon>lock</Icon>
+							</span>
+						)}
 					</div>
 				</div>
 				<Card.Media className={`card-media ${styles.cardMedia}`}>

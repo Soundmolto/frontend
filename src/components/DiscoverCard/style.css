@@ -196,6 +196,24 @@ span.genre {
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+span.private {
+    position: absolute;
+    top: 5px;
+    right: -10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 5px 10px;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+span.private i {
+    font-size: 0.9rem;
+}
+
+
 .cardMedia {
     height: 200px;
     overflow: hidden;
@@ -215,4 +233,5 @@ span.genre {
     height: 32px;
     width: 32px;
     margin-right: 5px;
+    padding: 6px;
 }
