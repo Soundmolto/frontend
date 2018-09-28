@@ -142,7 +142,11 @@ app.get('*', async (request, response, next) => {
 				image = track.image;
 
 				tags = generateTwitterCard({ summary, site, title, description, image });
-				tags.push({ name: "twitter:player", content: track.streamUrl });
+				tags.push({ name: "twitter:player:stream", content: track.streamUrl });
+				tags.push({
+					name: 'twitter:player:stream:content_type',
+					content: 'audio/mpeg'
+				})
 				break;
 			}
 		}
