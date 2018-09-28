@@ -107,11 +107,17 @@ app.get('*', async (request, response, next) => {
 			}
 
 			case toAddValues.PROFILE: {
-				summary = `${APP.NAME} - ${data.profile.displayName || data.profile.url || data.profile.id}'s profile`;
+				const getUserName = user => user.displayName || user.url || user.id;
+				const user = {
+					name: data.profile && (getUserName(data.profile)) || 'User not found',
+					description: data.profile && data.profile.description || '',
+					image: data.profile && data.profile.profilePicture || defImage
+				};
+				summary = user.name != 'User not found' ? `${APP.NAME} - ${user.name}'s profile` : `${APP.Name} - ${user.name}`;
 				site = `${APP.TWITTER_HANDLE}`;
-				title = `${APP.NAME} - ${data.profile.displayName || data.profile.url || data.profile.id}'s profile`;
-				description = `${data.profile.description || ''}`;
-				image = `${data.profile.profilePicture || defImage}`;
+				title = user.name != 'User not found' ? `${APP.NAME} - ${user.name}'s profile` : `${APP.Name} - ${user.name}`;
+				description = user.description;
+				image = user.image;
 				break;
 			}
 
@@ -122,9 +128,9 @@ app.get('*', async (request, response, next) => {
 					description: data.track && (data.track.description || "No description") || "No description",
 					image: data.track && (data.track.artwork || data.track.user.profilePicture || defImage) || defImage
 				}
-				summary = track.name !== 'Track not found' ? `Listen to ${(track.name)} on SoundMolto` : track.name;
+				summary = track.name !== 'Track not found' ? `Listen to ${(track.name)} on SoundMolto` : `${APP.Name} - ${track.name}`;
 				site = `${APP.TWITTER_HANDLE}`;
-				title = track.name !== 'Track not found' ? `Listen to ${(track.name)} on SoundMolto` : track.name;
+				title = track.name !== 'Track not found' ? `Listen to ${(track.name)} on SoundMolto` : `${APP.Name} - ${track.name}`;
 				description = track.description;
 				image = track.image;
 				break;
