@@ -126,7 +126,7 @@ app.get('*', async (request, response, next) => {
 });
 
 // app.get('/', (req, res) => res.send('Hello World!'));
-if (process.env.NODE_ENV) {
+if (process.env.NODE_ENV === 'PRODUCTION') {
 	https.createServer(httpsOptions, app).listen(port)
 } else {
 	http.createServer(httpsOptions, app).listen(port)
