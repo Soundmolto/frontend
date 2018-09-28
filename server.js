@@ -3,12 +3,13 @@
  * 		Clean this up!
  */
 'use strict';
+const PRODUCTION_MODE = process.env.NODE_ENV;
 const { readFileSync } = require('fs');
 const { resolve } = require('path');
 const fetch = require('node-fetch');
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
-const API = process.env.NODE_ENV === 'PRODUCTION' ? 'https://api.soundmolto.com:1344' : 'https://api.musicstreaming.dev:1344';
+const API = PRODUCTION_MODE === 'PRODUCTION' ? 'https://api.soundmolto.com:1344' : 'https://api.musicstreaming.dev:1344';
 const toAddValues = {
 	PROFILE: "PROFILE",
 	TRACK: "TRACK",
@@ -91,6 +92,7 @@ app.get('*', async (request, response, next) => {
 		const document = DOM.window.document;
 		const head = document.head;
 		let data = {};
+		let tags = [];
 
 		if (url != null) {
 			const fetched = await fetch(url);
@@ -104,6 +106,7 @@ app.get('*', async (request, response, next) => {
 				title = `${APP.NAME} - Discover`;
 				description = `${APP.NAME} Discovery page`;
 				image = defImage;
+				tags = generateTwitterCard({ summary, site, title, description, image });
 				break;
 			}
 
@@ -114,14 +117,12 @@ app.get('*', async (request, response, next) => {
 					description: data.profile != null && data.profile.description || '',
 					image: data.profile != null && data.profile.profilePicture || defImage
 				};
-				console.log(
-					user
-				)
 				summary = user.name;
 				site = `${APP.TWITTER_HANDLE}`;
 				title = user.name;
 				description = user.description;
 				image = user.image;
+				tags = generateTwitterCard({ summary, site, title, description, image });
 				break;
 			}
 
@@ -130,7 +131,8 @@ app.get('*', async (request, response, next) => {
 				const track = {
 					name: data.track != null && (`Listen to ${data.track.name || data.track.id} by ${getUserName(data.track.user)} on ${APP.NAME}`) || "Track not found",
 					description: data.track != null && (data.track.description || "No description") || "No description",
-					image: data.track != null && (data.track.artwork || data.track.user.profilePicture || defImage) || defImage
+					image: data.track != null && (data.track.artwork || data.track.user.profilePicture || defImage) || defImage,
+					streamUrl: data.track != null && (data.track.stream_url) || ''
 				}
 				console.log(track);
 				summary = track.name;
@@ -138,10 +140,13 @@ app.get('*', async (request, response, next) => {
 				title = track.name;
 				description = track.description;
 				image = track.image;
+
+				tags = generateTwitterCard({ summary, site, title, description, image });
+				tags.push({ name: "twitter:player", content: track.streamUrl });
 				break;
 			}
 		}
-		const tags = generateTwitterCard({ summary, site, title, description, image });
+
 		for (const tag of tags) {
 			const meta = document.createElement('meta');
 			meta.setAttribute('name', tag.name);
@@ -154,7 +159,7 @@ app.get('*', async (request, response, next) => {
 	}
 });
 
-if (process.env.NODE_ENV === 'PRODUCTION') {
+if (PRODUCTION_MODE === 'PRODUCTION') {
 	https.createServer(httpsOptions, app).listen(8081);
 	const httpServer = express();
 	// set up a route to redirect http to https
