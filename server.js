@@ -101,7 +101,7 @@ app.get('*', async (request, response, next) => {
 
 		switch (toAdd) {
 			case toAddValues.HOMEPAGE: {
-				summary = `${APP.NAME} - Discover`;
+				summary = 'summary';
 				site = `${APP.TWITTER_HANDLE}`;
 				title = `${APP.NAME} - Discover`;
 				description = `${APP.NAME} Discovery page`;
@@ -117,7 +117,7 @@ app.get('*', async (request, response, next) => {
 					description: data.profile != null && data.profile.description || '',
 					image: data.profile != null && data.profile.profilePicture || defImage
 				};
-				summary = user.name;
+				summary = 'summary';
 				site = `${APP.TWITTER_HANDLE}`;
 				title = user.name;
 				description = user.description;
@@ -134,19 +134,27 @@ app.get('*', async (request, response, next) => {
 					image: data.track != null && (data.track.artwork || data.track.user.profilePicture || defImage) || defImage,
 					streamUrl: data.track != null && (data.track.stream_url) || ''
 				}
-				console.log(track);
-				summary = track.name;
 				site = `${APP.TWITTER_HANDLE}`;
 				title = track.name;
 				description = track.description;
 				image = track.image;
 
-				tags = generateTwitterCard({ summary, site, title, description, image });
+				tags = generateTwitterCard({ summary: 'player', site, title, description, image });
 				tags.push({ name: "twitter:player:stream", content: track.streamUrl });
 				tags.push({
 					name: 'twitter:player:stream:content_type',
 					content: 'audio/mpeg'
-				})
+				});
+
+				tags.push({
+					name: 'twitter:player:width',
+					content: '100px'
+				});
+
+				tags.push({
+					name: 'twitter:player:height',
+					content: '100px'
+				});
 				break;
 			}
 		}
