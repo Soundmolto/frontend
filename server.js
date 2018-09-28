@@ -91,7 +91,8 @@ app.get('*', async (request, response, next) => {
 		const document = DOM.window.document;
 		const head = document.head;
 		let data = {};
-		if (url != url) {
+
+		if (url != null) {
 			const fetched = await fetch(url);
 			data = await fetched.json();
 		}
@@ -109,9 +110,9 @@ app.get('*', async (request, response, next) => {
 			case toAddValues.PROFILE: {
 				const getUserName = user => user.displayName || user.url || user.id;
 				const user = {
-					name: data.profile && (`View ${getUserName(data.profile)}'s profile on ${APP.NAME}`) || 'User not found',
-					description: data.profile && data.profile.description || '',
-					image: data.profile && data.profile.profilePicture || defImage
+					name: data.profile != null && (`View ${getUserName(data.profile)}'s profile on ${APP.NAME}`) || 'User not found',
+					description: data.profile != null && data.profile.description || '',
+					image: data.profile != null && data.profile.profilePicture || defImage
 				};
 				console.log(
 					user
@@ -127,9 +128,9 @@ app.get('*', async (request, response, next) => {
 			case toAddValues.TRACK: {
 				const getUserName = user => user.displayName || user.url || user.id;
 				const track = {
-					name: data.track && (`Listen to ${data.track.name || data.track.id} by ${getUserName(data.track.user)} on ${APP.NAME}`) || "Track not found",
-					description: data.track && (data.track.description || "No description") || "No description",
-					image: data.track && (data.track.artwork || data.track.user.profilePicture || defImage) || defImage
+					name: data.track != null && (`Listen to ${data.track.name || data.track.id} by ${getUserName(data.track.user)} on ${APP.NAME}`) || "Track not found",
+					description: data.track != null && (data.track.description || "No description") || "No description",
+					image: data.track != null && (data.track.artwork || data.track.user.profilePicture || defImage) || defImage
 				}
 				console.log(track);
 				summary = track.name;
