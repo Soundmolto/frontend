@@ -1,10 +1,14 @@
+/**
+ * TODO:
+ * 		Clean this up!
+ */
 'use strict';
 const { readFileSync } = require('fs');
 const { resolve } = require('path');
 const fetch = require('node-fetch');
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
-const API = process.env.NODE_ENV !== 'PRODUCTION' ? 'https://api.soundmolto.com:1344' : 'https://api.musicstreaming.dev:1344';
+const API = process.env.NODE_ENV === 'PRODUCTION' ? 'https://api.soundmolto.com:1344' : 'https://api.musicstreaming.dev:1344';
 const toAddValues = {
 	PROFILE: "PROFILE",
 	TRACK: "TRACK",
@@ -30,18 +34,8 @@ const port = 8080;
 const key = readFileSync(resolve(__dirname, './certs/_wildcard.musicstreaming.dev-key.pem'), { encoding: 'UTF8' });
 const cert = readFileSync(resolve(__dirname, './certs/_wildcard.musicstreaming.dev.pem'), { encoding: 'UTF8' });
 const httpsOptions = { key, cert };
-const spec = {
-  config: {
-    public: './build',
-    rewrites: [
-        {
-            source: "/**",
-            destination: "/index.html"
-        }
-    ]
-  },
-  cwd: process.cwd()
-};
+const http = require('http');
+const https = require('https');
 
 app.use(express.static('build'));
 
@@ -132,6 +126,11 @@ app.get('*', async (request, response, next) => {
 });
 
 // app.get('/', (req, res) => res.send('Hello World!'));
+if (process.env.NODE_ENV) {
+	https.createServer(httpsOptions, app).listen(port)
+} else {
+	http.createServer(httpsOptions, app).listen(port)
+}
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+// app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
