@@ -1,14 +1,6 @@
 import { h, Component } from 'preact';
 import Button from 'preact-material-components/Button';
-import LayoutGrid from 'preact-material-components/LayoutGrid';
-import List from 'preact-material-components/List';
-import Icon from 'preact-material-components/Icon';
 import Helmet from 'preact-helmet';
-import InfiniteScroll from 'react-infinite-scroller';
-import Stretch from 'styled-loaders/lib/components/Stretch';
-import 'preact-material-components/List/style.css';
-import 'preact-material-components/LayoutGrid/style.css';
-import 'preact-material-components/LayoutGrid/style.css';
 import 'preact-material-components/Button/style.css';
 import { connect } from 'preact-redux';
 import { fetch_user, follow_user, unfollow_user, fetch_user_more_songs } from '../../actions/user';
@@ -17,17 +9,15 @@ import { UserPictureName } from '../../components/UserPictureName';
 import { UserFollowers } from '../../components/UserFollowers';
 import { getCurrentUrl } from 'preact-router';
 import { UserFollowing } from '../../components/UserFollowing';
-import { TrackCard } from '../../components/TrackCard';
 import { USER } from '../../enums/user';
 import { APP } from '../../enums/app';
 import style from './style';
 import { generateTwitterCard } from '../../utils/generateTwitterCard';
 import { SETTINGS } from '../../enums/settings';
-import { TrackListItem } from '../../components/TrackListItem';
+import { ProfileTabContainer } from '../../components/ProfileTabContainer';
+import { TracksContainer } from '../../components/Tracks/Tracks';
 
 let _following = false;
-const loader = (<div key={0}><Stretch color="#c67dcb" /></div>);
-const infiniteScrollStyle = { display: "inline-block", width: '100%' };
 let hasMore = false;
 
 @connect(({ auth, user, viewedUser, settings }) => ({ auth, user, viewedUser, settings }))
@@ -126,6 +116,7 @@ export default class Profile extends Component {
 		const _user = viewedUser.profile.displayName || (viewedUser.profile && viewedUser.profile.url);
 		const title = `${APP.NAME} - ${_user}`;
 		const tracks = viewedUser.tracks;
+		const shouldRenderWaveform = settings.waveforms === SETTINGS.ENABLE_WAVEFORMS || settings.waveforms == null;
 		if (this.currentUrl !== getCurrentUrl()) this.updateData();
 
 		for (const track of tracks) {
@@ -164,77 +155,30 @@ export default class Profile extends Component {
 					</UserPictureName>
 				</div>
 				<div class={style.profile_contents}>
-					<LayoutGrid>
-						<LayoutGrid.Inner>
-						<LayoutGrid.Cell desktopCols="9" tabletCols="12" tabletOrder="2">
-								<h1 class={style.mainHeader} style={{ 'margin-top': "0" }}>
-									Tracks <small class={style.smolButNotSwol}>{viewedUser.amountOfTracks}</small>
-								</h1>
+					<ProfileTabContainer
+						amountOfTracks={viewedUser.amountOfTracks}
+						tracks={(
+							<div>
 								{tracks.length >= 1 && (
-									<InfiniteScroll pageStart={0} loadMore={this.loadMore} hasMore={hasMore} style={infiniteScrollStyle} loader={loader}>
-										{(settings.waveforms === SETTINGS.ENABLE_WAVEFORMS || settings.waveforms == null) ? tracks.map(track => (
-											<TrackCard
-											track={track}
-											user={viewedUser}
-											currentUser={user}
-											key={track.id}
-											audioContext={this.props.audioContext}
-											isCurrentTrack={false}
-											onStartPlay={this.onStartPlay.bind(this)}
-										/>)) : (<List>
-												<List.Item class={style['list-item']}>
-													<div style={{ width: '100px' }}></div>
-													<List.ItemGraphic class={style.hover}>
-														<Icon></Icon>
-													</List.ItemGraphic>
-													<List.TextContainer class={style.container}>
-														<LayoutGrid class={style.grid}>
-															<LayoutGrid.Inner class={style['grid-inner']}>
-																<LayoutGrid.Cell desktopCols="6" tabletCols="6" phoneCols="2">
-																	<List.PrimaryText>
-																		<span class={style.centered}>
-																			Track
-																		</span>
-																	</List.PrimaryText>
-																</LayoutGrid.Cell>
-																<LayoutGrid.Cell desktopCols="6" tabletCols="6" phoneCols="2">
-																	<span>
-																		<Icon>access_time</Icon>
-																	</span>
-																</LayoutGrid.Cell>
-															</LayoutGrid.Inner>
-														</LayoutGrid>
-													</List.TextContainer>
-													<List.ItemMeta>
-														<Icon style={{ 'margin-right': 10, opacity: 0 }}>cloud_download</Icon>
-														<Icon style={{ opacity: 0 }}>check</Icon>
-													</List.ItemMeta>
-												</List.Item>
-												{tracks.map(track => (
-													<TrackListItem
-														showArtwork={true}
-														showExtraStats={true}
-														onClick={this.onStartPlay.bind(this)}
-														track={track}
-														user={track.user}
-													/>
-												))}
-											</List>)
-										}
-									</InfiniteScroll>
+									<TracksContainer
+										tracks={tracks}
+										shouldRenderWaveform={shouldRenderWaveform}
+										onStartPlay={this.onStartPlay.bind(this)}
+										viewedUser={viewedUser}
+										user={user}
+									/>
 								)}
 								{tracks.length <= 0 && <h1>No tracks</h1>}
-							</LayoutGrid.Cell>
-							<LayoutGrid.Cell desktopCols="3" tabletCols="12">
-								<h1 class={style.mainHeader} style={{ 'margin-top': "0" }}>
-									About
-								</h1>
+							</div>
+						)}
+						about={(
+							<div>
 								{viewedUser != null && <UserDescription user={viewedUser.profile} />}
 								{viewedUser != null && <UserFollowers viewedUser={viewedUser} style={{ 'margin-top': '20px' }} />}
 								{viewedUser != null && <UserFollowing viewedUser={viewedUser} style={{ 'margin-top': '20px' }} />}
-							</LayoutGrid.Cell>
-						</LayoutGrid.Inner>
-					</LayoutGrid>
+							</div>
+						)}
+					/>
 				</div>
 			</div>
 		);

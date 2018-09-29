@@ -114,7 +114,7 @@ export class TrackListItem extends Component {
 								</List.SecondaryText>
 							</LayoutGrid.Cell>
 							<LayoutGrid.Cell desktopCols="6" tabletCols="6" phoneCols="6">
-								<List.SecondaryText>
+								<List.SecondaryText className={styles.timeContainer}>
 									<p class={styles.time}>
 										{seconds_to_time(track.duration).rendered}
 									</p>
@@ -143,6 +143,7 @@ export class TrackListItem extends Component {
 							inCollection={track.inCollection}
 							onSaveTrackToCollection={this.saveTrackToCollection.bind(this)}
 							onRemoveTrackFromCollection={this.removeTrackFromCollection.bind(this)}
+							className={styles.trackCollectionIndicator}
 						/>
 					</List.ItemMeta>
 				)}
