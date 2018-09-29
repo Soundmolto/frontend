@@ -317,7 +317,7 @@ export default class Header extends Component {
 						<Drawer.DrawerContent>
 							<Drawer.DrawerItem onClick={this.goHome} class={this.isActive('/')} href={`/`}>
 								<List.ItemGraphic>music_note</List.ItemGraphic>
-								Discover
+								Stream
 							</Drawer.DrawerItem>
 							
 							{this.login_or_logout()}
