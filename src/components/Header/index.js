@@ -324,6 +324,7 @@ export default class Header extends Component {
 						</Drawer.DrawerContent>
 					</Drawer.PermanentDrawer>
 					<Dialog ref={this.settingsDialogRef} onCancel={e => this.props.dispatch({ type: "HIDE_SETTINGS_PANEL" } )}>
+						<div class="modal-border-top"></div>
 						<Dialog.Header>Settings</Dialog.Header>
 						<Dialog.Body>
 							<div class={style.switchContainer}>
@@ -350,6 +351,7 @@ export default class Header extends Component {
 					</Dialog>
 
 					<Dialog ref={this.editProfileDialogRef}>
+						<div class="modal-border-top"></div>
 						<Dialog.Header>Edit Profile</Dialog.Header>
 						<Dialog.Body>
 							<EditProfile ref={this.editProfileRef} onSubmit={this.closeProfilePanel} />
@@ -357,6 +359,7 @@ export default class Header extends Component {
 					</Dialog>
 
 					<Dialog ref={this.gotoPanelRef} onCancel={e => this.closeGoToPanel()}>
+						<div class="modal-border-top"></div>
 						<Dialog.Header>Go to</Dialog.Header>
 						<Dialog.Body class={style["goto-panel"]}>
 							<Link href="/" onClick={e => this.closeGoToPanel()}>Home</Link>
@@ -373,6 +376,7 @@ export default class Header extends Component {
 					</Dialog>
 
 					<Dialog ref={this.shortcutsPanelRef} onCancel={e => this.closeShortcutsPanel()}>
+						<div class="modal-border-top"></div>
 						<Dialog.Header>Shortcuts</Dialog.Header>
 						<Dialog.Body class={style["goto-panel"]}>
 							<ul class={style["shortcuts"]}>
@@ -387,6 +391,7 @@ export default class Header extends Component {
 					</Dialog>
 
 					<Dialog ref={this.uploadTrackModalRef}>
+						<div class="modal-border-top"></div>
 						<Dialog.Header>Upload track</Dialog.Header>
 						<Dialog.Body>
 							<UploadTrack />

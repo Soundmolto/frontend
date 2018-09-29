@@ -167,12 +167,13 @@ body > div {
 }
 
 .mdc-theme--dark .mdc-dialog--open .mdc-dialog__surface {
-	background-color: #636366;
+	background-color: #111;
 	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .mdc-theme--dark .mdc-dialog--open .mdc-dialog__backdrop {
-	opacity: 0.8;
+	opacity: 1;
+	background-color: var(--mdc-theme-text-primary-on-light, rgba(0, 0, 0, 0.9));
 }
 
 .mdc-theme--dark .mdc-button:not(:disabled) {
@@ -214,7 +215,8 @@ body > div {
 }
 
 .mdc-dialog__surface {
-	border-top: 10px solid var(--mdc-theme-primary);
+	border: 0;
+	overflow: hidden;
 }
 
 .header {
@@ -408,6 +410,11 @@ input[disabled] {
 .slider-list {
 	cursor: initial !important;
 	user-select: all;
+}
+
+.modal-border-top {
+	height: 5px;
+	background: linear-gradient(to right, var(--mdc-theme-primary) -40%, var(--mdc-theme-complementary-color) 170%) !important;
 }
 
 .mdc-tab-bar__indicator {
