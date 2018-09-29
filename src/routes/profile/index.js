@@ -15,7 +15,7 @@ import style from './style';
 import { generateTwitterCard } from '../../utils/generateTwitterCard';
 import { SETTINGS } from '../../enums/settings';
 import { ProfileTabContainer } from '../../components/ProfileTabContainer';
-import { TracksContainer } from '../../components/Tracks/Tracks';
+import { TracksContainer } from '../../components/TracksContainer';
 
 let _following = false;
 let hasMore = false;

@@ -1,7 +1,7 @@
 import InfiniteScroll from 'react-infinite-scroller';
 import Stretch from 'styled-loaders/lib/components/Stretch';
-import { TrackCard } from '../../components/TrackCard';
-import { TrackListItem } from '../../components/TrackListItem';
+import { TrackCard } from '../TrackCard';
+import { TrackListItem } from '../TrackListItem';
 import 'preact-material-components/List/style.css';
 import LayoutGrid from 'preact-material-components/LayoutGrid';
 import List from 'preact-material-components/List';
@@ -37,7 +37,7 @@ export const TracksContainer = ({ tracks, shouldRenderWaveform, onStartPlay, vie
 	<InfiniteScroll pageStart={0} loadMore={this.loadMore} hasMore={hasMore} style={infiniteScrollStyle} loader={loader}>
 			{shouldRenderWaveform ?
 				tracks.map(track => renderTrackCard(track, viewedUser, user, onStartPlay)) : (
-				<List>
+				<List class={style.listContainer}>
 					<List.Item class={style['list-item']}>
 						<div style={{ width: '100px' }}></div>
 						<List.ItemGraphic class={style.hover}>
