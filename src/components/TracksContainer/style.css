@@ -3,6 +3,7 @@
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 	height: auto !important;
 	padding: 10px;
+	align-content: center;
 }
 
 .list-item:hover::before, .list-item:hover::after,
@@ -13,6 +14,7 @@
 
 .container {
 	width: 100%;
+	align-self: center !important;
 }
 
 .time {
@@ -25,7 +27,7 @@
 }
 
 .grid-inner {
-	align-items: center;
+	align-items: stretch;
 }
 
 .grid-inner > div {
@@ -36,6 +38,8 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: pre;
+	align-content: center;
+	align-items: center;
 }
 
 .centered {
