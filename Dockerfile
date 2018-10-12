@@ -18,6 +18,5 @@ COPY . .
 RUN npm i preact-cli
 RUN ./node_modules/.bin/preact build --no-prerender
 
-
-EXPOSE 8080 8081
+EXPOSE 80 443
 CMD [ "node", "server.js" ]
