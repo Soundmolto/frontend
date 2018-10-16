@@ -187,7 +187,44 @@ app.get('*', async (request, response, next) => {
 
 		response.send(DOM.serialize());
 	} else {
-		response.sendFile(__dirname + '/build/index.html');
+		const defImage = 'https://soundmolto.com/assets/icons/android-chrome-512x512.png';
+		let summary, site, title, description, image;
+		const file = readFileSync(__dirname + '/build/index.html');
+		const DOM = new JSDOM(file);
+		const document = DOM.window.document;
+		const head = document.head;
+		let tags = [];
+		let ogTags = [];
+
+		summary = 'summary';
+		site = `${APP.TWITTER_HANDLE}`;
+		title = `${APP.NAME} - Discover`;
+		description = `${APP.NAME} Discover new artists on SoundMolto`;
+		image = defImage;
+		tags = generateTwitterCard({ summary, site, title, description, image });
+		ogTags = generateFacebookCard({
+			title,
+			type: 'website',
+			description,
+			image,
+			url: `https://soundmolto.com/`
+		})
+
+		for (const tag of tags) {
+			const meta = document.createElement('meta');
+			meta.setAttribute('name', tag.name);
+			meta.setAttribute('content', tag.content);
+			head.appendChild(meta);
+		}
+
+		for (const tag of ogTags) {
+			const meta = document.createElement('meta');
+			meta.setAttribute('property', tag.name);
+			meta.setAttribute('content', tag.content);
+			head.appendChild(meta);
+		}
+
+		response.send(DOM.serialize());
 	}
 });
 
