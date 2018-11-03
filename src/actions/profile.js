@@ -4,7 +4,7 @@ import { prefill_auth } from '../prefill-authorized-route';
 
 export async function edit_profile (dispatch, { profile, token, id }) {
     let returnObject = {};
-	console.log(profile);
+
     try {
         const data = await fetch(`${API_ENDPOINT}/users/${id}`, {
             body: JSON.stringify(profile),

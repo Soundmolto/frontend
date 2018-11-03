@@ -1,10 +1,7 @@
 import { Component } from 'preact';
 import Card from 'preact-material-components/Card';
 import Button from 'preact-material-components/Button';
-import Dialog from 'preact-material-components/Dialog';
-import Snackbar from 'preact-material-components/Snackbar';
 import { Waveform } from '../Waveform';
-import { EditTrack } from '../EditTrack';
 import Icon from 'preact-material-components/Icon';
 import IconToggle from 'preact-material-components/IconToggle';
 import { playing_now, delete_track, toggle_like, save_track_in_collection, remove_track_from_collection } from '../../actions/track';
@@ -15,7 +12,6 @@ import { SETTINGS } from '../../enums/settings';
 import dayjs from 'dayjs';
 import TimeAgo from 'timeago-react';
 import Goku from '../../assets/goku.png';
-import { route } from 'preact-router';
 import approximateNumber from 'approximate-number';
 import 'preact-material-components/IconToggle/style.css';
 import 'preact-material-components/Button/style.css';
@@ -24,6 +20,7 @@ import 'preact-material-components/Button/style.css';
 import 'preact-material-components/Dialog/style.css';
 import 'preact-material-components/Snackbar/style.css';
 import styles from './style';
+import { start_editing_track } from '../../actions/editingTrack';
 
 let className = (e) => (e);
 
@@ -35,8 +32,6 @@ export class TrackCard extends Component {
 	deleting = false;
 
 	state = { playing: false, inCollection: false  };
-
-	editTrackRef = dialog => (this.editTrackPanel = dialog);
 
 	componentDidMount () {
 		this.plays = this.props.track.plays;
@@ -85,10 +80,13 @@ export class TrackCard extends Component {
 	}
 
 	onClickEditTrack () {
-		this.editTrackPanel.MDComponent.show();
+		const { dispatch, track } = this.props;
+		start_editing_track(dispatch, { track });
 	}
 
 	onClickDeleteTrack (e) {
+		// todo. move to event based in profile
+		return true;
 		this.deleting = true;
 		this.bar.MDComponent.show({
 			message: "Deleting track",
@@ -133,8 +131,6 @@ export class TrackCard extends Component {
 		const toggleOnIcon = { content: "favorite", label: "Remove From Favorites" };
 		const toggleOffIcon = { content: "favorite_border", label: "Add to Favorites" };
 		let posted = postedAt.format('DD-MM-YYYY');
-
-		console.log(settings);
 
 		if (posted.indexOf("NaN") !== -1) {
 			posted = "Unavaliable - Parsing error";
@@ -261,19 +257,6 @@ export class TrackCard extends Component {
 						)}
 					</div>
 				</Card>
-
-				<Dialog ref={this.editTrackRef}>
-					<Dialog.Header>Edit Track</Dialog.Header>
-					<Dialog.Body>
-						<EditTrack track={track} onSubmit={newTrack => {
-							track = newTrack;
-							if (isCurrentTrack === true) {
-								route(`/${track.user.url}/${newTrack.url}`, true);
-							}
-						}} />
-					</Dialog.Body>
-				</Dialog>
-				<Snackbar ref={bar=>{this.bar=bar;}}/>
 			</div>
 		);
 	}

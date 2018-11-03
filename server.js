@@ -229,12 +229,12 @@ app.get('*', async (request, response, next) => {
 });
 
 if (PRODUCTION_MODE === 'PRODUCTION') {
-	https.createServer(httpsOptions, app).listen(8081);
+	https.createServer(httpsOptions, app).listen(443);
 	const httpServer = express();
 	// set up a route to redirect http to https
 	httpServer.get('*', (req, res )=> res.redirect('https://' + req.headers.host + req.url));
 	// have it listen on 8080
-	http.createServer(httpServer).listen(8080);
+	http.createServer(httpServer).listen(80);
 } else {
-	http.createServer(httpsOptions, app).listen(port)
+	http.createServer(httpsOptions, app).listen(80)
 }

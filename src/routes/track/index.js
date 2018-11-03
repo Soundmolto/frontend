@@ -12,6 +12,10 @@ import Helmet from 'preact-helmet';
 import { APP } from '../../enums/app';
 import snarkdown from 'snarkdown';
 import { generateTwitterCard } from '../../utils/generateTwitterCard';
+import { EditTrack } from '../../components/EditTrack';
+import Dialog from 'preact-material-components/Dialog';
+import Snackbar from 'preact-material-components/Snackbar';
+import { finish_editing_track } from '../../actions/editingTrack';
 
 @connect(state => state)
 export default class Track extends Component {
@@ -19,10 +23,23 @@ export default class Track extends Component {
 	tracks = [];
 
 	currentUrl = getCurrentUrl();
+	editTrackRef = dialog => (this.editTrackPanel = dialog);
 
 	componentDidMount () {
 		this.updateData();
 	}
+
+	componentDidUpdate () {
+		window.requestAnimationFrame(() => {
+			if (this.props.editingTrack.editing && this.editTrackPanel) {
+				this.editTrackPanel.MDComponent.show()
+			}
+		})
+	}
+
+	onCloseEditTrack = () => {
+		finish_editing_track(this.props.dispatch);
+	};
 
 	updateData () {
 		const { auth, dispatch, track_url, vanity_url } = this.props;
@@ -64,7 +81,7 @@ export default class Track extends Component {
 		return trackArtwork || userAvatar || Goku;
 	}
 
-	render ({ user, viewedUser, track }) {
+	render ({ user, viewedUser, track, editingTrack }) {
 		const viewedTrack = track.track;
 		const trackOwner = track.user;
 		if (this.currentUrl !== getCurrentUrl()) this.updateData();
@@ -125,6 +142,19 @@ export default class Track extends Component {
 					)}
 					
 				</LayoutGrid>
+				{editingTrack.editing && (
+					<Dialog ref={this.editTrackRef} onCancel={this.onCloseEditTrack}>
+						<Dialog.Header>Edit Track</Dialog.Header>
+						<Dialog.Body>
+							<EditTrack track={editingTrack.track} onSubmit={newTrack => {
+								if (isCurrentTrack === true) {
+									route(`/${track.user.url}/${newTrack.url}`, true);
+								}
+							}} />
+						</Dialog.Body>
+					</Dialog>
+				)}
+				<Snackbar ref={bar=>{this.bar=bar;}}/>
 			</div>
 		);
 	}

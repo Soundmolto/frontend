@@ -16,14 +16,20 @@ import { generateTwitterCard } from '../../utils/generateTwitterCard';
 import { SETTINGS } from '../../enums/settings';
 import { ProfileTabContainer } from '../../components/ProfileTabContainer';
 import { TracksContainer } from '../../components/TracksContainer';
+import { EditTrack } from '../../components/EditTrack';
+import Dialog from 'preact-material-components/Dialog';
+import Snackbar from 'preact-material-components/Snackbar';
+import { finish_editing_track } from '../../actions/editingTrack';
 
 let _following = false;
 let hasMore = false;
 
-@connect(({ auth, user, viewedUser, settings }) => ({ auth, user, viewedUser, settings }))
+@connect(({ auth, user, viewedUser, settings, editingTrack }) => ({ auth, user, viewedUser, settings, editingTrack }))
 export default class Profile extends Component {
 
 	currentUrl = getCurrentUrl();
+
+	editTrackRef = dialog => (this.editTrackPanel = dialog);
 
 	componentDidMount () {
 		this.updateData();
@@ -111,7 +117,19 @@ export default class Profile extends Component {
 		}
 	}
 
-	render({ auth, user, viewedUser, settings }) {
+	componentDidUpdate () {
+		window.requestAnimationFrame(() => {
+			if (this.props.editingTrack.editing && this.editTrackPanel) {
+				this.editTrackPanel.MDComponent.show()
+			}
+		})
+	}
+
+	onCloseEditTrack = () => {
+		finish_editing_track(this.props.dispatch);
+	};
+
+	render({ auth, user, viewedUser, settings, editingTrack }) {
 		const following = this.following(viewedUser);
 		const _user = viewedUser.profile.displayName || (viewedUser.profile && viewedUser.profile.url);
 		const title = `${APP.NAME} - ${_user}`;
@@ -127,7 +145,6 @@ export default class Profile extends Component {
 
 		this.tracks = tracks.concat([]);
 		hasMore = viewedUser.hasMore;
-		console.log(hasMore);
 
 		return (
 			<div class={style.profile}>
@@ -180,6 +197,15 @@ export default class Profile extends Component {
 						)}
 					/>
 				</div>
+				{editingTrack.editing && (
+					<Dialog ref={this.editTrackRef} onCancel={this.onCloseEditTrack}>
+						<Dialog.Header>Edit Track</Dialog.Header>
+						<Dialog.Body>
+							<EditTrack track={editingTrack.track} />
+						</Dialog.Body>
+					</Dialog>
+				)}
+				<Snackbar ref={bar=>{this.bar=bar;}}/>
 			</div>
 		);
 	}

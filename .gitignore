@@ -65,3 +65,4 @@ package-lock.json
 build/
 certs/
 mode
+certbot-auth/
