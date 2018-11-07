@@ -103,6 +103,11 @@ export default class Header extends Component {
 		this.linkTo(`/collection/tracks`);
 	};
 
+	goToArtists = e => {
+		e.preventDefault();
+		this.linkTo(`${this.props.user.profile.url}/following`);
+	}
+
 	goToLogin = e => {
 		e.preventDefault();
 		this.linkTo('/login');
@@ -191,7 +196,7 @@ export default class Header extends Component {
 							My Music
 							<small>{settings.beta === SETTINGS.ENABLE_BETA ? "BETA" : "Soon"}</small>
 						</h1>
-						<Drawer.DrawerItem onClick={e => console.log(e)} class={this.isActive(`/${user.profile.url}/artists`)}>
+						<Drawer.DrawerItem onClick={this.goToArtists} class={`mdc-list-item ${this.isActive(`/${user.profile.url}/following`)}`} href={`/${user.profile.url}/following`}>
 							<List.ItemGraphic>person</List.ItemGraphic>
 							Artists
 						</Drawer.DrawerItem>

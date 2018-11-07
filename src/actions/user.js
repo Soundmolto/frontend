@@ -262,7 +262,6 @@ export async function fetch_following (dispatch, { token, vanity_url }) {
     } catch (error) {
         console.log(error);
     } finally {
-		console.log(returnObject)
         return dispatch(returnObject);
     }
 }

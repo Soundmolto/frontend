@@ -181,7 +181,6 @@ app.get('*', async (request, response, next) => {
 			const meta = document.createElement('meta');
 			meta.setAttribute('property', tag.name);
 			meta.setAttribute('content', tag.content);
-			console.log(meta.outerHTML);
 			head.appendChild(meta);
 		}
 
