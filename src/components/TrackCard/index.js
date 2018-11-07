@@ -29,7 +29,6 @@ export class TrackCard extends Component {
 
 	plays = 0;
 	played = false;
-	deleting = false;
 
 	state = { playing: false, inCollection: false  };
 
@@ -84,33 +83,6 @@ export class TrackCard extends Component {
 		start_editing_track(dispatch, { track });
 	}
 
-	onClickDeleteTrack (e) {
-		// todo. move to event based in profile
-		return true;
-		this.deleting = true;
-		this.bar.MDComponent.show({
-			message: "Deleting track",
-			actionText: "Undo",
-			actionHandler: e => {
-				if (e != null) {
-					e.preventDefault();
-					e.stopImmediatePropagation();
-				}
-				this.deleting = false;
-			}
-		});
-
-		window.setTimeout(_ => {
-			if (this.deleting) {
-				delete_track(this.props.dispatch, {
-					track: this.props.track,
-					token: this.props.auth.token,
-					id: this.props.track.id
-				})
-			}
-		}, 5500);
-	}
-
 	getArtwork (track, user) {
 		const userAvatar = user && user.profilePicture;
 		const trackArtwork = track && track.artwork;
@@ -125,7 +97,7 @@ export class TrackCard extends Component {
 		remove_track_from_collection(this.props.dispatch, { token: this.props.auth.token, id: this.props.track.id });
 	}
 
-	render ({ track, user, currentUser, currently_playing, isCurrentTrack, settings }, { inCollection }) {
+	render ({ track, user, currentUser, currently_playing, isCurrentTrack, settings, onDelete }, { inCollection }) {
 		const userLikesTrack = user.likes && user.likes.filter(like => like.id === track.id).length != 0;
 		const postedAt = dayjs(parseInt(track.createdAt));
 		const toggleOnIcon = { content: "favorite", label: "Remove From Favorites" };
@@ -247,7 +219,7 @@ export class TrackCard extends Component {
 						</span>
 						{user.profile.id === currentUser.profile.id && (
 							<span>
-								<p class={className(`${styles.centered} ${styles.actionable}`)} style={{ 'float': 'right', 'margin-top': '14px' }} onClick={this.onClickDeleteTrack.bind(this)}>
+								<p class={className(`${styles.centered} ${styles.actionable}`)} style={{ 'float': 'right', 'margin-top': '14px' }} onClick={onDelete}>
 									<Icon style={{ margin: 0 }}>delete</Icon>
 								</p>
 								<p class={className(`${styles.centered} ${styles.actionable}`)} style={{ 'float': 'right', 'margin-top': '14px' }} onClick={this.onClickEditTrack.bind(this)}>

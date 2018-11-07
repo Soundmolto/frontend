@@ -20,6 +20,7 @@ import { EditTrack } from '../../components/EditTrack';
 import Dialog from 'preact-material-components/Dialog';
 import Snackbar from 'preact-material-components/Snackbar';
 import { finish_editing_track } from '../../actions/editingTrack';
+import { delete_track } from '../../actions/track';
 
 let _following = false;
 let hasMore = false;
@@ -28,6 +29,7 @@ let hasMore = false;
 export default class Profile extends Component {
 
 	currentUrl = getCurrentUrl();
+	deleting = false;
 
 	editTrackRef = dialog => (this.editTrackPanel = dialog);
 
@@ -129,6 +131,31 @@ export default class Profile extends Component {
 		finish_editing_track(this.props.dispatch);
 	};
 
+	onDelete = () => {
+		this.deleting = true;
+		this.bar.MDComponent.show({
+			message: "Deleting track",
+			actionText: "Undo",
+			actionHandler: e => {
+				if (e != null) {
+					e.preventDefault();
+					e.stopImmediatePropagation();
+				}
+				this.deleting = false;
+			}
+		});
+
+		window.setTimeout(_ => {
+			if (this.deleting) {
+				delete_track(this.props.dispatch, {
+					track: this.props.track,
+					token: this.props.auth.token,
+					id: this.props.track.id
+				})
+			}
+		}, 5500);
+	};
+
 	render({ auth, user, viewedUser, settings, editingTrack }) {
 		const following = this.following(viewedUser);
 		const _user = viewedUser.profile.displayName || (viewedUser.profile && viewedUser.profile.url);
@@ -183,6 +210,7 @@ export default class Profile extends Component {
 										onStartPlay={this.onStartPlay.bind(this)}
 										viewedUser={viewedUser}
 										user={user}
+										onDelete={this.onDelete}
 									/>
 								)}
 								{tracks.length <= 0 && <h1>No tracks</h1>}
@@ -195,6 +223,7 @@ export default class Profile extends Component {
 								{viewedUser != null && <UserFollowing viewedUser={viewedUser} style={{ 'margin-top': '20px' }} />}
 							</div>
 						)}
+						onDelete={this.onDelete}
 					/>
 				</div>
 				{editingTrack.editing && (

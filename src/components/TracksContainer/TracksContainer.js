@@ -12,7 +12,7 @@ const loader = (<div key={0}><Stretch color="#c67dcb" /></div>);
 const infiniteScrollStyle = { display: "inline-block", width: '100%' };
 let hasMore = false;
 
-const renderTrackCard = (track, viewedUser, user, onStartPlay) => (
+const renderTrackCard = (track, viewedUser, user, onStartPlay, onDelete) => (
 	<TrackCard
 		track={track}
 		user={viewedUser}
@@ -20,23 +20,25 @@ const renderTrackCard = (track, viewedUser, user, onStartPlay) => (
 		key={track.id}
 		isCurrentTrack={false}
 		onStartPlay={onStartPlay}
+		onDelete={onDelete}
 	/>
 );
 
-const renderTrackListItem = (track, onStartPlay) => (
+const renderTrackListItem = (track, onStartPlay, onDelete) => (
 	<TrackListItem
 		showArtwork={true}
 		showExtraStats={true}
 		onClick={onStartPlay}
 		track={track}
 		user={track.user}
+		onDelete={onDelete}
 	/>
 );
 
-export const TracksContainer = ({ tracks, shouldRenderWaveform, onStartPlay, viewedUser, user }) => (
+export const TracksContainer = ({ tracks, shouldRenderWaveform, onStartPlay, viewedUser, user, onDelete }) => (
 	<InfiniteScroll pageStart={0} loadMore={this.loadMore} hasMore={hasMore} style={infiniteScrollStyle} loader={loader}>
 			{shouldRenderWaveform ?
-				tracks.map(track => renderTrackCard(track, viewedUser, user, onStartPlay)) : (
+				tracks.map(track => renderTrackCard(track, viewedUser, user, onStartPlay, onDelete)) : (
 				<List class={style.listContainer}>
 					<List.Item class={style['list-item']}>
 						<div style={{ width: '100px' }}></div>
@@ -66,7 +68,7 @@ export const TracksContainer = ({ tracks, shouldRenderWaveform, onStartPlay, vie
 							<Icon style={{ opacity: 0 }}>check</Icon>
 						</List.ItemMeta>
 					</List.Item>
-					{tracks.map(track => renderTrackListItem(track, onStartPlay))}
+					{tracks.map(track => renderTrackListItem(track, onStartPlay, onDelete))}
 				</List>)
 			}
 		</InfiniteScroll>

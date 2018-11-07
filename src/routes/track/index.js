@@ -81,6 +81,31 @@ export default class Track extends Component {
 		return trackArtwork || userAvatar || Goku;
 	}
 
+	onDelete = () => {
+		this.deleting = true;
+		this.bar.MDComponent.show({
+			message: "Deleting track",
+			actionText: "Undo",
+			actionHandler: e => {
+				if (e != null) {
+					e.preventDefault();
+					e.stopImmediatePropagation();
+				}
+				this.deleting = false;
+			}
+		});
+
+		window.setTimeout(_ => {
+			if (this.deleting) {
+				delete_track(this.props.dispatch, {
+					track: this.props.track,
+					token: this.props.auth.token,
+					id: this.props.track.id
+				})
+			}
+		}, 5500);
+	};
+
 	render ({ user, viewedUser, track, editingTrack }) {
 		const viewedTrack = track.track;
 		const trackOwner = track.user;
@@ -118,8 +143,16 @@ export default class Track extends Component {
 						<LayoutGrid.Inner>
 							<LayoutGrid.Cell desktopCols="12" tabletCols="12" tabletOrder="1">
 								<div class={style.profile_contents}>
-									<TrackCard track={viewedTrack} user={trackOwner} currentUser={user} key={viewedTrack.id} audioContext={this.props.audioContext} isCurrentTrack={true}
-										onStartPlay={this.onStartPlay.bind(this)} />
+									<TrackCard
+										track={viewedTrack}
+										user={trackOwner}
+										currentUser={user}
+										key={viewedTrack.id}
+										audioContext={this.props.audioContext}
+										isCurrentTrack={true}
+										onStartPlay={this.onStartPlay.bind(this)}
+										onDelete={this.onDelete}
+									/>
 								</div>
 							</LayoutGrid.Cell>
 							<LayoutGrid.Cell desktopCols="12" tabletCols="12" tabletOrder="1">
