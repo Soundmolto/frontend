@@ -237,3 +237,32 @@ export async function delete_user (dispatch, { token, user_id }) {
         return dispatch(returnObject);
     }
 }
+
+export async function fetch_following (dispatch, { token, vanity_url }) {
+	let returnObject = {};
+
+    try {
+        const data = await fetch(`${API_ENDPOINT}/users/${vanity_url}/following`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                ...prefill_auth(token)
+            }
+        });
+
+        if (data.status === 200) {
+            returnObject = {
+                type: USER.GOT_FOLLOWING_USERS,
+                payload: await data.json()
+            }
+        } else {
+            throw new Error(data.statusText);
+        }
+
+    } catch (error) {
+        console.log(error);
+    } finally {
+		console.log(returnObject)
+        return dispatch(returnObject);
+    }
+}

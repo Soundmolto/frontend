@@ -1,0 +1,33 @@
+.profile {
+	width: 100%;
+	padding: 0 20px;
+}
+
+@media screen and (min-width: 1200px) {
+	.profile {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+	}	
+
+	.profile > div {
+		width: calc(100% / 3 - 40px);
+	}
+}
+
+@media screen and (max-width: 1199px) {
+	.profile > div {
+		width: calc(100% - 40px);
+	}
+}
+
+.profile > div {
+	margin: 20px;
+}
+
+.profile > div > [class="mdc-card"] {
+	border-radius: 10px;
+	padding: 20px;
+	position: relative;
+	overflow: hidden;
+}

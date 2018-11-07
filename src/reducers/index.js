@@ -11,6 +11,7 @@ import tracks from './tracks';
 import trackCollection from './track-collection';
 import settings from './settings';
 import editingTrack from './editingTrack';
+import following from './following';
 
 export default combineReducers({
     auth,
@@ -24,5 +25,6 @@ export default combineReducers({
 	tracks,
 	trackCollection,
 	settings,
-	editingTrack
+	editingTrack,
+	following,
 });

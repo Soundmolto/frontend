@@ -15,6 +15,7 @@ import TrackCollection from 'async!../../routes/track-collection';
 import { request_new_data } from '../../actions/user';
 import { THEMES } from '../../enums/themes';
 import { QueueController } from '../QueueController';
+import Following from '../../routes/artists';
 
 let onRender = (UI) => {};
 let MainAudioContext;
@@ -80,6 +81,7 @@ export default class App extends Component {
 						<Profile path="/:vanity_url" key="profile" audioContext={this.audioContext} queue={queue} store={store} class="route-page" />
 						<Track path="/:vanity_url/:track_url" key="track" audioContext={this.audioContext} queue={queue} class="route-page" />
 						<TrackCollection path="/collection/tracks" key="track-collection" audioContext={this.audioContext} queue={queue} class="route-page" />
+						<Following path="/following" className="route-page" />
 					</Router>
 				</div>
 				<audio ref={this.audioPlayerRef} />
