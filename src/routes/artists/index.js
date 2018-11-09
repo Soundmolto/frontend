@@ -21,9 +21,13 @@ export default class Following extends Component {
 
 		return (
 			<div>
-				<Helmet title={`${APP.NAME} - Following`} />
-				<div class="header"><h1>Users <small style={{ fontSize: '0.8rem'}}>being deprecated</small></h1></div>
-				<div class={style.profile}>
+				<Helmet title={`${APP.NAME} - Artists`} />
+				<div class="header">
+					<h1>
+						Artists
+					</h1>
+				</div>
+				<div class={style.artists}>
 					{following.map(user => (<UserCard user={{ profile: user }} />))}
 				</div>
 			</div>

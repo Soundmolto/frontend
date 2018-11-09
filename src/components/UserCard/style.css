@@ -1,24 +1,84 @@
 .profile {
-    position: absolute;
-    top: -5px;
-    left: -5px;
-    width: calc(100% + 10px);
-    height: calc(100% + 10px);
-    filter: blur(5px);
     background-size: cover;
+    display: block;
+    box-shadow: var(--mdc-theme--box-shadow--floating);
 }
 
-.overlayImage {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 2;
+.about {
+    margin: 0 15px;
 }
 
 .typography {
-    color: white;
+    color: var(--mdc-theme-text-primary-on-background);
+}
+
+.typography > small {
+    font-size: 0.8rem;
+    margin-left: 10px;
+}
+
+.container {
+    display: flex;
+    position: relative;
+    flex-wrap: wrap;
+    text-decoration: none;
+}
+
+.button {
+    margin-top: 15px;
+    box-shadow: var(--mdc-theme--box-shadow--floating);
+    position: relative;
+    padding: 10px 0 15px !important;
+    height: auto !important;
+}
+
+.buttonBorder {
+    background: linear-gradient(to right, var(--mdc-theme-primary) -40%, var(--mdc-theme-complementary-color) 170%) !important;
+    height: 5px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.description {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.container:hover .typography {
+    color: var(--mdc-theme-complementary-color);
+}
+
+
+@media screen and (min-width: 460px) {
+    .profile {
+        width: 150px;
+        height: 150px;
+        border-radius: 150px;
+    }
+
+    .about {
+        width: calc(100% - 180px);
+    }
+}
+
+@media screen and (max-width: 460px) {
+    .profile {
+        height: 75px;
+        width: 75px;
+        border-radius: 75px;
+    }
+
+    .about {
+        width: calc(100% - 105px);
+    }
+
+    .typography {
+        font-size: 1rem;
+    }
+
+    .description {
+        font-size: 0.8rem;
+    }
 }

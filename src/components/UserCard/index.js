@@ -1,31 +1,30 @@
 import { Component } from 'preact';
-import Card from 'preact-material-components/Card';
-import 'preact-material-components/Card/style.css';
 import 'preact-material-components/Button/style.css';
 import { Link } from 'preact-router';
 import styles from './style.css';
+import Goku from '../../assets/goku.png';
+
+const getPicture = (user) => user.profile.profilePicture || Goku;
 
 export class UserCard extends Component {
-    render ({ user }) {
-		const buttonClass = `mdc-card__action mdc-button mdc-card__action--button`;
-        return (
-            <div>
-                <Card>
-                    <div class={styles.overlayImage}></div>
-                    <div class={styles.profile} style={{ "background-image": `url(${user.profile.profilePicture})` }}></div>
-                    <div style={{ 'z-index': 3 }}>
-                        <h2 class={`mdc-typography--title ${styles.typography}`}>
-                            {user.profile.displayName || "Untitled user"}
-                        </h2>
-                        <div class={`mdc-typography--caption ${styles.typography}`} style={{ 'word-break': 'break-all' }}>
-                            {user.profile.description || "No description"}
-                        </div>
-                    </div>
-                    <Card.Actions style={{ 'z-index': 3 }}>
-                        <Link className={buttonClass} style="width: 100%" href={`/${user.profile.url}`}>View Profile</Link>
-                    </Card.Actions>
-                </Card>
-            </div>
-        );
-    }
+	render ({ user }) {
+		let clamped = user.profile.description.substring(0, 150);
+		if (clamped !== user.profile.description) {
+			clamped = `${clamped}...`;
+		}
+		return (
+			<a href={`/${user.profile.url}`} class={styles.container}>
+				<div class={styles.profile} style={{ "background-image": `url(${getPicture(user)})` }}></div>
+				<div class={styles.about}>
+					<h2 class={`mdc-typography--title ${styles.typography}`}>
+						{user.profile.displayName || "Untitled user"}
+						<small>{user.profile.location}</small>
+					</h2>
+					<div class={`mdc-typography--caption ${styles.typography} ${styles.description}`}>
+						{clamped || "No description"}
+					</div>
+				</div>
+			</a>
+		);
+	}
 }
