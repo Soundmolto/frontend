@@ -20,7 +20,7 @@ const renderTrackCard = (track, viewedUser, user, onStartPlay, onDelete) => (
 		key={track.id}
 		isCurrentTrack={false}
 		onStartPlay={onStartPlay}
-		onDelete={onDelete}
+		onDelete={() => onDelete(track)}
 	/>
 );
 
@@ -31,7 +31,7 @@ const renderTrackListItem = (track, onStartPlay, onDelete) => (
 		onClick={onStartPlay}
 		track={track}
 		user={track.user}
-		onDelete={onDelete}
+		onDelete={() => onDelete(track)}
 	/>
 );
 

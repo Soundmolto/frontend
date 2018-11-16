@@ -9,7 +9,7 @@ const PRODUCTION_MODE = readFileSync(resolve(__dirname, 'mode')).toString();
 const fetch = require('node-fetch');
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
-const API = PRODUCTION_MODE === 'PRODUCTION' ? 'https://api.soundmolto.com:1344' : 'https://api.musicstreaming.dev:1344';
+const API = PRODUCTION_MODE === 'PRODUCTION' ? 'https://api.soundmolto.com' : 'https://api.musicstreaming.dev:1344';
 const toAddValues = {
 	PROFILE: "PROFILE",
 	TRACK: "TRACK",

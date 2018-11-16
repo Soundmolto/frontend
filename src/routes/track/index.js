@@ -4,7 +4,7 @@ import LayoutGrid from 'preact-material-components/LayoutGrid';
 import 'preact-material-components/LayoutGrid/style.css';
 import 'preact-material-components/Button/style.css';
 import { connect } from 'preact-redux';
-import { get_track } from '../../actions/track';
+import { get_track, delete_track } from '../../actions/track';
 import style from './style';
 import { getCurrentUrl } from 'preact-router';
 import { TrackCard } from '../../components/TrackCard';
@@ -97,10 +97,11 @@ export default class Track extends Component {
 
 		window.setTimeout(_ => {
 			if (this.deleting) {
+				const { track } = this.props.track;
 				delete_track(this.props.dispatch, {
-					track: this.props.track,
+					track: track,
 					token: this.props.auth.token,
-					id: this.props.track.id
+					id: track.id
 				})
 			}
 		}, 5500);

@@ -131,7 +131,7 @@ export default class Profile extends Component {
 		finish_editing_track(this.props.dispatch);
 	};
 
-	onDelete = () => {
+	onDelete = (track) => {
 		this.deleting = true;
 		this.bar.MDComponent.show({
 			message: "Deleting track",
@@ -148,9 +148,9 @@ export default class Profile extends Component {
 		window.setTimeout(_ => {
 			if (this.deleting) {
 				delete_track(this.props.dispatch, {
-					track: this.props.track,
+					track: track,
 					token: this.props.auth.token,
-					id: this.props.track.id
+					id: track.id
 				})
 			}
 		}, 5500);
@@ -210,7 +210,7 @@ export default class Profile extends Component {
 										onStartPlay={this.onStartPlay.bind(this)}
 										viewedUser={viewedUser}
 										user={user}
-										onDelete={this.onDelete}
+										onDelete={track => this.onDelete(track)}
 									/>
 								)}
 								{tracks.length <= 0 && <h1>No tracks</h1>}
@@ -223,7 +223,6 @@ export default class Profile extends Component {
 								{viewedUser != null && <UserFollowing viewedUser={viewedUser} style={{ 'margin-top': '20px' }} />}
 							</div>
 						)}
-						onDelete={this.onDelete}
 					/>
 				</div>
 				{editingTrack.editing && (
