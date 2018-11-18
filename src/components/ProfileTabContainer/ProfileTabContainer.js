@@ -31,8 +31,8 @@ export class ProfileTabContainer extends Component {
 					afterSlide={slideIndex => this.setState({ slideIndex })}
 					className={styles.tabContainer}
 				>
-					<div class="slide">{tracks}</div>
-					<div class={`slide ${styles.minHeight}`}>{about}</div>
+					<div class={`slide ${styles.containerEl}`}>{tracks}</div>
+					<div class={`slide ${styles.minHeight} ${styles.containerEl}`}>{about}</div>
 				</Carousel>
 			</div>
 		);

@@ -22,8 +22,6 @@ import 'preact-material-components/Snackbar/style.css';
 import styles from './style';
 import { start_editing_track } from '../../actions/editingTrack';
 
-let className = (e) => (e);
-
 @connect(({ auth, currently_playing, settings }) => ({ auth, currently_playing, settings }))
 export class TrackCard extends Component {
 
@@ -83,6 +81,10 @@ export class TrackCard extends Component {
 		start_editing_track(dispatch, { track });
 	}
 
+	onClickReportTrack (event) {
+		this.props.onReportTrack(this.props.track);
+	}
+
 	getArtwork (track, user) {
 		const userAvatar = user && user.profilePicture;
 		const trackArtwork = track && track.artwork;
@@ -137,14 +139,14 @@ export class TrackCard extends Component {
 						</Button>
 					</div>
 					{isCurrentTrack === true && (
-						<h4 class={className(styles.displayName)}>
+						<h4 class={styles.displayName}>
 							<a class={styles.link} href={`/${user.profile.url}`}>
 								{user.profile.displayName || user.profile.url || "N/A"}
 							</a>
 						</h4>
 					)}
 					{isCurrentTrack == false && (
-						<h4 class={className(styles.displayName)}>{user.profile.displayName || user.profile.url || "N/A"}</h4>
+						<h4 class={styles.displayName}>{user.profile.displayName || user.profile.url || "N/A"}</h4>
 					)}
 					<span class={styles.dateContainer}>
 						{track.genres != null && track.genres.length >= 1 && (
@@ -164,7 +166,7 @@ export class TrackCard extends Component {
 							</span>
 						)}
 					</span>
-					<h2 class={className(`mdc-typography--title ${styles.username}`)}>
+					<h2 class={`mdc-typography--title ${styles.username}`}>
 						{isCurrentTrack == false && (
 							<a class={styles.link} href={`/${user.profile.url}/${track.url}`}>
 								{track.name}
@@ -219,14 +221,19 @@ export class TrackCard extends Component {
 						</span>
 						{user.profile.id === currentUser.profile.id && (
 							<span>
-								<p class={className(`${styles.centered} ${styles.actionable}`)} style={{ 'float': 'right', 'margin-top': '14px' }} onClick={onDelete}>
+								<p class={`${styles.centered} ${styles.actionable}`} style={{ 'float': 'right', 'margin-top': '14px' }} onClick={this.onClickDeleteTrack.bind(this)}>
 									<Icon style={{ margin: 0 }}>delete</Icon>
 								</p>
-								<p class={className(`${styles.centered} ${styles.actionable}`)} style={{ 'float': 'right', 'margin-top': '14px' }} onClick={this.onClickEditTrack.bind(this)}>
+								<p class={`${styles.centered} ${styles.actionable}`} style={{ 'float': 'right', 'margin-top': '14px' }} onClick={this.onClickEditTrack.bind(this)}>
 									<Icon style={{ margin: 0 }}>edit</Icon>
 								</p>
 							</span>
 						)}
+						<span>
+							<p class={`${styles.centered} ${styles.actionable}`} style={{ 'float': 'right', 'margin-top': '14px' }} onClick={this.onClickReportTrack.bind(this)}>
+								<Icon style={{ margin: 0 }}>report</Icon>
+							</p>
+						</span>
 					</div>
 				</Card>
 			</div>
