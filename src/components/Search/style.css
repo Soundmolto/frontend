@@ -1,0 +1,77 @@
+.dropdown {
+    position: absolute;
+    top: 49px;
+    left: 0;
+    width: 100%;
+    min-height: 32px;
+    padding: 0;
+    background: rgb(78, 96, 125);
+	background: linear-gradient(rgb(78, 96, 125) 0%, rgb(78, 96, 125) 100%);
+    color: #FFF;
+    box-shadow: var(--mdc-theme--box-shadow--floating);
+    border-radius: 0 0 10px 10px;
+    overflow: hidden;
+}
+
+.dropdown a {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 10px;
+    text-decoration: none;
+    font-weight: 500;
+    color: #FFF;
+}
+
+.dropdown p {
+    padding: 10px;
+    text-decoration: none;
+    font-weight: 500;
+    margin: 0;
+}
+
+.dropdown p span.youFollow {
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 5px 10px;
+    background: rgba(0, 0, 0, 0.3);
+    margin-left: 10px;
+    border-radius: 10px;
+    color: #FFF;
+}
+
+.dropdown p.followerDetails {
+    width: 100%;
+    font-size: 0.9rem;
+    opacity: 0.75;
+    color: #FFF;
+}
+
+.dropdown p.followerDetails span {
+    margin-right: 10px;
+    color: #FFF;
+}
+
+.dropdown a:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.dropdown h3 {
+    margin: 15px 10px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.dropdown .image {
+    width: 32px;
+    height: 32px;
+    background-position: center;
+    background-size: cover;
+    border-radius: 100%;
+    margin-right: 10px;
+}
+
+.container {
+    position: relative;
+}

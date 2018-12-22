@@ -1,0 +1,56 @@
+.profile {
+	width: 100%;
+	padding: 0 20px;
+}
+
+.profile h3 {
+	margin: 0;
+}
+
+.height-fix {
+	height: auto !important;
+	padding: 10px;
+}
+
+.height-fix i {
+	cursor: pointer;
+}
+
+.margin-top {
+	border-top: 1px solid rgba(0, 0, 0, 0.3);
+	margin-top: 5px;
+}
+
+@media screen and (min-width: 1200px) {
+	.profile {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+	}	
+
+	.profile > div {
+		width: calc(100% / 3 - 40px);
+	}
+}
+
+@media screen and (max-width: 1199px) {
+	.profile > div {
+		width: calc(100% - 40px);
+	}
+}
+
+.profile > div {
+	margin: 20px;
+}
+
+.profile > div > [class="mdc-card"] {
+	border-radius: 10px;
+	padding: 20px;
+	position: relative;
+	overflow: hidden;
+}
+
+.image {
+	max-width: 100%;
+
+}

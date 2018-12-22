@@ -1,0 +1,87 @@
+@media screen and (min-width: 769px) {
+	.mobile {
+		display: none;
+	}
+}
+
+.mobile .start {
+	min-width: calc(100% - 110px);
+}
+
+.mobile .end {
+	min-width: 110px;
+}
+
+.mobile .start *, .mobile .end * {
+	max-width: 100%;
+}
+
+.mobile .songInfo {
+	font-size: 0.8rem;
+}
+
+.mobile .songInfo span {
+	white-space: pre;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: calc(100vw - 110px);
+}
+
+.footer {
+	position: fixed;
+	z-index: 10;
+	bottom: 0;
+	width: 100vw;
+	max-width: 100vw;
+	overflow: hidden;
+	background: rgb(78, 96, 125);
+	background: linear-gradient(to right, rgb(101, 101, 140) 0%, rgb(78, 96, 125) 100%);
+	min-height: 64px;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+}
+
+.footer .songInfo p {
+	margin-left: 10px;
+}
+
+.footer .songInfo p span {
+	display: block;
+	font-size: 0.8rem;
+	color: #FFFFFF;
+	font-weight: 600;
+}
+
+.footer .button {
+	width: 48px;
+	height: 48px;
+	color: var(--mdc-theme-primary-font);
+	display: flex;
+}
+
+.footer .button i {
+	color: var(--mdc-theme-primary-font);
+}
+
+.footer .end {
+	justify-content: flex-end;
+	padding: 0 15px;
+}
+
+.footer .songInfo a {
+	color: var(--mdc-theme-primary-font);
+	text-decoration: none;
+	margin-bottom: 10px;
+	transition: color 0.15s ease-in-out;
+}
+
+.footer .songInfo p span, .footer .songInfo a {
+	overflow: hidden;
+	white-space: pre;
+	text-overflow: ellipsis;
+}
+
+.footer .songInfo a.artist {
+	color: var(--mdc-theme-primary-font--darker);
+}

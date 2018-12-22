@@ -1,0 +1,235 @@
+.footer {
+	position: fixed;
+	z-index: 3;
+	bottom: 0;
+	width: 100vw;
+	background: rgb(78, 96, 125);
+	background: linear-gradient(to right, rgb(101, 101, 140) 0%, rgb(78, 96, 125) 100%);
+	height: 64px;
+	padding: 12px 10px 10px;
+	display: flex;
+	align-items: center;
+}
+
+.footer p {
+	font-size: 0.9rem;
+	font-weight: 500;
+}
+
+@media screen and (min-width: 769px) {
+	.footer {
+		width: calc(100vw - 150px) !important;
+		margin-left: 150px;
+	}
+}
+
+.footer .artwork {
+	overflow: hidden;
+	width: 150px;
+	height: 64px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 0;
+	left: -150px;
+	z-index: 2;
+}
+
+.footer .artwork div.blurred {
+	position: absolute;
+	left: -10px;
+	top: -10px;
+	filter: blur(10px);
+	height: calc(100% + 40px);
+	width: calc(100% + 40px);
+	background-position: center;
+}
+
+.footer .artwork div.overlay {
+	background: rgba(0, 0, 0, 0.5);
+	position: relative;
+	width: 100%;
+	display: flex;
+	height: 100%;
+	justify-content: center;
+}
+
+.footer .artwork img {
+	max-height: 100%;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    z-index: 2;
+}
+
+.notMobile .songInfo {
+	max-width: calc(100% - 64px);
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.footer .songInfo p {
+	margin-left: 10px;
+}
+
+.footer .songInfo p span {
+	display: block;
+	font-size: 0.8rem;
+	color: #FFFFFF;
+	font-weight: 600;
+}
+
+.footer .trackBar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 4px;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	transition: height 0.3s ease-in-out;
+	cursor: pointer;
+	user-select: none;
+}
+
+.footer .trackBar:hover, .footer .trackBar:active, .footer .trackBar:focus {
+	height: 10px;
+}
+
+.footer .trackBar:hover .thumb, .footer .trackBar:active .thumb, .footer .trackBar:focus .thumb {
+	height: 18px;
+	width: 18px;
+	top: -4px;
+}
+
+.footer .trackBar .progress {
+	background: var(--mdc-theme-complementary-color);
+	width: 100%;
+	transform: translateX(0);
+	position: absolute;
+	left: -100%;
+	height: 100%;
+}
+
+.footer .trackBar .thumb {
+	transition: height 0.3s ease-in-out, width 0.3s ease-in-out;
+	background: var(--mdc-theme-complementary-color);
+	transform: translateX(0);
+	position: absolute;
+	left: -6px;
+	top: -4px;
+	height: 12px;
+	width: 12px;
+	border-radius: 100%;
+	display: block;
+	z-index: 300;
+}
+
+.footer .start, .footer .middle, .footer .end {
+	display: flex;
+	color: var(--mdc-theme-primary-font);
+	overflow: visible;
+	align-items: center;
+}
+
+.notMobile .start, .notMobile .middle, .notMobile .end {
+	width: calc(100% / 3);
+}
+
+.footer .middle {
+	color: var(--mdc-theme-primary-font);
+	justify-content: center;
+}
+
+.footer .button {
+	width: 48px;
+	height: 28px;
+	max-width: 48px;
+	min-width: 48px;
+	color: var(--mdc-theme-primary-font);
+	display: flex;
+}
+
+.footer .button i {
+	color: var(--mdc-theme-primary-font);
+	font-size: 1.1rem;
+}
+
+.footer .end {
+	justify-content: flex-end;
+	padding: 0 15px;
+}
+
+@media screen and (max-width: 769px) {
+	.notMobile {
+		display: none;
+	}
+
+	.footer {
+		background: rgb(101, 101, 140);
+	}
+}
+
+.footer .songInfo a {
+	color: var(--mdc-theme-primary-font);
+	text-decoration: none;
+	margin-bottom: 10px;
+	transition: color 0.15s ease-in-out;
+}
+
+.footer .songInfo p span, .footer .songInfo a {
+	overflow: hidden;
+	white-space: pre;
+	text-overflow: ellipsis;
+}
+
+.footer .songInfo a.artist {
+	color: var(--mdc-theme-primary-font--darker);
+}
+
+.footer .songInfo a:hover, .footer .songInfo a:active, .footer .songInfo a:focus {
+	color: var(--mdc-theme-complementary-color);
+}
+
+.tooltip {
+	position: absolute;
+	left: 0;
+	top: -40px;
+	transform: translateX(0);
+	background: linear-gradient(rgb(101, 101, 140) 0%, rgb(78, 96, 125) 100%);
+	padding: 10px;
+	z-index: 3;
+	color: white;
+	font-size: 0.9rem;
+	border-radius: 10px;
+	opacity: 0;
+	transition: opacity 0.2s ease-in-out;
+	will-change: opacity;
+}
+
+.tooltip.show {
+	opacity: 1;
+}
+
+.volumePanel {
+	display: block;
+	margin-right: 10px;
+	width: 200px;
+	opacity: 0;
+	transition: all 0.3s ease-in-out;
+	position: absolute;
+	bottom: 70px;
+	right: 100px;
+	padding: 10px 20px;
+	border-radius: 10px;
+	box-shadow: var(--mdc-theme--box-shadow--floating);
+	background: var(--mdc-theme--volume-panel--background);
+}
+
+.volumePanel.show {
+	opacity: 1;
+}
+
+.footer .end .active > i {
+	color: var(--mdc-theme-complementary-color);
+}

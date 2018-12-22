@@ -1,0 +1,1 @@
+export { LikeIndicator } from './LikeIndicator';

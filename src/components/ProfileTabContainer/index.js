@@ -1,0 +1,1 @@
+export { ProfileTabContainer } from './ProfileTabContainer';

@@ -1,0 +1,237 @@
+.root {
+	position: relative;
+	padding: 30px;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.profile {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: calc(100% + 10px);
+    height: calc(100% + 10px);
+    filter: blur(5px);
+    background-size: cover;
+}
+
+.overlayImage {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 2;
+}
+
+.typography {
+	color: white;
+	font-size: 0.9rem;
+	font-weight: 600;
+}
+
+h2.typography, h3.typography {
+    margin: 0 0 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+
+p.typography {
+    display: flex;
+    align-content: center;
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+p.typography > i {
+    font-size: 0.9rem;
+    margin-right: 5px;
+}
+
+.padding {
+    padding: 10px 20px 0;
+}
+
+.paddingAll {
+    padding: 10px 20px;
+}
+
+.padding, .paddingAll {
+    font-size: 0.9rem;
+}
+
+.paddingAll h2 {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.flexible {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.flexible > button {
+    margin: 0 10px 0 -10px;
+}
+
+.flexible > button {
+    color: var(--mdc-theme-text-primary-on-background) !important;
+}
+
+.flex > div, .flex span {
+    display: flex;
+    align-items: center;
+}
+
+.flex > div {
+    padding: 0 0 10px 0;
+}
+
+.flex span {
+    margin-right: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.flex span > i { 
+    margin-right: 5px;
+    font-size: 1.3rem;
+}
+
+.noOverflow {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 115px);
+}
+
+.noOverflow > a {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.blur {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    height: calc(100% + 20px);
+    width: calc(100% + 20px);
+    background-size: cover;
+    filter: blur(10px);
+    z-index: 1;
+    background-position: center;
+}
+
+.overlay {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+}
+
+.overlay > img {
+    max-width: 100%;
+    height: 100%;
+    z-index: 3;
+}
+
+.paddingAll a {
+    transition: transform 0.3s ease-in-out;
+    display: block;
+    transform: translate(0);
+    color: var(--mdc-theme-text-primary-on-background) !important;
+    text-decoration: none;
+}
+
+.paddingAll a:hover {
+    transform: translateX(5px);
+}
+
+.date {
+    position: absolute;
+    top: 5px;
+    right: -10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 5px 10px;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+span.genre {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    padding: 5px 10px;
+    max-width: 110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    z-index: 3;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+span.private {
+    position: absolute;
+    top: 5px;
+    right: -10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 5px 10px;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+span.private i {
+    font-size: 0.9rem;
+}
+
+
+.cardMedia {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.likeIndicator {
+    display: flex;
+    font-size: 1rem;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.likeIndicator i {
+    font-size: 1.3rem;
+    color: var(--mdc-theme-text-primary-on-background);
+    height: 32px;
+    width: 32px;
+    margin-right: 5px;
+    padding: 6px;
+}

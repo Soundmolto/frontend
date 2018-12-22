@@ -1,0 +1,43 @@
+.artists {
+	width: 100%;
+	padding: 0 20px;
+}
+
+@media screen and (min-width: 1200px) {
+	.artists {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+	}	
+
+	.artists > a {
+		width: calc(100% / 3 - 40px);
+	}
+}
+
+@media screen and (max-width: 1199px) {
+	.artists > a {
+		width: calc(100% - 40px);
+	}
+}
+
+@media screen and (max-width: 460px) {
+	.artists > a {
+		background: rgba(0, 0, 0, 0.4);
+		padding: 10px;
+		border-radius: 10px;
+		overflow: hidden;
+		max-height: 200px;
+	}
+}
+
+.artists > a {
+	margin: 20px;
+}
+
+.artists > a > [class="mdc-card"] {
+	border-radius: 10px;
+	padding: 20px;
+	position: relative;
+	overflow: hidden;
+}

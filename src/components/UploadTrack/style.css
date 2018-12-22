@@ -1,0 +1,49 @@
+.root {
+    overflow: hidden;
+}
+
+.uploader {
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.02);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    outline-offset: 5px;
+    position: relative;
+    height: 150px;
+    width: 100%;
+}
+
+.uploader input {
+    display: none;
+}
+
+.uploader img, .uploader .icon {
+    pointer-events: none;
+}
+
+.uploader, .icon {
+    transition: all 100ms ease-in;
+}
+
+.icon {
+    font-size: 2rem !important;
+    margin-right: 10px;
+}
+
+.loaded {
+    opacity: 1;
+}
+
+.center {
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+    color: var(--mdc-theme-text-primary);
+}
+
+p.maxFileSize {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin: 10px 0 0;
+}

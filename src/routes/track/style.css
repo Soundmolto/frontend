@@ -1,0 +1,101 @@
+.profile {
+	min-height: 100%;
+	width: 100%;
+}
+
+.header img {
+	max-width: 64px;
+	height: 64px;
+	margin-right: 10px;
+	border-radius: 100%;
+}
+
+.profile_contents {
+	padding: 0 20px;
+}
+
+.profile_contents h1.mainHeader {
+	font-size: 1.3rem;
+}
+
+.profile_contents [class="mdc-card"] {
+	padding: 20px;
+}
+
+.profile_contents > div {
+	margin: 0;
+}
+
+.profile_contents [class="mdc-card"] h2 {
+	margin-top: 0;
+	font-size: 0.9rem !important;
+}
+
+.smol {
+	font-size: 1rem;
+	line-height: 1rem;
+	display: block;
+}
+
+.button {
+	position: absolute;
+	background: rgba(0, 0, 0, 0.2) !important;
+	color: #ffffff !important;
+}
+
+@media screen and (min-width: 500px) {
+	.button {
+		right: 28px;
+	}
+}
+
+@media screen and (max-width: 500px) {
+	.button {
+		right: 10px;
+		bottom: 10px;
+	}
+}
+
+@media screen and (min-width: 500px) {
+	.username_custom {
+		max-width: calc(100% - 300px);
+	}
+}
+
+.header h1 {
+	white-space: pre;
+}
+
+.header {
+	position: relative;
+	background: none;
+	overflow: hidden;
+}
+
+.header .background {
+	position: absolute;
+	left: -10px;
+	top: -10px;
+	z-index: 1;
+	filter: blur(10px);
+	height: calc(100% + 20px);
+	width: calc(100% + 20px);
+	background-size: cover;
+}
+
+.header .overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	z-index: 2;
+	background: rgba(0, 0, 0, 0.7);
+	height: 100%;
+	width: 100%;
+	justify-content: flex-start;
+	align-items: flex-end;
+}
+
+.header .overlay h1 {
+	margin: auto 20px auto;
+}
