@@ -9,17 +9,10 @@ const PRODUCTION_MODE = readFileSync(resolve(__dirname, 'mode')).toString();
 const fetch = require('node-fetch');
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
-const API = PRODUCTION_MODE === 'PRODUCTION' ? 'https://api.soundmolto.com' : 'https://api.musicstreaming.dev:1344';
-const toAddValues = {
-	PROFILE: "PROFILE",
-	TRACK: "TRACK",
-	HOMEPAGE: "HOMEPAGE"
-};
-
-const APP = Object.freeze({
-	NAME: "SoundMolto",
-	TWITTER_HANDLE: "@soundmolto"
-});
+const API = PRODUCTION_MODE === 'PRODUCTION' ? 'https://api.soundmolto.com' : 'http://localhost:1344';
+const toAddValues = { PROFILE: "PROFILE", TRACK: "TRACK", HOMEPAGE: "HOMEPAGE" };
+const APP = Object.freeze({ NAME: "SoundMolto", TWITTER_HANDLE: "@soundmolto" });
+const appUrl = PRODUCTION_MODE === 'PRODUCTION' ? `https://app.soundmolto.com` : `http://localhost:8080`;
 
 const generateTwitterCard = ({ summary, site, title, description, image }) => [
 	{ name: 'twitter:card', content: summary },
@@ -41,15 +34,15 @@ const generateFacebookCard = ({ type, title, description, image, url = '' }) => 
 const express = require('express')
 const app = express();
 const port = 8080;
-const key = readFileSync(resolve(__dirname, './certs/_wildcard.musicstreaming.dev-key.pem'), { encoding: 'UTF8' });
-const cert = readFileSync(resolve(__dirname, './certs/_wildcard.musicstreaming.dev.pem'), { encoding: 'UTF8' });
+const key = readFileSync(resolve(__dirname, './certs/soundmolto-key.pem'), { encoding: 'UTF8' });
+const cert = readFileSync(resolve(__dirname, './certs/soundmolto.pem'), { encoding: 'UTF8' });
 const httpsOptions = { key, cert };
 const http = require('http');
 const https = require('https');
 
 app.use(express.static('build'));
 
-app.get('*', async (request, response, next) => {
+app.get('*', async (request, response) => {
 	const possiblePaths = request.originalUrl.split("/");
 	let url;
 	let toAdd;
@@ -88,7 +81,7 @@ app.get('*', async (request, response, next) => {
 		}
 	}
 	if (toAdd != null) {
-		const defImage = 'https://soundmolto.com/assets/icons/android-chrome-512x512.png';
+		const defImage = `${appUrl}/assets/icons/android-chrome-512x512.png`;
 		let summary, site, title, description, image;
 		const file = readFileSync(__dirname + '/build/index.html');
 		const DOM = new JSDOM(file);
@@ -116,7 +109,7 @@ app.get('*', async (request, response, next) => {
 					type: 'website',
 					description,
 					image,
-					url: `https://soundmolto.com/`
+					url: `${appUrl}/`
 				})
 				break;
 			}
@@ -134,7 +127,7 @@ app.get('*', async (request, response, next) => {
 				description = user.description;
 				image = user.image;
 				tags = generateTwitterCard({ summary, site, title, description, image });
-				ogTags = generateFacebookCard({ title, type: 'profile', description, image, url: `https://soundmolto.com${request.originalUrl}` })
+				ogTags = generateFacebookCard({ title, type: 'profile', description, image, url: `${appUrl}${request.originalUrl}` })
 				ogTags.push({ name: 'profile:username', content: user.name });
 				break;
 			}
@@ -161,7 +154,7 @@ app.get('*', async (request, response, next) => {
 				tags.push({ name: 'twitter:player:width', content: '100px' });
 				tags.push({ name: 'twitter:player:height', content: '100px' });
 
-				ogTags = generateFacebookCard({ title, type: 'music.song', description, image, url: `https://soundmolto.com${request.originalUrl}` })
+				ogTags = generateFacebookCard({ title, type: 'music.song', description, image, url: `${appUrl}${request.originalUrl}` })
 				ogTags.push({ name: 'music:duration', content: track.duration });
 				ogTags.push({ name: 'music:musician', content: track.userUrl });
 				ogTags.push({ name: 'og:audio', content: track.streamUrl });
@@ -186,7 +179,7 @@ app.get('*', async (request, response, next) => {
 
 		response.send(DOM.serialize());
 	} else {
-		const defImage = 'https://soundmolto.com/assets/icons/android-chrome-512x512.png';
+		const defImage = `${appUrl}/assets/icons/android-chrome-512x512.png`;
 		let summary, site, title, description, image;
 		const file = readFileSync(__dirname + '/build/index.html');
 		const DOM = new JSDOM(file);
@@ -206,7 +199,7 @@ app.get('*', async (request, response, next) => {
 			type: 'website',
 			description,
 			image,
-			url: `https://soundmolto.com/`
+			url: `${appUrl}/`
 		})
 
 		for (const tag of tags) {

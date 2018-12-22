@@ -81,7 +81,7 @@ export class TrackCard extends Component {
 		start_editing_track(dispatch, { track });
 	}
 
-	onClickReportTrack (event) {
+	onClickReportTrack = (event) => {
 		this.props.onReportTrack(this.props.track);
 	}
 
@@ -221,7 +221,7 @@ export class TrackCard extends Component {
 						</span>
 						{user.profile.id === currentUser.profile.id && (
 							<span>
-								<p class={`${styles.centered} ${styles.actionable}`} style={{ 'float': 'right', 'margin-top': '14px' }} onClick={this.onClickDeleteTrack.bind(this)}>
+								<p class={`${styles.centered} ${styles.actionable}`} style={{ 'float': 'right', 'margin-top': '14px' }} onClick={onDelete}>
 									<Icon style={{ margin: 0 }}>delete</Icon>
 								</p>
 								<p class={`${styles.centered} ${styles.actionable}`} style={{ 'float': 'right', 'margin-top': '14px' }} onClick={this.onClickEditTrack.bind(this)}>
@@ -230,7 +230,7 @@ export class TrackCard extends Component {
 							</span>
 						)}
 						<span>
-							<p class={`${styles.centered} ${styles.actionable}`} style={{ 'float': 'right', 'margin-top': '14px' }} onClick={this.onClickReportTrack.bind(this)}>
+							<p class={`${styles.centered} ${styles.actionable}`} style={{ 'float': 'right', 'margin-top': '14px' }} onClick={this.onClickReportTrack}>
 								<Icon style={{ margin: 0 }}>report</Icon>
 							</p>
 						</span>
