@@ -100,8 +100,8 @@ export class TrackCard extends Component {
 		remove_track_from_collection(this.props.dispatch, { token: this.props.auth.token, id: this.props.track.id });
 	}
 
-	onClickShare () {
-		console.log(this.props)
+	onClickShare = () => {
+		this.props.onShareTrack(this.props.track);
 	}
 
 	render ({ track, user, currentUser, currently_playing, isCurrentTrack, settings, onDelete }, { inCollection }) {
@@ -208,7 +208,7 @@ export class TrackCard extends Component {
 							{track.amountOfLikes || 0}
 						</p>
 						<p class={`${styles.centered} ${styles.favorites}`}>
-							<ShareTrack onClick={this.props.onClickShare} />
+							<ShareTrack onClick={this.onClickShare} />
 						</p>
 						<p class={`${styles.centered} ${styles.favorites}`}>
 							{settings.beta === SETTINGS.ENABLE_BETA && (

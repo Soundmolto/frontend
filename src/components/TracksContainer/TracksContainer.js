@@ -12,7 +12,7 @@ const loader = (<div key={0}><Stretch color="#c67dcb" /></div>);
 const infiniteScrollStyle = { display: "inline-block", width: '100%' };
 let hasMore = false;
 
-const renderTrackCard = (track, viewedUser, user, onStartPlay, onDelete, onReportTrack) => (
+const renderTrackCard = (track, viewedUser, user, onStartPlay, onDelete, onReportTrack, onShareTrack) => (
 	<TrackCard
 		track={track}
 		user={viewedUser}
@@ -22,10 +22,11 @@ const renderTrackCard = (track, viewedUser, user, onStartPlay, onDelete, onRepor
 		onStartPlay={onStartPlay}
 		onDelete={() => onDelete(track)}
 		onReportTrack={onReportTrack}
+		onShareTrack={() => onShareTrack(track)}
 	/>
 );
 
-const renderTrackListItem = (track, onStartPlay, onDelete, onReportTrack) => (
+const renderTrackListItem = (track, onStartPlay, onDelete, onReportTrack, onShareTrack) => (
 	<TrackListItem
 		showArtwork={true}
 		showExtraStats={true}
@@ -34,13 +35,14 @@ const renderTrackListItem = (track, onStartPlay, onDelete, onReportTrack) => (
 		user={track.user}
 		onDelete={() => onDelete(track)}
 		onReportTrack={onReportTrack}
+		onShareTrack={() => onShareTrack(track)}
 	/>
 );
 
-export const TracksContainer = ({ tracks, shouldRenderWaveform, onStartPlay, viewedUser, user, onDelete, onReportTrack }) => (
+export const TracksContainer = ({ tracks, shouldRenderWaveform, onStartPlay, viewedUser, user, onDelete, onReportTrack, onShareTrack }) => (
 	<InfiniteScroll pageStart={0} loadMore={this.loadMore} hasMore={hasMore} style={infiniteScrollStyle} loader={loader}>
 			{shouldRenderWaveform ?
-				tracks.map(track => renderTrackCard(track, viewedUser, user, onStartPlay, onDelete, onReportTrack)) : (
+				tracks.map(track => renderTrackCard(track, viewedUser, user, onStartPlay, onDelete, onReportTrack, onShareTrack)) : (
 				<List class={style.listContainer}>
 					<List.Item class={style['list-item']}>
 						<div style={{ width: '100px' }}></div>
@@ -70,7 +72,7 @@ export const TracksContainer = ({ tracks, shouldRenderWaveform, onStartPlay, vie
 							<Icon style={{ opacity: 0 }}>check</Icon>
 						</List.ItemMeta>
 					</List.Item>
-					{tracks.map(track => renderTrackListItem(track, onStartPlay, onDelete, onReportTrack))}
+					{tracks.map(track => renderTrackListItem(track, onStartPlay, onDelete, onReportTrack, onShareTrack))}
 				</List>)
 			}
 		</InfiniteScroll>

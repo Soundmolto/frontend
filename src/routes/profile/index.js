@@ -216,6 +216,7 @@ export default class Profile extends Component {
 										user={user}
 										onDelete={track => this.onDelete(track)}
 										onReportTrack={this.onReportTrack}
+										onShareTrack={this.props.onShareTrack}
 									/>
 								)}
 								{tracks.length <= 0 && <h1>No tracks</h1>}
