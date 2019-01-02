@@ -156,6 +156,10 @@ export default class Profile extends Component {
 		}, 5500);
 	};
 
+	onReportTrack = (track) => {
+		console.log('yeah', track);
+	}
+
 	render({ auth, user, viewedUser, settings, editingTrack }) {
 		const following = this.following(viewedUser);
 		const _user = viewedUser.profile.displayName || (viewedUser.profile && viewedUser.profile.url);
@@ -211,6 +215,7 @@ export default class Profile extends Component {
 										viewedUser={viewedUser}
 										user={user}
 										onDelete={track => this.onDelete(track)}
+										onReportTrack={this.onReportTrack}
 									/>
 								)}
 								{tracks.length <= 0 && <h1>No tracks</h1>}

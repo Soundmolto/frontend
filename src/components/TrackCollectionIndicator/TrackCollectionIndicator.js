@@ -1,7 +1,9 @@
 import { Component } from "preact";
 import Icon from 'preact-material-components/Icon';
 import styles from './style.css';
+import { connect } from "preact-redux";
 
+@connect(({ auth }) => ({ auth }))
 export class TrackCollectionIndicator extends Component {
 
 	state = { icon: 'check', inCollection: false };
@@ -28,22 +30,22 @@ export class TrackCollectionIndicator extends Component {
 		this.setState({ inCollection: this.props.track.inCollection });
 	}
 
-	render (props, { icon, inCollection }) {
-		return (
+	render ({ logged_in }, { icon, inCollection }) {
+		return !logged_in ? ("") : (
 			<div>
 				{inCollection === true && (
-					<span onClick={this.removeTrackFromCollection.bind(this)} class={styles.saveTrack} onMouseOut={this.mouseOut.bind(this)} onMouseOver={this.mouseOver.bind(this)}>
-						<Icon>
-							{icon}
-						</Icon>
-					</span>
-				)}
+						<span onClick={this.removeTrackFromCollection.bind(this)} class={styles.saveTrack} onMouseOut={this.mouseOut.bind(this)} onMouseOver={this.mouseOver.bind(this)}>
+							<Icon>
+								{icon}
+							</Icon>
+						</span>
+					)}
 
-				{inCollection !== true && (
-					<span onClick={this.saveTrackToCollection.bind(this)} class={styles.saveTrack}>
-						<Icon>add</Icon>
-					</span>
-				)}
+					{inCollection !== true && (
+						<span onClick={this.saveTrackToCollection.bind(this)} class={styles.saveTrack}>
+							<Icon>add</Icon>
+						</span>
+					)}
 			</div>
 		);
 	}

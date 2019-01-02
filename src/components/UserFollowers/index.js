@@ -29,8 +29,6 @@ export class UserFollowers extends Component {
 	}
 
 	render ({ viewedUser, style = {} }) {
-
-
 		return (
 			<div style={style}>
 				<Card class={styles.card}>

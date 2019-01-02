@@ -8,6 +8,7 @@ import Dialog from 'preact-material-components/Dialog';
 import Switch from 'preact-material-components/Switch';
 import Menu from 'preact-material-components/Menu';
 import Icon from 'preact-material-components/Icon';
+import TextField from 'preact-material-components/TextField';
 import EditProfile from '../EditProfile';
 import 'preact-material-components/Switch/style.css';
 import 'preact-material-components/Dialog/style.css';
@@ -15,6 +16,7 @@ import 'preact-material-components/Drawer/style.css';
 import 'preact-material-components/Toolbar/style.css';
 import 'preact-material-components/List/style.css';
 import 'preact-material-components/Menu/style.css';
+import 'preact-material-components/TextField/style.css';
 import { UserPictureName } from '../UserPictureName';
 import { shortcuts } from '../../shortcuts';
 import style from './style';
@@ -73,12 +75,18 @@ export default class Header extends Component {
 		this.props.dispatch({ type: "HIDE_SHORTCUTS_PANEL" });
 	};
 
+	openShareTrackModal = (track) => {
+		this.setState({ shareTrack: track });
+		this.shareTrackModal.MDComponent.show();
+	};
+
 	settingsDialogRef = dialog => (this.settingsModal = dialog);
 	editProfileDialogRef = dialog => (this.editProfileModal = dialog);
 	editProfileRef = editProfile => (this.editProfile = editProfile);
 	gotoPanelRef = gotoPanel => (this.gotoPanel = gotoPanel);
 	uploadTrackModalRef = dialog => (this.uploadTrackModal = dialog);
 	shortcutsPanelRef = dialog => (this.shortcutsPanel = dialog);
+	shareTrackModalRef = dialog => (this.shareTrackModal = dialog);
 
 	linkTo = path => () => {
 		if (this.closeMenu) this.closeMenu();
@@ -247,7 +255,11 @@ export default class Header extends Component {
 		return className;
 	}
 
-	render ({ auth, user, UI, settings }) {
+	openShareTrack = (track) => {
+		this.openShareTrackModal(track);
+	}
+
+	render ({ auth, user, UI, settings }, { shareTrack }) {
 		this.currentUrl = getCurrentUrl();
 
 		try {
@@ -402,6 +414,29 @@ export default class Header extends Component {
 							<UploadTrack />
 						</Dialog.Body>
 					</Dialog>
+
+					<Dialog ref={this.shareTrackModalRef}>
+						<div class="modal-border-top"></div>
+						<Dialog.Header>Share track</Dialog.Header>
+						<Dialog.Body>
+							{shareTrack != null && shareTrack != '' && (
+								<div>
+									<div className={style.trackDetails}>
+										<img src={shareTrack.artwork} />
+										<p title={`${(shareTrack.user.displayName || shareTrack.user.firstName || shareTrack.user.id)} - ${shareTrack.name}`}>
+											{(shareTrack.user.displayName || shareTrack.user.firstName || shareTrack.user.id)} - {shareTrack.name}
+										</p>
+									</div>
+									<TextField
+										readonly="readonly"
+										value={`${location.origin}/${shareTrack.user.url}/${shareTrack.url}${shareTrack.visibility === 'private' ? `?secret=${shareTrack.secret_key}`: ''}`}
+										className={style.inputContainer}
+									/>
+								</div>
+							)}
+						</Dialog.Body>
+					</Dialog>
+
 					<div class="mdc-toolbar-blur-bg"></div>
 				</div>
 			);

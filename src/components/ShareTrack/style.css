@@ -1,0 +1,16 @@
+.saveTrack {
+    cursor: pointer;
+}
+
+.popover {
+    transition: opacity 0.3s ease-in-out;
+    position: absolute;
+    top: -110px;
+    max-width: 100px;
+    left: 0;
+    overflow: hidden;
+    padding: 20px;
+    box-shadow: 0 0 30px 10px rgba(0, 0, 0, 0.2) !important;
+    z-index: 100;
+    opacity: 0;
+}

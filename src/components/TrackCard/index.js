@@ -21,6 +21,7 @@ import 'preact-material-components/Dialog/style.css';
 import 'preact-material-components/Snackbar/style.css';
 import styles from './style';
 import { start_editing_track } from '../../actions/editingTrack';
+import { ShareTrack } from '../ShareTrack';
 
 @connect(({ auth, currently_playing, settings }) => ({ auth, currently_playing, settings }))
 export class TrackCard extends Component {
@@ -97,6 +98,10 @@ export class TrackCard extends Component {
 
 	removeTrackFromCollection () {
 		remove_track_from_collection(this.props.dispatch, { token: this.props.auth.token, id: this.props.track.id });
+	}
+
+	onClickShare () {
+		console.log(this.props)
 	}
 
 	render ({ track, user, currentUser, currently_playing, isCurrentTrack, settings, onDelete }, { inCollection }) {
@@ -201,6 +206,9 @@ export class TrackCard extends Component {
 								{userLikesTrack === false && "favorite_border"}
 							</IconToggle>
 							{track.amountOfLikes || 0}
+						</p>
+						<p class={`${styles.centered} ${styles.favorites}`}>
+							<ShareTrack onClick={this.props.onClickShare} />
 						</p>
 						<p class={`${styles.centered} ${styles.favorites}`}>
 							{settings.beta === SETTINGS.ENABLE_BETA && (

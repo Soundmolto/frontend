@@ -16,6 +16,7 @@ import 'preact-material-components/Card/style.css';
 import 'preact-material-components/Button/style.css';
 import styles from './style.css';
 import { LikeIndicator } from "../LikeIndicator";
+import { ShareTrack } from "../ShareTrack";
 
 @connect( ({ auth, currently_playing, settings }) => ({ auth, currently_playing, settings }))
 export class DiscoverCard extends Component {
@@ -63,7 +64,11 @@ export class DiscoverCard extends Component {
 		this.setState({ inCollection: this.props.track.inCollection });
 	}
 
-	render ({ currently_playing, track, user, settings }, { playing, icon, inCollection }) {
+	onClickShare = () => {
+		this.props.openShareTrackModal(this.props.track);
+	}
+
+	render ({ currently_playing, track, user, settings }, { playing, inCollection }) {
 		const artwork = this.getArtwork(track, (track.user || user));
 		const postedAt = dayjs(parseInt(track.createdAt));
 
@@ -133,6 +138,7 @@ export class DiscoverCard extends Component {
 								iconLast={false}
 							/>
 						</span>
+						<ShareTrack onClick={this.onClickShare} />
 						{settings.beta === SETTINGS.ENABLE_BETA && (
 							<TrackCollectionIndicator
 								track={track}

@@ -202,3 +202,30 @@ h1.subtitle-header > small {
     cursor: pointer;
     margin-left: 20px;
 }
+
+.inputContainer {
+    width: 100%;
+    margin-top: 0 !important;
+    margin-bottom: 10px;
+}
+
+.trackDetails {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.trackDetails > img {
+    max-height: 48px;
+    min-height: 48px;
+    margin-right: 10px;
+    border-radius: 10px;
+    box-shadow: var(--mdc-theme--box-shadow--floating);
+}
+
+.trackDetails > p {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

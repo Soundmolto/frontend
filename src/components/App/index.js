@@ -70,10 +70,10 @@ export default class App extends Component {
 
 		return (
 			<div id="app">
-				<Header get_url={url} />
+				<Header get_url={url} ref={e => this.header = e} />
 				<div class="route-container">
 					<Router onChange={this.handleRoute}>
-						<Home path="/" className="route-page" queue={queue} />
+						<Home path="/" className="route-page" queue={queue} onShareTrack={track => this.header._component.openShareTrack(track)} />
 						<Login path="/login" key="login" className="route-page" />
 						<Register path="/register" key="register" className="route-page" />
 						<Admin path="/admin" className="route-page" />

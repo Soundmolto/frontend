@@ -12,7 +12,7 @@ const loader = (<div key={0}><Stretch color="#c67dcb" /></div>);
 const infiniteScrollStyle = { display: "inline-block", width: '100%' };
 let hasMore = false;
 
-const renderTrackCard = (track, viewedUser, user, onStartPlay, onDelete) => (
+const renderTrackCard = (track, viewedUser, user, onStartPlay, onDelete, onReportTrack) => (
 	<TrackCard
 		track={track}
 		user={viewedUser}
@@ -21,10 +21,11 @@ const renderTrackCard = (track, viewedUser, user, onStartPlay, onDelete) => (
 		isCurrentTrack={false}
 		onStartPlay={onStartPlay}
 		onDelete={() => onDelete(track)}
+		onReportTrack={onReportTrack}
 	/>
 );
 
-const renderTrackListItem = (track, onStartPlay, onDelete) => (
+const renderTrackListItem = (track, onStartPlay, onDelete, onReportTrack) => (
 	<TrackListItem
 		showArtwork={true}
 		showExtraStats={true}
@@ -32,13 +33,14 @@ const renderTrackListItem = (track, onStartPlay, onDelete) => (
 		track={track}
 		user={track.user}
 		onDelete={() => onDelete(track)}
+		onReportTrack={onReportTrack}
 	/>
 );
 
-export const TracksContainer = ({ tracks, shouldRenderWaveform, onStartPlay, viewedUser, user, onDelete }) => (
+export const TracksContainer = ({ tracks, shouldRenderWaveform, onStartPlay, viewedUser, user, onDelete, onReportTrack }) => (
 	<InfiniteScroll pageStart={0} loadMore={this.loadMore} hasMore={hasMore} style={infiniteScrollStyle} loader={loader}>
 			{shouldRenderWaveform ?
-				tracks.map(track => renderTrackCard(track, viewedUser, user, onStartPlay, onDelete)) : (
+				tracks.map(track => renderTrackCard(track, viewedUser, user, onStartPlay, onDelete, onReportTrack)) : (
 				<List class={style.listContainer}>
 					<List.Item class={style['list-item']}>
 						<div style={{ width: '100px' }}></div>
@@ -68,7 +70,7 @@ export const TracksContainer = ({ tracks, shouldRenderWaveform, onStartPlay, vie
 							<Icon style={{ opacity: 0 }}>check</Icon>
 						</List.ItemMeta>
 					</List.Item>
-					{tracks.map(track => renderTrackListItem(track, onStartPlay, onDelete))}
+					{tracks.map(track => renderTrackListItem(track, onStartPlay, onDelete, onReportTrack))}
 				</List>)
 			}
 		</InfiniteScroll>
