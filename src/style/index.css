@@ -228,7 +228,7 @@ body > div {
 }
 
 .header {
-	height: 100px;
+	min-height: 100px;
 	width: 100vw;
 	display: flex;
 	padding: 0 20px 0;

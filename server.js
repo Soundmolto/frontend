@@ -4,7 +4,7 @@
  */
 'use strict';
 const { readFileSync } = require('fs');
-const { resolve } = require('path');
+const { resolve, join } = require('path');
 const PRODUCTION_MODE = readFileSync(resolve(__dirname, 'mode')).toString();
 const fetch = require('node-fetch');
 const jsdom = require("jsdom");
@@ -41,6 +41,10 @@ const http = require('http');
 const https = require('https');
 
 app.use(express.static('build'));
+
+app.get('/google1dbcc925cd0c648a.html', (req, res) => {
+	res.sendFile(`${join(__dirname, 'src/google1dbcc925cd0c648a.html')}`);
+});
 
 app.get('*', async (request, response) => {
 	const possiblePaths = request.originalUrl.split("/");
@@ -80,6 +84,7 @@ app.get('*', async (request, response) => {
 			toAdd = toAddValues.TRACK;
 		}
 	}
+
 	if (toAdd != null) {
 		const defImage = `${appUrl}/assets/icons/android-chrome-512x512.png`;
 		let summary, site, title, description, image;
@@ -228,5 +233,5 @@ if (PRODUCTION_MODE === 'PRODUCTION') {
 	// have it listen on 8080
 	http.createServer(httpServer).listen(80);
 } else {
-	http.createServer(httpsOptions, app).listen(80)
+	http.createServer(app).listen(8080)
 }

@@ -74,11 +74,11 @@
 
 .header {
 	background: transparent;
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: cover;
+	background-repeat: no-repeat !important;
+	background-position: center !important;
+	background-size: cover !important;
 	height: 300px;
-	position: relative;
+	position: relative !important;
 	overflow: visible !important;
 }
 
