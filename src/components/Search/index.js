@@ -113,7 +113,7 @@ export class Search extends Component {
 						<h3>Users</h3>
 						{items.users.length !== 0 && items.users.map(profile => (
 							<a href={`/${profile.url}`} onClick={this.onClickUrl.bind(this)} onFocus={e => (this.shouldClose = false)} onBlur={e => this.onBlurLink.bind(this)}>
-								<div class={styles.image} style={{ backgroundImage: `url(${profile.profilePicture})` }} />
+								<div class={styles.image} style={{ backgroundImage: `url(${profile.profilePicture || Goku})` }} />
 								<p>
 									{profile.displayName || profile.url}
 									{profile.youFollow && (<span class={styles.youFollow}>You follow this user</span>)}

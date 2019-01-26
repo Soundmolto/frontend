@@ -182,12 +182,16 @@ export default class Header extends Component {
 		let defaultVal = (
 			<div>
 				<Drawer.DrawerItem onClick={this.goToLogin} class={this.isActive('/login')} href="/login">
-					<List.ItemGraphic>vpn_key</List.ItemGraphic>
-					Login
+					<span class="text">
+						<List.ItemGraphic>vpn_key</List.ItemGraphic>
+						Login
+					</span>
 				</Drawer.DrawerItem>
 				<Drawer.DrawerItem onClick={this.goToRegister} class={this.isActive('/register')} href="/register">
-					<List.ItemGraphic>person_add</List.ItemGraphic>
-					Register
+					<span class="text">
+						<List.ItemGraphic>person_add</List.ItemGraphic>
+						Register
+					</span>
 				</Drawer.DrawerItem>
 			</div>
 		);
@@ -196,35 +200,56 @@ export default class Header extends Component {
 			defaultVal = (
 				<div>
 					<Drawer.DrawerItem onClick={this.goToMyProfile} class={this.isActive(`/${user.profile.url}`)} href={`/${user.profile.url}`}>
-						<List.ItemGraphic>account_circle</List.ItemGraphic>
-						Profile
+						<span class="text">
+							<List.ItemGraphic>account_circle</List.ItemGraphic>
+							Profile
+						</span>
 					</Drawer.DrawerItem>
 					<div class="section">
 						<h1 class={style['subtitle-header']}>
 							My Music
 							<small>{settings.beta === SETTINGS.ENABLE_BETA ? "BETA" : "Soon"}</small>
 						</h1>
-						<Drawer.DrawerItem onClick={this.goToArtists} class={`mdc-list-item ${this.isActive(`/${user.profile.url}/following`)}`} href={`/${user.profile.url}/following`}>
-							<List.ItemGraphic>person</List.ItemGraphic>
-							Artists
-						</Drawer.DrawerItem>
+						{settings.beta === SETTINGS.ENABLE_BETA && (
+							<Drawer.DrawerItem onClick={this.goToArtists} class={`mdc-list-item ${this.isActive(`/${user.profile.url}/following`)}`} href={`/${user.profile.url}/following`}>
+								<span class="text">
+									<List.ItemGraphic>person</List.ItemGraphic>
+									Artists
+								</span>
+							</Drawer.DrawerItem>
+						)}
 						{settings.beta === SETTINGS.ENABLE_BETA && (
 							<Drawer.DrawerItem onClick={this.goToTrackCollection} class={`mdc-list-item ${this.isActive(`/collection/tracks`)}`} href='/collection/tracks'>
-								<List.ItemGraphic>music_note</List.ItemGraphic>
-								Songs
+								<span class="text">
+									<List.ItemGraphic>music_note</List.ItemGraphic>
+									Songs
+								</span>
 							</Drawer.DrawerItem>
 						)}
 
 						{settings.beta === SETTINGS.DISABLE_BETA && (
 							<Drawer.DrawerItem class={`mdc-list-item`}>
-								<List.ItemGraphic>music_note</List.ItemGraphic>
-								Songs
+								<span class="text">
+									<List.ItemGraphic>person</List.ItemGraphic>
+									Artists
+								</span>
+							</Drawer.DrawerItem>
+						)}
+
+						{settings.beta === SETTINGS.DISABLE_BETA && (
+							<Drawer.DrawerItem class={`mdc-list-item`}>
+								<span class="text">
+									<List.ItemGraphic>music_note</List.ItemGraphic>
+									Songs
+								</span>
 							</Drawer.DrawerItem>
 						)}
 
 						<Drawer.DrawerItem onClick={e => console.log(e)} class={this.isActive(`/${user.profile.url}/playlists`)}>
-							<List.ItemGraphic>playlist_play</List.ItemGraphic>
-							Playlists
+							<span class="text">
+								<List.ItemGraphic>playlist_play</List.ItemGraphic>
+								Playlists
+							</span>
 						</Drawer.DrawerItem>
 					</div>
 					{user.role != null && user.role === "admin" && (
@@ -233,14 +258,18 @@ export default class Header extends Component {
 								Administration
 							</h1>
 							<Drawer.DrawerItem onClick={this.goToAdmin} class={this.isActive(`/admin`)} href="/admin">
-								<List.ItemGraphic>supervisor_account</List.ItemGraphic>
-								Users
+								<span class="text">
+									<List.ItemGraphic>supervisor_account</List.ItemGraphic>
+									Users
+								</span>
 							</Drawer.DrawerItem>
 						</div>
 					)}
 					<Drawer.DrawerItem onClick={this.logout.bind(this)} class={`align-end ${this.isActive('/logout')}`}>
-						<List.ItemGraphic>vpn_key</List.ItemGraphic>
-						Logout
+						<span class="text">
+							<List.ItemGraphic>vpn_key</List.ItemGraphic>
+							Logout
+						</span>
 					</Drawer.DrawerItem>
 				</div>
 			);
@@ -333,13 +362,16 @@ export default class Header extends Component {
 					<Drawer.PermanentDrawer class={`${style.drawer} ${auth.logged_in !== true && style.loggedOut}`}>
 						<Drawer.DrawerContent>
 							<Drawer.DrawerItem onClick={this.goHome} class={this.isActive('/')} href={`/`}>
-								<List.ItemGraphic>music_note</List.ItemGraphic>
-								Stream
+								<span class="text">
+									<List.ItemGraphic>music_note</List.ItemGraphic>
+									Stream
+								</span>
 							</Drawer.DrawerItem>
 							
 							{this.login_or_logout()}
 						</Drawer.DrawerContent>
 					</Drawer.PermanentDrawer>
+					
 					<Dialog ref={this.settingsDialogRef} onCancel={e => this.props.dispatch({ type: "HIDE_SETTINGS_PANEL" } )}>
 						<div class="modal-border-top"></div>
 						<Dialog.Header>Settings</Dialog.Header>

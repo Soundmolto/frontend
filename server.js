@@ -47,7 +47,7 @@ app.get('*', async (request, response) => {
 	let url;
 	let toAdd;
 
-	if (possiblePaths.length === 1) {
+	if (possiblePaths.length === 1 || possiblePaths.length === 0) {
 		toAdd = toAddValues.HOMEPAGE;
 	}
 
@@ -191,7 +191,7 @@ app.get('*', async (request, response) => {
 		summary = 'summary';
 		site = `${APP.TWITTER_HANDLE}`;
 		title = `${APP.NAME} - Discover`;
-		description = `${APP.NAME} Discover new artists on SoundMolto`;
+		description = `${APP.NAME} Discover new artists on SoundMolto & Upload your tracks for free.`;
 		image = defImage;
 		tags = generateTwitterCard({ summary, site, title, description, image });
 		ogTags = generateFacebookCard({

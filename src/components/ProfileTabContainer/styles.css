@@ -1,7 +1,8 @@
 .tabs {
 	display: flex !important;
 	align-content: center;
-	width: 100%;
+	width: 500px;
+	margin: -58px 0 30px 20px;
 }
 
 .tabs a {
@@ -15,6 +16,14 @@
 	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 	font-size: 0.8rem;
 	font-weight: 600;
+	border-radius: 50px !important;
+    overflow: hidden;
+	margin: 0 10px 0 0;
+	box-shadow: var(--mdc-theme--box-shadow--floating);
+}
+
+.tabs a:last-of-type {
+	border-radius: 0 10px 0 0;
 }
 
 .tabs a i {
@@ -22,7 +31,9 @@
 }
 
 .tabs a small {
-    margin-left: 10px;
+	margin-left: 10px;
+	font-size: 0.9rem;
+	opacity: 0.75;
 }
 
 .tabContainer {

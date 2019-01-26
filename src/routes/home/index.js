@@ -92,7 +92,7 @@ export default class Home extends Component {
 						site: `${APP.TWITTER_HANDLE}`,
 						title: `${APP.NAME} - Discover`,
 						description: `${APP.NAME} Discovery page`,
-						image: `https://soundmolto.com/assets/icons/android-chrome-512x512.png`,
+						image: `https://app.soundmolto.com/assets/icons/android-chrome-512x512.png`,
 					})}
 				/>
 				<div class="header">

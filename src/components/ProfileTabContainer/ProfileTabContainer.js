@@ -13,13 +13,16 @@ export class ProfileTabContainer extends Component {
 		return (
 			<div>
 				<Tabs className={styles.tabs} activeTabIndex={this.state.slideIndex}>
-					<Tabs.Tab onClick={() => this.setState({slideIndex: 0})}>
+					<Tabs.Tab onClick={() => this.setState({slideIndex: 0})}
+					 class={this.state.slideIndex === 0 ? 'mdc-tab--active' : ''}>
 						<Icon>music_note</Icon>
 						Tracks <small>{amountOfTracks}</small>
+						<div class="block"></div>
 					</Tabs.Tab>
 					<Tabs.Tab onClick={() => this.setState({slideIndex: 1})}>
 						<Icon>person</Icon>
 						About
+						<div class="block"></div>
 					</Tabs.Tab>
 				</Tabs>
 

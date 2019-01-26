@@ -3,8 +3,7 @@
 	z-index: 3;
 	bottom: 0;
 	width: 100vw;
-	background: rgb(78, 96, 125);
-	background: linear-gradient(to right, rgb(101, 101, 140) 0%, rgb(78, 96, 125) 100%);
+	background: var(--mdc-sidebar-footer-bg);
 	height: 64px;
 	padding: 12px 10px 10px;
 	display: flex;

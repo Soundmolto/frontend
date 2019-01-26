@@ -9,8 +9,13 @@ let linGradProgress = '#334b5c';
 
 if (typeof window !== "undefined") {
 	linGrad = document.createElement('canvas').getContext('2d').createLinearGradient(0, 0, 0, 95);
-	linGrad.addColorStop(0, '#5D8CAE');
-	linGrad.addColorStop(1, '#c67dcb');
+	if (window.document.body.classList.contains('mdc-theme--dark')) {
+		linGrad.addColorStop(0, '#555');
+		linGrad.addColorStop(1, '#555');
+	} else {
+		linGrad.addColorStop(0, '#ddd');
+		linGrad.addColorStop(1, '#999');
+	}
 
 	linGradProgress = document.createElement('canvas').getContext('2d').createLinearGradient(0, 0, 0, 95);
 	linGradProgress.addColorStop(0, '#334b5c');
@@ -80,6 +85,20 @@ export class Waveform extends Component {
 	}
 	
 	loadData () {
+		if (typeof window !== "undefined") {
+			linGrad = document.createElement('canvas').getContext('2d').createLinearGradient(0, 0, 0, 95);
+			if (window.document.body.classList.contains('mdc-theme--dark')) {
+				linGrad.addColorStop(0, '#555');
+				linGrad.addColorStop(1, '#555');
+			} else {
+				linGrad.addColorStop(0, '#ddd');
+				linGrad.addColorStop(1, '#999');
+			}
+		
+			linGradProgress = document.createElement('canvas').getContext('2d').createLinearGradient(0, 0, 0, 95);
+			linGradProgress.addColorStop(0, '#334b5c');
+			linGradProgress.addColorStop(1, '#7b4180');
+		}
 		this.removeCanvas();
 		this.renderCanvas(this.props.data);
 	}
@@ -128,12 +147,18 @@ export class Waveform extends Component {
 
 			const wave = new WaveformGenerator({
 				canvas,
-				bar_width: 2,
-				bar_gap : 0.2,
+				bar_width: 4,
+				bar_gap : 0.5,
 				wave_color: linGrad,
 				audioContext,
 				onComplete () {
-					const tline = new WaveformGenerator({ canvas: timeline, bar_width: 2, bar_gap : 0.2, wave_color: linGradProgress, audioContext });
+					const tline = new WaveformGenerator({
+						canvas: timeline,
+						bar_width: 4,
+						bar_gap : 0.5,
+						wave_color: linGradProgress,
+						audioContext
+					});
 					tline.extractBuffer(that.buffer);
 				}
 			});

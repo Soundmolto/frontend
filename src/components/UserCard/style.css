@@ -2,14 +2,27 @@
     background-size: cover;
     display: block;
     box-shadow: var(--mdc-theme--box-shadow--floating);
+    margin-bottom: 10px;
+}
+
+.profile:after {
+    display: block;
+    content: " ";
+    width: 100%;
+    height: 4px;
+    position: absolute;
+    border-radius: 4px;
+    bottom: 0;
+    background: linear-gradient(to right, var(--mdc-theme-primary) -40%, var(--mdc-theme-complementary-color) 170%) !important;
 }
 
 .about {
-    margin: 0 15px;
+    margin: 0 15px 10px;
 }
 
 .typography {
     color: var(--mdc-theme-text-primary-on-background);
+    margin: 0;
 }
 
 .typography > small {
@@ -53,9 +66,9 @@
 
 @media screen and (min-width: 460px) {
     .profile {
-        width: 150px;
-        height: 150px;
-        border-radius: 150px;
+        width: 70px;
+        height: 70px;
+        border-radius: 10px;
     }
 
     .about {
@@ -65,9 +78,9 @@
 
 @media screen and (max-width: 460px) {
     .profile {
-        height: 75px;
-        width: 75px;
-        border-radius: 75px;
+        width: 70px;
+        height: 70px;
+        border-radius: 10px;
     }
 
     .about {

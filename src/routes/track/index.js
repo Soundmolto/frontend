@@ -126,7 +126,7 @@ export default class Track extends Component {
 						site: `${APP.TWITTER_HANDLE}`,
 						title: `${APP.NAME} - ${(viewedTrack && viewedTrack.name) || "Loading..."}`,
 						description: track.description,
-						image: this.getArtwork(track) || `https://soundmolto.com/assets/icons/android-chrome-512x512.png`,
+						image: this.getArtwork(track) || `https://app.soundmolto.com/assets/icons/android-chrome-512x512.png`,
 					})}
 				/>
 				<div class={"header " + style.header}>
@@ -138,6 +138,7 @@ export default class Track extends Component {
 							)}
 						</h1>
 					</div>
+					<div class={style.fade}></div>
 				</div>
 				<LayoutGrid>
 					{viewedTrack != null && viewedTrack.id != null && viewedTrack.owner != null && (

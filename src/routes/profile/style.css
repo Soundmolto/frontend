@@ -72,4 +72,23 @@
 	cursor: pointer;
 }
 
+.header {
+	background: transparent;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	height: 300px;
+	position: relative;
+	overflow: visible !important;
+}
 
+
+.fade {
+	height: 48px;
+	position: absolute;
+	background: linear-gradient(transparent 0%, var(--mdc-theme-background) 100%);
+	width: 100vw;
+	margin-left: -20px;
+	z-index: 0;
+	bottom: 0;
+}

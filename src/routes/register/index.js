@@ -102,7 +102,7 @@ export default class Login extends Component {
 						site: `${APP.TWITTER_HANDLE}`,
 						title: `${APP.NAME} - Register`,
 						description: `${APP.NAME} Register page`,
-						image: `https://soundmolto.com/assets/icons/android-chrome-512x512.png`,
+						image: `https://app.soundmolto.com/assets/icons/android-chrome-512x512.png`,
 					})}
 				/>
 				<div class="header">

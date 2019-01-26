@@ -99,3 +99,23 @@
 .header .overlay h1 {
 	margin: auto 20px auto;
 }
+
+.header {
+	background: transparent;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	height: 300px;
+	position: relative;
+}
+
+
+.fade {
+	height: 64px;
+	position: absolute;
+	background: linear-gradient(transparent 75%, var(--mdc-theme-background) 100%);
+	width: 100vw;
+	margin-left: -20px;
+	z-index: 2;
+	bottom: 0;
+}

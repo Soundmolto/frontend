@@ -21,6 +21,7 @@ import Dialog from 'preact-material-components/Dialog';
 import Snackbar from 'preact-material-components/Snackbar';
 import { finish_editing_track } from '../../actions/editingTrack';
 import { delete_track } from '../../actions/track';
+import Goku from '../../assets/goku.png';
 
 let _following = false;
 let hasMore = false;
@@ -166,6 +167,7 @@ export default class Profile extends Component {
 		const title = `${APP.NAME} - ${_user}`;
 		const tracks = viewedUser.tracks;
 		const shouldRenderWaveform = settings.waveforms === SETTINGS.ENABLE_WAVEFORMS || settings.waveforms == null;
+		const defaultPic = viewedUser.profile.profilePicture || Goku;
 		if (this.currentUrl !== getCurrentUrl()) this.updateData();
 
 		for (const track of tracks) {
@@ -186,20 +188,26 @@ export default class Profile extends Component {
 						site: `${APP.TWITTER_HANDLE}`,
 						title: title,
 						description: `View ${_user}'s profile on SoundMolto`,
-						image: viewedUser.profile.profilePicture || `https://soundmolto.com/assets/icons/android-chrome-512x512.png`,
+						image: viewedUser.profile.profilePicture || `https://app.soundmolto.com/assets/icons/android-chrome-512x512.png`,
 					})}
 				/>
-				<div class={"header " + style.header}>
+				<div
+					class={"header " + style.header}
+					style={{
+						backgroundImage: `url(${defaultPic})`
+					}}
+				>
 					<UserPictureName user={viewedUser.profile} show_location={true} style={{
 							width: '100%',
 							position: 'relative',
-							'overflow': 'hidden',
+
 						}} h1_class={style.username_custom} role={viewedUser.role}>
 						{auth.logged_in != null && user.profile.id !== viewedUser.profile.id && 
 							<Button class={style.button} onClick={this.toggle_following.bind(this)}>
 								{following ? "Unfollow user" : "Follow user"}
 							</Button>
 						}
+						<div class={style.fade}></div>
 					</UserPictureName>
 				</div>
 				<div class={style.profile_contents}>

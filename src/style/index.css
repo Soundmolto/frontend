@@ -11,22 +11,26 @@
 	--mdc-layout-grid-margin-phone: 0 !important;
 	--mdc-theme--footer-background: #cfcfcf;
 	--mdc-theme-primary-font--darker: #ccc;
-	--mdc-theme-background: #ffffff;
+	--mdc-theme-background: #fff;
 	--mdc-theme-text-primary-on-background: #333333;
 
 	--mdc-theme--box-shadow--floating: 0 15px 20px -15px rgba(0, 0, 0, 0.35);
-	--mdc-theme--card-bg: #ffffff;
+	--mdc-theme--card-bg: #efefef;
 	--mdc-theme--volume-panel--background: rgba(0, 0, 0, 0.8);
+	--mdc-sidebar-footer-bg: rgb(26, 26, 26);
+	--mdc-search-bg: rgba(0, 0, 0, 0.3);
 }
 
 .mdc-theme--dark {
 	--mdc-theme-text-primary-on-background: #fff;
 	--mdc-theme-text-primary: #FFFFFF;
-	--mdc-theme-background: #333;
+	--mdc-theme-background: #111;
 	--mdc-theme-link-primary-on-background: #FFFFFF;
 	--mdc-theme--footer-background: rgb(36, 36, 36);
-	--mdc-theme--card-bg: #444444;
+	--mdc-theme--card-bg: #222222;
 	--mdc-theme--volume-panel--background: rgba(0, 0, 0, 0.5);
+	--mdc-sidebar-footer-bg: rgb(26, 26, 26);
+	--mdc-search-bg: rgba(0, 0, 0, 0.7);
 	/* #b64040 */
 }
 
@@ -36,7 +40,7 @@ html, body {
 	width: 100%;
 	padding: 0;
 	margin: 0;
-	background: #FAFAFA;
+	background: var(--mdc-theme-background);
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 	font-weight: 400;
 	color: #444;
@@ -123,7 +127,7 @@ body > div {
 }
 
 .mdc-theme--dark {
-	background-color: #333;
+	background-color: var(--mdc-theme-background);
 	color: #fff;
 }
 
@@ -131,8 +135,7 @@ body > div {
 	position: fixed;
 	top: 0;
 	z-index: 5;
-	background: rgb(78, 96, 125);
-	background: linear-gradient(rgb(78, 96, 125) 0%, rgb(78, 96, 125) 100%);
+	background: var(--mdc-sidebar-footer-bg);
 	color: initial;
 }
 
@@ -266,7 +269,7 @@ body > div {
 	top: 64px;
 	position: fixed;
 	border: none;
-	background: linear-gradient(rgb(78, 96, 125) 0%, var(--mdc-theme-complementary-color) 500%) !important;
+	background: var(--mdc-sidebar-footer-bg) !important;
 	box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.35) !important;
 }
 
@@ -307,8 +310,28 @@ body > div {
 .mdc-drawer--permanent .mdc-list .mdc-list-item.active {
 	background: rgba(0, 0, 0, 0.25);
 	font-weight: 600;
-	transform: translateX(5px);
 }
+
+.mdc-drawer--permanent .mdc-list .mdc-list-item.active > span.text {
+	transform: translateX(5px);
+	position: relative;
+}
+
+.mdc-drawer--permanent .mdc-list .mdc-list-item.active > span.text:after {
+	display: block;
+	position: absolute;
+	bottom: -12px;
+	height: 3px;
+	width: 150px;
+	left: -21px;
+	content: " ";
+	background: linear-gradient(to right, var(--mdc-theme-primary) -40%, var(--mdc-theme-complementary-color) 170%) !important;
+}
+
+.mdc-drawer--permanent .mdc-list .mdc-list-item > span.text {
+	display: flex;
+	align-items: center;
+ }
 
 .search-container {
 	display: flex;
@@ -323,10 +346,10 @@ body > div {
 	width: 100%;
 	display: block;
 	border: 0;
-	background: rgba(0, 0, 0, 0.2);
+	background: var(--mdc-search-bg);
 	color: #FFF;
-	padding: 10px;
-	border-radius: 10px;
+	padding: 10px 20px 10px 20px;
+	border-radius: 50px;
 	box-shadow: var(--mdc-theme--box-shadow--floating);
 }
 
@@ -361,12 +384,19 @@ input[disabled] {
 .mdc-drawer--permanent .mdc-list-item {
 	transition: transform 0.3s ease-in-out;
 	transform: translateX(0);
-	border-radius: 10px 0 0 10px;
 	margin-bottom: 5px;
 	cursor: pointer;
 }
 
-.mdc-drawer--permanent .mdc-list-item:hover {
+.mdc-drawer--permanent .mdc-list-item span.text {
+	transition: transform 0.3s ease-in-out;
+	transform: translateX(0);
+}
+
+.mdc-drawer--permanent .mdc-list .mdc-list-item:hover {
+}
+
+.mdc-drawer--permanent .mdc-list-item:hover span.text {
 	transform: translateX(5px);
 }
 
@@ -404,7 +434,12 @@ input[disabled] {
 }
 
 .mdc-tab--active {
-	background: rgba(0, 0, 0, 0.7) !important;
+	background: rgba(0, 0, 0, 1) !important;
+	color: white;
+}
+
+.mdc-tab i {
+	color: white;
 }
 
 .slider-list {
@@ -419,4 +454,17 @@ input[disabled] {
 
 .mdc-tab-bar__indicator {
 	background: linear-gradient(to right, var(--mdc-theme-primary) -40%, var(--mdc-theme-complementary-color) 170%) !important;
+	display: none;
+}
+
+.mdc-tab--active .block {
+	display: block;
+	content: " ";
+	position: absolute;
+	bottom: 0;
+	background: linear-gradient(to right, var(--mdc-theme-primary) -40%, var(--mdc-theme-complementary-color) 170%) !important;
+	height: 3px;
+	width: 100%;
+	left: 0;
+	border-radius: 50px;
 }
