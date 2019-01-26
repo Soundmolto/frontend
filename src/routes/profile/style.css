@@ -92,3 +92,14 @@
 	z-index: 0;
 	bottom: 0;
 }
+
+.username_custom {
+	background: rgba(0, 0, 0, 0.8);
+	padding: 10px;
+	border-radius: 10px;
+	box-shadow: var(--mdc-theme--box-shadow--floating);
+}
+
+.username_custom i {
+	color: white;
+}

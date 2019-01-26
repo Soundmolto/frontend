@@ -6,7 +6,7 @@
     min-height: 32px;
     padding: 0;
     background: var(--mdc-sidebar-footer-bg);
-    color: #FFF;
+    color: var(--mdc-sidebar-footer-fg);
     box-shadow: var(--mdc-theme--box-shadow--floating);
     border-radius: 0 0 10px 10px;
     overflow: hidden;
@@ -20,7 +20,7 @@
     padding: 10px;
     text-decoration: none;
     font-weight: 500;
-    color: #FFF;
+    color: var(--mdc-sidebar-footer-fg);
 }
 
 .dropdown p {
@@ -37,19 +37,19 @@
     background: rgba(0, 0, 0, 0.3);
     margin-left: 10px;
     border-radius: 10px;
-    color: #FFF;
+    color: var(--mdc-sidebar-footer-fg);
 }
 
 .dropdown p.followerDetails {
     width: 100%;
     font-size: 0.9rem;
     opacity: 0.75;
-    color: #FFF;
+    color: var(--mdc-sidebar-footer-fg);
 }
 
 .dropdown p.followerDetails span {
     margin-right: 10px;
-    color: #FFF;
+    color: var(--mdc-sidebar-footer-fg);
 }
 
 .dropdown a:hover {

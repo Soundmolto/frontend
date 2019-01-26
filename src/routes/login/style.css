@@ -4,13 +4,6 @@
 	width: 100%;
 }
 
-.card {
-	border-radius: 10px;
-	width: 100%;
-	max-width: 750px;
-	margin: 0 auto;
-}
-
 .cardHeader {
 	padding: 16px;
 }
@@ -20,12 +13,44 @@
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
+	width: 100%;
+	max-width: 750px;
+	background: transparent !important;
+	margin: 0 auto;
 }
 
-[class="mdc-text-field"] {
+.cardBody [class="mdc-text-field"] {
 	width: 100% !important;
 }
 
 .buttonContainer {
 	transition: all 0.3s ease-in-out;
+}
+
+.cardBody input {
+	color: white;
+	background: var(--mdc-search-bg) !important;
+	border-radius: 50px;
+	padding: 10px;
+	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+	border: 0;
+}
+
+.cardBody label {
+	left: 10px;
+	bottom: 14px;
+}
+
+.cardBody [class="mdc-text-field"]  div {
+	display: none !important;
+	opacity: 0 !important;
+}
+
+.button {
+	width: 100%;
+	margin-top: 10px;
+	background: var(--floating-label-login-bg) !important;
+	color: white !important;
+	border-radius: 50px;
+	padding: 10px !important;
 }

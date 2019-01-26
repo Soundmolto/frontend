@@ -63,7 +63,7 @@ export default class Login extends Component {
 		if (logged_in === true) route("/", true);
 
 		return (
-			<div>
+			<div class="login">
 				<Helmet
 					title={`${APP.NAME} - Login`}
 					meta={generateTwitterCard({
@@ -78,19 +78,26 @@ export default class Login extends Component {
 					<h1>Login</h1>
 				</div>
 				<div class={style.home}>
-					<Card className={style.card}>
-						<form class={style.cardBody} onSubmit={this.onLogin.bind(this)} key="login-form">
-							<TextField name="login_email" label="Enter your email address" type="email" autofocus onChange={this.onEmailChange.bind(this)} onBlur={this.onEmailChange.bind(this)} key="login-email" value={this.__state.email} />
-							<TextField name="login_password" type="password" label="Enter a password" onChange={this.onPasswordChange.bind(this)} onBlur={this.onPasswordChange.bind(this)} key="login-password" value={this.__state.password} />
-							<div className={style.buttonContainer}>
-								<Button raised onClick={this.onLogin.bind(this)} type="submit">
-									{!logged_in && !loading && "Login"}
-									{!logged_in && loading && <LinearProgress reversed={true} indeterminate={true} />}
-								</Button>
-								{error && errorMessage != null && <div className="error-message">{errorMessage}</div>}
-							</div>
-						</form>
-					</Card>
+					<form class={style.cardBody} onSubmit={this.onLogin.bind(this)} key="login-form">
+						<TextField
+							name="login_email"
+							label="Enter your email address"
+							type="email"
+							autofocus
+							onChange={this.onEmailChange.bind(this)}
+							onBlur={this.onEmailChange.bind(this)}
+							key="login-email"
+							value={this.__state.email}
+						/>
+						<TextField name="login_password" type="password" label="Enter a password" onChange={this.onPasswordChange.bind(this)} onBlur={this.onPasswordChange.bind(this)} key="login-password" value={this.__state.password} />
+						<div className={style.buttonContainer}>
+							<Button raised onClick={this.onLogin.bind(this)} type="submit" class={style.button}>
+								{!logged_in && !loading && "Login"}
+								{!logged_in && loading && <LinearProgress reversed={true} indeterminate={true} />}
+							</Button>
+							{error && errorMessage != null && <div className="error-message">{errorMessage}</div>}
+						</div>
+					</form>
 				</div>
 			</div>
 		);

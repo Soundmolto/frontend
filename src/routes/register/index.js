@@ -94,7 +94,7 @@ export default class Login extends Component {
 		if (logged_in === true) route("/", true);
 
 		return (
-			<div>
+			<div class="register">
 				<Helmet
 					title={`${APP.NAME} - Register`}
 					meta={generateTwitterCard({
@@ -109,20 +109,18 @@ export default class Login extends Component {
 					<h1>Register</h1>
 				</div>
 				<div class={style.home}>
-					<Card className={style.card}>
-						<form class={style.cardBody} onSubmit={this.onRegister.bind(this)} key={"registration-form"}>
-							<TextField label="Enter your email address" type="email" autofocus onChange={this.onEmailChange.bind(this)} key="registration-email" />
-							<TextField type="password" label="Enter a password" onChange={this.onPasswordChange.bind(this)} key="registration-password" />
-							<div className={style.buttonContainer}>
-								<Button raised onClick={this.onRegister.bind(this)} type="submit">
-									{!logged_in && !loading && "Register"}
-									{!logged_in && loading && <LinearProgress reversed={true} indeterminate={true} />}
-								</Button>
-								{error && errorMessage != null && <div className="error-message">{errorMessage}</div>}
-								{state.error && state.errorMessage != null && <div className="error-message">{state.errorMessage}</div>}
-							</div>
-						</form>
-					</Card>
+					<form class={style.cardBody} onSubmit={this.onRegister.bind(this)} key={"registration-form"}>
+						<TextField label="Enter your email address" type="email" autofocus onChange={this.onEmailChange.bind(this)} key="registration-email" />
+						<TextField type="password" label="Enter a password" onChange={this.onPasswordChange.bind(this)} key="registration-password" />
+						<div className={style.buttonContainer}>
+							<Button raised onClick={this.onRegister.bind(this)} type="submit" class={style.button}>
+								{!logged_in && !loading && "Register"}
+								{!logged_in && loading && <LinearProgress reversed={true} indeterminate={true} />}
+							</Button>
+							{error && errorMessage != null && <div className="error-message">{errorMessage}</div>}
+							{state.error && state.errorMessage != null && <div className="error-message">{state.errorMessage}</div>}
+						</div>
+					</form>
 				</div>
 			</div>
 		);

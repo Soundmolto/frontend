@@ -17,8 +17,10 @@
 	--mdc-theme--box-shadow--floating: 0 15px 20px -15px rgba(0, 0, 0, 0.35);
 	--mdc-theme--card-bg: #efefef;
 	--mdc-theme--volume-panel--background: rgba(0, 0, 0, 0.8);
-	--mdc-sidebar-footer-bg: rgb(26, 26, 26);
-	--mdc-search-bg: rgba(0, 0, 0, 0.3);
+	--mdc-sidebar-footer-bg: #fff;
+	--mdc-sidebar-footer-fg: rgb(26, 26, 26);
+	--mdc-search-bg: rgba(0, 0, 0, 0.2);
+	--floating-label-login-bg: #111;
 }
 
 .mdc-theme--dark {
@@ -30,7 +32,9 @@
 	--mdc-theme--card-bg: #222222;
 	--mdc-theme--volume-panel--background: rgba(0, 0, 0, 0.5);
 	--mdc-sidebar-footer-bg: rgb(26, 26, 26);
+	--mdc-sidebar-footer-fg: #fff;
 	--mdc-search-bg: rgba(0, 0, 0, 0.7);
+	--floating-label-login-bg: #000;
 	/* #b64040 */
 }
 
@@ -136,11 +140,12 @@ body > div {
 	top: 0;
 	z-index: 5;
 	background: var(--mdc-sidebar-footer-bg);
-	color: initial;
+	color: var(--mdc-sidebar-footer-fg);
 }
 
-.mdc-toolbar span, .mdc-toolbar h1 {
-	color: white;
+.mdc-toolbar span, .mdc-toolbar h1,
+.mdc-toolbar__icon, .mdc-toolbar__menu-icon.material-icons, .mdc-toolbar__icon.material-icons, .mdc-toolbar__menu-icon.material-icons {
+	color: var(--mdc-sidebar-footer-fg) !important;
 }
 
 .mdc-toolbar__title {
@@ -270,6 +275,7 @@ body > div {
 	position: fixed;
 	border: none;
 	background: var(--mdc-sidebar-footer-bg) !important;
+	color: var(--mdc-sidebar-footer-fg);
 	box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.35) !important;
 }
 
@@ -280,8 +286,9 @@ body > div {
 	}
 }
 
-.mdc-drawer--permanent .mdc-drawer__content a, .mdc-drawer--permanent .mdc-drawer__content i {
-	color: #FFF;
+.mdc-drawer--permanent .mdc-drawer__content a, .mdc-drawer--permanent .mdc-drawer__content i,
+.mdc-drawer--permanent .mdc-drawer__content .section > h1 {
+	color: var(--mdc-sidebar-footer-fg);
 }
 
 /* .mdc-drawer--permanent .mdc-drawer__content {
@@ -299,12 +306,6 @@ body > div {
 
 .mdc-drawer--permanent .mdc-list {
 	padding: 0;
-}
-
-.mdc-drawer--permanent .mdc-list .mdc-list-item.align-end {
-	position: absolute;
-	bottom: 10px;
-	width: 100%;
 }
 
 .mdc-drawer--permanent .mdc-list .mdc-list-item.active {
@@ -347,7 +348,7 @@ body > div {
 	display: block;
 	border: 0;
 	background: var(--mdc-search-bg);
-	color: #FFF;
+	color: var(--mdc-sidebar-footer-fg);
 	padding: 10px 20px 10px 20px;
 	border-radius: 50px;
 	box-shadow: var(--mdc-theme--box-shadow--floating);
@@ -467,4 +468,16 @@ input[disabled] {
 	width: 100%;
 	left: 0;
 	border-radius: 50px;
+}
+
+.login .mdc-line-ripple,
+.register .mdc-line-ripple {
+	display: none !important;
+}
+
+.login .mdc-floating-label--float-above,
+.register .mdc-floating-label--float-above {
+	background: var(--floating-label-login-bg);
+	padding: 0 10px;
+	color: white !important;
 }

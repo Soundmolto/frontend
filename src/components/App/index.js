@@ -16,6 +16,7 @@ import { request_new_data } from '../../actions/user';
 import { THEMES } from '../../enums/themes';
 import { QueueController } from '../QueueController';
 import Following from '../../routes/artists';
+import Stats from '../../routes/stats';
 
 let onRender = (UI) => {};
 let MainAudioContext;
@@ -82,6 +83,7 @@ export default class App extends Component {
 						<Track path="/:vanity_url/:track_url" key="track" audioContext={this.audioContext} queue={queue} class="route-page" onShareTrack={track => this.header._component.openShareTrack(track)} />
 						<TrackCollection path="/collection/tracks" key="track-collection" audioContext={this.audioContext} queue={queue} class="route-page" />
 						<Following path="/:vanity_url/following" className="route-page" />
+						<Stats path="/you/stats" className="route-page" />
 					</Router>
 				</div>
 				<audio ref={this.audioPlayerRef} />

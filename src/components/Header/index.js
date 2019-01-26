@@ -124,6 +124,16 @@ export default class Header extends Component {
 	goToRegister = e => {
 		e.preventDefault();
 		this.linkTo('/register');
+	};
+
+	goToStats = e => {
+		e.preventDefault();
+		this.linkTo('/you/stats');
+	};
+
+	goToAdmin = e => {
+		e.preventDefault();
+		this.linkTo('/admin');
 	}
 
 	toggleDarkTheme = () => {
@@ -252,6 +262,20 @@ export default class Header extends Component {
 							</span>
 						</Drawer.DrawerItem>
 					</div>
+
+					<div class="section">
+						<h1 class={style['subtitle-header']}>
+							Artist Panel
+						</h1>
+						<Drawer.DrawerItem onClick={this.goToStats} class={this.isActive(`/you/stats`)} href="/you/stats">
+							<span class="text">
+								<List.ItemGraphic>equalizer</List.ItemGraphic>
+								Your stats
+							</span>
+						</Drawer.DrawerItem>
+					</div>
+
+
 					{user.role != null && user.role === "admin" && (
 						<div class="section">
 							<h1 class={style['subtitle-header']}>
@@ -281,6 +305,7 @@ export default class Header extends Component {
 	isActive (url) {
 		let className = '';
 		if (url === getCurrentUrl()) className = 'active';
+		if (url === getCurrentUrl()) { console.log(url) }
 		return className;
 	}
 
@@ -361,6 +386,9 @@ export default class Header extends Component {
 					<div class={style.drawerCloseContainer} onClick={this.closeMenu}></div>
 					<Drawer.PermanentDrawer class={`${style.drawer} ${auth.logged_in !== true && style.loggedOut}`}>
 						<Drawer.DrawerContent>
+							<h1 class={style['subtitle-header']}>
+								Discover
+							</h1>
 							<Drawer.DrawerItem onClick={this.goHome} class={this.isActive('/')} href={`/`}>
 								<span class="text">
 									<List.ItemGraphic>music_note</List.ItemGraphic>
@@ -372,6 +400,7 @@ export default class Header extends Component {
 						</Drawer.DrawerContent>
 					</Drawer.PermanentDrawer>
 					
+					{/* TODO: Move these into their own components */}
 					<Dialog ref={this.settingsDialogRef} onCancel={e => this.props.dispatch({ type: "HIDE_SETTINGS_PANEL" } )}>
 						<div class="modal-border-top"></div>
 						<Dialog.Header>Settings</Dialog.Header>
