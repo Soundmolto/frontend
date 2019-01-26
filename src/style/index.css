@@ -232,8 +232,7 @@ body > div {
 	width: 100vw;
 	display: flex;
 	padding: 0 20px 0;
-	background: #5D8CAE;
-	background: linear-gradient(var(--mdc-theme-primary) -40%, var(--mdc-theme-complementary-color) 170%);
+	background: var(--mdc-search-bg);
 }
 
 .header h1 {
