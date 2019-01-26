@@ -305,7 +305,6 @@ export default class Header extends Component {
 	isActive (url) {
 		let className = '';
 		if (url === getCurrentUrl()) className = 'active';
-		if (url === getCurrentUrl()) { console.log(url) }
 		return className;
 	}
 

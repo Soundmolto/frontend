@@ -22,12 +22,19 @@ import Snackbar from 'preact-material-components/Snackbar';
 import { finish_editing_track } from '../../actions/editingTrack';
 import { delete_track } from '../../actions/track';
 import Goku from '../../assets/goku.png';
+import { prefill_auth } from '../../prefill-authorized-route';
+import { API_ENDPOINT } from '../../api';
 
 let _following = false;
 let hasMore = false;
 
 @connect(({ auth, user, viewedUser, settings, editingTrack }) => ({ auth, user, viewedUser, settings, editingTrack }))
 export default class Profile extends Component {
+
+	changeCoverPhotoRef = e => (this.changeCoverPhotoModal = e);
+	shouldUpdateData = false;
+
+	state = { editingCoverPhoto: false };
 
 	currentUrl = getCurrentUrl();
 	deleting = false;
@@ -47,6 +54,13 @@ export default class Profile extends Component {
 		const { auth, vanity_url } = this.props;
 		fetch_user(this.props.dispatch.bind(this), { token: auth.token, vanity_url });
 		this.currentUrl = getCurrentUrl();
+
+		if (this.shouldUpdateData) {
+			console.log(this.changeCoverPhotoModal)
+			this.setState({ editingCoverPhoto: false });
+		}
+
+		this.shouldUpdateData = false;
 	}
 
 	/**
@@ -108,12 +122,14 @@ export default class Profile extends Component {
 		return { ...{ followers, following, id, likes, profile, tracks, verified } };
 	}
 
-	componentWillUpdate () {
+	componentWillUpdate (props, nextState) {
 		const state = this.props.store.getState();
 		const viewed = this.massageObject(state.viewedUser);
 		const user = this.massageObject(state.user);
 		const are_same = JSON.stringify(viewed) === JSON.stringify(user);
+		const { editingCoverPhoto } = nextState;
 
+		if (editingCoverPhoto === true) return true;
 		if (state.viewedUser.shouldForcefullyIgnoreUpdateLogic != null) return true;
 		if (state.user.profile && state.user.profile.url === this.props.vanity_url && false === are_same) {
 			this.props.dispatch({ type: USER.VIEW_PROFILE, payload: state.user });
@@ -125,12 +141,16 @@ export default class Profile extends Component {
 			if (this.props.editingTrack.editing && this.editTrackPanel) {
 				this.editTrackPanel.MDComponent.show()
 			}
+
+			if (this.state.editingCoverPhoto && this.changeCoverPhotoModal) {
+				this.changeCoverPhotoModal.MDComponent.show()
+			}
 		})
 	}
 
-	onCloseEditTrack = () => {
-		finish_editing_track(this.props.dispatch);
-	};
+	onCloseEditTrack = () => finish_editing_track(this.props.dispatch);
+
+	onCloseCoverPhotoModal = () => this.setState({ editingCoverPhoto: false });
 
 	onDelete = (track) => {
 		this.deleting = true;
@@ -158,17 +178,39 @@ export default class Profile extends Component {
 	};
 
 	onReportTrack = (track) => {
-		console.log('yeah', track);
+		console.log('yeah, about that...', track);
 	}
 
-	render({ auth, user, viewedUser, settings, editingTrack }) {
+	changeCoverPhoto = () => {
+		// Change the cover photo
+		this.setState({ editingCoverPhoto: true });
+	}
+
+	onChangeCoverPhoto = async (e, f) => {
+		const file = f || e.target.files[0];
+		const data = new FormData();
+		const { token } = this.props.auth;
+		data.append('file', file, file.name);
+		const user = this.props.user;
+
+		const post = await fetch(`${API_ENDPOINT}/users/${this.props.user.id}/cover-photo`, { method: "POST", headers: { ...prefill_auth(token) }, body: data });
+		const payload = await post.json();
+		user.profile = payload.profile;
+
+		this.shouldUpdateData = true;
+		e.target.value = '';
+		this.props.dispatch({ type: USER.HAS_NEW_DATA, payload: user });
+	};
+
+	render({ auth, user, viewedUser, settings, editingTrack }, { editingCoverPhoto }) {
 		const following = this.following(viewedUser);
 		const _user = viewedUser.profile.displayName || (viewedUser.profile && viewedUser.profile.url);
 		const title = `${APP.NAME} - ${_user}`;
 		const tracks = viewedUser.tracks;
 		const shouldRenderWaveform = settings.waveforms === SETTINGS.ENABLE_WAVEFORMS || settings.waveforms == null;
-		const defaultPic = viewedUser.profile.profilePicture || Goku;
+		const defaultPic = viewedUser.profile.coverPhoto || viewedUser.profile.profilePicture || Goku;
 		if (this.currentUrl !== getCurrentUrl()) this.updateData();
+		if (this.shouldUpdateData) this.updateData();
 
 		for (const track of tracks) {
 			if (track.user == null) {
@@ -207,6 +249,11 @@ export default class Profile extends Component {
 								{following ? "Unfollow user" : "Follow user"}
 							</Button>
 						}
+						{auth.logged_in != null && user.profile.id === viewedUser.profile.id && 
+							<Button class={style.coverPhotoButton} onClick={this.changeCoverPhoto}>
+								Change cover photo
+							</Button>
+						}
 						<div class={style.fade}></div>
 					</UserPictureName>
 				</div>
@@ -241,9 +288,26 @@ export default class Profile extends Component {
 				</div>
 				{editingTrack.editing && (
 					<Dialog ref={this.editTrackRef} onCancel={this.onCloseEditTrack}>
+					<div class="modal-border-top"></div>
 						<Dialog.Header>Edit Track</Dialog.Header>
 						<Dialog.Body>
 							<EditTrack track={editingTrack.track} />
+						</Dialog.Body>
+					</Dialog>
+				)}
+				{editingCoverPhoto && (
+					<Dialog ref={this.changeCoverPhotoRef} onCancel={this.onCloseCoverPhotoModal}>
+						<div class="modal-border-top"></div>
+						<Dialog.Header>Change cover photo</Dialog.Header>
+						<Dialog.Body>
+							<ul>
+								<li>
+									Cover photo <b>must</b> be at least 1920x300
+								</li>
+							</ul>
+							<form>
+								<input type="file" accept="image/*" onChange={this.onChangeCoverPhoto} />
+							</form>
 						</Dialog.Body>
 					</Dialog>
 				)}

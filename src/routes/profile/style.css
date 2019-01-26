@@ -29,22 +29,28 @@
 	display: block;
 }
 
-.button {
+.button, .coverPhotoButton {
 	position: absolute;
-	background: rgba(0, 0, 0, 0.2) !important;
 	color: #ffffff !important;
+	background: rgba(0, 0, 0, 0.8) !important;
+	border-radius: 50px;
+	padding: 15px;
 }
 
 @media screen and (min-width: 500px) {
-	.button {
+	.button, .coverPhotoButton {
 		right: 28px;
 	}
 }
 
 @media screen and (max-width: 500px) {
-	.button {
+	.button, .coverPhotoButton {
 		right: 10px;
 		bottom: 10px;
+	}
+
+	.coverPhotoButton {
+		display: none;
 	}
 }
 
