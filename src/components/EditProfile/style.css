@@ -75,27 +75,27 @@
 	display: none !important;
 }
 
+.form input, .form textarea {
+	background: var(--mdc-search-bg);
+	padding: 10px;
+	border: 0 !important;
+}
+
+.form > div {
+	border: none;
+}
+
+.form > div > label {
+	left: 10px;
+	bottom: 14px;
+}
+
+.form input {
+	border-radius: 50px;
+}
+
 @media screen and (max-width: 768px) {
 	.form .username {
 		width: 100%;
-	}
-
-	.form input, .form textarea {
-		background: var(--mdc-search-bg);
-		padding: 10px;
-		border: 0 !important;
-	}
-
-	.form > div {
-		border: none;
-	}
-
-	.form > div > label {
-		left: 10px;
-		bottom: 14px;
-	}
-
-	.form input {
-		border-radius: 50px;
 	}
 }
