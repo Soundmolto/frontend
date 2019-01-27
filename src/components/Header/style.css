@@ -247,6 +247,11 @@ h1.subtitle-header > small {
     cursor: pointer;
     padding: 10px;
     margin-top: -10px;
+    border-radius: 100%;
+}
+
+.modalClose:hover {
+    background: var(--mdc-search-bg);
 }
 
 @media screen and (min-width: 768px) {
