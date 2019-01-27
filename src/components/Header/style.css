@@ -251,3 +251,16 @@ h1.subtitle-header > small {
     background: linear-gradient(to right, var(--mdc-theme-primary) -40%, var(--mdc-theme-complementary-color) 170%) !important;
     box-shadow: none;
 }
+
+.modalClose {
+    float: right;
+    cursor: pointer;
+    padding: 10px;
+    margin-top: -10px;
+}
+
+@media screen and (min-width: 768px) {
+    .modalClose {
+        display: none;
+    }
+}

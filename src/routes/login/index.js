@@ -15,6 +15,8 @@ import Helmet from 'preact-helmet';
 import { APP } from '../../enums/app';
 import { generateTwitterCard } from '../../utils/generateTwitterCard';
 
+let hasFocused = false;
+
 /**
  * The login page / component
  */
@@ -59,6 +61,24 @@ export default class Login extends Component {
 		this.__state = Object.assign({}, this.__state, { password: event.currentTarget.value || "" });
 	}
 
+	onFocus = e => {
+		const element = e.target;
+		window.setTimeout(() => {
+			hasFocused = true;
+			element.scrollIntoView({ behavior: "smooth" });
+		}, hasFocused ? 16 : 128);
+	}
+
+	onPasswordBlur = (e) => {
+		hasFocused = false;
+		this.onPasswordChange(e);
+	}
+
+	onEmailBlur = (e) => {
+		hasFocused = false;
+		this.onEmailChange(e);
+	}
+
 	render ({ loading, logged_in, error, errorMessage }) {
 		if (logged_in === true) route("/", true);
 
@@ -85,11 +105,21 @@ export default class Login extends Component {
 							type="email"
 							autofocus
 							onChange={this.onEmailChange.bind(this)}
-							onBlur={this.onEmailChange.bind(this)}
+							onBlur={this.onEmailBlur}
 							key="login-email"
 							value={this.__state.email}
+							onFocus={this.onFocus}
 						/>
-						<TextField name="login_password" type="password" label="Enter a password" onChange={this.onPasswordChange.bind(this)} onBlur={this.onPasswordChange.bind(this)} key="login-password" value={this.__state.password} />
+						<TextField
+							name="login_password"
+							type="password"
+							label="Enter a password"
+							onChange={this.onPasswordChange.bind(this)}
+							onBlur={this.onPasswordBlur}
+							key="login-password"
+							value={this.__state.password}
+							onFocus={this.onFocus}
+						/>
 						<div className={style.buttonContainer}>
 							<Button raised onClick={this.onLogin.bind(this)} type="submit" class={style.button}>
 								{!logged_in && !loading && "Login"}

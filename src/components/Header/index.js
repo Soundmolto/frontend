@@ -456,9 +456,12 @@ export default class Header extends Component {
 						</Dialog.Body>
 					</Dialog>
 
-					<Dialog ref={this.editProfileDialogRef}>
+					<Dialog ref={this.editProfileDialogRef} class="edit-profile-modal">
 						<div class="modal-border-top"></div>
-						<Dialog.Header>Edit Profile</Dialog.Header>
+						<Dialog.Header>
+							Edit Profile
+							<Icon class={style.modalClose} onClick={this.closeProfilePanel}>close</Icon>
+						</Dialog.Header>
 						<Dialog.Body>
 							<EditProfile ref={this.editProfileRef} onSubmit={this.closeProfilePanel} />
 						</Dialog.Body>

@@ -292,10 +292,6 @@ body > div {
 	color: var(--mdc-sidebar-footer-fg);
 }
 
-/* .mdc-drawer--permanent .mdc-drawer__content {
-	background: var(--mdc-theme-background, #FFFFFF);
-} */
-
 .mdc-drawer--permanent .mdc-drawer__header-content {
 	padding: 16px;
 	position: relative;
@@ -491,5 +487,23 @@ input[disabled] {
 	#app {
 		height: 100%;
 		padding-bottom: 112px;
+	}
+
+	.edit-profile-modal {
+		z-index: 1000;
+	}
+
+	.edit-profile-modal .mdc-dialog__surface {
+		max-height: 100vh;
+		height: 100vh;
+		overflow: auto;
+		z-index: 1000;
+		top: 0;
+		width: 100vw;
+	}
+
+	.mdc-drawer--permanent {
+		height: calc(100vh - 64px) !important;
+		overflow: auto;
 	}
 }

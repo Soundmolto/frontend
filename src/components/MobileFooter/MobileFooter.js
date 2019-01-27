@@ -6,7 +6,9 @@ import "preact-material-components/Tabs/style.css";
 import 'preact-material-components/Button/style.css';
 import styles from './style';
 import { route, getCurrentUrl } from "preact-router";
+import { connect } from "preact-redux";
 
+@connect(state => state)
 export class MobileFooter extends Component {
 	state = { activeTabIndex: 0 };
 
@@ -22,17 +24,33 @@ export class MobileFooter extends Component {
 		e.target.blur();
 	};
 
+	goToLogin = e => {
+		route('/login');
+		e.preventDefault();
+		e.target.blur();
+	};
+
 	componentDidMount () {
+		let activeTabIndex = 0;
+		if (getCurrentUrl() === '/search') activeTabIndex = 1;
+		if (getCurrentUrl() === '/collection/tracks' && this.props.auth.logged_in) activeTabIndex = 2;
+		if (getCurrentUrl() === '/login' && !this.props.auth.logged_in) activeTabIndex = 2;
+
+		console.log(activeTabIndex, getCurrentUrl());
+
+		this.setState({ activeTabIndex });
+
 		window.document.addEventListener('url-change', () => {
 			let activeTabIndex = 0;
 			if (getCurrentUrl() === '/search') activeTabIndex = 1;
-			if (getCurrentUrl() === '/collection/tracks') activeTabIndex = 2;
+			if (getCurrentUrl() === '/collection/tracks' && this.props.auth.logged_in) activeTabIndex = 2;
+			if (getCurrentUrl() === '/login' && !this.props.auth.logged_in) activeTabIndex = 2;
 
 			this.setState({ activeTabIndex });
 		});
 	}
 
-	render ({ trackName, owner, playing, onClickPlay, onClickPause }, { activeTabIndex }) {
+	render ({ trackName, owner, playing, onClickPlay, onClickPause, auth }, { activeTabIndex }) {
 		return (
 			<div class={styles.mobile}>
 				<div class={styles.footer}>
@@ -68,10 +86,17 @@ export class MobileFooter extends Component {
 						<Icon>search</Icon>
 						Search
 					</Tabs.Tab>
-					<Tabs.Tab active={activeTabIndex === 2} onClick={this.goToMusic}>
-						<Icon>music_note</Icon>
-						My Music
-					</Tabs.Tab>
+					{auth.logged_in ? (
+						<Tabs.Tab active={activeTabIndex === 2} onClick={this.goToMusic}>
+							<Icon>music_note</Icon>
+							My Music
+						</Tabs.Tab>
+					) : (
+						<Tabs.Tab active={activeTabIndex === 2} onClick={this.goToLogin}>
+							<Icon>vpn_key</Icon>
+							Login
+						</Tabs.Tab>
+					)}
 				</Tabs>
 			</div>
 		);
