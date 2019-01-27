@@ -5,7 +5,6 @@
 .header img {
 	max-width: 24px;
 	height: 24px;
-	margin-right: 10px;
 	border-radius: 100%;
 }
 
@@ -228,4 +227,27 @@ h1.subtitle-header > small {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.userDetails {
+    padding: 10px;
+    background: var(--mdc-search-bg);
+}
+
+.userDetails img {
+    margin-right: 10px;
+    max-width: 32px;
+    max-height: 32px;
+    height: 32px;
+}
+
+.userDetails h1 {
+    max-width: 142px;
+}
+
+.hr {
+    height: 3px;
+    border: 0;
+    background: linear-gradient(to right, var(--mdc-theme-primary) -40%, var(--mdc-theme-complementary-color) 170%) !important;
+    box-shadow: none;
 }

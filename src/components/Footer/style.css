@@ -4,6 +4,7 @@
 	bottom: 0;
 	width: 100vw;
 	background: var(--mdc-sidebar-footer-bg);
+	color: var(--mdc-sidebar-footer-fg);
 	height: 64px;
 	padding: 12px 10px 10px;
 	display: flex;
@@ -75,8 +76,9 @@
 .footer .songInfo p span {
 	display: block;
 	font-size: 0.8rem;
-	color: #FFFFFF;
+	color: var(--mdc-sidebar-footer-fg);
 	font-weight: 600;
+	opacity: 0.8;
 }
 
 .footer .trackBar {
@@ -126,7 +128,7 @@
 
 .footer .start, .footer .middle, .footer .end {
 	display: flex;
-	color: var(--mdc-theme-primary-font);
+	color: var(--mdc-sidebar-footer-fg);
 	overflow: visible;
 	align-items: center;
 }
@@ -136,7 +138,7 @@
 }
 
 .footer .middle {
-	color: var(--mdc-theme-primary-font);
+	color: var(--mdc-sidebar-footer-fg);
 	justify-content: center;
 }
 
@@ -145,12 +147,12 @@
 	height: 28px;
 	max-width: 48px;
 	min-width: 48px;
-	color: var(--mdc-theme-primary-font);
+	color: var(--mdc-sidebar-footer-fg);
 	display: flex;
 }
 
 .footer .button i {
-	color: var(--mdc-theme-primary-font);
+	color: var(--mdc-sidebar-footer-fg);
 	font-size: 1.1rem;
 }
 
@@ -170,7 +172,7 @@
 }
 
 .footer .songInfo a {
-	color: var(--mdc-theme-primary-font);
+	color: var(--mdc-sidebar-footer-fg);
 	text-decoration: none;
 	margin-bottom: 10px;
 	transition: color 0.15s ease-in-out;
@@ -183,7 +185,7 @@
 }
 
 .footer .songInfo a.artist {
-	color: var(--mdc-theme-primary-font--darker);
+	opacity: 0.7;
 }
 
 .footer .songInfo a:hover, .footer .songInfo a:active, .footer .songInfo a:focus {
@@ -223,10 +225,12 @@
 	border-radius: 10px;
 	box-shadow: var(--mdc-theme--box-shadow--floating);
 	background: var(--mdc-theme--volume-panel--background);
+	transform: translateY(200%);
 }
 
 .volumePanel.show {
 	opacity: 1;
+	transform: translateY(0);
 }
 
 .footer .end .active > i {

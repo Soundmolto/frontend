@@ -346,6 +346,11 @@ export default class Header extends Component {
 								<Search token={auth.token} />
 							</Toolbar.Section>
 							<Toolbar.Section align-end={true} style={{ 'margin-right': '10px' }}>
+								{auth.logged_in === true && settings.beta === SETTINGS.ENABLE_BETA && (
+									<div>
+										<Toolbar.Icon onClick={e => console.log('yeah')} style={{ marginRight: 10 }}>notifications</Toolbar.Icon>
+									</div>
+								)}
 								{auth.logged_in === true && (
 									<div>
 										<Toolbar.Icon onClick={this.showUploadTrackModal}>cloud_upload</Toolbar.Icon>
@@ -355,10 +360,13 @@ export default class Header extends Component {
 									{auth.logged_in === true && (
 										<div>
 											<div onClick={this.toggleDropdownMenu.bind(this)} class={style.clickable}>
-												<UserPictureName user={user.profile} />
+												<UserPictureName user={user.profile} showUsername={false} />
 											</div>
 											<Menu.Anchor>
 												<Menu ref={menu => { this.menu = menu; }} class={style.menu}>
+													<div class={style.userDetails}>
+														<UserPictureName user={user.profile} />
+													</div>
 													<Menu.Item onClick={e => route(`/${this.props.user.profile.url}`, false)}>
 														<Icon class={style.icon}>person</Icon>
 														Profile
@@ -367,6 +375,11 @@ export default class Header extends Component {
 														<Icon class={style.icon}>edit</Icon>
 														Edit Profile
 													</Menu.Item>
+													<Menu.Item onClick={this.toggleDarkTheme}>
+													<Icon class={style.icon}>brightness_2</Icon>
+														{this.props.UI.theme === THEMES.dark ? "Disable" : "Enable"} dark theme
+													</Menu.Item>
+													<hr class={style.hr} />
 													<Menu.Item onClick={this.logout.bind(this)}>
 														<Icon class={style.icon}>vpn_key</Icon>
 														Logout
