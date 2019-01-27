@@ -58,6 +58,8 @@ export default class App extends Component {
 	handleRoute = e => {
 		this.currentUrl = e.url;
 		ReactGA.pageview(window.location.pathname + window.location.search);
+		const event = new Event('url-change');
+		window.document.dispatchEvent(event);
 	};
 
 	get_current_route () {

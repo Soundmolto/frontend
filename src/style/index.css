@@ -12,6 +12,7 @@
 	--mdc-theme--footer-background: #cfcfcf;
 	--mdc-theme-primary-font--darker: #ccc;
 	--mdc-theme-background: #fff;
+	--mdc-theme-tabs-bg: #ccc;
 	--mdc-theme-text-primary-on-background: #333333;
 
 	--mdc-theme--box-shadow--floating: 0 15px 20px -15px rgba(0, 0, 0, 0.35);
@@ -27,6 +28,7 @@
 	--mdc-theme-text-primary-on-background: #fff;
 	--mdc-theme-text-primary: #FFFFFF;
 	--mdc-theme-background: #111;
+	--mdc-theme-tabs-bg: #111;
 	--mdc-theme-link-primary-on-background: #FFFFFF;
 	--mdc-theme--footer-background: rgb(36, 36, 36);
 	--mdc-theme--card-bg: #222222;
@@ -433,12 +435,12 @@ input[disabled] {
 	margin-right: 24px !important;
 }
 
-.mdc-tab--active {
+:not(.footer-tabs) .mdc-tab--active {
 	background: rgba(0, 0, 0, 1) !important;
 	color: white;
 }
 
-.mdc-tab i {
+:not(.footer-tabs) .mdc-tab i {
 	color: white;
 }
 
@@ -452,12 +454,12 @@ input[disabled] {
 	background: linear-gradient(to right, var(--mdc-theme-primary) -40%, var(--mdc-theme-complementary-color) 170%) !important;
 }
 
-.mdc-tab-bar__indicator {
+:not(.footer-tabs) .mdc-tab-bar__indicator {
 	background: linear-gradient(to right, var(--mdc-theme-primary) -40%, var(--mdc-theme-complementary-color) 170%) !important;
 	display: none;
 }
 
-.mdc-tab--active .block {
+:not(.footer-tabs) .mdc-tab--active .block {
 	display: block;
 	content: " ";
 	position: absolute;

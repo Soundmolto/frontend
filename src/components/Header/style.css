@@ -28,7 +28,7 @@
     max-width: 250px;
 }
 
-.menu {
+.menu, .notificationsMenu {
     overflow: hidden;
     border-radius: 2px;
     max-width: 250px;
@@ -36,7 +36,7 @@
 }
 
 @media screen and (max-width: 768px) {
-    .clickable, .menu {
+    .clickable, .menu, .notificationsMenu {
         max-width: 150px;
     }
 }
@@ -52,11 +52,11 @@
     color: var(--mdc-theme-primary-font);
 }
 
-.menu ul {
+.menu ul, .notificationsMenu ul {
     padding: 0 0 8px 0 !important;
 }
 
-.menu ul > p {
+.menu ul > p, .notificationsMenu ul > p {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;

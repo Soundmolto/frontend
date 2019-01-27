@@ -174,6 +174,13 @@ export default class Header extends Component {
 		this.menu.MDComponent.open = nextState;
 	}
 
+	toggleNotificationsMenu = () => {
+		const currentState = this.notificationsMenu.MDComponent.open;
+		let nextState = true;
+		if (null != currentState) nextState = !currentState;
+		this.notificationsMenu.MDComponent.open = nextState;
+	};
+
 	closeMenu () {
 		if (typeof window !== "undefined") {
 			const closeContainer = window.document.querySelector(`.${style.drawerCloseContainer}`);
@@ -348,7 +355,14 @@ export default class Header extends Component {
 							<Toolbar.Section align-end={true} style={{ 'margin-right': '10px' }}>
 								{auth.logged_in === true && settings.beta === SETTINGS.ENABLE_BETA && (
 									<div>
-										<Toolbar.Icon onClick={e => console.log('yeah')} style={{ marginRight: 10 }}>notifications</Toolbar.Icon>
+										<Toolbar.Icon style={{ marginRight: 10 }} onClick={this.toggleNotificationsMenu}>notifications</Toolbar.Icon>
+										<Menu.Anchor>
+											<Menu ref={menu => (this.notificationsMenu = menu)} class={style.notificationsMenu}>
+												<Menu.Item>
+													You have no notifications!
+												</Menu.Item>
+											</Menu>
+										</Menu.Anchor>
 									</div>
 								)}
 								{auth.logged_in === true && (

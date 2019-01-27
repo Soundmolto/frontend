@@ -27,40 +27,73 @@
 	max-width: calc(100vw - 110px);
 }
 
+.tabs {
+	position: fixed !important;
+	z-index: 11 !important;
+	bottom: 0 !important;
+	width: 100vw !important;
+	max-width: 100vw !important;
+	overflow: hidden !important;
+	background: var(--mdc-theme-tabs-bg) !important;
+	padding: 0 !important;
+	display: flex !important;
+	align-items: center !important;
+	height: auto !important;
+	color: var(--mdc-sidebar-footer-fg) !important;
+}
+
+.tabs > a {
+	width: 100%;
+	background: var(--mdc-theme-tabs-bg) !important;
+	padding: 5px !important;
+	display: flex !important;
+	justify-content: center !important;
+	align-content: center !important;
+	flex-direction: column !important;
+	line-height: 1.3rem !important;
+	font-size: 0.7rem !important;
+	color: var(--mdc-sidebar-footer-fg) !important;
+}
+
+.tabs > a i {
+	color: var(--mdc-sidebar-footer-fg) !important;
+	font-size: 1.3rem !important;
+}
+
 .footer {
 	position: fixed;
 	z-index: 10;
-	bottom: 0;
+	bottom: 52px;
 	width: 100vw;
 	max-width: 100vw;
 	overflow: hidden;
 	background: var(--mdc-sidebar-footer-bg);
-	min-height: 64px;
-	padding: 10px;
+	color: var(--mdc-sidebar-footer-fg);
+	padding: 5px;
 	display: flex;
 	align-items: center;
 }
 
 .footer .songInfo p {
-	margin-left: 10px;
+	margin: 0 0 0 10px;
 }
 
 .footer .songInfo p span {
 	display: block;
 	font-size: 0.8rem;
-	color: #FFFFFF;
+	color: var(--mdc-sidebar-footer-fg);
 	font-weight: 600;
 }
 
 .footer .button {
 	width: 48px;
 	height: 48px;
-	color: var(--mdc-theme-primary-font);
+	color: var(--mdc-sidebar-footer-fg);
 	display: flex;
 }
 
 .footer .button i {
-	color: var(--mdc-theme-primary-font);
+	color: var(--mdc-sidebar-footer-fg);
 }
 
 .footer .end {
@@ -69,7 +102,7 @@
 }
 
 .footer .songInfo a {
-	color: var(--mdc-theme-primary-font);
+	color: var(--mdc-sidebar-footer-fg);
 	text-decoration: none;
 	margin-bottom: 10px;
 	transition: color 0.15s ease-in-out;
