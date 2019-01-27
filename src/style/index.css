@@ -482,3 +482,7 @@ input[disabled] {
 	padding: 0 10px;
 	color: white !important;
 }
+
+.footer-tabs .mdc-tab--active {
+	background: var(--mdc-search-bg) !important;
+}

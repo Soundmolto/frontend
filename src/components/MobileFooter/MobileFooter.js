@@ -36,6 +36,7 @@ export class MobileFooter extends Component {
 		return (
 			<div class={styles.mobile}>
 				<div class={styles.footer}>
+					<div class={styles.breaker}></div>
 					<div class={styles.start}>
 						<div class={styles.songInfo}>
 							<p>

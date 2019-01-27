@@ -45,7 +45,7 @@
 .tabs > a {
 	width: 100%;
 	background: var(--mdc-theme-tabs-bg) !important;
-	padding: 5px !important;
+	padding: 8px 5px 5px !important;
 	display: flex !important;
 	justify-content: center !important;
 	align-content: center !important;
@@ -63,7 +63,7 @@
 .footer {
 	position: fixed;
 	z-index: 10;
-	bottom: 52px;
+	bottom: 55px;
 	width: 100vw;
 	max-width: 100vw;
 	overflow: hidden;
@@ -116,4 +116,16 @@
 
 .footer .songInfo a.artist {
 	color: var(--mdc-theme-primary-font--darker);
+}
+
+.breaker {
+	display: block;
+	content: " ";
+	position: absolute;
+	top: 0;
+	background: linear-gradient(to right, var(--mdc-theme-primary) -40%, var(--mdc-theme-complementary-color) 170%) !important;
+	height: 3px;
+	width: 100%;
+	left: 0;
+	border-radius: 50px;
 }
