@@ -93,7 +93,7 @@ export default class EditProfile extends Component {
 		state.profile = Object.assign({}, user.profile);
 		return (
 			<form onSubmit={this.onSubmit.bind(this)} class={styles.form}>
-				<label className={styles['upload-image']}
+				<label className={`${styles['upload-image']} edit-profile-form`}
 					onDragOver={this.onDragOver.bind(this)}
 					onDrop={this.onDrop.bind(this)}
 					>
@@ -107,7 +107,7 @@ export default class EditProfile extends Component {
 				<TextField label="Description" textarea value={user.profile.description} style={full_width} onChange={e => this.onInputChange(e, 'description')} />
 				<TextField label="Password" type="password" value={state.password || undefined} style={full_width} onChange={e => this.onInputChange(e, 'password')} />
 				{error != null && <div className="error-message">{error}</div>}
-				<Button type="submit">Submit</Button>
+				<Button class={styles.button} type="submit">Submit</Button>
 			</form>
 		);
 	}

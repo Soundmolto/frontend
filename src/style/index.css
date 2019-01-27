@@ -468,12 +468,14 @@ input[disabled] {
 }
 
 .login .mdc-line-ripple,
-.register .mdc-line-ripple {
+.register .mdc-line-ripple,
+.edit-profile-form .mdc-line-ripple {
 	display: none !important;
 }
 
 .login .mdc-floating-label--float-above,
-.register .mdc-floating-label--float-above {
+.register .mdc-floating-label--float-above,
+.edit-profile-form .mdc-floating-label--float-above {
 	background: var(--floating-label-login-bg);
 	padding: 0 10px;
 	color: white !important;

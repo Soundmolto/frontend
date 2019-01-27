@@ -62,8 +62,40 @@
 	opacity: 1;
 }
 
+.button {
+	width: 100%;
+	margin-top: 10px;
+	background: var(--floating-label-login-bg) !important;
+	color: white !important;
+	border-radius: 50px;
+	padding: 10px !important;
+}
+
+.form > div > div {
+	display: none !important;
+}
+
 @media screen and (max-width: 768px) {
 	.form .username {
 		width: 100%;
+	}
+
+	.form input, .form textarea {
+		background: var(--mdc-search-bg);
+		padding: 10px;
+		border: 0 !important;
+	}
+
+	.form > div {
+		border: none;
+	}
+
+	.form > div > label {
+		left: 10px;
+		bottom: 14px;
+	}
+
+	.form input {
+		border-radius: 50px;
 	}
 }
