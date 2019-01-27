@@ -167,6 +167,16 @@ export default class Footer extends Component {
 				})
 			});
 		}
+
+		window.document.addEventListener("mouseout", e => {
+			const from = e.relatedTarget || e.toElement;
+			if (!from || from.nodeName == "HTML") {
+				this.mouseDown = false;
+				window.document.querySelector(`.${styles.tooltip}`).classList.remove(styles.show);
+			}
+		});
+
+		window.document.addEventListener('mousemove', this.onMouseMove.bind(this))
 	}
 
 	componentDidUpdate () {
@@ -223,33 +233,38 @@ export default class Footer extends Component {
 		audioPlayer.removeEventListener('timeupdate', this.onPosChange.bind(this));
 	}
 
-	onMouseMove (e) {
+	onMouseMove = e => {
 		const { currently_playing, dispatch } = this.props;
 		const duration = (currently_playing.track && currently_playing.track.duration) || 0;
 		const percentage = (e.pageX - 150) / this.desktopTrackbar.clientWidth;
 		const time = duration * percentage;
 		const tooltip = this.desktopTrackbar.querySelector(`.${styles.tooltip}`);
 		const rendered = seconds_to_time(Math.max(0, time)).rendered;
-		this.__renderedTime = rendered;
-		tooltip.classList.add(styles.show);
-		tooltip.innerText = rendered;
+		if (e.target === this.desktopTrackbar) {
 
+			this.__renderedTime = rendered;
+			tooltip.classList.add(styles.show);
+			tooltip.innerText = rendered;
+		}
+	
 		if (this.mouseDown === true) {
 			playing_now(dispatch, { playing: true, position: time, track: currently_playing.track, owner: currently_playing.owner });
 		}
 
-		if (tooltip.getAttribute('style') != null && parseInt(tooltip.getAttribute('style').split('transform: translateX(')[1].split('px)')) === e.pageX) {
-			return;
+		if (e.target === this.desktopTrackbar) {
+
+			if (tooltip.getAttribute('style') != null && parseInt(tooltip.getAttribute('style').split('transform: translateX(')[1].split('px)')) === e.pageX) {
+				return;
+			}
+	
+			if ((this.desktopTrackbar.clientWidth - e.pageX) + 150 < tooltip.clientWidth) { return; }
+	
+			tooltip.setAttribute('style', `transform: translateX(${e.pageX - 150}px)`);
 		}
-
-		if ((this.desktopTrackbar.clientWidth - e.pageX) + 150 < tooltip.clientWidth) { return; }
-
-		tooltip.setAttribute('style', `transform: translateX(${e.pageX - 150}px)`);
 	}
 
 	onMouseOut (e) {
 		if (e.relatedTarget.parentElement == this.desktopTrackbar || e.relatedTarget.parentElement.parentElement == this.desktopFooter) return;
-		this.mouseDown = false;
 		e.currentTarget.querySelector(`.${styles.tooltip}`).classList.remove(styles.show);
 	}
 
@@ -346,7 +361,7 @@ export default class Footer extends Component {
 								</div>
 							</div>
 							<div class={styles.trackBar} onClick={this.onClickTrackBar.bind(this)}
-								onMouseMove={this.onMouseMove.bind(this)} onMouseOut={this.onMouseOut.bind(this)}
+								onMouseMove={this.onMouseMove} onMouseOut={this.onMouseOut.bind(this)}
 								onMouseDown={this.onMouseDown.bind(this)} onMouseUp={this.onMouseUp.bind(this)}
 								ref={e => (this.desktopTrackbar = e)}
 							>
