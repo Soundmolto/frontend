@@ -486,3 +486,10 @@ input[disabled] {
 .footer-tabs .mdc-tab--active {
 	background: var(--mdc-search-bg) !important;
 }
+
+@media screen and (max-width: 768px) {
+	#app {
+		height: 100%;
+		padding-bottom: 112px;
+	}
+}
