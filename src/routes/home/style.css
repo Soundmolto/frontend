@@ -82,6 +82,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: flex-start;
+	flex-wrap: wrap;
 	width: 100%;
 	text-align: right;
 	margin-bottom: 20px;
@@ -114,6 +115,8 @@
 	float: left;
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
+	width: 100%;
 }
 
 .genresContainer .forceLeft i {
@@ -126,4 +129,24 @@
 
 .closable:hover {
 	color: var(--mdc-theme-complementary-color);
+}
+
+.center {
+	display: flex;
+	align-items: center;
+}
+
+.clickable {
+	padding: 0 0 0 15px;
+	cursor: pointer;
+	border-radius: 50px;
+}
+
+.clickable:hover {
+	background: var(--mdc-sidebar-footer-fg);
+	color: var(--mdc-sidebar-footer-bg);
+}
+
+.clickable:hover i {
+	color: var(--mdc-sidebar-footer-bg);
 }

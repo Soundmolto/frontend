@@ -20,6 +20,8 @@ const infiniteScrollStyle = { display: "inline-block", width: '100%' };
 @connect(({ auth, discover }) => ({ auth, discover }))
 export default class Home extends Component {
 
+	state = { filterEnabled: false };
+
 	sortingBy = '';
 
 	componentDidMount () {
@@ -77,7 +79,7 @@ export default class Home extends Component {
 		return sorted;
 	}
 
-	render ({ discover }) {
+	render ({ discover }, { filterEnabled }) {
 		const tracks = discover.tracks || [];
 		const genres = this.getGenres(tracks);
 		this.sorted = this.sortTracks(tracks);
@@ -105,20 +107,27 @@ export default class Home extends Component {
 							<LayoutGrid.Inner>
 								<LayoutGrid.Cell desktopCols="12" tabletCols="12" phoneCols="12">
 									<span class={styles.genresContainer}>
-										<span class={styles.forceLeft}>
-											{this.filterBy == null ? (
-												<Icon>filter_list</Icon>
-											): (
-												<Icon class={styles.closable} onClick={e => this.filterByGenre(null)}>close</Icon>
-											)}
-											
-											<span>Filter by genre</span>
+										<span class={styles.forceLeft} onClick={() => this.setState({ filterEnabled: !filterEnabled })}>
+											<span class={styles.center}>
+												{this.filterBy == null ? (
+													<Icon>filter_list</Icon>
+												): (
+													<Icon class={styles.closable} onClick={e => this.filterByGenre(null)}>close</Icon>
+												)}
+												Filter by genre
+											</span>
+											<span class={`${styles.center} ${styles.clickable}`}>
+												Click to {filterEnabled ? "close" : "expand"}
+												<Icon>{filterEnabled ? "expand_less" : "expand_more"}</Icon>
+											</span>
 										</span>
-										<span>
-											{genres.map(genre => (
-												<FilterableGenre genre={genre} onFilterByGenre={this.filterByGenre} sortingBy={this.sortingBy} />
-											))}
-										</span>
+										{filterEnabled && (
+											<span>
+												{genres.map(genre => (
+													<FilterableGenre genre={genre} onFilterByGenre={this.filterByGenre} sortingBy={this.sortingBy} />
+												))}
+											</span>
+										)}
 									</span>
 								</LayoutGrid.Cell>
 							</LayoutGrid.Inner>
