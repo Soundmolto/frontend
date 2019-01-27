@@ -59,6 +59,13 @@ export class EditTrack extends Component {
 			value = e.currentTarget.checked ? 'private' : 'public';
 		}
 
+		if (val === 'genres') {
+			value = value.split(",")
+						.filter(genre => genre.trim() !== '')
+						.map(genre => genre.trim())
+						.join(", ");
+		}
+
 		let _opt = { [val]: value };
 		this.localState = {...this.localState, ..._opt };
 	}
