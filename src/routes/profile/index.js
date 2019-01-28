@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import Button from 'preact-material-components/Button';
 import Helmet from 'preact-helmet';
+import Icon from 'preact-material-components/Icon';
 import 'preact-material-components/Button/style.css';
 import { connect } from 'preact-redux';
 import { fetch_user, follow_user, unfollow_user, fetch_user_more_songs } from '../../actions/user';
@@ -149,6 +150,10 @@ export default class Profile extends Component {
 	}
 
 	onCloseEditTrack = () => finish_editing_track(this.props.dispatch);
+	
+	closeEditTrackPanel = () => {
+		this.editTrackPanel.MDComponent.close();
+	}
 
 	onCloseCoverPhotoModal = () => this.setState({ editingCoverPhoto: false });
 
@@ -289,7 +294,10 @@ export default class Profile extends Component {
 				{editingTrack.editing && (
 					<Dialog ref={this.editTrackRef} onCancel={this.onCloseEditTrack} class="edit-modal">
 					<div class="modal-border-top"></div>
-						<Dialog.Header>Edit Track</Dialog.Header>
+						<Dialog.Header>
+							Edit Track
+							<Icon class={style.modalClose} onClick={this.closeEditTrackPanel}>close</Icon>
+						</Dialog.Header>
 						<Dialog.Body>
 							<EditTrack track={editingTrack.track} />
 						</Dialog.Body>

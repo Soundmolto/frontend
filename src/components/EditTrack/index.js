@@ -118,12 +118,17 @@ export class EditTrack extends Component {
 				<TextField label="Genres (Comma seperated)" type="text" value={track.genres} style={full_width} onChange={e => this.onInputChange(e, 'genres')} />
 				<TextField textarea label="Track description" value={track.description} style={full_width} onChange={e => this.onInputChange(e, 'description')} />
 				<Formfield>
-					<Checkbox id="song-private" checked={track.visibility === 'private'} onChange={e => this.onInputChange(e, 'visibility')} />
+					<Checkbox id="song-private" checked={track.visibility === 'private'} onChange={e => this.onInputChange(e, 'visibility')} class={styles.checkbox} />
 					<label for="song-private">
 						Song is private?
 					</label>
 				</Formfield>
-				<Button type="submit">Submit</Button>
+				<Button
+					type="submit"
+					class={styles.button}
+				>
+					Submit
+				</Button>
 			</form>
 		);
 	}

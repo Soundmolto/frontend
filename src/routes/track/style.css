@@ -119,3 +119,21 @@
 	z-index: 2;
 	bottom: 0;
 }
+
+.modalClose {
+    float: right;
+    cursor: pointer;
+    padding: 10px;
+    margin-top: -10px;
+    border-radius: 100%;
+}
+
+.modalClose:hover {
+    background: var(--mdc-search-bg);
+}
+
+@media screen and (min-width: 768px) {
+    .modalClose {
+        display: none;
+    }
+}

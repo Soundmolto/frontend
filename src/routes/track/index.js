@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import Goku from '../../assets/goku.png';
 import LayoutGrid from 'preact-material-components/LayoutGrid';
+import Icon from 'preact-material-components/Icon';
 import 'preact-material-components/LayoutGrid/style.css';
 import 'preact-material-components/Button/style.css';
 import { connect } from 'preact-redux';
@@ -107,6 +108,10 @@ export default class Track extends Component {
 		}, 5500);
 	};
 
+	closeEditTrackPanel = () => {
+		this.editTrackPanel.MDComponent.close();
+	}
+
 	render ({ user, viewedUser, track, editingTrack }) {
 		const viewedTrack = track.track;
 		const trackOwner = track.user;
@@ -180,7 +185,11 @@ export default class Track extends Component {
 				</LayoutGrid>
 				{editingTrack.editing && (
 					<Dialog ref={this.editTrackRef} onCancel={this.onCloseEditTrack} class="edit-modal">
-						<Dialog.Header>Edit Track</Dialog.Header>
+						<div class="modal-border-top"></div>
+						<Dialog.Header>
+							Edit Track
+							<Icon class={style.modalClose} onClick={this.closeEditTrackPanel}>close</Icon>
+						</Dialog.Header>
 						<Dialog.Body>
 							<EditTrack track={editingTrack.track} onSubmit={newTrack => {
 								if (isCurrentTrack === true) {
@@ -190,7 +199,7 @@ export default class Track extends Component {
 						</Dialog.Body>
 					</Dialog>
 				)}
-				<Snackbar ref={bar=>{this.bar=bar;}}/>
+				<Snackbar ref={bar=>(this.bar=bar)}/>
 			</div>
 		);
 	}
