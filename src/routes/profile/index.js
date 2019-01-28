@@ -287,7 +287,7 @@ export default class Profile extends Component {
 					/>
 				</div>
 				{editingTrack.editing && (
-					<Dialog ref={this.editTrackRef} onCancel={this.onCloseEditTrack}>
+					<Dialog ref={this.editTrackRef} onCancel={this.onCloseEditTrack} class="edit-modal">
 					<div class="modal-border-top"></div>
 						<Dialog.Header>Edit Track</Dialog.Header>
 						<Dialog.Body>

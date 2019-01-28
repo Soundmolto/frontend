@@ -456,7 +456,7 @@ export default class Header extends Component {
 						</Dialog.Body>
 					</Dialog>
 
-					<Dialog ref={this.editProfileDialogRef} class="edit-profile-modal">
+					<Dialog ref={this.editProfileDialogRef} class="edit-modal">
 						<div class="modal-border-top"></div>
 						<Dialog.Header>
 							Edit Profile

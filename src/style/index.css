@@ -469,13 +469,13 @@ input[disabled] {
 
 .login .mdc-line-ripple,
 .register .mdc-line-ripple,
-.edit-profile-modal .mdc-line-ripple {
+.edit-modal .mdc-line-ripple {
 	display: none !important;
 }
 
 .login .mdc-floating-label--float-above,
 .register .mdc-floating-label--float-above,
-.edit-profile-modal :not(.mdc-text-field--textarea)>.mdc-floating-label--float-above {
+.edit-modal :not(.mdc-text-field--textarea)>.mdc-floating-label--float-above {
 	background: var(--floating-label-login-bg);
 	padding: 0 10px;
 	color: white !important;
@@ -491,11 +491,11 @@ input[disabled] {
 		padding-bottom: 112px;
 	}
 
-	.edit-profile-modal {
+	.edit-modal {
 		z-index: 1000;
 	}
 
-	.edit-profile-modal .mdc-dialog__surface {
+	.edit-modal .mdc-dialog__surface {
 		max-height: 100%;
 		height: 100%;
 		overflow: auto;

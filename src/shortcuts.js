@@ -168,5 +168,21 @@ export const shortcuts = [
 		keys: 'shift+left',
 		name: 'previous:track',
 		description: 'Skip to previous song'
-	}
+	},
+	{
+		action: e => {
+			console.log(e);
+		},
+		keys: 'shift+up',
+		name: 'volume:up',
+		description: 'Increment volume up'
+	},
+	{
+		action: e => {
+			console.log(e);
+		},
+		keys: 'shift+down',
+		name: 'volume:down',
+		description: 'Increment volume down'
+	},
 ];

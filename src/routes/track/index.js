@@ -179,7 +179,7 @@ export default class Track extends Component {
 					
 				</LayoutGrid>
 				{editingTrack.editing && (
-					<Dialog ref={this.editTrackRef} onCancel={this.onCloseEditTrack}>
+					<Dialog ref={this.editTrackRef} onCancel={this.onCloseEditTrack} class="edit-modal">
 						<Dialog.Header>Edit Track</Dialog.Header>
 						<Dialog.Body>
 							<EditTrack track={editingTrack.track} onSubmit={newTrack => {
