@@ -176,7 +176,9 @@ export default class Footer extends Component {
 			}
 		});
 
-		window.document.addEventListener('mousemove', this.onMouseMove.bind(this))
+		window.document.addEventListener('mousemove', this.onMouseMove.bind(this));
+
+		window.document.addEventListener('mouseup', this.onMouseUp.bind(this));
 	}
 
 	componentDidUpdate () {
@@ -236,9 +238,14 @@ export default class Footer extends Component {
 	onMouseMove = e => {
 		const { currently_playing, dispatch } = this.props;
 		const duration = (currently_playing.track && currently_playing.track.duration) || 0;
-		const percentage = (e.pageX - 150) / this.desktopTrackbar.clientWidth;
+		if (this.desktopTrackbar === null) return;
+		const trackbarWidth = this.desktopTrackbar.clientWidth;
+		const positionInPage = parseInt(e.pageX);
+		const rect = this.desktopTrackbar.getBoundingClientRect();
+		const offset = rect.left;
+		const percentage = (positionInPage - offset) / trackbarWidth;
 		const time = duration * percentage;
-		const tooltip = this.desktopTrackbar.querySelector(`.${styles.tooltip}`);
+		const tooltip = this.tooltip;
 		const rendered = seconds_to_time(Math.max(0, time)).rendered;
 		if (e.target === this.desktopTrackbar) {
 
@@ -257,23 +264,22 @@ export default class Footer extends Component {
 				return;
 			}
 	
-			if ((this.desktopTrackbar.clientWidth - e.pageX) + 150 < tooltip.clientWidth) { return; }
-	
-			tooltip.setAttribute('style', `transform: translateX(${e.pageX - 150}px)`);
+			tooltip.setAttribute('style', `transform: translateX(${(positionInPage - offset)}px)`);
 		}
 	}
 
-	onMouseOut (e) {
-		if (e.relatedTarget.parentElement == this.desktopTrackbar || e.relatedTarget.parentElement.parentElement == this.desktopFooter) return;
-		e.currentTarget.querySelector(`.${styles.tooltip}`).classList.remove(styles.show);
-	}
+	onMouseOut = () => this.tooltip.classList.remove(styles.show);
 
 	onMouseDown (e) {
 		if (e.which !== 1) return;
 		this.mouseDown = true;
 		const { currently_playing, dispatch } = this.props;
 		const duration = (currently_playing.track && currently_playing.track.duration) || 0;
-		const percentage = ( e.pageX - 150) / e.currentTarget.clientWidth;
+		const trackbarWidth = this.desktopTrackbar.clientWidth;
+		const positionInPage = parseInt(e.pageX);
+		const rect = this.desktopTrackbar.getBoundingClientRect();
+		const offset = rect.left;
+		const percentage = (positionInPage - offset) / trackbarWidth;
 
 		playing_now(dispatch, {
 			playing: true,
@@ -360,19 +366,6 @@ export default class Footer extends Component {
 									<img src={this.getArtwork(currently_playing.track || {})} />
 								</div>
 							</div>
-							<div class={styles.trackBar} onClick={this.onClickTrackBar.bind(this)}
-								onMouseMove={this.onMouseMove} onMouseOut={this.onMouseOut.bind(this)}
-								onMouseDown={this.onMouseDown.bind(this)} onMouseUp={this.onMouseUp.bind(this)}
-								ref={e => (this.desktopTrackbar = e)}
-							>
-								<div class={styles.tooltip}>{this.__renderedTime != null && this.__renderedTime}</div>
-								<div class={styles.progress} style={{
-									'transform': `translateX(${amount}%)`
-								}} ref={e => (this.progressBar = e)}></div>
-								<div class={styles.thumb} style={{
-									'transform': `translateX(${this.__currentPos / this.duration* parentWidth}px)`
-								}} ref={e => (this.thumb = e)}></div>
-							</div>
 							
 							<div class={styles.songInfo}>
 								<p>
@@ -437,6 +430,21 @@ export default class Footer extends Component {
 							<Button ripple className={`${styles.button} ${this.state.shuffled === true && styles.active}`} onClick={this.shuffle.bind(this)}>
 								<Icon style={{ margin: 0 }}>shuffle</Icon>
 							</Button>
+						</div>
+						<div class={styles.trackbarContainer}>
+							<div ref={e => (this.tooltip = e)} class={styles.tooltip}>{this.__renderedTime != null && this.__renderedTime}</div>
+							<div class={styles.trackBar} onClick={this.onClickTrackBar.bind(this)}
+								onMouseMove={this.onMouseMove} onMouseOut={this.onMouseOut}
+								onMouseDown={this.onMouseDown.bind(this)} onMouseUp={this.onMouseUp.bind(this)}
+								ref={e => (this.desktopTrackbar = e)}
+							>
+								<div class={styles.progress} style={{
+									'transform': `translateX(${amount}%)`
+								}} ref={e => (this.progressBar = e)}></div>
+								<div class={styles.thumb} style={{
+									'transform': `translateX(${this.__currentPos / this.duration* parentWidth}px)`
+								}} ref={e => (this.thumb = e)}></div>
+							</div>
 						</div>
 					</div>
 				</div>
