@@ -123,7 +123,7 @@
 }
 
 .footer .trackBar .progress {
-	background: var(--mdc-theme-complementary-color);
+	background: linear-gradient(to right, var(--mdc-theme-primary) -40%, var(--mdc-theme-complementary-color) 170%);
 	width: 100%;
 	transform: translateX(0);
 	position: absolute;
@@ -133,7 +133,7 @@
 
 .footer .trackBar .thumb {
 	transition: height 0.3s ease-in-out, width 0.3s ease-in-out;
-	background: var(--mdc-theme-complementary-color);
+	background: #a382c1;
 	transform: translateX(0);
 	position: absolute;
 	left: -6px;
