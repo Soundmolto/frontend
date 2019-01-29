@@ -131,14 +131,6 @@ export default class Footer extends Component {
 		}
 	}
 
-	onClickTrackBar (e) {
-		const { currently_playing, dispatch } = this.props;
-		const percent = (e.pageX / e.currentTarget.clientWidth);
-		const position = percent * this.duration;
-
-		playing_now(dispatch, { playing: true, position, track: currently_playing.track, owner: currently_playing.owner });
-	}
-
 	componentDidMount () {
 		let { audioPlayer } = this;
 
@@ -247,8 +239,8 @@ export default class Footer extends Component {
 		const time = duration * percentage;
 		const tooltip = this.tooltip;
 		const rendered = seconds_to_time(Math.max(0, time)).rendered;
-		if (e.target === this.desktopTrackbar) {
 
+		if (e.target === this.desktopTrackbar) {
 			this.__renderedTime = rendered;
 			tooltip.classList.add(styles.show);
 			tooltip.innerText = rendered;
@@ -289,9 +281,7 @@ export default class Footer extends Component {
 		});
 	}
 
-	onMouseUp () {
-		this.mouseDown = false;
-	}
+	onMouseUp = () => this.mouseDown = false;
 
 	shuffle () {
 		const { dispatch, currently_playing } = this.props;
@@ -303,7 +293,7 @@ export default class Footer extends Component {
 		this.setState({ shuffled: !this.state.shuffled });
 
 		playing_now(dispatch, {
-			playing: true,
+			playing: currently_playing.playing,
 			position: this.audioPlayer.currentTime,
 			track: currently_playing.track,
 			owner: currently_playing.owner
@@ -314,7 +304,7 @@ export default class Footer extends Component {
 		const { dispatch, currently_playing } = this.props;
 		const { track, owner } = currently_playing;
 		const position = this.audioPlayer.currentTime;
-		const playing = true;
+		const playing = currently_playing.playing;
 		const willRepeat = !this.state.repeat;
 
 		this.queue.repeat = willRepeat;
@@ -433,7 +423,7 @@ export default class Footer extends Component {
 						</div>
 						<div class={styles.trackbarContainer}>
 							<div ref={e => (this.tooltip = e)} class={styles.tooltip}>{this.__renderedTime != null && this.__renderedTime}</div>
-							<div class={styles.trackBar} onClick={this.onClickTrackBar.bind(this)}
+							<div class={styles.trackBar}
 								onMouseMove={this.onMouseMove} onMouseOut={this.onMouseOut}
 								onMouseDown={this.onMouseDown.bind(this)} onMouseUp={this.onMouseUp.bind(this)}
 								ref={e => (this.desktopTrackbar = e)}

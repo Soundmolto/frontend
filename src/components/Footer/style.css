@@ -120,10 +120,6 @@
 		width: 25% !important;
 		overflow: hidden;
 	}
-
-	/* .notMobile .start, .notMobile .end {
-		width: 100%;
-	} */
 }
 
 .footer .trackBar .progress {

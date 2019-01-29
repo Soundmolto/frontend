@@ -36,8 +36,6 @@ export class MobileFooter extends Component {
 		if (getCurrentUrl() === '/collection/tracks' && this.props.auth.logged_in) activeTabIndex = 2;
 		if (getCurrentUrl() === '/login' && !this.props.auth.logged_in) activeTabIndex = 2;
 
-		console.log(activeTabIndex, getCurrentUrl());
-
 		this.setState({ activeTabIndex });
 
 		window.document.addEventListener('url-change', () => {
