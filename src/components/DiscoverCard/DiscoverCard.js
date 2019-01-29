@@ -43,7 +43,9 @@ export class DiscoverCard extends Component {
 			position = audio.currentTime;
 		}
 
-		playing_now(dispatch, { playing: this.state.playing, track, owner: user, position });
+		console.log(user);
+
+		playing_now(dispatch, { playing: this.state.playing, track, owner: { profile: user }, position });
 	}
 
 	getArtwork (track, user) {

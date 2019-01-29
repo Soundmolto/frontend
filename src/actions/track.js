@@ -123,6 +123,7 @@ export function playing_now (dispatch, { playing, position, track, owner }) {
 	let type = TRACK.PLAYING_TRACK;
 	if (!playing) type = TRACK.PAUSED_TRACK;
 	delete track.peaks;
+	if (playing) window.document.title = `${owner.profile.displayName || owner.profile.url} - ${track.name}`
 	return dispatch({ type: type, payload: { position, track, owner } })
 }
 

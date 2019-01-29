@@ -13,6 +13,7 @@
     position: absolute;
     border-radius: 4px;
     bottom: 0;
+    left: 0;
     background: linear-gradient(to right, var(--mdc-theme-primary) -40%, var(--mdc-theme-complementary-color) 170%) !important;
 }
 
@@ -34,6 +35,12 @@
     display: flex;
     position: relative;
     flex-wrap: wrap;
+    padding: 10px;
+    border-radius: 10px 10px 4px 4px;
+    overflow: hidden;
+}
+
+.link {
     text-decoration: none;
 }
 
@@ -94,4 +101,18 @@
     .description {
         font-size: 0.8rem;
     }
+}
+
+.profile, .about {
+    z-index: 2;
+}
+
+.overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
 }

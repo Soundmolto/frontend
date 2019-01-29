@@ -46,11 +46,8 @@
 @media screen and (max-width: 500px) {
 	.button, .coverPhotoButton {
 		right: 10px;
-		bottom: 10px;
-	}
-
-	.coverPhotoButton {
-		display: none;
+		top: 30px;
+		background: #111 !important;
 	}
 }
 

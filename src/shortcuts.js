@@ -1,6 +1,7 @@
 import store from './store';
 import { TRACK } from './enums/track';
 import { QueueController } from './components/QueueController';
+import { playing_now } from './actions/track';
 const queue = new QueueController();
 
 export const shortcuts = [
@@ -48,15 +49,9 @@ export const shortcuts = [
 			if (state.currently_playing.track != null) {
 				if (state.currently_playing.playing === true) {
 					const audio = document.querySelector('audio') || { currentTime: currently_playing.position };
-					store.dispatch({
-						type: TRACK.PAUSED_TRACK,
-						payload: Object.assign({}, state.currently_playing, { position: audio.currentTime })
-					})
+					playing_now(store.dispatch, Object.assign({}, state.currently_playing, { position: audio.currentTime, playing: false }))
 				} else {
-					store.dispatch({
-						type: TRACK.PLAYING_TRACK,
-						payload: state.currently_playing
-					})
+					playing_now(store.dispatch, Object.assign({}, state.currently_playing, { playing: true }))
 				}
 			}
 		},
