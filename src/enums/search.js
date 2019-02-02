@@ -1,0 +1,4 @@
+export const SEARCH = Object.freeze({
+	SHOW_SEARCH_PANEL: "SHOW_SEARCH_PANEL",
+	HIDE_SEARCH_PANEL: "HIDE_SEARCH_PANEL"
+})

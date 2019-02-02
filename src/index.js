@@ -23,17 +23,9 @@ for (const shortcut of shortcuts) {
 }
 
 class HotKeysHOC extends Component {
+
 	map = map;
-
 	handlers = handlers;
-
-	render ({ children }) {
-		return (
-			<HotKeys handlers={this.handlers} keyMap={this.map} focused={true} attach={attach}>
-				{children}
-			</HotKeys>
-		);
-	}
 
 	constructor (opts) {
 		super(opts);
@@ -42,6 +34,14 @@ class HotKeysHOC extends Component {
 		const _payload = Object.assign({}, state.UI, { settings_open: false, goto_open: false, shortcuts_open: false });
 		store.dispatch({ type: TRACK.PAUSED_TRACK, payload });
 		store.dispatch({ type: SETTINGS.RESET, payload: _payload });
+	}
+
+	render ({ children }) {
+		return (
+			<HotKeys handlers={this.handlers} keyMap={this.map} focused={true} attach={attach}>
+				{children}
+			</HotKeys>
+		);
 	}
 };
 

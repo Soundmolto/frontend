@@ -17,6 +17,7 @@ import { EditTrack } from '../../components/EditTrack';
 import Dialog from 'preact-material-components/Dialog';
 import Snackbar from 'preact-material-components/Snackbar';
 import { finish_editing_track } from '../../actions/editingTrack';
+import { UserPictureName } from '../../components/UserPictureName';
 
 @connect(state => state)
 export default class Track extends Component {
@@ -165,8 +166,39 @@ export default class Track extends Component {
 							</LayoutGrid.Cell>
 							<LayoutGrid.Cell desktopCols="12" tabletCols="12" tabletOrder="1">
 								<div class={style.profile_contents}>
-									<h1 class={style.mainHeader} style={{ margin: '0 0 10px 0' }}>Description</h1>
-									<div class="mdc-custom-card" dangerouslySetInnerHTML={{ __html: snarkdown(viewedTrack.description || 'Track has no description.') }}></div>
+									<h1 class={style.mainHeader} style={{ margin: '0 0 10px 0' }}>
+										Description
+									</h1>
+									<div
+										class="mdc-custom-card"
+										dangerouslySetInnerHTML={{
+											__html: snarkdown(
+												viewedTrack.description || 'Track has no description.'
+											)
+										}}
+									>
+									</div>
+								</div>
+							</LayoutGrid.Cell>
+
+							<LayoutGrid.Cell desktopCols="12" tabletCols="12" tabletOrder="1">
+								<div class={style.profile_contents}>
+									<h1 class={style.mainHeader} style={{ margin: '0 0 10px 0' }}>
+										Comments
+										<small>1</small>
+									</h1>
+									<div class={style.customCard}>
+										<div class={style.userPictureComment}>
+											<UserPictureName user={user.profile} linksToProfile={true}>
+												<span class={style.timeago}>10m ago</span>
+											</UserPictureName>
+										</div>
+										<div class={style.comment}>
+											<blockquote>
+												Yea, nice one MATE!
+											</blockquote>
+										</div>
+									</div>
 								</div>
 							</LayoutGrid.Cell>
 						</LayoutGrid.Inner>

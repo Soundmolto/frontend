@@ -39,6 +39,10 @@
     .clickable, .menu, .notificationsMenu {
         max-width: 100vw;
     }
+
+    .appName, .hideMobile {
+        display: none;
+    }
 }
 
 .clickable:hover {
@@ -137,7 +141,7 @@ h1.subtitle-header > small {
         z-index: 100 !important;
     }
 
-    .appName, .hideMobile {
+    .appName {
         display: none;
     }
 

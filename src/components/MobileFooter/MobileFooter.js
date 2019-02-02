@@ -7,6 +7,7 @@ import 'preact-material-components/Button/style.css';
 import styles from './style';
 import { route, getCurrentUrl } from "preact-router";
 import { connect } from "preact-redux";
+import { SEARCH } from "../../enums/search";
 
 @connect(state => state)
 export class MobileFooter extends Component {
@@ -28,6 +29,10 @@ export class MobileFooter extends Component {
 		route('/login');
 		e.preventDefault();
 		e.target.blur();
+	};
+
+	onClickSearch = () => {
+		this.props.dispatch({ type: SEARCH.SHOW_SEARCH_PANEL });
 	};
 
 	componentDidMount () {
@@ -80,7 +85,7 @@ export class MobileFooter extends Component {
 						<Icon>home</Icon>
 						Home
 					</Tabs.Tab>
-					<Tabs.Tab active={activeTabIndex === 1} onClick={() => console.log('yeah thats comin soon')}>
+					<Tabs.Tab active={activeTabIndex === 1} onClick={this.onClickSearch}>
 						<Icon>search</Icon>
 						Search
 					</Tabs.Tab>

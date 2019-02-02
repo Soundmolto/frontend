@@ -1,0 +1,73 @@
+.columns {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    overflow: hidden;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+.userContainer > div a, .flex {
+    padding: 5px 10px;
+}
+
+.list img {
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    margin-right: 10px;
+}
+
+.followers {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin: 0 0 0 10px;
+}
+
+a.flex, .userContainer > div a {
+    height: 76px;
+}
+
+.flex {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    text-decoration: none;
+}
+
+.flex p {
+    margin: 0;
+}
+
+@media screen and (min-width: 768px) {
+    .list {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .list {
+        width: 100%;
+    }
+}
+
+.seperator {
+    display: block;
+    width: 100%;
+    background: linear-gradient(to right, var(--mdc-theme-primary) -40%, var(--mdc-theme-complementary-color) 170%) !important;
+    height: 4px;
+    border-radius: 50px;
+}
+
+.h1Class {
+    margin: 0
+}

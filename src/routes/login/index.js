@@ -1,6 +1,5 @@
 import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
-import Card from 'preact-material-components/Card';
 import TextField from 'preact-material-components/TextField';
 import Button from 'preact-material-components/Button';
 import LinearProgress from 'preact-material-components/LinearProgress';

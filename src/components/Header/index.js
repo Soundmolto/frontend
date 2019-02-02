@@ -8,7 +8,7 @@ import Dialog from 'preact-material-components/Dialog';
 import Switch from 'preact-material-components/Switch';
 import Menu from 'preact-material-components/Menu';
 import Icon from 'preact-material-components/Icon';
-import TextField from 'preact-material-components/TextField';
+import TextField, { TextFieldInput } from 'preact-material-components/TextField';
 import EditProfile from '../EditProfile';
 import 'preact-material-components/Switch/style.css';
 import 'preact-material-components/Dialog/style.css';
@@ -30,6 +30,7 @@ import { Search } from '../Search';
 import raf from 'raf';
 import { SETTINGS } from '../../enums/settings';
 import { disable_beta, enable_beta, enable_waveform, disable_waveform } from '../../actions/settings';
+import { SearchModal } from '../SearchModal';
 
 @connect(state => state)
 export default class Header extends Component {
@@ -528,6 +529,8 @@ export default class Header extends Component {
 							)}
 						</Dialog.Body>
 					</Dialog>
+
+					<SearchModal />
 
 					<div class="mdc-toolbar-blur-bg"></div>
 				</div>
