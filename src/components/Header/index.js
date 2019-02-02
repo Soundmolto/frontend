@@ -102,6 +102,16 @@ export default class Header extends Component {
 		this.linkTo('/');
 	};
 
+	goToPrivacy = e => {
+		e.preventDefault();
+		this.linkTo('/privacy-policy');
+	}
+
+	goToTermsOfUse = e => {
+		e.preventDefault();
+		this.linkTo('/terms-of-use');
+	}
+
 	goToMyProfile = e => {
 		e.preventDefault();
 		this.linkTo(`/${this.props.user.profile.url}`);
@@ -320,6 +330,12 @@ export default class Header extends Component {
 		this.openShareTrackModal(track);
 	}
 
+	componentDidMount () {
+		window.document.addEventListener('url-change', () => {
+			this.setState({ shareTrack: this.state.shareTrack });
+		});
+	}
+
 	render ({ auth, user, UI, settings }, { shareTrack }) {
 		this.currentUrl = getCurrentUrl();
 
@@ -426,6 +442,26 @@ export default class Header extends Component {
 							</Drawer.DrawerItem>
 							
 							{this.login_or_logout()}
+
+
+							<div class="section">
+								<h1 class={style['subtitle-header']}>
+									Legal
+								</h1>
+							</div>
+							<Drawer.DrawerItem onClick={this.goToPrivacy} class={this.isActive('/privacy-policy')} href={`/privacy-policy`}>
+								<span class="text legal-nav-link">
+									<List.ItemGraphic>music_note</List.ItemGraphic>
+									Privacy Policy
+								</span>
+							</Drawer.DrawerItem>
+
+							<Drawer.DrawerItem onClick={this.goToTermsOfUse} class={this.isActive('/terms-of-use')} href={`/terms-of-use`}>
+								<span class="text legal-nav-link">
+									<List.ItemGraphic>account_balance</List.ItemGraphic>
+									Terms of Use
+								</span>
+							</Drawer.DrawerItem>
 						</Drawer.DrawerContent>
 					</Drawer.PermanentDrawer>
 					

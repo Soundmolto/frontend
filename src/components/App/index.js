@@ -17,6 +17,7 @@ import { THEMES } from '../../enums/themes';
 import { QueueController } from '../QueueController';
 import Following from '../../routes/artists';
 import Stats from '../../routes/stats';
+import PrivacyPolicy from '../../routes/privacy-policy';
 
 let onRender = (UI) => {};
 let MainAudioContext;
@@ -29,6 +30,28 @@ if (typeof window !== "undefined") {
 		} else {
 			document.body.classList.remove('mdc-theme--dark');
 		}
+
+		window.fbAsyncInit = () => {
+			FB.init({
+			  appId: '2449734321920413',
+			  cookie: true,
+			  xfbml: true,
+			  version: 'v3.2'
+			});
+			  
+			FB.AppEvents.logPageView();
+
+
+			FB.getLoginStatus(console.log);
+		};
+		
+		(function(d, s, id){
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) {return;}
+			js = d.createElement(s); js.id = id;
+			js.src = "https://connect.facebook.net/en_US/sdk.js";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
 	};
 	
 
@@ -86,6 +109,8 @@ export default class App extends Component {
 						<TrackCollection path="/collection/tracks" key="track-collection" audioContext={this.audioContext} queue={queue} class="route-page" />
 						<Following path="/:vanity_url/following" className="route-page" />
 						<Stats path="/you/stats" className="route-page" />
+						<PrivacyPolicy path="/privacy-policy" className="route-page" />
+						<Stats path="/terms-of-use" className="route-page" />
 					</Router>
 				</div>
 				<audio ref={this.audioPlayerRef} />

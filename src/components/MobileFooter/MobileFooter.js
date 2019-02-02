@@ -100,6 +100,12 @@ export class MobileFooter extends Component {
 							Login
 						</Tabs.Tab>
 					)}
+					{auth.logged_in && (
+						<Tabs.Tab active={activeTabIndex === 3} onClick={this.goToMusic}>
+							<Icon>favorite</Icon>
+							Favorites
+						</Tabs.Tab>
+					)}
 				</Tabs>
 			</div>
 		);
