@@ -124,7 +124,7 @@ body > div:not(#fb-root) {
 
 @media screen and (min-width: 1200px) {
 	.route-container {
-		padding-left: 175px;
+		padding-left: 185px;
 	}
 
 	.header > .vertical-center {
@@ -271,7 +271,7 @@ body > div:not(#fb-root) {
 
 .mdc-drawer--permanent {
 	height: calc(100vh - 128px);
-	width: 175px;
+	width: 185px;
 	top: 64px;
 	position: fixed;
 	border: none;
@@ -320,7 +320,7 @@ body > div:not(#fb-root) {
 	position: absolute;
 	bottom: -12px;
 	height: 3px;
-	width: 175px;
+	width: 185px;
 	left: -21px;
 	content: " ";
 	background: linear-gradient(to right, var(--mdc-theme-primary) -40%, var(--mdc-theme-complementary-color) 170%) !important;

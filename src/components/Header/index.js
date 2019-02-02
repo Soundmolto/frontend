@@ -451,7 +451,7 @@ export default class Header extends Component {
 							</div>
 							<Drawer.DrawerItem onClick={this.goToPrivacy} class={this.isActive('/privacy-policy')} href={`/privacy-policy`}>
 								<span class="text legal-nav-link">
-									<List.ItemGraphic>music_note</List.ItemGraphic>
+									<List.ItemGraphic>remove_red_eye</List.ItemGraphic>
 									Privacy Policy
 								</span>
 							</Drawer.DrawerItem>

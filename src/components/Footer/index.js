@@ -318,6 +318,25 @@ export default class Footer extends Component {
 		return trackArtwork || userAvatar || Goku;
 	}
 
+	getVolumeType = _vol => {
+		let volumeType = 'volume_up';
+		const volume = _vol * 100;
+
+		if (volume === 0) {
+			volumeType = 'volume_off';
+		}
+
+		if (volume >= 1 && volume <= 25) {
+			volumeType = 'volume_mute';
+		}
+
+		if (volume >= 26 && volume <= 75) {
+			volumeType = 'volume_down';
+		}
+
+		return volumeType;
+	}
+
 	render ({ currently_playing, audioPlayer }) {
 		let amount = 0;
 		let duration = 0;
@@ -402,6 +421,8 @@ export default class Footer extends Component {
 								<Slider step={2} value={this.volume * 100} max={100} discrete={true} ref={this.volumeSliderRef} onInput={e => {
 									this.volume = this.volumeSlider.getValue() / 100;
 									this.audioPlayer.volume = this.volume;
+									this.volumeIcon.props.children = [this.getVolumeType(this.volume)]
+									this.volumeIcon.forceUpdate();
 								}} />
 							</div>
 							<Button ripple className={`${styles.button}`} onClick={e => {
@@ -409,7 +430,7 @@ export default class Footer extends Component {
 								this.volumePanel.classList.toggle(styles.show);
 								e.currentTarget.blur();
 							}}>
-								<Icon style={{ margin: 0 }}>volume_up</Icon>
+								<Icon style={{ margin: 0 }} ref={e => (this.volumeIcon = e)}>{this.getVolumeType(this.volume)}</Icon>
 							</Button>
 							<Button ripple className={`${styles.button}`} onClick={this.toggleQueuePanel.bind(this)}>
 								<Icon style={{ margin: 0 }}>queue_music</Icon>
