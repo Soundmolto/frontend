@@ -21,6 +21,7 @@
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 	height: auto !important;
 	padding: 10px;
+	margin-bottom: 20px;
 }
 
 .list-item:hover::before, .list-item:hover::after,
@@ -44,6 +45,7 @@
 
 .grid-inner {
 	align-items: center;
+	height: 32px;
 }
 
 .grid-inner > div {

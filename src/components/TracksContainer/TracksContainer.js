@@ -52,14 +52,21 @@ export const TracksContainer = ({ tracks, shouldRenderWaveform, onStartPlay, vie
 						<List.TextContainer class={style.container}>
 							<LayoutGrid class={style.grid}>
 								<LayoutGrid.Inner class={style['grid-inner']}>
-									<LayoutGrid.Cell desktopCols="6" tabletCols="6" phoneCols="2">
+									<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="4">
 										<List.PrimaryText class={style.fixHeight}>
 											<span class={style.centered}>
 												Track
 											</span>
 										</List.PrimaryText>
 									</LayoutGrid.Cell>
-									<LayoutGrid.Cell desktopCols="6" tabletCols="6" phoneCols="2">
+									<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="4">
+										<List.PrimaryText class={style.fixHeight}>
+											<span class={style.centered}>
+												Artist
+											</span>
+										</List.PrimaryText>
+									</LayoutGrid.Cell>
+									<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="4">
 										<span>
 											<Icon>access_time</Icon>
 										</span>

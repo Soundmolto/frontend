@@ -7,3 +7,8 @@
 .caption {
     word-break: normal;
 }
+
+.noOverflow, .noOverflow > div {
+    position: relative;
+    overflow: hidden !important;
+}

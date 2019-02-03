@@ -10,6 +10,7 @@ import { connect } from 'preact-redux';
 import styles from './style.css';
 import { TrackCollectionIndicator } from "../TrackCollectionIndicator";
 import { LikeIndicator } from "../LikeIndicator";
+import Goku from '../../assets/goku.png';
 
 @connect( ({ auth, currently_playing }) => ({ auth, currently_playing }))
 export class TrackListItem extends Component {
@@ -101,19 +102,21 @@ export class TrackListItem extends Component {
 				<List.TextContainer class={styles.container}>
 					<LayoutGrid class={styles.grid}>
 						<LayoutGrid.Inner class={styles['grid-inner']}>
-							<LayoutGrid.Cell desktopCols="6" tabletCols="6" phoneCols="6">
+							<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="4">
 								<List.PrimaryText>
 									<a href={`/${track.user.url}/${track.url}`} class={styles.link}>
 										{track.name}
 									</a>
 								</List.PrimaryText>
-								<List.SecondaryText>
-									<a href={`/${track.user.url}`} class={styles.link}>
+							</LayoutGrid.Cell>
+							<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="4">
+								<List.PrimaryText>
+								<a href={`/${track.user.url}`} class={styles.link}>
 										{track.user.displayName}
 									</a>
-								</List.SecondaryText>
+								</List.PrimaryText>
 							</LayoutGrid.Cell>
-							<LayoutGrid.Cell desktopCols="6" tabletCols="6" phoneCols="6">
+							<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="4">
 								<List.SecondaryText className={styles.timeContainer}>
 									<p class={styles.time}>
 										{seconds_to_time(track.duration).rendered}

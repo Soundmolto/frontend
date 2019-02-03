@@ -85,6 +85,12 @@ export class MobileFooter extends Component {
 						<Icon>home</Icon>
 						Home
 					</Tabs.Tab>
+					{auth.logged_in && (
+						<Tabs.Tab active={activeTabIndex === 3} onClick={this.goToMusic}>
+							<Icon>import_contacts</Icon>
+							Browse
+						</Tabs.Tab>
+					)}
 					<Tabs.Tab active={activeTabIndex === 1} onClick={this.onClickSearch}>
 						<Icon>search</Icon>
 						Search

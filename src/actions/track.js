@@ -119,10 +119,11 @@ export async function get_track (dispatch, { token, track_url, vanity_url, secre
 	}
 }
 
-export function playing_now (dispatch, { playing, position, track, owner }) {
+export function playing_now (dispatch, { playing, position, track, owner = { profile: {} } }) {
 	let type = TRACK.PLAYING_TRACK;
 	if (!playing) type = TRACK.PAUSED_TRACK;
 	delete track.peaks;
+	console.log(owner)
 	if (playing) window.document.title = `${owner.profile.displayName || owner.profile.url} - ${track.name}`
 	return dispatch({ type: type, payload: { position, track, owner } })
 }

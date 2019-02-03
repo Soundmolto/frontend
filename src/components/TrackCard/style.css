@@ -205,19 +205,10 @@
 
 @media screen and (max-width: 839px) {
     .cardRoot {
-        flex-direction: row;
-        flex-wrap: wrap;
-        min-height: 230px;
+        display: block;
         overflow: hidden;
-    }
-
-    .cardRoot .image {
-        position: absolute;
-        top: -10px;
-        left: -10px;
-        width: calc(100% + 20px);
-        height: calc(100% + 20px);
-        filter: blur(10px);
+        background-color: transparent !important;
+        /* border-radius: 0 !important; */
     }
 
     .cardRoot .image button {
@@ -229,21 +220,19 @@
     }
 
     .displayName {
-        padding: 10px;
         border-radius: 10px;
         display: inline;
-        margin-right: 10px;
+        margin: 0;
+        padding: 0;
     }
 
     .date {
-        margin-left: 10px;
         text-align: right;
     }
 
     .displayName, .date {
-        max-width: 50%;
-        width: calc(50% - 10px);
-        margin-bottom: 0;
+        max-width: 100%;
+        width: 100%;
         opacity: 1;
         z-index: 3;
         color: white;
@@ -272,5 +261,11 @@
         height: 100%;
         background: rgba(0, 0, 0, 0.7);
         z-index: 2;
+    }
+
+    .dateContainer {
+        position: relative;
+        flex-direction: row;
+        margin: 0 0 40px 0;
     }
 }

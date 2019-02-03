@@ -12,7 +12,7 @@ import { playing_now } from '../../actions/track';
 import { QueuePanel } from "../QueuePanel";
 import { MobileFooter } from "../MobileFooter";
 
-@connect(({ currently_playing }) => ({ currently_playing }))
+@connect(({ currently_playing, user }) => ({ currently_playing, user }))
 export default class Footer extends Component {
 	
 	pos = 0;
@@ -72,11 +72,12 @@ export default class Footer extends Component {
 	onClickPlay () {
 		const { currently_playing, dispatch } = this.props;
 		if (this.isCurrentlyPlayingNotEmpty(currently_playing)) {
+			const owner = { profile: currently_playing.user || currently_playing.owner };
 			playing_now(dispatch, {
 				playing: true,
 				position: currently_playing.position,
 				track: currently_playing.track,
-				owner: currently_playing.owner
+				owner
 			});
 		}
 	}
@@ -85,11 +86,12 @@ export default class Footer extends Component {
 		const { currently_playing, dispatch } = this.props;
 		if (this.isCurrentlyPlayingNotEmpty(currently_playing)) {
 			const audio = document.querySelector('audio') || { currentTime: this.__currentPos };
+			const owner = { profile: currently_playing.user || currently_playing.owner };
 			playing_now(dispatch, {
 				playing: false,
 				position: audio.currentTime,
 				track: currently_playing.track,
-				owner: currently_playing.owner
+				owner
 			});
 		}
 	}
@@ -98,11 +100,13 @@ export default class Footer extends Component {
 		const { currently_playing, dispatch } = this.props;
 		if (this.isCurrentlyPlayingNotEmpty(currently_playing)) {
 			const next = this.queue.next();
+			const owner = { profile: next.user || next.owner };
+
 			playing_now(dispatch, {
 				playing: true,
 				position: 0,
 				track: next,
-				owner: next.owner
+				owner
 			});
 		}
 	}
@@ -113,19 +117,21 @@ export default class Footer extends Component {
 
 			if (this.audioPlayerCurrentTime >= 3) {
 				const { track } = currently_playing;
+				const owner = { profile: track.user || track.owner };
 				playing_now(dispatch, {
 					playing: true,
 					position: 0,
 					track: track,
-					owner: track.owner
+					owner
 				});
 			} else {
 				const next = this.queue.previous();
+				const owner = { profile: next.user || next.owner };
 				playing_now(dispatch, {
 					playing: true,
 					position: 0,
 					track: next,
-					owner: next.owner
+					owner
 				});
 			}
 		}
@@ -143,13 +149,14 @@ export default class Footer extends Component {
 			}
 
 			audioPlayer.addEventListener('ended', e => {
+				const owner = { profile: currently_playing.user || currently_playing.owner };
 				this.tracks[currently_playing.track.id] = 0;
-				playing_now(dispatch, { playing: false, position, track: currently_playing.track, owner: currently_playing.owner });
+				playing_now(dispatch, { playing: false, position, track: currently_playing.track, owner });
 				requestAnimationFrame(_ => {
 					const track = this.queue.next();
-					let owner = currently_playing.owner;
+					let owner = (currently_playing.owner || currently_playing.user);
 					if (track != null) {
-						if (currently_playing.owner.id !== track.owner) {
+						if ((currently_playing.owner || currently_playing.user).id !== (track.owner || track.user)) {
 							owner = null;
 						}
 						playing_now(dispatch, { playing: true, position, track, owner });
@@ -188,7 +195,7 @@ export default class Footer extends Component {
 				const updatedTime = this.tracks[currently_playing.track.id] || currently_playing.position || 0;
 
 				if (audioPlayer.src !== currently_playing.track.stream_url) {
-					audioPlayer.src = currently_playing.track.stream_url;
+					audioPlayer.src = `${currently_playing.track.stream_url}${(this.props.user && this.props.user.id) ? `?user=${this.props.user.id}` : ''}`;
 				}
 
 				if (audioPlayer.currentTime !== updatedTime || audioPlayer.paused === true) {
@@ -247,7 +254,8 @@ export default class Footer extends Component {
 		}
 	
 		if (this.mouseDown === true) {
-			playing_now(dispatch, { playing: true, position: time, track: currently_playing.track, owner: currently_playing.owner });
+			const owner = { profile: currently_playing.user || currently_playing.owner };
+			playing_now(dispatch, { playing: true, position: time, track: currently_playing.track, owner });
 		}
 
 		if (e.target === this.desktopTrackbar) {
@@ -272,12 +280,13 @@ export default class Footer extends Component {
 		const rect = this.desktopTrackbar.getBoundingClientRect();
 		const offset = rect.left;
 		const percentage = (positionInPage - offset) / trackbarWidth;
+		const owner = { profile: currently_playing.user || currently_playing.owner };
 
 		playing_now(dispatch, {
 			playing: true,
 			position: duration * percentage,
 			track: currently_playing.track,
-			owner: currently_playing.owner
+			owner
 		});
 	}
 
@@ -291,12 +300,13 @@ export default class Footer extends Component {
 			this.queue.resetShuffle();
 		}
 		this.setState({ shuffled: !this.state.shuffled });
+		const owner = { profile: currently_playing.user || currently_playing.owner };
 
 		playing_now(dispatch, {
 			playing: currently_playing.playing,
 			position: this.audioPlayer.currentTime,
 			track: currently_playing.track,
-			owner: currently_playing.owner
+			owner
 		});
 	}
 
@@ -342,7 +352,7 @@ export default class Footer extends Component {
 		let duration = 0;
 		let playing = currently_playing != null && currently_playing.playing;
 		let parentWidth = 1;
-		const owner = currently_playing.owner && currently_playing.track && currently_playing.track.user && (currently_playing.track.user.displayName || currently_playing.track.user.url);
+		const owner = (currently_playing.owner || currently_playing.user) && currently_playing.track && currently_playing.track.user && (currently_playing.track.user.displayName || currently_playing.track.user.url);
 		const trackName = (currently_playing && currently_playing.track && currently_playing.track.name || "");
 		this.audioPlayer = audioPlayer;
 

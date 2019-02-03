@@ -30,8 +30,8 @@ export class TrackCollectionIndicator extends Component {
 		this.setState({ inCollection: this.props.track.inCollection });
 	}
 
-	render ({ logged_in }, { icon, inCollection }) {
-		return !logged_in ? ("") : (
+	render ({ auth }, { icon, inCollection }) {
+		return !auth.logged_in ? ("") : (
 			<div>
 				{inCollection === true && (
 						<span onClick={this.removeTrackFromCollection.bind(this)} class={styles.saveTrack} onMouseOut={this.mouseOut.bind(this)} onMouseOver={this.mouseOver.bind(this)}>

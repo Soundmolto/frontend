@@ -45,7 +45,8 @@ export class TrackCard extends Component {
 		this.setState({ inCollection: this.props.track.inCollection });
 	}
 
-	onClickPlayPause (e) {
+	onClickPlayPause = e => {
+		console.log('yeah');
 		e.preventDefault();
 		e.stopImmediatePropagation();
 		e.currentTarget.blur();
@@ -59,7 +60,7 @@ export class TrackCard extends Component {
 		playing_now(this.props.dispatch, {
 			playing: this.state.playing,
 			track: this.props.track,
-			owner: this.props.user,
+			owner: this.props.viewedUser,
 			position: audio.currentTime
 		});
 	}
@@ -133,26 +134,15 @@ export class TrackCard extends Component {
 
 		return (
 			<div class={styles.card}>
-				<Card class={styles.cardRoot}>
-					<div class={styles.overlayImage} onClick={this.onClickPlayPause.bind(this)}></div>
-					<div class={styles.image} style={{ 'background-image': `url(${this.getArtwork(track, track.user)})` }}>
-						<Button class={styles['play-button']} onClick={this.onClickPlayPause.bind(this)}>
+				<Card class={styles.cardRoot} onClick={() => console.log('fuck sake')}>
+					<div class={styles.image} style={{ 'background-image': `url(${this.getArtwork(track, track.user)})` }} onClick={() => console.log('fuck sake')}>
+						<Button class={styles['play-button']} onClick={this.onClickPlayPause}>
 							<Icon>
 								{!this.state.playing && 'play_arrow'}
 								{this.state.playing && 'pause'}
 							</Icon>
 						</Button>
 					</div>
-					{isCurrentTrack === true && (
-						<h4 class={styles.displayName}>
-							<a class={styles.link} href={`/${user.profile.url}`}>
-								{user.profile.displayName || user.profile.url || "N/A"}
-							</a>
-						</h4>
-					)}
-					{isCurrentTrack == false && (
-						<h4 class={styles.displayName}>{user.profile.displayName || user.profile.url || "N/A"}</h4>
-					)}
 					<span class={styles.dateContainer}>
 						{track.genres != null && track.genres.length >= 1 && (
 							<div class={styles.genres}>
@@ -171,6 +161,16 @@ export class TrackCard extends Component {
 							</span>
 						)}
 					</span>
+					{isCurrentTrack === true && (
+						<h4 class={styles.displayName}>
+							<a class={styles.link} href={`/${user.profile.url}`}>
+								{user.profile.displayName || user.profile.url || "N/A"}
+							</a>
+						</h4>
+					)}
+					{isCurrentTrack == false && (
+						<h4 class={styles.displayName}>{user.profile.displayName || user.profile.url || "N/A"}</h4>
+					)}
 					<h2 class={`mdc-typography--title ${styles.username}`}>
 						{isCurrentTrack == false && (
 							<a class={styles.link} href={`/${user.profile.url}/${track.url}`}>

@@ -1,5 +1,4 @@
 import { h, Component } from 'preact';
-import Carousel from "nuka-carousel";
 import Icon from 'preact-material-components/Icon';
 import Tabs from "preact-material-components/Tabs";
 import "preact-material-components/Tabs/style.css";
@@ -25,18 +24,12 @@ export class ProfileTabContainer extends Component {
 						<div class="block"></div>
 					</Tabs.Tab>
 				</Tabs>
-
-				<Carousel
-					renderBottomCenterControls={null}
-					renderCenterRightControls={null}
-					renderCenterLeftControls={null}
-					slideIndex={this.state.slideIndex}
-					afterSlide={slideIndex => this.setState({ slideIndex })}
-					className={styles.tabContainer}
-				>
-					<div class={`slide ${styles.containerEl}`}>{tracks}</div>
-					<div class={`slide ${styles.minHeight} ${styles.containerEl}`}>{about}</div>
-				</Carousel>
+				<div className={styles.tabContainer}>
+					{this.state.slideIndex === 0 ?
+						(<div class={`slide ${styles.containerEl}`}>{tracks}</div>) :
+						(<div class={`slide ${styles.minHeight} ${styles.containerEl}`}>{about}</div>)
+					}
+				</div>
 			</div>
 		);
 	}

@@ -177,3 +177,9 @@
 	margin: 0 0 0 10px;
 	font-size: 0.9rem;
 }
+
+@media screen and (max-width: 839px) {
+	.profile_contents {
+		padding: 0;
+	}
+}
