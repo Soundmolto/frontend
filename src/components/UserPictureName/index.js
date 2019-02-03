@@ -32,7 +32,7 @@ export class UserPictureName extends Component {
 		
 		return (
 			props.linksToProfile ? (
-				<a href={`/${props.user.url}`} class={styles.noTextDecoration} onClick={props.onClickProfile || function () {}}>
+				<a href={`/${props.user.url}`} class={`${styles.noTextDecoration} ${props.class || ''}`} onClick={props.onClickProfile || function () {}} onMouseOver={props.onMouseOver}>
 					{renderProfile(props)}
 				</a>
 			) : (renderProfile(props))

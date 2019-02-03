@@ -2,9 +2,10 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    align-content: flex-start;
     max-height: calc(80vh - 100px);
-    overflow: auto;
-
+    width: 50%;
+    padding: 10px;
 }
 
 .list {
@@ -14,6 +15,14 @@
     overflow: hidden;
     word-break: break-all;
     word-wrap: break-word;
+    width: 100% !important;
+}
+
+.userContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: auto;
 }
 
 .userContainer > div a, .flex {
@@ -47,6 +56,13 @@ a.flex, .userContainer > div a {
     text-decoration: none;
 }
 
+.flexTop {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    text-decoration: none;
+}
+
 .flex p {
     margin: 0;
 }
@@ -54,12 +70,20 @@ a.flex, .userContainer > div a {
 @media screen and (min-width: 768px) {
     .list {
         width: 50%;
+        position: relative;
+        display: block;
+        height: calc(50vh - 144px);
+        overflow: auto;
     }
 }
 
 @media screen and (max-width: 768px) {
     .list {
         width: 100%;
+        position: relative;
+        display: block;
+        height: calc(50vh - 144px);
+        overflow: auto;
     }
 }
 
@@ -73,4 +97,58 @@ a.flex, .userContainer > div a {
 
 .h1Class {
     margin: 0
+}
+
+.headerTitle {
+    position: sticky;
+    top: 0;
+    background: #111;
+    margin: 0;
+    padding: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    .hiddenMobile {
+        display: none;
+    }
+}
+
+.username_custom {
+	background: rgba(0, 0, 0, 0.8);
+	padding: 10px;
+	border-radius: 10px;
+	box-shadow: var(--mdc-theme--box-shadow--floating);
+}
+
+.username_custom i {
+	color: white;
+}
+
+.header {
+	background: transparent;
+	background-repeat: no-repeat !important;
+	background-position: center !important;
+	background-size: cover !important;
+	height: 120px;
+    position: relative !important;
+    overflow: visible !important;
+    width: 100% !important;
+    border-radius: 10px !important;
+}
+
+.header img {
+	max-width: 64px;
+	height: 64px;
+	margin-right: 10px;
+	border-radius: 100%;
+}
+
+.container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.userPictureName {
+    padding: 10px;
 }

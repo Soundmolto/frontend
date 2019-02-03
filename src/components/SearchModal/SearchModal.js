@@ -13,14 +13,16 @@ import { SEARCH } from "../../enums/search";
 import Goku from '../../assets/goku.png';
 
 
-@connect(({ search }) => ({ search }))
+@connect(({ search, auth }) => ({ search, auth }))
 export class SearchModal extends Component {
 	searchModalRef = dialog => this.searchModal = dialog;
 
 	state = {
 		loading: false,
 		items: { tracks: [], users: [] },
-		hasItems: false
+		hasItems: false,
+		hoverItem: null,
+		hoverType: null
 	};
 
 	async searchValue (query) {
@@ -87,6 +89,7 @@ export class SearchModal extends Component {
 
 	render (props, { loading, items }) {
 		const { users, tracks } = items;
+		const { auth } = props;
 		return (
 			<Dialog ref={this.searchModalRef} onCancel={this.onCancel} class={`search-modal`}>
 				<div class="modal-border-top"></div>
@@ -94,36 +97,89 @@ export class SearchModal extends Component {
 					
 					<TextField onKeyUp={this.onKeyUp} />
 
-					<div class={styles.columns}>
-						<div class={styles.list}>
-							<h3>Users</h3>
-							<div class={styles.userContainer}>
-								{users.map(user => (
-									<div>
-										<UserPictureName user={user} linksToProfile={true} onClickProfile={this.onClickUrl} h1_class={styles.h1Class}>
+					<div class={styles.flexTop}>
+						<div class={styles.columns}>
+							<div class={styles.list}>
+								<h3 class={styles.headerTitle}>
+									Users {users.length}
+								</h3>
+								<div class={styles.userContainer}>
+									{users.map(user => (
+										<UserPictureName
+											user={user}
+											linksToProfile={true}
+											onClickProfile={this.onClickUrl}
+											h1_class={styles.h1Class}
+											onMouseOver={e => this.setState({ hoverItem: user, hoverType: 'user' })}
+											class={styles.userPictureName}
+										>
 											<p class={styles.followers}>
 												{user.followersAmount} {user.followersAmount >= 2 ? 'followers': 'follower'}
 											</p>
 										</UserPictureName>
-										<div class={styles.seperator}></div>
-									</div>
-								))}
+									))}
+								</div>
+							</div>
+
+							<div class={styles.list}>
+								<h3 class={styles.headerTitle}>
+									Tracks {tracks.length}
+								</h3>
+								<div class={styles.userContainer}>
+									{tracks.map(track =>
+										<div class={styles.flex}>
+											<a
+												class={styles.flex}
+												href={`/${track.user.url}/${track.url}`}
+												onClick={this.onClickUrl}
+											>
+												<img src={track.artwork || track.user.profilePicture || Goku} />
+												<p>
+													{track.name} <br />
+													<small>{track.user.displayName}</small>
+												</p>
+											</a>
+											<div class={styles.seperator}></div>
+										</div>
+									)}
+								</div>
 							</div>
 						</div>
-
-						<div class={styles.list}>
-							<h3>
-								Tracks
+						
+						<div class={`${styles.columns} ${styles.hiddenMobile}`}>
+							<h3 class={styles.headerTitle}>
+								{this.state.hoverItem && this.state.hoverItem.displayName || 'Hover an item to preview it'}
 							</h3>
-							{tracks.map(track =>
-								<div class={styles.flex}>
-									<a class={styles.flex} href={`/${track.user.url}/${track.url}`}>
-										<img src={track.artwork || track.user.profilePicture || Goku} />
-										<p>{track.name} - {track.user.displayName}</p>
-									</a>
-									<div class={styles.seperator}></div>
+							{this.state.hoverItem != null ? (
+								<div class={styles.container}>
+									<div
+										class={"header " + styles.header}
+										style={{
+											backgroundImage: `url(${(
+												this.state.hoverItem.coverPhoto || this.state.hoverItem.profilePicture || Goku
+											)})`
+										}}
+									>
+										<UserPictureName user={this.state.hoverItem} show_location={true} style={{
+												width: '100%',
+												position: 'relative',
+
+											}} h1_class={styles.username_custom}>
+										</UserPictureName>
+									</div>
+
+									{auth.logged_in ? (
+										<ul>
+											<li>
+												{this.state.hoverItem.youFollow === true ? 'You follow this user' : 'You do not follow this user'}
+											</li>
+											<li>
+												{this.state.hoverItem.followingYou === true ? 'This user follows you' : 'This user does not follow you'}
+											</li>
+										</ul>
+									) : (<span>No relevant information to show currently.</span>)}
 								</div>
-							)}
+							) : ''}
 						</div>
 					</div>
 
