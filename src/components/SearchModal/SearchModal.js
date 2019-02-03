@@ -132,14 +132,14 @@ export class SearchModal extends Component {
 												class={styles.flex}
 												href={`/${track.user.url}/${track.url}`}
 												onClick={this.onClickUrl}
+												style={{ flexWrap: 'nowrap' }}
 											>
 												<img src={track.artwork || track.user.profilePicture || Goku} />
-												<p>
+												<p class={styles['track-title']}>
 													{track.name} <br />
 													<small>{track.user.displayName}</small>
 												</p>
 											</a>
-											<div class={styles.seperator}></div>
 										</div>
 									)}
 								</div>

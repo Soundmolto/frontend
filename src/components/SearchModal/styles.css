@@ -85,6 +85,10 @@ a.flex, .userContainer > div a {
         height: calc(50vh - 144px);
         overflow: auto;
     }
+
+    .columns {
+        width: 100% !important;
+    }
 }
 
 .seperator {
@@ -151,4 +155,10 @@ a.flex, .userContainer > div a {
 
 .userPictureName {
     padding: 10px;
+}
+
+.track-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: pre;
 }
