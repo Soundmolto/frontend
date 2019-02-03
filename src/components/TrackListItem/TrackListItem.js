@@ -1,16 +1,16 @@
 import { Component } from "preact";
+import { connect } from 'preact-redux';
+import { TrackCollectionIndicator } from "../TrackCollectionIndicator";
+import { LikeIndicator } from "../LikeIndicator";
+import { seconds_to_time } from "../../utils/seconds-to-time";
+import { playing_now, save_track_in_collection, remove_track_from_collection } from "../../actions/track";
 import List from 'preact-material-components/List';
 import Icon from 'preact-material-components/Icon';
 import LayoutGrid from 'preact-material-components/LayoutGrid';
+import Goku from '../../assets/goku.png';
+import styles from './style.css';
 import 'preact-material-components/List/style.css';
 import 'preact-material-components/LayoutGrid/style.css';
-import { seconds_to_time } from "../../utils/seconds-to-time";
-import { playing_now, save_track_in_collection, remove_track_from_collection } from "../../actions/track";
-import { connect } from 'preact-redux';
-import styles from './style.css';
-import { TrackCollectionIndicator } from "../TrackCollectionIndicator";
-import { LikeIndicator } from "../LikeIndicator";
-import Goku from '../../assets/goku.png';
 
 @connect( ({ auth, currently_playing }) => ({ auth, currently_playing }))
 export class TrackListItem extends Component {
