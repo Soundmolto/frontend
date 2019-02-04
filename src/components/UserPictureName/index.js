@@ -15,7 +15,7 @@ const renderProfile = ({
 	showUsername = true,
 	role = null,
 	style = {},
-}) => <div class="vertical-center" style={style}>
+}, passedClass) => <div class={`vertical-center ${passedClass}`} style={style}>
 	<img src={getPicture(user)} />
 	{(showUsername === true || show_location === true) && (
 		<h1 class={`${h1_class} ${styles.usernameCustom}`}>
@@ -35,7 +35,7 @@ export class UserPictureName extends Component {
 				<a href={`/${props.user.url}`} class={`${styles.noTextDecoration} ${props.class || ''}`} onClick={props.onClickProfile || function () {}} onMouseOver={props.onMouseOver}>
 					{renderProfile(props)}
 				</a>
-			) : (renderProfile(props))
+			) : (renderProfile(props, props.class))
 		);
 	}
 }

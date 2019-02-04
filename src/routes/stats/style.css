@@ -1,129 +1,27 @@
-.home {
+.container {
+	display: flex;
+	width: 100%;
+	padding: 50px;
+}
+
+.card {
+	width: calc(33.3333% - 15px);
+	text-align: left;
 	padding: 20px;
-	min-height: 100%;
-	width: 100%;
-	display: flex;
-	justify-content: flex-start;
-	align-content: center;
-	flex-wrap: wrap;
+	margin: 0 15px 0 0;
 }
 
-.cardHeader {
-	padding: 16px;
+.userPictureName {
+	margin: 0 0 10px 0;
 }
 
-.cardBody {
-	padding: 16px
+.userPictureName img {
+	height: 32px;
+	width: 32px;
+	border-radius: 100%;
 }
 
-.home > a {
-	margin: 20px;
-	text-decoration: none;
-	display: block;
-	transform: translateY(0);
-	transition: transform 0.3s ease-in-out;
-}
-
-@media screen and (max-width: 768px) {
-	.home > a {
-		width: 100%;
-	}
-}
-
-@media screen and (max-width: 1200px) and (min-width: 768px) {
-	.home > a {
-		width: calc(calc(100% / 2) - 40px);
-	}
-}
-
-@media screen and (min-width: 1200px) {
-	.home > a {
-		width: calc(calc(100% / 4) - 40px);
-	}
-}
-
-@media screen and (min-width: 540px) {
-	.genresContainer .forceLeft {
-		min-width: 150px;
-		margin: 10px 0;
-	}
-}
-
-@media screen and (max-width: 540px) {
-	.genresContainer {
-		flex-wrap: wrap;
-	}
-
-	.genresContainer > span {
-		text-align: left;
-	}
-
-	.genresContainer .forceLeft {
-		display: block;
-		min-width: 100%;
-		margin: 10px 0 20px;
-	}
-}
-
-.home > a:hover {
-	transform: translateY(-5px);
-}
-
-.home h1.mainHeader {
-	font-size: 1.3rem;
-}
-
-.home [class="mdc-card"] h2 {
-	margin-top: 0;
-	font-size: 0.9rem !important;
-}
-
-.genresContainer {
-	display: flex;
-	justify-content: space-between;
-	align-items: flex-start;
-	width: 100%;
-	text-align: right;
-	margin-bottom: 20px;
-	border-radius: 10px;
-	padding: 0 10px;
-	box-shadow: var(--mdc-theme--box-shadow--floating);
-}
-
-.genresContainer > span > a {
-	transition: all 0.3s ease-in-out;
-	color: #ffffff;
-	padding: 10px 20px;
-	background: rgba(0, 0, 0, 0.45);
-	margin: 0 0 10px 10px;
-	border-radius: 10px;
-	box-shadow: var(--mdc-theme--box-shadow--floating);
-	display: inline-block;
-	text-decoration: none;
-}
-
-.genresContainer > span > a:hover {
-	background: rgba(0, 0, 0, 0.8)
-}
-
-.genresContainer > span > a[class="active"] {
-	background: var(--mdc-theme-complementary-color);
-}
-
-.genresContainer .forceLeft {
-	float: left;
-	display: flex;
-	align-items: center;
-}
-
-.genresContainer .forceLeft i {
-	margin-right: 10px;
-}
-
-.closable {
-	cursor: pointer;
-}
-
-.closable:hover {
-	color: var(--mdc-theme-complementary-color);
+.username {
+	margin: 0 0 0 10px;
+	font-size: 1rem;
 }
