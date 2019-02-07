@@ -207,7 +207,23 @@ export class MobileFooter extends Component {
 		});
 	}
 
-	render ({ trackName, owner, playing, onClickPlay, onClickPause, auth, currently_playing, audioPlayer, calculate_amount, onClickPrevious, onClickNext }, { activeTabIndex }) {
+	render ({
+		trackName,
+		owner,
+		playing,
+		onClickPlay,
+		onClickPause,
+		auth,
+		currently_playing,
+		audioPlayer,
+		calculate_amount,
+		onClickPrevious,
+		onClickNext,
+		repeat,
+		shuffle,
+		repeatEnabled,
+		shuffleEnabled
+	}, { activeTabIndex }) {
 		let amount = 0;
 		let duration = 0;
 		let parentWidth = 1;
@@ -322,6 +338,15 @@ export class MobileFooter extends Component {
 
 								<Button ripple className={`${styles.button}`} onClick={onClickNext}>
 									<Icon style={{ margin: 0 }}>skip_next</Icon>
+								</Button>
+							</div>
+
+							<div class={`${styles.controls} ${styles.marginTop}`}>
+								<Button ripple className={`${styles.button} ${repeatEnabled === true && styles.active}`} onClick={repeat}>
+									<Icon style={{ margin: 0 }}>repeat</Icon>
+								</Button>
+								<Button ripple className={`${styles.button} ${shuffleEnabled === true && styles.active}`} onClick={shuffle}>
+									<Icon style={{ margin: 0 }}>shuffle</Icon>
 								</Button>
 							</div>
 						</div>

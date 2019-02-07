@@ -286,3 +286,11 @@
 	padding: 20px;
 	height: 64px;
 }
+
+.player .content .controls.marginTop {
+	margin-top: 20px;
+}
+
+.player .content .controls .active > i {
+	color: var(--mdc-theme-complementary-color);
+}
