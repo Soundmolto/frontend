@@ -63,7 +63,7 @@ export default class Footer extends Component {
 		this.tracks[this.props.currently_playing.track.id] = pos;
 	}
 
-	calculate_amount (currently_playing) {
+	calculate_amount = (currently_playing) => {
 		this.pos = currently_playing.position;
 		this.duration = currently_playing.track.duration;
 		return currently_playing.position / currently_playing.track.duration * 100;
@@ -186,6 +186,8 @@ export default class Footer extends Component {
 		if (audioPlayer == null && window.document.querySelector('audio') != null) {
 			audioPlayer = window.document.querySelector('audio');
 		}
+
+		console.log('yea');
 		if (currently_playing.playing === true) {
 			if (currently_playing.position != null && currently_playing.position < this.tracks[currently_playing.track.id]) {
 				this.tracks[currently_playing.track.id] = currently_playing.position;
@@ -373,7 +375,11 @@ export default class Footer extends Component {
 					playing={playing}
 					onClickPlay={this.onClickPlay.bind(this)}
 					onClickPause={this.onClickPause.bind(this)}
+					onClickPrevious={this.onClickPrevious.bind(this)}
+					onClickNext={this.onClickNext.bind(this)}
 					footerClass={styles.footer}
+					audioPlayer={this.audioPlayer}
+					calculate_amount={this.calculate_amount}
 				/>
 				<div class={styles.notMobile}>
 					<QueuePanel ref={this.queuePanelRef} queue={this.queue} getArtwork={this.getArtwork} currently_playing={currently_playing} />
