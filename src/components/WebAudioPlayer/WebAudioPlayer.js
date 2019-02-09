@@ -142,7 +142,7 @@ export class WebAudioPlayer {
 		let val = ((amount * (max - min) / 100) + min);
 
 		if (val === min) {
-			val = this.gainNode.gain.minValue;
+			val = -1.0000000000000000001;
 		}
 
 		this.gainNode.gain.value = val;
