@@ -1,5 +1,6 @@
 import store from "../../store";
-import { API_ENDPOINT } from "../../api";
+
+let playing;
 
 export class WebAudioPlayer {
 
@@ -16,6 +17,8 @@ export class WebAudioPlayer {
 
 	constructor (opts) {
 		this.audioContext = opts.audioContext;
+		this.gainNode = this.audioContext.createGain();
+		this.gainNode.connect(this.audioContext.destination);
 	}
 
 	get src () {
@@ -79,6 +82,7 @@ export class WebAudioPlayer {
 		this.source.buffer = buffer;
 		this.duration = buffer.duration;
 		this.source.connect(this.audioContext.destination);
+		this.source.connect(this.gainNode);
 		this.source.start(0, offset);
 		this._dispatchUpdate(0);
 		this.playing = true;
@@ -124,6 +128,18 @@ export class WebAudioPlayer {
 		this.pausedAt = 0;
 		this.startedAt = 0;
 		this.playing = false;
+	}
+
+	set volume (amount) {
+		const max = Math.min(this.gainNode.gain.maxValue, 1);
+		const min = -1;
+		let val = ((amount * (max - min) / 100) + min);
+
+		if (val === min) {
+			val = this.gainNode.gain.minValue;
+		}
+		console.log(val, min);
+		this.gainNode.gain.value = val;
 	}
 
 	get currentTime () {

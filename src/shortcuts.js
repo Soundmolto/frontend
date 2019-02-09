@@ -47,11 +47,11 @@ export const shortcuts = [
 			e.preventDefault();
 
 			if (state.currently_playing.track != null) {
+				const audio = window.__webAudioPlayer || state.currently_playing;
 				if (state.currently_playing.playing === true) {
-					const audio = document.querySelector('audio') || { currentTime: currently_playing.position };
 					playing_now(store.dispatch, Object.assign({}, state.currently_playing, { position: audio.currentTime, playing: false }))
 				} else {
-					playing_now(store.dispatch, Object.assign({}, state.currently_playing, { playing: true }))
+					playing_now(store.dispatch, Object.assign({}, state.currently_playing, { playing: true, position: audio.currentTime }))
 				}
 			}
 		},

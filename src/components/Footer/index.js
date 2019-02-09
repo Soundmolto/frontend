@@ -444,7 +444,7 @@ export default class Footer extends Component {
 						<div class={styles.end}>
 							<div class={styles.volumePanel} ref={this.volumePanelRef}>
 								<Slider step={2} value={this.volume * 100} max={100} discrete={true} ref={this.volumeSliderRef} onInput={e => {
-									this.volume = this.volumeSlider.getValue() / 100;
+									this.volume = this.volumeSlider.getValue();
 									this.audioPlayer.volume = this.volume;
 									this.volumeIcon.props.children = [this.getVolumeType(this.volume)]
 									this.volumeIcon.forceUpdate();

@@ -68,6 +68,7 @@ export default class App extends Component {
 	constructor (opts) {
 		super(opts);
 		this.player = new WebAudioPlayer({ audioContext: MainAudioContext });
+		window.__webAudioPlayer = this.player;
 	}
 	
 	componentDidMount () {
