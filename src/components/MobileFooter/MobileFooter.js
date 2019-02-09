@@ -20,6 +20,11 @@ export class MobileFooter extends Component {
 
 	tracks = {};
 
+	constructor (opts) {
+		super(opts);
+		this.audioPlayer = opts.audioPlayer;
+	}
+
 	goHome = (e) => {
 		route('/');
 		e.preventDefault();
@@ -78,12 +83,19 @@ export class MobileFooter extends Component {
 			requestAnimationFrame(_ => {
 				const updatedTime = this.tracks[currently_playing.track.id] || currently_playing.position || 0;
 				const url = currently_playing.track.stream_url;
+				const currentTime = parseInt(audioPlayer.currentTime)
+				const _updated = parseInt(updatedTime);
 
 				if (audioPlayer.src !== url) {
 					return audioPlayer.play(url);
 				}
 
-				if (audioPlayer.currentTime !== updatedTime || audioPlayer.paused === true) {
+				if (
+					(
+						currentTime !== _updated &&
+						currentTime + 1 > updated
+					) ||
+					audioPlayer.paused === true) {
 					audioPlayer.play(url, updatedTime);
 				}
 			});
@@ -222,7 +234,6 @@ export class MobileFooter extends Component {
 		let amount = 0;
 		let duration = 0;
 		let parentWidth = 1;
-		this.audioPlayer = audioPlayer;
 
 		if (currently_playing != null && currently_playing.track != null) {
 			amount = calculate_amount(currently_playing);
@@ -234,11 +245,6 @@ export class MobileFooter extends Component {
 		if (this.thumb != null) {
 			parentWidth = this.thumb.parentElement.clientWidth;
 		}
-
-		console.log(
-			amount,
-			seconds_to_time(amount).rendered
-		)
 
 		return (
 			<div class={styles.mobile}>

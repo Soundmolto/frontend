@@ -16,7 +16,6 @@ export class WebAudioPlayer {
 
 	constructor (opts) {
 		this.audioContext = opts.audioContext;
-		console.log('well fuck');
 	}
 
 	get src () {
@@ -75,7 +74,6 @@ export class WebAudioPlayer {
 	}
 
 	_playBuffer (buffer, offset) {
-		console.log(offset);
 		this._currentTime = offset || 0;
 		this.source = this.audioContext.createBufferSource();
 		this.source.buffer = buffer;
@@ -100,7 +98,6 @@ export class WebAudioPlayer {
 		}, 1000);
 
 		this.source.onended = () => {
-			console.log(parseInt(this.currentTime), parseInt(this.duration))
 			if (
 				parseInt(this.currentTime) === parseInt(this.duration) ||
 				parseInt(this.currentTime) + 1 === parseInt(this.duration) ||
