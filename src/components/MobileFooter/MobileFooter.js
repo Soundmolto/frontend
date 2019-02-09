@@ -218,7 +218,7 @@ export class MobileFooter extends Component {
 		repeatEnabled,
 		shuffleEnabled
 	}, { activeTabIndex }) {
-		const position = this.tracks[currently_playing.track.id] || currently_playing.position;
+		let position = 0;
 		let amount = 0;
 		let duration = 0;
 		let parentWidth = 1;
@@ -228,6 +228,7 @@ export class MobileFooter extends Component {
 			amount = calculate_amount(currently_playing);
 			duration = parseInt(currently_playing.track.duration);
 			this.__currentTime = duration;
+			position = this.tracks[currently_playing.track.id] || currently_playing.position;
 		}
 
 		if (this.thumb != null) {
@@ -342,14 +343,14 @@ export class MobileFooter extends Component {
 							</div>
 
 							<div class={`${styles.controls} ${styles.marginTop}`}>
-								<LikeIndicator track={currently_playing.track} />
+								<LikeIndicator track={currently_playing.track || {}} />
 								<Button ripple className={`${styles.button} ${repeatEnabled === true && styles.active}`} onClick={repeat}>
 									<Icon style={{ margin: 0 }}>repeat</Icon>
 								</Button>
 								<Button ripple className={`${styles.button} ${shuffleEnabled === true && styles.active}`} onClick={shuffle}>
 									<Icon style={{ margin: 0 }}>shuffle</Icon>
 								</Button>
-								<TrackCollectionIndicator track={currently_playing.track} />
+								<TrackCollectionIndicator track={currently_playing.track || {}} />
 							</div>
 						</div>
 					</div>

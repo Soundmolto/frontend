@@ -1,4 +1,5 @@
 import store from "../../store";
+import { API_ENDPOINT } from "../../api";
 
 export class WebAudioPlayer {
 
@@ -42,6 +43,7 @@ export class WebAudioPlayer {
 		if (token) {
 			request.setRequestHeader('Authorization', `Bearer ${token}`);
 		}
+
 		request.responseType = 'arraybuffer';
 	  
 		// Decode asynchronously
