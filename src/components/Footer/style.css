@@ -19,21 +19,21 @@
 
 @media screen and (min-width: 769px) {
 	.footer {
-		width: calc(100vw - 150px) !important;
-		margin-left: 150px;
+		width: calc(100vw - 185px) !important;
+		margin-left: 185px;
 	}
 }
 
 .footer .artwork {
 	overflow: hidden;
-	width: 150px;
+	width: 185px;
 	height: 64px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	position: absolute;
 	top: 0;
-	left: -150px;
+	left: -185px;
 	z-index: 2;
 }
 
