@@ -77,7 +77,7 @@ export class MobileFooter extends Component {
 
 			requestAnimationFrame(_ => {
 				const updatedTime = this.tracks[currently_playing.track.id] || currently_playing.position || 0;
-				const url = `${currently_playing.track.stream_url}${(this.props.user && this.props.user.id) ? `?user=${this.props.user.id}` : ''}`
+				const url = currently_playing.track.stream_url;
 
 				if (audioPlayer.src !== url) {
 					return audioPlayer.play(url);

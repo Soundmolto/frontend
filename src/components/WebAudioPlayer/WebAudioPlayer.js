@@ -1,3 +1,5 @@
+import store from "../../store";
+
 export class WebAudioPlayer {
 
 	audioContext = null;
@@ -36,6 +38,10 @@ export class WebAudioPlayer {
 	loadFile (url, done) {
 		var request = new XMLHttpRequest();
 		request.open('GET', url, true);
+		const { token } = store.getState().auth;
+		if (token) {
+			request.setRequestHeader('Authorization', `Bearer ${token}`);
+		}
 		request.responseType = 'arraybuffer';
 	  
 		// Decode asynchronously

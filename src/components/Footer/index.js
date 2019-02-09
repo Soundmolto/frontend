@@ -74,7 +74,7 @@ export default class Footer extends Component {
 		const { currently_playing, dispatch } = this.props;
 		if (this.isCurrentlyPlayingNotEmpty(currently_playing)) {
 			const owner = { profile: currently_playing.user || currently_playing.owner };
-			const url = `${currently_playing.track.stream_url}${(this.props.user && this.props.user.id) ? `?user=${this.props.user.id}` : ''}`;
+			const url = currently_playing.track.stream_url;
 			playing_now(dispatch, {
 				playing: true,
 				position: currently_playing.position,
@@ -199,7 +199,7 @@ export default class Footer extends Component {
 			audioPlayer.addEventListener('timeupdate', this.onPosChange.bind(this));
 			requestAnimationFrame(_ => {
 				const updatedTime = this.tracks[currently_playing.track.id] || currently_playing.position || 0;
-				const url = `${currently_playing.track.stream_url}${(this.props.user && this.props.user.id) ? `?user=${this.props.user.id}` : ''}`;
+				const url = currently_playing.track.stream_url;
 
 				if (audioPlayer.src !== url) {
 					return audioPlayer.play(url);
