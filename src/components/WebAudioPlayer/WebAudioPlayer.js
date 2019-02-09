@@ -1,6 +1,6 @@
 import store from "../../store";
 
-let playing;
+let vol = 100;
 
 export class WebAudioPlayer {
 
@@ -77,12 +77,17 @@ export class WebAudioPlayer {
 	}
 
 	_playBuffer (buffer, offset) {
+		if (this.playing) {
+			this.stop();
+		}
+
 		this._currentTime = offset || 0;
 		this.source = this.audioContext.createBufferSource();
 		this.source.buffer = buffer;
 		this.duration = buffer.duration;
 		this.source.connect(this.audioContext.destination);
 		this.source.connect(this.gainNode);
+		this.volume = vol;
 		this.source.start(0, offset);
 		this._dispatchUpdate(0);
 		this.playing = true;
@@ -131,15 +136,20 @@ export class WebAudioPlayer {
 	}
 
 	set volume (amount) {
-		const max = Math.min(this.gainNode.gain.maxValue, 1);
+		vol = amount;
+		const max = Math.min(this.gainNode.gain.maxValue, 0);
 		const min = -1;
 		let val = ((amount * (max - min) / 100) + min);
 
 		if (val === min) {
 			val = this.gainNode.gain.minValue;
 		}
-		console.log(val, min);
+
 		this.gainNode.gain.value = val;
+	}
+
+	get volume () {
+		return this.gainNode.gain.value;
 	}
 
 	get currentTime () {
