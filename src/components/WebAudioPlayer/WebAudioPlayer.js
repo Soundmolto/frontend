@@ -134,7 +134,7 @@ export class WebAudioPlayer {
 	set currentTime (seconds) {
 		if (typeof seconds != 'number') throw new Error('currentTime only accepts a number');
 		if (this.currentlyPlaying == null || this.playing == false) throw new Error('Cannot set time of track that isn\'t playing');
-
+		this._currentTime = seconds;
 		this.play(this.currentlyPlaying, seconds);
 	}
 }

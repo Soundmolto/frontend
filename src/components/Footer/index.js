@@ -97,6 +97,8 @@ export default class Footer extends Component {
 				track: currently_playing.track,
 				owner
 			});
+
+			this.audioPlayer.pause();
 		}
 	}
 

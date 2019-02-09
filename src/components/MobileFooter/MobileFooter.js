@@ -165,10 +165,10 @@ export class MobileFooter extends Component {
 	}
 
 	onMouseMove = e => {
+		if (this.desktopTrackbar === null) return;
 		const { currently_playing, dispatch } = this.props;
 		const touch = e.targetTouches[0];
 		const duration = (currently_playing.track && currently_playing.track.duration) || 0;
-		if (this.desktopTrackbar === null) return;
 		const trackbarWidth = this.desktopTrackbar.clientWidth;
 		const positionInPage = parseInt(touch.screenX);
 		const rect = this.desktopTrackbar.getBoundingClientRect();
@@ -218,6 +218,7 @@ export class MobileFooter extends Component {
 		repeatEnabled,
 		shuffleEnabled
 	}, { activeTabIndex }) {
+		const position = this.tracks[currently_playing.track.id] || currently_playing.position;
 		let amount = 0;
 		let duration = 0;
 		let parentWidth = 1;
@@ -232,6 +233,11 @@ export class MobileFooter extends Component {
 		if (this.thumb != null) {
 			parentWidth = this.thumb.parentElement.clientWidth;
 		}
+
+		console.log(
+			amount,
+			seconds_to_time(amount).rendered
+		)
 
 		return (
 			<div class={styles.mobile}>
@@ -306,7 +312,7 @@ export class MobileFooter extends Component {
 							<div>
 								<p class={styles.time}>
 									<span ref={e => (this.amount_el = e)}>
-										{amount != null && seconds_to_time(amount).rendered}
+										{position != null && seconds_to_time(position).rendered}
 									</span>
 									<span>
 										{this.__currentTime != null && seconds_to_time(this.__currentTime).rendered}
