@@ -85,11 +85,13 @@ export class TrackListItem extends Component {
 		return trackArtwork || userAvatar || Goku;
 	}
 
-	render ({ track, showArtwork, showExtraStats }, { playing, opacity }) {
+	render ({ track, showArtwork, showExtraStats, currently_playing }, { playing, opacity }) {
 		this.massageState();
 		track.user = track.user || { url: '' };
 
-		return (
+		
+
+		return window.innerWidth >= 768 ? (
 			<List.Item class={styles['list-item']}>
 				{showArtwork === true && (
 					<img src={this.getArtwork(track, this.props.user)} class={styles.image} />
@@ -102,21 +104,21 @@ export class TrackListItem extends Component {
 				<List.TextContainer class={styles.container}>
 					<LayoutGrid class={styles.grid}>
 						<LayoutGrid.Inner class={styles['grid-inner']}>
-							<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="4">
+							<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="6">
 								<List.PrimaryText>
 									<a href={`/${track.user.url}/${track.url}`} class={styles.link}>
 										{track.name}
 									</a>
 								</List.PrimaryText>
 							</LayoutGrid.Cell>
-							<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="4">
+							<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="6">
 								<List.PrimaryText>
 								<a href={`/${track.user.url}`} class={styles.link}>
 										{track.user.displayName}
 									</a>
 								</List.PrimaryText>
 							</LayoutGrid.Cell>
-							<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="4">
+							<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="6">
 								<List.SecondaryText className={styles.timeContainer}>
 									<p class={styles.time}>
 										{seconds_to_time(track.duration).rendered}
@@ -148,6 +150,40 @@ export class TrackListItem extends Component {
 							onRemoveTrackFromCollection={this.removeTrackFromCollection.bind(this)}
 							className={styles.trackCollectionIndicator}
 						/>
+					</List.ItemMeta>
+				)}
+			</List.Item>
+		) : (
+			<List.Item class={styles['list-item']}>
+				{showArtwork === true && (
+					<img src={this.getArtwork(track, this.props.user)} class={styles.image} />
+				)}
+				<List.TextContainer class={styles.container}>
+					<LayoutGrid class={styles.grid}>
+						<LayoutGrid.Inner class={styles['grid-inner']}>
+							<LayoutGrid.Cell desktopCols="12" tabletCols="12" phoneCols="12" onClick={this.onStartPlay.bind(this)}>
+								<List.PrimaryText>
+									<p class={`${styles.mobileTrackDetails} ${currently_playing.track.id === track.id ? styles.active : ''}`}>
+										<span class={styles.track}>{track.name}</span> <br />
+										<span class={styles.artist}>{track.user.displayName}</span>
+									</p>
+								</List.PrimaryText>
+							</LayoutGrid.Cell>
+						</LayoutGrid.Inner>
+					</LayoutGrid>
+				</List.TextContainer>
+				{this.props.onRemoveItem != null && (
+					<List.ItemMeta>
+						<Icon style={{ 'margin-right': 10, opacity }}>cloud_download</Icon>
+						<Icon class={styles.hover} onMouseOver={this.mouseOver.bind(this)} onMouseOut={this.mouseOut.bind(this)}
+							onMouseEnter={this.mouseOver.bind(this)} onMouseLeave={this.mouseOut.bind(this)} onClick={this.onClick.bind(this)}>
+							{this.state.icon}
+						</Icon>
+					</List.ItemMeta>
+				)}
+				{showExtraStats == true && (
+					<List.ItemMeta class={styles.itemMeta}>
+						<Icon>menu</Icon>
 					</List.ItemMeta>
 				)}
 			</List.Item>

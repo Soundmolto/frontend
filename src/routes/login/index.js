@@ -108,6 +108,7 @@ export default class Login extends Component {
 							key="login-email"
 							value={this.__state.email}
 							onFocus={this.onFocus}
+							id="email"
 						/>
 						<TextField
 							name="login_password"
@@ -118,6 +119,7 @@ export default class Login extends Component {
 							key="login-password"
 							value={this.__state.password}
 							onFocus={this.onFocus}
+							id="password"
 						/>
 						<div className={style.buttonContainer}>
 							<Button raised onClick={this.onLogin.bind(this)} type="submit" class={style.button}>

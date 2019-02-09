@@ -99,59 +99,61 @@ export default class TrackCollection extends Component {
 				</div>
 				<div class={styles.home}>
 					<List>
-						<List.Item class={styles['list-item']}>
-							<div style={{ width: '100px' }}></div>
-							<List.ItemGraphic class={styles.hover}>
-								<Icon></Icon>
-							</List.ItemGraphic>
-							<List.TextContainer class={styles.container}>
-								<LayoutGrid class={styles.grid}>
-									<LayoutGrid.Inner class={styles['grid-inner']}>
-										<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="4">
-											<List.PrimaryText>
-												<span onClick={this.onClickSortByTrack.bind(this)} class={`${styles.hover} ${styles.centered}`}>
-													Track
-													{sortBy === 'track' && (
+						{window.innerWidth >= 768 && (
+							<List.Item class={styles['list-item']}>
+								<div style={{ width: '100px' }}></div>
+								<List.ItemGraphic class={styles.hover}>
+									<Icon></Icon>
+								</List.ItemGraphic>
+								<List.TextContainer class={styles.container}>
+									<LayoutGrid class={styles.grid}>
+										<LayoutGrid.Inner class={styles['grid-inner']}>
+											<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="4">
+												<List.PrimaryText>
+													<span onClick={this.onClickSortByTrack.bind(this)} class={`${styles.hover} ${styles.centered}`}>
+														Track
+														{sortBy === 'track' && (
+															<Icon class={styles.activeSort}>
+																{sortDir === 'desc' && ('keyboard_arrow_down')}
+																{sortDir === 'asc' && ('keyboard_arrow_up')}
+															</Icon>
+														)}
+													</span>
+												</List.PrimaryText>
+											</LayoutGrid.Cell>
+											<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="4">
+												<List.PrimaryText>
+													<span onClick={this.onClickSortByTrack.bind(this)} class={`${styles.hover} ${styles.centered}`}>
+														Artist
+														{sortBy === 'artist' && (
+															<Icon class={styles.activeSort}>
+																{sortDir === 'desc' && ('keyboard_arrow_down')}
+																{sortDir === 'asc' && ('keyboard_arrow_up')}
+															</Icon>
+														)}
+													</span>
+												</List.PrimaryText>
+											</LayoutGrid.Cell>
+											<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="4">
+												<span onClick={this.onClickSortByTime.bind(this)} class={styles.hover}>
+													<Icon>access_time</Icon>
+													{sortBy === 'time' && (
 														<Icon class={styles.activeSort}>
 															{sortDir === 'desc' && ('keyboard_arrow_down')}
 															{sortDir === 'asc' && ('keyboard_arrow_up')}
 														</Icon>
 													)}
 												</span>
-											</List.PrimaryText>
-										</LayoutGrid.Cell>
-										<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="4">
-											<List.PrimaryText>
-												<span onClick={this.onClickSortByTrack.bind(this)} class={`${styles.hover} ${styles.centered}`}>
-													Artist
-													{sortBy === 'artist' && (
-														<Icon class={styles.activeSort}>
-															{sortDir === 'desc' && ('keyboard_arrow_down')}
-															{sortDir === 'asc' && ('keyboard_arrow_up')}
-														</Icon>
-													)}
-												</span>
-											</List.PrimaryText>
-										</LayoutGrid.Cell>
-										<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="4">
-											<span onClick={this.onClickSortByTime.bind(this)} class={styles.hover}>
-												<Icon>access_time</Icon>
-												{sortBy === 'time' && (
-													<Icon class={styles.activeSort}>
-														{sortDir === 'desc' && ('keyboard_arrow_down')}
-														{sortDir === 'asc' && ('keyboard_arrow_up')}
-													</Icon>
-												)}
-											</span>
-										</LayoutGrid.Cell>
-									</LayoutGrid.Inner>
-								</LayoutGrid>
-							</List.TextContainer>
-							<List.ItemMeta>
-								<Icon style={{ 'margin-right': 10, opacity: 0 }}>cloud_download</Icon>
-								<Icon style={{ opacity: 0 }}>check</Icon>
-							</List.ItemMeta>
-						</List.Item>
+											</LayoutGrid.Cell>
+										</LayoutGrid.Inner>
+									</LayoutGrid>
+								</List.TextContainer>
+								<List.ItemMeta>
+									<Icon style={{ 'margin-right': 10, opacity: 0 }}>cloud_download</Icon>
+									<Icon style={{ opacity: 0 }}>check</Icon>
+								</List.ItemMeta>
+							</List.Item>
+						)}
 						{this.sorted.length >= 1 && this.sorted.map(track => (
 							<TrackListItem
 								onClick={this.onStartPlay.bind(this)}

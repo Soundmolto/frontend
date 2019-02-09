@@ -56,3 +56,9 @@
 		border-radius: 0 !important;
 	}
 }
+
+@media screen and (max-width: 768px) {
+	.tabContainer {
+		padding: 20px 10px;
+	}
+}

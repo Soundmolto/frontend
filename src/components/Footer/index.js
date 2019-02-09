@@ -61,6 +61,7 @@ export default class Footer extends Component {
 		this.thumb.setAttribute('style', `transform: translateX(${pos / duration * this.thumb.parentElement.clientWidth}px)`);
 		this.amount_el.textContent = this.__currentTime;
 		this.tracks[this.props.currently_playing.track.id] = pos;
+		this.mobileFooter._component.onPosChange();
 	}
 
 	calculate_amount = (currently_playing) => {
@@ -100,14 +101,16 @@ export default class Footer extends Component {
 		const { currently_playing, dispatch } = this.props;
 		if (this.isCurrentlyPlayingNotEmpty(currently_playing)) {
 			const next = this.queue.next();
-			const owner = { profile: next.user || next.owner };
-
-			playing_now(dispatch, {
-				playing: true,
-				position: 0,
-				track: next,
-				owner
-			});
+			if (next) {
+				const owner = { profile: next.track.user || next.user || next.owner };
+	
+				playing_now(dispatch, {
+					playing: true,
+					position: 0,
+					track: next,
+					owner
+				});
+			}
 		}
 	}
 
@@ -148,8 +151,8 @@ export default class Footer extends Component {
 				audioPlayer = window.document.querySelector('audio');
 			}
 
-			audioPlayer.addEventListener('ended', e => {
-				const owner = { profile: currently_playing.user || currently_playing.owner };
+			audioPlayer.addEventListener('ended', () => {
+				const owner = { profile: currently_playing.track.owner || currently_playing.owner };
 				this.tracks[currently_playing.track.id] = 0;
 				playing_now(dispatch, { playing: false, position, track: currently_playing.track, owner });
 				requestAnimationFrame(_ => {
@@ -163,7 +166,7 @@ export default class Footer extends Component {
 					} else {
 						playing_now(dispatch, { playing: false, position, track: currently_playing.track, owner });
 					}
-				})
+				});
 			});
 		}
 
@@ -183,9 +186,6 @@ export default class Footer extends Component {
 	componentDidUpdate () {
 		const { currently_playing } = this.props;
 		let { audioPlayer } = this;
-		if (audioPlayer == null && window.document.querySelector('audio') != null) {
-			audioPlayer = window.document.querySelector('audio');
-		}
 
 		if (currently_playing.playing === true) {
 			if (currently_playing.position != null && currently_playing.position < this.tracks[currently_playing.track.id]) {
@@ -195,13 +195,15 @@ export default class Footer extends Component {
 			requestAnimationFrame(_ => {
 				const updatedTime = this.tracks[currently_playing.track.id] || currently_playing.position || 0;
 
-				if (audioPlayer.src !== currently_playing.track.stream_url) {
-					audioPlayer.src = `${currently_playing.track.stream_url}${(this.props.user && this.props.user.id) ? `?user=${this.props.user.id}` : ''}`;
+				if (audioPlayer.src !== `${currently_playing.track.stream_url}${(this.props.user && this.props.user.id) ? `?user=${this.props.user.id}` : ''}`) {
+					return audioPlayer.play(`${currently_playing.track.stream_url}${(this.props.user && this.props.user.id) ? `?user=${this.props.user.id}` : ''}`);
 				}
 
 				if (audioPlayer.currentTime !== updatedTime || audioPlayer.paused === true) {
-					audioPlayer.play();
-					audioPlayer.currentTime = updatedTime;
+					audioPlayer.play(
+						`${currently_playing.track.stream_url}${(this.props.user && this.props.user.id) ? `?user=${this.props.user.id}` : ''}`,
+						updatedTime
+					);
 				}
 			});
 		} else {
@@ -215,10 +217,6 @@ export default class Footer extends Component {
 	componentWillUpdate (nextProps) {
 		let { audioPlayer } = this;
 		const currently_playing = nextProps.currently_playing || this.props.currently_playing;
-		
-		if (audioPlayer == null && window.document.querySelector('audio') != null) {
-			audioPlayer = window.document.querySelector('audio');
-		}
 
 		if (currently_playing.track && audioPlayer.currentTime > this.tracks[currently_playing.track.id]) {
 			this.tracks[currently_playing.track.id] = audioPlayer.currentTime;
@@ -383,6 +381,8 @@ export default class Footer extends Component {
 					shuffle={this.shuffle.bind(this)}
 					shuffleEnabled={this.state.shuffled}
 					repeatEnabled={this.state.repeat}
+					audioPlayer={this.audioPlayer}
+					ref={e => (this.mobileFooter = e)}
 				/>
 				<div class={styles.notMobile}>
 					<QueuePanel ref={this.queuePanelRef} queue={this.queue} getArtwork={this.getArtwork} currently_playing={currently_playing} />

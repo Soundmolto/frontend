@@ -44,41 +44,44 @@ export const TracksContainer = ({ tracks, shouldRenderWaveform, onStartPlay, vie
 			{shouldRenderWaveform ?
 				tracks.map(track => renderTrackCard(track, viewedUser, user, onStartPlay, onDelete, onReportTrack, onShareTrack)) : (
 				<List class={style.listContainer}>
-					<List.Item class={style['list-item']}>
-						<div style={{ width: '100px' }}></div>
-						<List.ItemGraphic class={style.hover}>
-							<Icon></Icon>
-						</List.ItemGraphic>
-						<List.TextContainer class={style.container}>
-							<LayoutGrid class={style.grid}>
-								<LayoutGrid.Inner class={style['grid-inner']}>
-									<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="4">
-										<List.PrimaryText class={style.fixHeight}>
-											<span class={style.centered}>
-												Track
+					{window.innerWidth >= 768 && (
+						<List.Item class={style['list-item']}>
+							<div style={{ width: '100px' }}></div>
+							<List.ItemGraphic class={style.hover}>
+								<Icon></Icon>
+							</List.ItemGraphic>
+							<List.TextContainer class={style.container}>
+								<LayoutGrid class={style.grid}>
+									<LayoutGrid.Inner class={style['grid-inner']}>
+										<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="4">
+											<List.PrimaryText class={style.fixHeight}>
+												<span class={style.centered}>
+													Track
+												</span>
+											</List.PrimaryText>
+										</LayoutGrid.Cell>
+										<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="4">
+											<List.PrimaryText class={style.fixHeight}>
+												<span class={style.centered}>
+													Artist
+												</span>
+											</List.PrimaryText>
+										</LayoutGrid.Cell>
+										<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="4">
+											<span>
+												<Icon>access_time</Icon>
 											</span>
-										</List.PrimaryText>
-									</LayoutGrid.Cell>
-									<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="4">
-										<List.PrimaryText class={style.fixHeight}>
-											<span class={style.centered}>
-												Artist
-											</span>
-										</List.PrimaryText>
-									</LayoutGrid.Cell>
-									<LayoutGrid.Cell desktopCols="4" tabletCols="4" phoneCols="4">
-										<span>
-											<Icon>access_time</Icon>
-										</span>
-									</LayoutGrid.Cell>
-								</LayoutGrid.Inner>
-							</LayoutGrid>
-						</List.TextContainer>
-						<List.ItemMeta>
-							<Icon style={{ 'margin-right': 10, opacity: 0 }}>cloud_download</Icon>
-							<Icon style={{ opacity: 0 }}>check</Icon>
-						</List.ItemMeta>
-					</List.Item>
+										</LayoutGrid.Cell>
+									</LayoutGrid.Inner>
+								</LayoutGrid>
+							</List.TextContainer>
+							<List.ItemMeta>
+								<Icon style={{ 'margin-right': 10, opacity: 0 }}>cloud_download</Icon>
+								<Icon style={{ opacity: 0 }}>check</Icon>
+							</List.ItemMeta>
+						</List.Item>
+					)}
+					
 					{tracks.map(track => renderTrackListItem(track, onStartPlay, onDelete, onReportTrack, onShareTrack))}
 				</List>)
 			}

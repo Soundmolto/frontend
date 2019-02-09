@@ -136,7 +136,8 @@
 
 .player {
 	display: block;
-	height: calc(100% - 55px);
+	height: calc(100% - 54px);
+	overflow: hidden;
 }
 
 .player .start, .player .end {
@@ -146,6 +147,14 @@
 .player .content {
 	display: block;
 	text-align: center;
+	height: calc(100% - 54px);
+}
+
+.player .content .flex {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 100%;
 }
 
 .player .content .top p {

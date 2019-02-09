@@ -94,3 +94,34 @@
 .timeContainer p {
 	margin: 0;
 }
+
+@media screen and (max-width: 768px) {
+	.image {
+		width: 48px;
+	}
+
+	.grid-inner, .grid-inner > div {
+		padding: 0;
+	}
+
+	.grid-inner span::before {
+		display: none !important;
+	}
+
+	.grid-inner > div > span {
+		display: flex;
+		flex-direction: column;
+		align-content: center;
+	}
+
+	.mobileTrackDetails {
+		margin: 0;
+		font-size: 0.85rem;
+		font-weight: 400;
+	}
+
+	.active .track, .active .artist {
+		font-weight: 500;
+		color: var(--mdc-theme-secondary);
+	}
+}

@@ -11,6 +11,8 @@ import { SEARCH } from "../../enums/search";
 import { seconds_to_time } from "../../utils/seconds-to-time";
 import { playing_now } from '../../actions/track';
 import Goku from '../../assets/goku.png';
+import { LikeIndicator } from "../LikeIndicator";
+import { TrackCollectionIndicator } from "../TrackCollectionIndicator";
 
 @connect(({ auth, currently_playing, user }) => ({ auth, currently_playing, user }))
 export class MobileFooter extends Component {
@@ -52,8 +54,6 @@ export class MobileFooter extends Component {
 
 		this.setState({ activeTabIndex });
 
-		audioPlayer.addEventListener('timeupdate', this.onPosChange);
-
 		window.document.addEventListener('url-change', () => {
 			let activeTabIndex = 0;
 			if (getCurrentUrl() === '/search') activeTabIndex = 1;
@@ -61,30 +61,30 @@ export class MobileFooter extends Component {
 			if (getCurrentUrl() === '/login' && !this.props.auth.logged_in) activeTabIndex = 2;
 
 			this.setState({ activeTabIndex });
+
+			this._hidePlayer();
 		});
 	}
 
 	componentDidUpdate () {
 		const { currently_playing } = this.props;
 		let { audioPlayer } = this;
-		if (audioPlayer == null && window.document.querySelector('audio') != null) {
-			audioPlayer = window.document.querySelector('audio');
-		}
+
 		if (currently_playing.playing === true) {
 			if (currently_playing.position != null && currently_playing.position < this.tracks[currently_playing.track.id]) {
 				this.tracks[currently_playing.track.id] = currently_playing.position;
 			}
-			audioPlayer.addEventListener('timeupdate', this.onPosChange);
+
 			requestAnimationFrame(_ => {
 				const updatedTime = this.tracks[currently_playing.track.id] || currently_playing.position || 0;
+				const url = `${currently_playing.track.stream_url}${(this.props.user && this.props.user.id) ? `?user=${this.props.user.id}` : ''}`
 
-				if (audioPlayer.src !== currently_playing.track.stream_url) {
-					audioPlayer.src = `${currently_playing.track.stream_url}${(this.props.user && this.props.user.id) ? `?user=${this.props.user.id}` : ''}`;
+				if (audioPlayer.src !== url) {
+					return audioPlayer.play(url);
 				}
 
 				if (audioPlayer.currentTime !== updatedTime || audioPlayer.paused === true) {
-					audioPlayer.play();
-					requestAnimationFrame(() => audioPlayer.currentTime = updatedTime)
+					audioPlayer.play(url, updatedTime);
 				}
 			});
 		} else {
@@ -98,10 +98,6 @@ export class MobileFooter extends Component {
 	componentWillUpdate (nextProps) {
 		let { audioPlayer } = this;
 		const currently_playing = nextProps.currently_playing || this.props.currently_playing;
-		
-		if (audioPlayer == null && window.document.querySelector('audio') != null) {
-			audioPlayer = window.document.querySelector('audio');
-		}
 
 		if (currently_playing.track && audioPlayer.currentTime > this.tracks[currently_playing.track.id]) {
 			this.tracks[currently_playing.track.id] = audioPlayer.currentTime;
@@ -114,8 +110,6 @@ export class MobileFooter extends Component {
 		if (currently_playing.position > audioPlayer.currentTime) {
 			this.tracks[currently_playing.track.id] = currently_playing.position;
 		}
-
-		audioPlayer.removeEventListener('timeupdate', this.onPosChange.bind(this));
 	}
 
 	showPlayer = e => {
@@ -168,16 +162,15 @@ export class MobileFooter extends Component {
 		this.thumb.setAttribute('style', `transform: translateX(${pos / duration * this.thumb.parentElement.clientWidth}px)`);
 		this.amount_el.textContent = this.__currentTime;
 		this.tracks[this.props.currently_playing.track.id] = pos;
-		
-
 	}
 
 	onMouseMove = e => {
 		const { currently_playing, dispatch } = this.props;
+		const touch = e.targetTouches[0];
 		const duration = (currently_playing.track && currently_playing.track.duration) || 0;
 		if (this.desktopTrackbar === null) return;
 		const trackbarWidth = this.desktopTrackbar.clientWidth;
-		const positionInPage = parseInt(e.pageX);
+		const positionInPage = parseInt(touch.screenX);
 		const rect = this.desktopTrackbar.getBoundingClientRect();
 		const offset = rect.left;
 		const percentage = (positionInPage - offset) / trackbarWidth;
@@ -192,8 +185,9 @@ export class MobileFooter extends Component {
 	onMouseDown = e => {
 		const { currently_playing, dispatch } = this.props;
 		const duration = (currently_playing.track && currently_playing.track.duration) || 0;
+		const touch = e.targetTouches[0];
 		const trackbarWidth = this.desktopTrackbar.clientWidth;
-		const positionInPage = parseInt(e.pageX);
+		const positionInPage = parseInt(touch.screenX);
 		const rect = this.desktopTrackbar.getBoundingClientRect();
 		const offset = rect.left;
 		const percentage = (positionInPage - offset) / trackbarWidth;
@@ -342,12 +336,14 @@ export class MobileFooter extends Component {
 							</div>
 
 							<div class={`${styles.controls} ${styles.marginTop}`}>
+								<LikeIndicator track={currently_playing.track} />
 								<Button ripple className={`${styles.button} ${repeatEnabled === true && styles.active}`} onClick={repeat}>
 									<Icon style={{ margin: 0 }}>repeat</Icon>
 								</Button>
 								<Button ripple className={`${styles.button} ${shuffleEnabled === true && styles.active}`} onClick={shuffle}>
 									<Icon style={{ margin: 0 }}>shuffle</Icon>
 								</Button>
+								<TrackCollectionIndicator track={currently_playing.track} />
 							</div>
 						</div>
 					</div>

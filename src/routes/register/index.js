@@ -1,19 +1,20 @@
 import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
-import Card from 'preact-material-components/Card';
+import Checkbox from 'preact-material-components/Checkbox';
 import TextField from 'preact-material-components/TextField';
 import Button from 'preact-material-components/Button';
 import LinearProgress from 'preact-material-components/LinearProgress';
-import 'preact-material-components/LinearProgress/style.css';
 import { begin_register, register } from '../../actions/register';
 import { route } from 'preact-router';
-import 'preact-material-components/Card/style.css';
+import 'preact-material-components/LinearProgress/style.css';
+import 'preact-material-components/Checkbox/style.css';
 import 'preact-material-components/Button/style.css';
 import 'preact-material-components/TextField/style.css';
 import style from './style';
 import Helmet from 'preact-helmet';
 import { APP } from '../../enums/app';
 import { generateTwitterCard } from '../../utils/generateTwitterCard';
+import Formfield from 'preact-material-components/FormField';
 
 // State outside of the component.
 let _state = {};
@@ -58,6 +59,7 @@ export default class Login extends Component {
 	 * @param {Event} e - The submit event.
 	 */
 	async onRegister (e) {
+		if (e.target.disabled) return;
 		e.preventDefault();
 		const { dispatch } = this.props;
 		if (this.validate()) {
@@ -90,8 +92,24 @@ export default class Login extends Component {
 		return true;
 	}
 
+	onChangeTermsOfUse = e => {
+		const checked = e.target.checked;
+
+		this.setState({ acceptedTerms: checked });
+	}
+
+	routeTo = (e, url) => {
+		e.preventDefault();
+		route(url);
+	}
+
 	render ({ loading, logged_in, error, errorMessage }, state) {
 		if (logged_in === true) route("/", true);
+		let otherProps = {};
+
+		if (!state.acceptedTerms) {
+			otherProps.disabled = true;
+		}
 
 		return (
 			<div class="register">
@@ -110,10 +128,16 @@ export default class Login extends Component {
 				</div>
 				<div class={style.home}>
 					<form class={style.cardBody} onSubmit={this.onRegister.bind(this)} key={"registration-form"}>
-						<TextField label="Enter your email address" type="email" autofocus onChange={this.onEmailChange.bind(this)} key="registration-email" />
-						<TextField type="password" label="Enter a password" onChange={this.onPasswordChange.bind(this)} key="registration-password" />
+						<TextField label="Enter your email address" type="email" autofocus onChange={this.onEmailChange.bind(this)} key="registration-email" name="email" id="email" />
+						<TextField type="password" label="Enter a password" onChange={this.onPasswordChange.bind(this)} key="registration-password" name="password" id="password" />
+						<Formfield>
+							<Checkbox id="terms-conditions" label="I accept the terms of use" onChange={this.onChangeTermsOfUse} />
+							<label for="terms-conditions">
+								I agree to the <a target="_blank" href='/terms-of-use' onClick={e => this.routeTo(e, '/terms-of-use')}>Terms of use</a> and <a target="_blank" href='/privacy-policy' onClick={e => this.routeTo(e, '/privacy-policy')}>Privacy policy</a>
+							</label>
+						</Formfield>
 						<div className={style.buttonContainer}>
-							<Button raised onClick={this.onRegister.bind(this)} type="submit" class={style.button}>
+							<Button raised onClick={this.onRegister.bind(this)} type="submit" class={style.button} {...otherProps}>
 								{!logged_in && !loading && "Register"}
 								{!logged_in && loading && <LinearProgress reversed={true} indeterminate={true} />}
 							</Button>

@@ -106,7 +106,7 @@ a.flex, .userContainer > div a {
 .headerTitle {
     position: sticky;
     top: 0;
-    background: #111;
+    background: var(--mdc-theme-background);
     margin: 0;
     padding: 10px;
 }
@@ -161,4 +161,10 @@ a.flex, .userContainer > div a {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: pre;
+}
+
+@media screen and (max-width: 768px) {
+    .list {
+        min-height: 200px;
+    }
 }

@@ -18,6 +18,7 @@ import { QueueController } from '../QueueController';
 import Following from '../../routes/artists';
 import Stats from '../../routes/stats';
 import PrivacyPolicy from '../../routes/privacy-policy';
+import { WebAudioPlayer } from '../WebAudioPlayer/WebAudioPlayer';
 
 let onRender = (UI) => {};
 let MainAudioContext;
@@ -60,11 +61,14 @@ if (typeof window !== "undefined") {
 
 @connect(state => state)
 export default class App extends Component {
-	
-	audioPlayer = null;
+
 	footer = null;
 	audioContext = MainAudioContext;
-	audioPlayerRef = e => (this.audioPlayer = e);
+
+	constructor (opts) {
+		super(opts);
+		this.player = new WebAudioPlayer({ audioContext: MainAudioContext });
+	}
 	
 	componentDidMount () {
 		ReactGA.initialize('UA-125828388-1');
@@ -113,8 +117,7 @@ export default class App extends Component {
 						<Stats path="/terms-of-use" className="route-page" />
 					</Router>
 				</div>
-				<audio ref={this.audioPlayerRef} />
-				<Footer ref={e => (this.footer = e)} audioContext={this.audioContext} queue={queue} audioPlayer={this.audioPlayer} />
+				<Footer ref={e => (this.footer = e)} audioContext={this.audioContext} queue={queue} audioPlayer={this.player} />
 			</div>
 		);
 	}

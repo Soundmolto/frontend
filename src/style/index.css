@@ -40,6 +40,10 @@
 	/* #b64040 */
 }
 
+.mdc-theme--dark .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate) ~ .mdc-checkbox__background {
+	border-color: var(--mdc-theme-text-primary-on-background);
+}
+
 html, body {
 	min-height: 100vh;
 	height: auto;
@@ -530,9 +534,17 @@ input[disabled] {
 	border-radius: 50px;
 	padding: 10px 30px;
 	background: var(--mdc-search-bg) !important;
+	border: 0;
+	box-shadow: var(--mdc-theme--box-shadow--floating);
 }
 
 .search-modal .mdc-text-field .mdc-line-ripple {
 	display: none !important;
 	background: linear-gradient(to right, var(--mdc-theme-primary) -40%, var(--mdc-theme-complementary-color) 170%) !important;
+}
+
+@media screen and (max-width: 768px) {
+	.search-modal .mdc-dialog__surface {
+		overflow: auto;
+	}
 }
