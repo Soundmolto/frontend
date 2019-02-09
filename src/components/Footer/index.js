@@ -74,12 +74,15 @@ export default class Footer extends Component {
 		const { currently_playing, dispatch } = this.props;
 		if (this.isCurrentlyPlayingNotEmpty(currently_playing)) {
 			const owner = { profile: currently_playing.user || currently_playing.owner };
+			const url = `${currently_playing.track.stream_url}${(this.props.user && this.props.user.id) ? `?user=${this.props.user.id}` : ''}`;
 			playing_now(dispatch, {
 				playing: true,
 				position: currently_playing.position,
 				track: currently_playing.track,
 				owner
 			});
+
+			this.audioPlayer.play(url, currently_playing.position);
 		}
 	}
 
@@ -194,14 +197,15 @@ export default class Footer extends Component {
 			audioPlayer.addEventListener('timeupdate', this.onPosChange.bind(this));
 			requestAnimationFrame(_ => {
 				const updatedTime = this.tracks[currently_playing.track.id] || currently_playing.position || 0;
+				const url = `${currently_playing.track.stream_url}${(this.props.user && this.props.user.id) ? `?user=${this.props.user.id}` : ''}`;
 
-				if (audioPlayer.src !== `${currently_playing.track.stream_url}${(this.props.user && this.props.user.id) ? `?user=${this.props.user.id}` : ''}`) {
-					return audioPlayer.play(`${currently_playing.track.stream_url}${(this.props.user && this.props.user.id) ? `?user=${this.props.user.id}` : ''}`);
+				if (audioPlayer.src !== url) {
+					return audioPlayer.play(url);
 				}
 
 				if (audioPlayer.currentTime !== updatedTime || audioPlayer.paused === true) {
 					audioPlayer.play(
-						`${currently_playing.track.stream_url}${(this.props.user && this.props.user.id) ? `?user=${this.props.user.id}` : ''}`,
+						url,
 						updatedTime
 					);
 				}
