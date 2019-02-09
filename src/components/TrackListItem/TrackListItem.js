@@ -142,6 +142,7 @@ export class TrackListItem extends Component {
 						<LikeIndicator
 							track={track}
 							className={styles.likeContainer}
+							showAmount={false}
 						/>
 						<TrackCollectionIndicator
 							track={track}

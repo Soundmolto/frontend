@@ -349,7 +349,7 @@ export class MobileFooter extends Component {
 							</div>
 
 							<div class={`${styles.controls} ${styles.marginTop}`}>
-								<LikeIndicator track={currently_playing.track || {}} />
+								<LikeIndicator track={currently_playing.track || {}} showAmount={false} />
 								<Button ripple className={`${styles.button} ${repeatEnabled === true && styles.active}`} onClick={repeat}>
 									<Icon style={{ margin: 0 }}>repeat</Icon>
 								</Button>

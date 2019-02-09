@@ -24,7 +24,7 @@ export class LikeIndicator extends Component {
 		})
 	}
 
-	render ({ track, user, className, iconLast, showIcon }, { amountOfLikes }) {
+	render ({ track, user, className, iconLast, showAmount = true }, { amountOfLikes }) {
 		const userLikesTrack = user.likes && user.likes.filter(like => like.id === track.id).length != 0;
 		const toggleOnIcon = { content: "favorite", label: "Remove From Favorites" };
 		const toggleOffIcon = { content: "favorite_border", label: "Add to Favorites" };
@@ -32,7 +32,7 @@ export class LikeIndicator extends Component {
 
 		return (
 			<div class={className}>
-				{iconLast && showIcon ? likes : ''}
+				{iconLast && showAmount ? likes : ''}
 				<IconToggle
 					role="button"
 					tabindex="0"
@@ -44,7 +44,7 @@ export class LikeIndicator extends Component {
 				>
 					{userLikesTrack ? "favorite" : "favorite_border"}
 				</IconToggle>
-				{!iconLast && showIcon ? likes : ''}
+				{!iconLast && showAmount ? likes : ''}
 			</div>
 		);
 	}

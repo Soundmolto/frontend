@@ -80,13 +80,7 @@ export class WebAudioPlayer {
 		this.duration = buffer.duration;
 		this.source.connect(this.audioContext.destination);
 		this.source.start(0, offset);
-		if (this.events.timeupdate) {
-			new CustomEvent('webAudioPlayerTimeUpdate', { detail: 0 })
-		} else {
-			window.document.dispatchEvent(
-				new CustomEvent('webAudioPlayerTimeUpdate', { detail: 0 })
-			);
-		}
+		this._dispatchUpdate(0);
 		this.playing = true;
 		this.stopped = false;
 
