@@ -15,6 +15,8 @@ import Helmet from 'preact-helmet';
 import { APP } from '../../enums/app';
 import { generateTwitterCard } from '../../utils/generateTwitterCard';
 import Formfield from 'preact-material-components/FormField';
+import { facebookConfig } from '../../config/facebook';
+import { facebook_login } from '../../actions/login';
 
 // State outside of the component.
 let _state = {};
@@ -27,8 +29,38 @@ export default class Login extends Component {
 
 	state = {
 		error: false,
-		errorMessage: ''
+		errorMessage: '',
+		allowFacebook: false
 	};
+
+	componentDidUpdate () {
+		if (this.state.allowFacebook) {
+			window.fbAsyncInit = () => {
+				FB.init(facebookConfig);
+				const fields = 'first_name,last_name,email,picture';
+
+				FB.Event.subscribe('auth.login', response => {
+					if (response.status === "connected") {
+						FB.api('/me', { fields }, response => this.loginWithFacebook(response));
+					}
+				});
+
+				FB.getLoginStatus(response => {
+					if (response.status === "connected") {
+						FB.api('/me', { fields }, response => this.loginWithFacebook(response));
+					}
+				});
+			};
+
+			(function(d, s, id){
+				var js, fjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id)) {return;}
+				js = d.createElement(s); js.id = id;
+				js.src = "https://connect.facebook.net/en_US/sdk.js";
+				fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));
+		}
+	}
 
 	validate () {
 		let valid = true;
@@ -103,6 +135,15 @@ export default class Login extends Component {
 		route(url);
 	}
 
+	loginWithFacebook (profile) {
+		const { dispatch } = this.props;
+		/** This will update our state to indicate we've either logged in or failed login */
+		facebook_login(profile, dispatch, _ => {
+			this.__state = {};
+			this.setState({ allowFacebook: false });
+		});
+	}
+
 	render ({ loading, logged_in, error, errorMessage }, state) {
 		if (logged_in === true) route("/", true);
 		let otherProps = {};
@@ -144,6 +185,36 @@ export default class Login extends Component {
 							{error && errorMessage != null && <div className="error-message">{errorMessage}</div>}
 							{state.error && state.errorMessage != null && <div className="error-message">{state.errorMessage}</div>}
 						</div>
+
+						<div class={style['line-center-container']}>
+							<span class={style['line-center']}>OR</span>
+						</div>
+
+						{state.allowFacebook ? (
+							<div id="spinner" class={style.fbLoader}>
+								<div
+									class={`fb-login-button ${style.fbButton}`}
+									data-max-rows="1"
+									data-size="large"
+									data-button-type="login_with"
+									data-auto-logout-link="true"
+									scope="public_profile,email"
+								></div>
+							</div>
+						) : (
+							<div class={style.facebookButton} onClick={() => this.setState({ allowFacebook: true })}>
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 216 216" class="_5h0m" color="#FFFFFF">
+									<path fill="#FFFFFF" d="
+										M204.1 0H11.9C5.3 0 0 5.3 0 11.9v192.2c0 6.6 5.3 11.9 11.9
+										11.9h103.5v-83.6H87.2V99.8h28.1v-24c0-27.9 17-43.1 41.9-43.1
+										11.9 0 22.2.9 25.2 1.3v29.2h-17.3c-13.5 0-16.2 6.4-16.2
+										15.9v20.8h32.3l-4.2 32.6h-28V216h55c6.6 0 11.9-5.3
+										11.9-11.9V11.9C216 5.3 210.7 0 204.1 0z"
+									></path>
+								</svg>
+								Allow Facebook login?
+							</div>
+						)}
 					</form>
 				</div>
 			</div>

@@ -19,6 +19,7 @@ import Following from '../../routes/artists';
 import Stats from '../../routes/stats';
 import PrivacyPolicy from '../../routes/privacy-policy';
 import { WebAudioPlayer } from '../WebAudioPlayer/WebAudioPlayer';
+import { facebookConfig } from '../../config/facebook';
 
 let onRender = (UI) => {};
 let MainAudioContext;
@@ -31,36 +32,6 @@ if (typeof window !== "undefined") {
 		} else {
 			document.body.classList.remove('mdc-theme--dark');
 		}
-
-		window.fbAsyncInit = () => {
-			FB.init({
-				appId: '2449734321920413',
-				cookie: true,
-				xfbml: true,
-				version: 'v3.2'
-			});
-
-			FB.AppEvents.logPageView();
-
-			FB.getLoginStatus(response => {
-				if (response.status === "connected") {
-					FB.api('/me', {fields: 'first_name,last_name,email'}, function(response) {
-						console.log(response);
-					});
-				}
-			});
-
-			const event = new Event('fb-loaded');
-			window.document.dispatchEvent(event);
-		};
-		
-		(function(d, s, id){
-			var js, fjs = d.getElementsByTagName(s)[0];
-			if (d.getElementById(id)) {return;}
-			js = d.createElement(s); js.id = id;
-			js.src = "https://connect.facebook.net/en_US/sdk.js";
-			fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
 	};
 	
 

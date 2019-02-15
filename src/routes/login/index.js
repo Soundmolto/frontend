@@ -4,7 +4,7 @@ import TextField from 'preact-material-components/TextField';
 import Button from 'preact-material-components/Button';
 import LinearProgress from 'preact-material-components/LinearProgress';
 import 'preact-material-components/LinearProgress/style.css';
-import { begin_login, login } from '../../actions/login';
+import { begin_login, login, facebook_login } from '../../actions/login';
 import { route } from 'preact-router';
 import 'preact-material-components/Card/style.css';
 import 'preact-material-components/Button/style.css';
@@ -13,6 +13,7 @@ import style from './style';
 import Helmet from 'preact-helmet';
 import { APP } from '../../enums/app';
 import { generateTwitterCard } from '../../utils/generateTwitterCard';
+import { facebookConfig } from '../../config/facebook';
 
 let hasFocused = false;
 
@@ -22,15 +23,36 @@ let hasFocused = false;
 @connect(({ auth }) => auth)
 export default class Login extends Component {
 
-	__state = { email: '', password: '', allowFacebook: false };
+	__state = { email: '', password: '' };
+	state = { allowFacebook: false };
 
 	componentDidUpdate () {
-		FB.init({
-			appId: '2449734321920413',
-			cookie: true,
-			xfbml: true,
-			version: 'v3.2'
-		});
+		if (this.state.allowFacebook) {
+			window.fbAsyncInit = () => {
+				FB.init(facebookConfig);
+				const fields = 'first_name,last_name,email,picture';
+
+				FB.Event.subscribe('auth.login', response => {
+					if (response.status === "connected") {
+						FB.api('/me', { fields }, response => this.loginWithFacebook(response));
+					}
+				});
+
+				FB.getLoginStatus(response => {
+					if (response.status === "connected") {
+						FB.api('/me', { fields }, response => this.loginWithFacebook(response));
+					}
+				});
+			};
+
+			(function(d, s, id){
+				var js, fjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id)) {return;}
+				js = d.createElement(s); js.id = id;
+				js.src = "https://connect.facebook.net/en_US/sdk.js";
+				fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));
+		}
 	}
 
 	/**
@@ -85,6 +107,15 @@ export default class Login extends Component {
 	onEmailBlur = (e) => {
 		hasFocused = false;
 		this.onEmailChange(e);
+	}
+
+	loginWithFacebook (profile) {
+		const { dispatch } = this.props;
+		/** This will update our state to indicate we've either logged in or failed login */
+		facebook_login(profile, dispatch, _ => {
+			this.__state = {};
+			this.setState({ allowFacebook: false });
+		});
 	}
 
 	render ({ loading, logged_in, error, errorMessage }, { allowFacebook }) {
@@ -151,7 +182,6 @@ export default class Login extends Component {
 									data-button-type="login_with"
 									data-auto-logout-link="true"
 									scope="public_profile,email"
-									// Onlogin is needed.
 								></div>
 							</div>
 						) : (
@@ -165,7 +195,7 @@ export default class Login extends Component {
 										11.9-11.9V11.9C216 5.3 210.7 0 204.1 0z"
 									></path>
 								</svg>
-								Allow Facebook?
+								Allow Facebook login?
 							</div>
 						)}
 					</form>
