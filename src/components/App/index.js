@@ -34,16 +34,24 @@ if (typeof window !== "undefined") {
 
 		window.fbAsyncInit = () => {
 			FB.init({
-			  appId: '2449734321920413',
-			  cookie: true,
-			  xfbml: true,
-			  version: 'v3.2'
+				appId: '2449734321920413',
+				cookie: true,
+				xfbml: true,
+				version: 'v3.2'
 			});
-			  
+
 			FB.AppEvents.logPageView();
 
+			FB.getLoginStatus(response => {
+				if (response.status === "connected") {
+					FB.api('/me', {fields: 'first_name,last_name,email'}, function(response) {
+						console.log(response);
+					});
+				}
+			});
 
-			FB.getLoginStatus(console.log);
+			const event = new Event('fb-loaded');
+			window.document.dispatchEvent(event);
 		};
 		
 		(function(d, s, id){

@@ -54,3 +54,60 @@
 	border-radius: 50px;
 	padding: 10px !important;
 }
+
+.fbLoader {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 auto;
+}
+
+.facebookButton {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 auto;
+	background: #4267b2;
+	border-radius: 5px;
+	color: white;
+	height: 40px;
+	text-align: center;
+	max-width: 250px;
+	width: 100%;
+	cursor: pointer;
+	position: relative;
+	padding-left: 24px;
+}
+
+.facebookButton svg {
+	height: 24px;
+    width: 24px;
+    position: absolute;
+    left: 10px;
+}
+
+.line-center {
+	margin: 0;
+	padding:0 10px;
+	background: var(--mdc-theme-background);
+	color: var(--mdc-theme-text-primary-on-background);
+	display: inline-block;
+	text-transform: capitalize;
+}
+
+.line-center-container {
+	text-align:center;
+	position:relative;
+	z-index:2;
+	margin: 20px 0;
+}
+
+.line-center-container:after{
+	content:"";
+	position:absolute;
+	top:50%;
+	left:0;
+	right:0;
+	border-top: 1px solid var(--mdc-search-bg);
+	z-index:-1;
+}
