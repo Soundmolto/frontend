@@ -18,6 +18,8 @@ import Dialog from 'preact-material-components/Dialog';
 import Snackbar from 'preact-material-components/Snackbar';
 import { finish_editing_track } from '../../actions/editingTrack';
 import { UserPictureName } from '../../components/UserPictureName';
+import TimeAgo from 'timeago-react';
+import dayjs from 'dayjs';
 
 @connect(state => state)
 export default class Track extends Component {
@@ -123,6 +125,10 @@ export default class Track extends Component {
 		const tracks = viewedUser.tracks.sort((first, second) => parseInt(second.createdAt) - parseInt(first.createdAt));
 		this.tracks = [track.track].concat(tracks);
 
+		if (viewedTrack.comments) {
+			viewedTrack.comments = viewedTrack.comments.sort((first, second) => parseInt(second.createdAt) - parseInt(first.createdAt));
+		}
+
 		return (
 			<div class={style.profile}>
 				<Helmet
@@ -185,20 +191,26 @@ export default class Track extends Component {
 								<div class={style.profile_contents}>
 									<h1 class={style.mainHeader} style={{ margin: '0 0 10px 0' }}>
 										Comments
-										<small>1</small>
+										<small>{viewedTrack.comments.length}</small>
 									</h1>
-									<div class={style.customCard}>
-										<div class={style.userPictureComment}>
-											<UserPictureName user={user.profile} linksToProfile={true}>
-												<span class={style.timeago}>10m ago</span>
-											</UserPictureName>
+									{viewedTrack.comments && viewedTrack.comments.map(comment => 
+										<div class={style.customCard}>
+											<div class={style.userPictureComment}>
+												<UserPictureName user={comment.user} linksToProfile={true}>
+													<TimeAgo
+														datetime={dayjs(parseInt(comment.createdAt)).toDate()} 
+														locale='en_AU'
+														className={style.timeago}
+														title={`Posted on ${dayjs(parseInt(comment.createdAt)).format('DD MMMM YYYY')}`}
+													/>
+													{/* <span class={style.timeago}>10m ago</span> */}
+												</UserPictureName>
+											</div>
+											<div class={style.comment}>
+												<blockquote>{comment.comment}</blockquote>
+											</div>
 										</div>
-										<div class={style.comment}>
-											<blockquote>
-												Yea, nice one MATE!
-											</blockquote>
-										</div>
-									</div>
+									)}
 								</div>
 							</LayoutGrid.Cell>
 						</LayoutGrid.Inner>
