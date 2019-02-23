@@ -127,6 +127,8 @@ export default class Track extends Component {
 
 		if (viewedTrack.comments) {
 			viewedTrack.comments = viewedTrack.comments.sort((first, second) => parseInt(second.createdAt) - parseInt(first.createdAt));
+		} else {
+			viewedTrack.comments = [];
 		}
 
 		return (
