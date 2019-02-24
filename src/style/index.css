@@ -57,6 +57,8 @@ html, body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	overflow-x: hidden;
+	scrollbar-color: #666666 #111111;
+  	scrollbar-width: thin;
 }
 
 .mdc-slider:not(.mdc-slider--disabled) .mdc-slider__track-container {

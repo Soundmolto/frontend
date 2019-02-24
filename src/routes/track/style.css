@@ -37,25 +37,6 @@
 	display: block;
 }
 
-.button {
-	position: absolute;
-	background: rgba(0, 0, 0, 0.2) !important;
-	color: #ffffff !important;
-}
-
-@media screen and (min-width: 500px) {
-	.button {
-		right: 28px;
-	}
-}
-
-@media screen and (max-width: 500px) {
-	.button {
-		right: 10px;
-		bottom: 10px;
-	}
-}
-
 @media screen and (min-width: 500px) {
 	.username_custom {
 		max-width: calc(100% - 300px);
@@ -182,4 +163,26 @@
 	.profile_contents {
 		padding: 0;
 	}
+}
+
+.button {
+	width: 100%;
+	margin-top: 10px;
+	background: var(--mdc-theme--card-bg) !important;
+	color: white !important;
+	border-radius: 50px;
+	padding: 10px !important;
+}
+
+.form textarea {
+	width: 100%;
+	margin-top: 10px;
+	background: var(--mdc-theme--card-bg) !important;
+	color: white !important;
+	resize: vertical;
+	min-height: 100px;
+}
+
+.textarea {
+	width: 100%;
 }

@@ -1,0 +1,65 @@
+.profile {
+	min-height: 100%;
+	width: 100%;
+}
+
+.header img {
+	max-width: 64px;
+	height: 64px;
+	margin-right: 10px;
+	border-radius: 100%;
+}
+
+.profile_contents {
+	padding: 0 20px;
+}
+
+.profile_contents h1.mainHeader {
+	font-size: 1.3rem;
+}
+
+.profile_contents [class="mdc-card"] {
+	padding: 20px;
+}
+
+.profile_contents > div {
+	margin: 0;
+}
+
+.profile_contents [class="mdc-card"] h2 {
+	margin-top: 0;
+	font-size: 0.9rem !important;
+}
+
+.profile_contents h1.mainHeader small {
+	margin: 0 0 0 10px;
+	font-size: 0.9rem;
+}
+
+@media screen and (max-width: 839px) {
+	.profile_contents {
+		padding: 0;
+	}
+}
+
+.button {
+	width: 100%;
+	margin-top: 10px;
+	background: var(--mdc-theme--card-bg) !important;
+	color: white !important;
+	border-radius: 50px;
+	padding: 10px !important;
+}
+
+.form textarea {
+	width: 100%;
+	margin-top: 10px;
+	background: var(--mdc-theme--card-bg) !important;
+	color: white !important;
+	resize: vertical;
+	min-height: 100px;
+}
+
+.textarea {
+	width: 100%;
+}

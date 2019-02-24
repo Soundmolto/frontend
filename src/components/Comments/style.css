@@ -1,0 +1,76 @@
+.comments {
+	padding: 0 20px;
+}
+
+.comments h1.mainHeader {
+	font-size: 1.3rem;
+}
+
+.comments [class="mdc-card"] {
+	padding: 20px;
+}
+
+.comments > div {
+	margin: 0;
+}
+
+.comments [class="mdc-card"] h2 {
+	margin-top: 0;
+	font-size: 0.9rem !important;
+}
+
+.userPictureComment {
+	position: relative;
+}
+
+.userPictureComment img {
+	width: 32px;
+	height: 32px;
+	border-radius: 100%;
+}
+
+.userPictureComment h1 {
+	font-size: 1rem;
+	margin: 0 0 0 10px;
+}
+
+.comment > blockquote {
+	background: rgba(0, 0, 0, 0.4);
+	padding: 10px;
+	margin: 10px 0;
+	border-radius: 10px;
+	color: #fff;
+	box-shadow: var(--mdc-theme--box-shadow--floating);
+}
+
+.customCard {
+	padding: 10px;
+}
+
+.timeago {
+	color: #fff;
+	margin: 0 0 0 10px;
+	font-weight: 600;
+	font-size: 0.7rem;
+	display: block;
+	background: rgba(0, 0, 0, 0.4);
+	padding: 10px;
+	border-radius: 10px;
+}
+
+.comments h1.mainHeader small {
+	margin: 0 0 0 10px;
+	font-size: 0.9rem;
+}
+
+@media screen and (max-width: 839px) {
+	.comments {
+		padding: 0;
+	}
+}
+
+.delete {
+	position: absolute;
+	right: 0;
+	z-index: 100;
+}

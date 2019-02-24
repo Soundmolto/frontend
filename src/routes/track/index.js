@@ -17,9 +17,9 @@ import { EditTrack } from '../../components/EditTrack';
 import Dialog from 'preact-material-components/Dialog';
 import Snackbar from 'preact-material-components/Snackbar';
 import { finish_editing_track } from '../../actions/editingTrack';
-import { UserPictureName } from '../../components/UserPictureName';
-import TimeAgo from 'timeago-react';
-import dayjs from 'dayjs';
+import { Comments } from '../../components/Comments/Comments';
+import { CommentForm } from '../../components/CommentForm/CommentForm';
+import { submit_comment, delete_comment } from '../../actions/comment';
 
 @connect(state => state)
 export default class Track extends Component {
@@ -79,8 +79,8 @@ export default class Track extends Component {
 
 	}
 
-	getArtwork (track) {
-		const userAvatar = track && track.user && track.user.profilePicture;
+	getArtwork (track, user) {
+		const userAvatar = user && user.profilePicture;
 		const trackArtwork = track && track.artwork;
 		return trackArtwork || userAvatar || Goku;
 	}
@@ -115,13 +115,23 @@ export default class Track extends Component {
 		this.editTrackPanel.MDComponent.close();
 	}
 
+	submitComment = (comment, done) => {
+		const track = this.props.track.track || {};
+		submit_comment(this.props.dispatch, { id: track.id, token: this.props.auth.token, comment }, done);
+	};
+
+	deleteComment = (comment) => {
+		delete_comment(this.props.dispatch, { id: comment.id, token: this.props.auth.token, track: this.props.track.track });
+	};
+
 	render ({ user, viewedUser, track, editingTrack }) {
-		const viewedTrack = track.track;
-		const trackOwner = track.user;
+		const viewedTrack = track.track || {};
 		if (this.currentUrl !== getCurrentUrl()) this.updateData();
+
 		for (const track of viewedUser.tracks) {
 			track.user = viewedUser.profile;
 		}
+
 		const tracks = viewedUser.tracks.sort((first, second) => parseInt(second.createdAt) - parseInt(first.createdAt));
 		this.tracks = [track.track].concat(tracks);
 
@@ -140,11 +150,11 @@ export default class Track extends Component {
 						site: `${APP.TWITTER_HANDLE}`,
 						title: `${APP.NAME} - ${(viewedTrack && viewedTrack.name) || "Loading..."}`,
 						description: track.description,
-						image: this.getArtwork(track) || `https://app.soundmolto.com/assets/icons/android-chrome-512x512.png`,
+						image: this.getArtwork(viewedTrack, viewedUser.profile) || `https://app.soundmolto.com/assets/icons/android-chrome-512x512.png`,
 					})}
 				/>
 				<div class={"header " + style.header}>
-					<div class={style.background} style={{ 'background-image': `url(${this.getArtwork(viewedTrack)})` }}></div>
+					<div class={style.background} style={{ 'background-image': `url(${this.getArtwork(viewedTrack, viewedUser.profile)})` }}></div>
 					<div class={style.overlay}>
 						<h1>
 							{viewedTrack != null && viewedTrack.id != null && viewedTrack.owner != null && (
@@ -161,7 +171,7 @@ export default class Track extends Component {
 								<div class={style.profile_contents}>
 									<TrackCard
 										track={viewedTrack}
-										user={trackOwner}
+										user={viewedUser}
 										currentUser={user}
 										key={viewedTrack.id}
 										audioContext={this.props.audioContext}
@@ -190,30 +200,16 @@ export default class Track extends Component {
 							</LayoutGrid.Cell>
 
 							<LayoutGrid.Cell desktopCols="12" tabletCols="12" tabletOrder="1">
-								<div class={style.profile_contents}>
-									<h1 class={style.mainHeader} style={{ margin: '0 0 10px 0' }}>
-										Comments
-										<small>{viewedTrack.comments.length}</small>
-									</h1>
-									{viewedTrack.comments && viewedTrack.comments.map(comment => 
-										<div class={style.customCard}>
-											<div class={style.userPictureComment}>
-												<UserPictureName user={comment.user} linksToProfile={true}>
-													<TimeAgo
-														datetime={dayjs(parseInt(comment.createdAt)).toDate()} 
-														locale='en_AU'
-														className={style.timeago}
-														title={`Posted on ${dayjs(parseInt(comment.createdAt)).format('DD MMMM YYYY')}`}
-													/>
-													{/* <span class={style.timeago}>10m ago</span> */}
-												</UserPictureName>
-											</div>
-											<div class={style.comment}>
-												<blockquote>{comment.comment}</blockquote>
-											</div>
-										</div>
-									)}
-								</div>
+								<CommentForm submitComment={this.submitComment} />
+							</LayoutGrid.Cell>
+
+							<LayoutGrid.Cell desktopCols="12" tabletCols="12" tabletOrder="1">
+								<Comments
+									comments={viewedTrack.comments}
+									user={viewedUser}
+									profile={viewedUser.profile}
+									deleteComment={this.deleteComment}
+								/>
 							</LayoutGrid.Cell>
 						</LayoutGrid.Inner>
 					)}

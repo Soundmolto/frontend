@@ -136,7 +136,6 @@ export default class Login extends Component {
 	}
 
 	loginWithFacebook (profile, res) {
-		console.log(res, profile);
 		const { dispatch } = this.props;
 		/** This will update our state to indicate we've either logged in or failed login */
 		facebook_login({

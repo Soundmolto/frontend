@@ -46,7 +46,6 @@ export class TrackCard extends Component {
 	}
 
 	onClickPlayPause = e => {
-		console.log('yeah');
 		e.preventDefault();
 		e.stopImmediatePropagation();
 		e.currentTarget.blur();
@@ -135,7 +134,7 @@ export class TrackCard extends Component {
 		return (
 			<div class={styles.card}>
 				<Card class={styles.cardRoot}>
-					<div class={styles.image} style={{ 'background-image': `url(${this.getArtwork(track, track.user)})` }}>
+					<div class={styles.image} style={{ 'background-image': `url(${this.getArtwork(track, user.profile)})` }}>
 						<Button class={styles['play-button']} onClick={this.onClickPlayPause}>
 							<Icon>
 								{!this.state.playing && 'play_arrow'}
