@@ -57,7 +57,6 @@ export default class Profile extends Component {
 		this.currentUrl = getCurrentUrl();
 
 		if (this.shouldUpdateData) {
-			console.log(this.changeCoverPhotoModal)
 			this.setState({ editingCoverPhoto: false });
 		}
 

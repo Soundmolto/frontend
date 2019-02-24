@@ -14,6 +14,7 @@ import editingTrack from './editingTrack';
 import following from './following';
 import search from './search';
 import analytics from './analytics';
+import notifications from './notifications';
 
 export default combineReducers({
     auth,
@@ -30,5 +31,6 @@ export default combineReducers({
 	editingTrack,
 	following,
 	search,
-	analytics
+	analytics,
+	notifications
 });

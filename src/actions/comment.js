@@ -6,7 +6,6 @@ import store from '../store';
 
 export async function submit_comment (dispatch, { id, token, comment }, done) {
 	let returnObject = {};
-	const state = store.getState();
 
 	try {
 		const data = await fetch(`${API_ENDPOINT}/tracks/${id}/comment`, {
@@ -22,7 +21,7 @@ export async function submit_comment (dispatch, { id, token, comment }, done) {
 		if (data.status === 200) {
 			returnObject = {
 				type: USER.TRACK_UPDATE_SUCCESS,
-				payload: { track: await data.json(), user: state.track.user.profile }
+				payload: await data.json()
 			}
 		} else {
 			throw new Error(data.statusText);

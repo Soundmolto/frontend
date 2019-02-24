@@ -124,12 +124,19 @@ export default class Track extends Component {
 		delete_comment(this.props.dispatch, { id: comment.id, token: this.props.auth.token, track: this.props.track.track });
 	};
 
-	render ({ user, viewedUser, track, editingTrack }) {
+	render ({ auth, user, viewedUser, track, editingTrack }) {
 		const viewedTrack = track.track || {};
+		track.user = track.user || {};
+		const trackOwner = track.user;
+		const profile = trackOwner.profile || {};
 		if (this.currentUrl !== getCurrentUrl()) this.updateData();
 
-		for (const track of viewedUser.tracks) {
-			track.user = viewedUser.profile;
+		if (track != null && trackOwner.tracks != null) {
+			for (const _track of trackOwner.tracks) {
+				if (_track.user != null) {
+					_track.user = profile;
+				}
+			}
 		}
 
 		const tracks = viewedUser.tracks.sort((first, second) => parseInt(second.createdAt) - parseInt(first.createdAt));
@@ -150,11 +157,11 @@ export default class Track extends Component {
 						site: `${APP.TWITTER_HANDLE}`,
 						title: `${APP.NAME} - ${(viewedTrack && viewedTrack.name) || "Loading..."}`,
 						description: track.description,
-						image: this.getArtwork(viewedTrack, viewedUser.profile) || `https://app.soundmolto.com/assets/icons/android-chrome-512x512.png`,
+						image: this.getArtwork(viewedTrack, profile) || `https://app.soundmolto.com/assets/icons/android-chrome-512x512.png`,
 					})}
 				/>
 				<div class={"header " + style.header}>
-					<div class={style.background} style={{ 'background-image': `url(${this.getArtwork(viewedTrack, viewedUser.profile)})` }}></div>
+					<div class={style.background} style={{ 'background-image': `url(${this.getArtwork(viewedTrack, profile)})` }}></div>
 					<div class={style.overlay}>
 						<h1>
 							{viewedTrack != null && viewedTrack.id != null && viewedTrack.owner != null && (
@@ -171,7 +178,7 @@ export default class Track extends Component {
 								<div class={style.profile_contents}>
 									<TrackCard
 										track={viewedTrack}
-										user={viewedUser}
+										user={trackOwner}
 										currentUser={user}
 										key={viewedTrack.id}
 										audioContext={this.props.audioContext}
@@ -199,15 +206,18 @@ export default class Track extends Component {
 								</div>
 							</LayoutGrid.Cell>
 
-							<LayoutGrid.Cell desktopCols="12" tabletCols="12" tabletOrder="1">
-								<CommentForm submitComment={this.submitComment} />
-							</LayoutGrid.Cell>
+							{auth.logged_in && (
+								<LayoutGrid.Cell desktopCols="12" tabletCols="12" tabletOrder="1">
+									<CommentForm submitComment={this.submitComment} />
+								</LayoutGrid.Cell>
+							)}
+
 
 							<LayoutGrid.Cell desktopCols="12" tabletCols="12" tabletOrder="1">
 								<Comments
 									comments={viewedTrack.comments}
-									user={viewedUser}
-									profile={viewedUser.profile}
+									user={user}
+									profile={profile}
 									deleteComment={this.deleteComment}
 								/>
 							</LayoutGrid.Cell>
@@ -235,7 +245,7 @@ export default class Track extends Component {
 						<Dialog.Body>
 							<EditTrack track={editingTrack.track} onSubmit={newTrack => {
 								if (isCurrentTrack === true) {
-									route(`/${track.user.url}/${newTrack.url}`, true);
+									route(`/${profile.url}/${newTrack.url}`, true);
 								}
 							}} />
 						</Dialog.Body>

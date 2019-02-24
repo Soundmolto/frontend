@@ -93,7 +93,7 @@ export class MobileFooter extends Component {
 				if (
 					(
 						currentTime !== _updated &&
-						currentTime + 1 > updated
+						currentTime + 1 > _updated
 					) ||
 					audioPlayer.paused === true) {
 					audioPlayer.play(url, updatedTime);

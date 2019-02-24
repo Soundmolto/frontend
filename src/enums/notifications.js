@@ -1,0 +1,3 @@
+export const NOTIFICATIONS = Object.freeze({
+    GOT_NOTIFICATIONS: "GOT_NOTIFICATIONS"
+})

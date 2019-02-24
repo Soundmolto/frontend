@@ -105,7 +105,7 @@ export class TrackCard extends Component {
 	}
 
 	render ({ track, user, currentUser, currently_playing, isCurrentTrack, settings, onDelete }, { inCollection }) {
-		const userLikesTrack = user.likes && user.likes.filter(like => like.id === track.id).length != 0;
+		const userLikesTrack = user && user.likes && user.likes.filter(like => like.id === track.id).length != 0;
 		const postedAt = dayjs(parseInt(track.createdAt));
 		const toggleOnIcon = { content: "favorite", label: "Remove From Favorites" };
 		const toggleOffIcon = { content: "favorite_border", label: "Add to Favorites" };
@@ -134,7 +134,7 @@ export class TrackCard extends Component {
 		return (
 			<div class={styles.card}>
 				<Card class={styles.cardRoot}>
-					<div class={styles.image} style={{ 'background-image': `url(${this.getArtwork(track, user.profile)})` }}>
+					<div class={styles.image} style={{ 'background-image': `url(${this.getArtwork(track, user && user.profile)})` }}>
 						<Button class={styles['play-button']} onClick={this.onClickPlayPause}>
 							<Icon>
 								{!this.state.playing && 'play_arrow'}
@@ -162,17 +162,17 @@ export class TrackCard extends Component {
 					</span>
 					{isCurrentTrack === true && (
 						<h4 class={styles.displayName}>
-							<a class={styles.link} href={`/${user.profile.url}`}>
-								{user.profile.displayName || user.profile.url || "N/A"}
+							<a class={styles.link} href={`/${user && user.profile.url}`}>
+								{user && user.profile.displayName || user && user.profile.url || "N/A"}
 							</a>
 						</h4>
 					)}
 					{isCurrentTrack == false && (
-						<h4 class={styles.displayName}>{user.profile.displayName || user.profile.url || "N/A"}</h4>
+						<h4 class={styles.displayName}>{user && user.profile.displayName || user && user.profile.url || "N/A"}</h4>
 					)}
 					<h2 class={`mdc-typography--title ${styles.username}`}>
 						{isCurrentTrack == false && (
-							<a class={styles.link} href={`/${user.profile.url}/${track.url}`}>
+							<a class={styles.link} href={`/${user && user.profile.url}/${track.url}`}>
 								{track.name}
 							</a>
 						)}
@@ -226,7 +226,7 @@ export class TrackCard extends Component {
 								</span>
 							</p>
 						</span>
-						{user.profile.id === currentUser.profile.id && (
+						{user && user.profile.id === currentUser.profile.id && (
 							<span>
 								<p class={`${styles.centered} ${styles.actionable}`} style={{ 'float': 'right', 'margin-top': '14px' }} onClick={onDelete}>
 									<Icon style={{ margin: 0 }}>delete</Icon>

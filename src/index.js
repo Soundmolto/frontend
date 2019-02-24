@@ -7,6 +7,8 @@ import App from './components/App';
 import store from './store';
 import { shortcuts } from './shortcuts';
 import './style';
+import { WS_ENDPOINT } from './api';
+import { NOTIFICATIONS } from './enums/notifications';
 
 let attach = null;
 
@@ -34,6 +36,34 @@ class HotKeysHOC extends Component {
 		const _payload = Object.assign({}, state.UI, { settings_open: false, goto_open: false, shortcuts_open: false });
 		store.dispatch({ type: TRACK.PAUSED_TRACK, payload });
 		store.dispatch({ type: SETTINGS.RESET, payload: _payload });
+
+		const ws = new WebSocket(`${WS_ENDPOINT}`);
+
+		ws.addEventListener('message', (event) => {
+			const { token } = store.getState().auth;
+			const message = JSON.parse(event.data);
+
+			switch (message.type) {
+				case "Authorization": {
+					if (message["Authorization-Begin"] === "TokenRequired") {
+						ws.send(
+							JSON.stringify({
+								type: "authentication",
+								token
+							})
+						);
+					}
+					return;
+				}
+
+				case "notifications": {
+					const notifications = message.notifications.sort((first, second) => parseInt(second.createdAt) - parseInt(first.createdAt));
+					console.log(notifications);
+					store.dispatch({ type: NOTIFICATIONS.GOT_NOTIFICATIONS, payload: notifications });
+					return;
+				}
+			}
+		});
 	}
 
 	render ({ children }) {

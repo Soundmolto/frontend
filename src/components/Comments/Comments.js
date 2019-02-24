@@ -16,7 +16,7 @@ export class Comments extends Component {
 		this.props.deleteComment(comment);
 	}
 
-	render ({ comments, profile, user }) {
+	render ({ comments, user }) {
 		return (
 			<div class={style.comments}>
 				<h1 class={style.mainHeader} style={{ margin: '0 0 10px 0' }}>
@@ -26,7 +26,7 @@ export class Comments extends Component {
 				{comments && comments.map(comment => 
 					<div class={style.customCard}>
 						<div class={style.userPictureComment}>
-							<UserPictureName user={profile} linksToProfile={true}>
+							<UserPictureName user={comment.user} linksToProfile={true}>
 								<TimeAgo
 									datetime={dayjs(parseInt(comment.createdAt)).toDate()} 
 									locale='en_AU'

@@ -19,21 +19,19 @@ import Following from '../../routes/artists';
 import Stats from '../../routes/stats';
 import PrivacyPolicy from '../../routes/privacy-policy';
 import { WebAudioPlayer } from '../WebAudioPlayer/WebAudioPlayer';
-import { facebookConfig } from '../../config/facebook';
 
 let onRender = (UI) => {};
 let MainAudioContext;
 const queue = new QueueController();
 
 if (typeof window !== "undefined") {
-	onRender = (UI) => {
+	onRender = (UI, auth) => {
 		if (UI.theme === THEMES.dark) {
 			document.body.classList.add('mdc-theme--dark');
 		} else {
 			document.body.classList.remove('mdc-theme--dark');
 		}
 	};
-	
 
 	MainAudioContext = new (window.AudioContext || window.webkitAudioContext)();
 }
@@ -73,10 +71,10 @@ export default class App extends Component {
 		return this.currentUrl;
 	}
 
-	render ({ UI, store }) {
+	render ({ auth, UI, store }) {
 		const url = this.get_current_route.bind(this);
 
-		onRender(UI);
+		onRender(UI, auth);
 
 		return (
 			<div id="app">
