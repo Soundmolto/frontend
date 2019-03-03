@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import { get_analytics } from '../../actions/analytics';
 import { connect } from 'preact-redux';
+import Helmet from 'preact-helmet';
 import Card from 'preact-material-components/Card';
 import 'preact-material-components/Card/style.css';
 import styles from './style.css'
@@ -17,25 +18,54 @@ export default class Stats extends Component {
 	render ({ auth, analytics }) {
 		if (!auth.logged_in) route('/', true);
 		const listeners = analytics.listeners || [];
-		return (
-			<div class={styles.container}>
-				<Card class={styles.card}>
-					<h3>Total plays</h3>
-					<p>{analytics.totalPlays || 0}</p>
-				</Card>
+		const tracks = analytics.user.tracks || [];
+		let likes = 0;
 
-				<Card class={styles.card}>
-					<h3>Top 10 listeners</h3>
-					{listeners.map(listener =>
-						<UserPictureName
-							user={listener.profile}
-							showUsername={true}
-							show_location={true}
-							class={styles.userPictureName}
-							h1_class={styles.username}
-						/>
-					)}
-				</Card>
+		for (const track of tracks) {
+			likes += track.amountOfLikes;
+		}
+
+		return (
+			<div>
+				<Helmet
+					title={'SoundMolto - Your Stats'}
+				/>
+				<div class='header'>
+					<h1>
+						Your Stats
+					</h1>
+				</div>
+				<div class={styles.container}>
+					<div class={styles.general}>
+						<Card class={`${styles.card} ${styles.plays}`}>
+							<h3>Total plays</h3>
+							<p>{analytics.totalPlays || 0}</p>
+						</Card>
+
+						<Card class={`${styles.card} ${styles.plays}`}>
+							<h3>Total Likes</h3>
+							<p>{likes}</p>
+						</Card>
+
+						<Card class={`${styles.card} ${styles.plays}`}>
+							<h3>Total Followers</h3>
+							<p>{analytics.user.followers.length || 0}</p>
+						</Card>
+					</div>
+
+					<Card class={styles.card}>
+						<h3>Top 10 listeners</h3>
+						{listeners.map(listener =>
+							<UserPictureName
+								user={listener.profile}
+								showUsername={true}
+								show_location={true}
+								class={styles.userPictureName}
+								h1_class={styles.username}
+							/>
+						)}
+					</Card>
+				</div>
 			</div>
 		);
 	}
