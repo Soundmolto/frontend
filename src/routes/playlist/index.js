@@ -3,8 +3,10 @@ import { connect } from 'preact-redux';
 import List from 'preact-material-components/List';
 import Icon from 'preact-material-components/Icon';
 import Button from 'preact-material-components/Button';
+import Menu from 'preact-material-components/Menu';
 import 'preact-material-components/List/style.css';
 import 'preact-material-components/Button/style.css';
+import 'preact-material-components/Menu/style.css';
 import Helmet from 'preact-helmet';
 import styles from './style.css'
 import { get_playlist } from '../../actions/playlist';
@@ -15,6 +17,10 @@ import { seconds_to_time } from '../../utils/seconds-to-time';
 
 @connect(({ playlist }) => ({ playlist }))
 export default class Playlist extends Component {
+
+	menu;
+
+	menuRef = e => this.menu = e;
 
 	componentDidMount () {
 		this.updateData();
@@ -52,6 +58,14 @@ export default class Playlist extends Component {
 		queue.position = 0;
 	}
 
+	toggleMenu = () => {
+		this.menu.MDComponent.open = !this.menu.MDComponent.open;
+	}
+
+	editPlaylist = () => {
+		
+	}
+
 	onRemoveItem () {}
 
 	getArtwork (track) {
@@ -79,34 +93,46 @@ export default class Playlist extends Component {
 					title={`SoundMolto - ${name || 'Untitled Playlist'}`}
 				/>
 				<div class={`header ${styles.header}`}>
-					<div class={styles.overlay}>
+					<div class={styles.images}>
+						{images.slice(0, 4).map(image => (<img src={image} />))}
+					</div>
+					<div>
+						<h1>
+							{name || 'Untitled Playlist'} <br />
+							<small>{description}</small>
+						</h1>
+
+						<p>
+							By: <a href={`/${profile.url}`}>{profile.displayName || profile.firstName || profile.id}</a>
+						</p>
+						<p>
+							{tracks.length} tracks &middot; {seconds_to_time(totalLength).rendered}
+						</p>
+
 						<div>
-							<h1>
-								{name || 'Untitled Playlist'} <br />
-								<small>{description}</small>
-							</h1>
-
-							<p>
-								By: <a href={`/${profile.url}`}>{profile.displayName || profile.firstName || profile.id}</a>
-							</p>
-							<p>
-								{tracks.length} tracks &middot; {seconds_to_time(totalLength).rendered}
-							</p>
-
 							<Button ripple={true} class={styles.button} onClick={this.playAll}>
 								<Icon class={styles.playButton}>play_arrow</Icon>
 								Play All
 							</Button>
+							<Menu.Anchor class={styles.anchor}>
+								<Button
+									ripple={true}
+									class={styles.optionsButton}
+									onClick={this.toggleMenu}
+								>
+									<Icon>more_horiz</Icon>
+								</Button>
+								<Menu ref={this.menuRef}>
+									<Menu.Item onClick={this.editPlaylist}>Edit Playlist</Menu.Item>
+								</Menu>
+								</Menu.Anchor>
+							
 						</div>
-					</div>
-
-					<div class={styles.images}>
-						{images.slice(0, 7).map(image => (<img src={image} />))}
 					</div>
 				</div>
 				<div class={styles.rootContainer}>
 					<List class={styles.list}>
-						{tracks.length >= 1 && tracks.map(track => 
+						{tracks.length >= 1 && tracks.map(track =>
 							<TrackListItem
 								onClick={this.onStartPlay}
 								track={track}

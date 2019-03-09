@@ -288,3 +288,13 @@ h1.subtitle-header > small {
     border-radius: 100%;
     background: var(--mdc-theme-secondary);
 }
+
+.playlistButton {
+    font-size: 0.8rem !important;
+    background: linear-gradient(to top, var(--mdc-theme-primary) -100%, var(--mdc-theme-complementary-color) 270%) !important;
+    color: #fff !important;
+    margin: 10px auto;
+    display: inherit;
+    padding: 0 15px;
+    border-radius: 50px;
+}

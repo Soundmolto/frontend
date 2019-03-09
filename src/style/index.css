@@ -273,9 +273,6 @@ body > div:not(#fb-root) {
 
 .mdc-drawer--permanent {
 	z-index: 1;
-}
-
-.mdc-drawer--permanent {
 	height: calc(100vh - 128px);
 	width: 185px;
 	top: 64px;
@@ -284,6 +281,7 @@ body > div:not(#fb-root) {
 	background: var(--mdc-sidebar-footer-bg) !important;
 	color: var(--mdc-sidebar-footer-fg);
 	box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.35) !important;
+	overflow: auto;
 }
 
 

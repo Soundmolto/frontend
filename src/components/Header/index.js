@@ -9,6 +9,7 @@ import Switch from 'preact-material-components/Switch';
 import Menu from 'preact-material-components/Menu';
 import Icon from 'preact-material-components/Icon';
 import TextField from 'preact-material-components/TextField';
+import Button from 'preact-material-components/Button';
 import EditProfile from '../EditProfile';
 import 'preact-material-components/Switch/style.css';
 import 'preact-material-components/Dialog/style.css';
@@ -17,6 +18,7 @@ import 'preact-material-components/Toolbar/style.css';
 import 'preact-material-components/List/style.css';
 import 'preact-material-components/Menu/style.css';
 import 'preact-material-components/TextField/style.css';
+import 'preact-material-components/Button/style.css';
 import { UserPictureName } from '../UserPictureName';
 import { shortcuts } from '../../shortcuts';
 import style from './style';
@@ -278,6 +280,7 @@ export default class Header extends Component {
 							Playlists
 							<small>{settings.beta === SETTINGS.ENABLE_BETA ? "BETA" : "Soon"}</small>
 						</h1>
+						<Button ripple={true} class={style.playlistButton}>Create Playlist</Button>
 						{user.playlists.map(playlist => 
 							<Drawer.DrawerItem
 								onClick={e => {

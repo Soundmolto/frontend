@@ -11,47 +11,39 @@
 
 .header {
 	position: relative;
-	overflow: hidden;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
 	min-height: 300px;
+	height: auto;
 }
 
 .header h1 {
 	z-index: 2;
 	width: 100%;
 	margin-bottom: 0;
+	color: var(--mdc-theme-text-primary-on-background) !important;
+}
+
+.header h1 small {
+	font-weight: 400;
+	font-size: 1.3rem;
+	opacity: 0.7;
 }
 
 .header .images {
-	position: absolute;
-	top: -50px;
-	left: -50px;
-	width: calc(100% + 100px);
-	min-height: calc(100% + 100px);
-	z-index: 1;
-	filter: blur(75px);
-	overflow: hidden;
 	display: flex;
+	flex-wrap: wrap;
+	width: 128px;
+	height: 128px;
+	overflow: hidden;
+	border-radius: 10px;
+	box-shadow: var(--mdc-theme--box-shadow--floating);
 }
 
 .header .images > img {
-	max-height: 100%;
-	width: 100%;
-	max-width: 100%;
-}
-
-.header .overlay {
-	position: absolute;
-	background: rgba(0, 0, 0, 0.7);
-	z-index: 2;
-	top: 0;
-	left: 0;
-	padding: 20px;
-	width: 100%;
-	color: #ffffff;
-	min-height: 100%;
-	display: flex;
-	align-items: center;
-	flex-wrap: wrap;
+	width: 50%;
+	height: 64px;
 }
 
 .playButton {
@@ -69,7 +61,11 @@
 	padding: 10px 15px;
 }
 
-.button i, .header a {
+.header a {
+	color: var(--mdc-theme-text-primary-on-background) !important;
+}
+
+.button i {
 	color: #fff !important;
 }
 
@@ -77,14 +73,31 @@
 	margin-left: 20px;
 }
 
-@media screen and (min-width: 1200px) {
-	.header .overlay {
-		width: calc(100vw - 185px);
-	}
+.optionsButton {
+	margin-left: 10px;
+	border-radius: 100%;
+	padding: 20px 10px;
+	min-width: 0;
 }
 
-@media screen and (max-width: 1200px) {
-	.header .overlay {
-		width: 100vw;
+.anchor {
+	display: inline-block;
+}
+
+@media screen and (max-width: 500px) {
+	.header {
+		padding: 20px;
+	}
+
+	.header .images {
+		margin: 0 auto 20px;
+	}
+
+	.header h1 {
+		font-size: 1.3rem;
+	}
+
+	.header h1 small {
+		font-size: 1rem;
 	}
 }
