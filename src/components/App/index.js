@@ -19,6 +19,7 @@ import Following from '../../routes/artists';
 import Stats from '../../routes/stats';
 import PrivacyPolicy from '../../routes/privacy-policy';
 import { WebAudioPlayer } from '../WebAudioPlayer/WebAudioPlayer';
+import Playlist from '../../routes/playlist';
 
 let onRender = (UI) => {};
 let MainAudioContext;
@@ -86,6 +87,7 @@ export default class App extends Component {
 						<Register path="/register" key="register" className="route-page" />
 						<Admin path="/admin" className="route-page" />
 						<Users path="/users" className="route-page" />
+						<Playlist path="/playlist/:playlistID" className="route-page" audioContext={this.audioContext} queue={queue} />
 						<Profile path="/:vanity_url" key="profile" audioContext={this.audioContext} queue={queue} store={store} class="route-page" onShareTrack={track => this.header._component.openShareTrack(track)} />
 						<Track path="/:vanity_url/:track_url" key="track" audioContext={this.audioContext} queue={queue} class="route-page" onShareTrack={track => this.header._component.openShareTrack(track)} />
 						<TrackCollection path="/collection/tracks" key="track-collection" audioContext={this.audioContext} queue={queue} class="route-page" />

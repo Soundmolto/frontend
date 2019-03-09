@@ -85,7 +85,7 @@ export class TrackListItem extends Component {
 		return trackArtwork || userAvatar || Goku;
 	}
 
-	render ({ track, showArtwork, showExtraStats, currently_playing }, { playing, opacity }) {
+	render ({ track, showArtwork, showExtraStats, currently_playing, showAdded }, { playing, opacity }) {
 		this.massageState();
 		track.user = track.user || { url: '' };
 

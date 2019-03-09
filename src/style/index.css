@@ -311,6 +311,25 @@ body > div:not(#fb-root) {
 	padding: 0;
 }
 
+.mdc-drawer--permanent .mdc-list .mdc-list-item {
+	height: auto;
+	padding: 8px 16px;
+}
+
+.mdc-drawer--permanent .mdc-list .mdc-list-item, .mdc-drawer--permanent .mdc-drawer__content a {
+	font-size: 0.8rem;
+}
+
+span.overflow-prevention {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.mdc-drawer--permanent .mdc-drawer__content i {
+	font-size: 1.1rem;
+}
+
 .mdc-drawer--permanent .mdc-list .mdc-list-item.active {
 	background: rgba(0, 0, 0, 0.25);
 	font-weight: 600;
@@ -324,7 +343,7 @@ body > div:not(#fb-root) {
 .mdc-drawer--permanent .mdc-list .mdc-list-item.active > span.text:after {
 	display: block;
 	position: absolute;
-	bottom: -12px;
+	bottom: -8px;
 	height: 3px;
 	width: 185px;
 	left: -21px;
@@ -335,7 +354,12 @@ body > div:not(#fb-root) {
 .mdc-drawer--permanent .mdc-list .mdc-list-item > span.text {
 	display: flex;
 	align-items: center;
- }
+}
+
+.mdc-drawer--permanent .mdc-list .mdc-list-item > span.text .overflow-prevention {
+	display: block;
+	max-width: 115px;
+}
 
 .search-container {
 	display: flex;
@@ -434,7 +458,7 @@ input[disabled] {
 }
 
 .mdc-list-item__graphic {
-	margin-right: 24px !important;
+	margin-right: 10px !important;
 }
 
 :not(.footer-tabs) .mdc-tab--active {

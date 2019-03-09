@@ -237,7 +237,6 @@ export default class Header extends Component {
 					<div class="section">
 						<h1 class={style['subtitle-header']}>
 							My Music
-							<small>{settings.beta === SETTINGS.ENABLE_BETA ? "BETA" : "Soon"}</small>
 						</h1>
 						{settings.beta === SETTINGS.ENABLE_BETA && (
 							<Drawer.DrawerItem onClick={this.goToArtists} class={`mdc-list-item ${this.isActive(`/${user.profile.url}/following`)}`} href={`/${user.profile.url}/following`}>
@@ -273,13 +272,30 @@ export default class Header extends Component {
 								</span>
 							</Drawer.DrawerItem>
 						)}
+					</div>
+					<div class="section">
+						<h1 class={style['subtitle-header']}>
+							Playlists
+							<small>{settings.beta === SETTINGS.ENABLE_BETA ? "BETA" : "Soon"}</small>
+						</h1>
+						{user.playlists.map(playlist => 
+							<Drawer.DrawerItem
+								onClick={e => {
+									e.preventDefault();
+									this.linkTo(`/playlist/${playlist.id}`);
+								}}
+								href={`/playlist/${playlist.id}`}
+								class={this.isActive(`/playlist/${playlist.id}`)}
+							>
+								<span class="text">
+									<List.ItemGraphic>playlist_play</List.ItemGraphic>
+									<span class="overflow-prevention">
+										{playlist.name || "Untitled Playlist"}
+									</span>
+								</span>
+							</Drawer.DrawerItem>
+						)}
 
-						<Drawer.DrawerItem onClick={e => console.log(e)} class={this.isActive(`/${user.profile.url}/playlists`)}>
-							<span class="text">
-								<List.ItemGraphic>playlist_play</List.ItemGraphic>
-								Playlists
-							</span>
-						</Drawer.DrawerItem>
 					</div>
 
 					<div class="section">

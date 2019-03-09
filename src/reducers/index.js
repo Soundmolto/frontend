@@ -15,6 +15,7 @@ import following from './following';
 import search from './search';
 import analytics from './analytics';
 import notifications from './notifications';
+import playlist from './playlist';
 
 export default combineReducers({
     auth,
@@ -32,5 +33,6 @@ export default combineReducers({
 	following,
 	search,
 	analytics,
-	notifications
+	notifications,
+	playlist
 });
