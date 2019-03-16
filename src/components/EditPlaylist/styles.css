@@ -1,0 +1,14 @@
+.input {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.button {
+    margin-bottom: 0;
+    font-size: 0.8rem !important;
+    background: linear-gradient(to top, var(--mdc-theme-primary) -100%, var(--mdc-theme-complementary-color) 270%) !important;
+    color: #fff !important;
+    margin: 10px auto;
+    padding: 0 15px;
+    border-radius: 50px;
+}

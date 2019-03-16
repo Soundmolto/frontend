@@ -17,6 +17,10 @@ export function seconds_to_time (seconds) {
 	}
 
 	return {
-		mins, secs, rendered: `${hour}${pad(realmin)}:${(secs > 9 ? secs : '0' + secs)}`
+		hour,
+		mins,
+		secs,
+		rendered: `${hour}${pad(realmin)}:${(secs > 9 ? secs : '0' + secs)}`,
+		playlistRender: `${hour != 0 ? `${pad(hours)} hr` : ''} ${realmin} min`
 	}
 };

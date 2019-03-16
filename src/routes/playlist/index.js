@@ -14,9 +14,14 @@ import { TrackListItem } from '../../components/TrackListItem';
 import Goku from '../../assets/goku.png';
 import { playing_now } from '../../actions/track';
 import { seconds_to_time } from '../../utils/seconds-to-time';
+import { EditPlaylist } from '../../components/EditPlaylist';
 
 @connect(({ playlist }) => ({ playlist }))
 export default class Playlist extends Component {
+
+	state = {
+		editingPlaylist: false
+	};
 
 	menu;
 
@@ -62,11 +67,10 @@ export default class Playlist extends Component {
 		this.menu.MDComponent.open = !this.menu.MDComponent.open;
 	}
 
-	editPlaylist = () => {
-		
-	}
-
+	editPlaylist = () => this.setState({ editingPlaylist: true });
 	onRemoveItem () {}
+
+	onClose = () => this.setState({ editingPlaylist: false });
 
 	getArtwork (track) {
 		const userAvatar = track && track.user && track.user.profilePicture;
@@ -74,7 +78,7 @@ export default class Playlist extends Component {
 		return trackArtwork || userAvatar || Goku;
 	}
 
-	render ({ playlist, playlistID }) {
+	render ({ playlist, playlistID }, { editingPlaylist }) {
 		const playlistData = playlist.playlist || { tracks: [], name: '', description: '', id: '' };
 		const { tracks, name, description, id, owner = {} } = playlistData;
 		const profile = owner.profile || { displayName: '', url: '', firstName: '', id: '' };
@@ -106,7 +110,7 @@ export default class Playlist extends Component {
 							By: <a href={`/${profile.url}`}>{profile.displayName || profile.firstName || profile.id}</a>
 						</p>
 						<p>
-							{tracks.length} tracks &middot; {seconds_to_time(totalLength).rendered}
+							{tracks.length} tracks &middot; {seconds_to_time(totalLength).playlistRender}
 						</p>
 
 						<div>
@@ -125,8 +129,7 @@ export default class Playlist extends Component {
 								<Menu ref={this.menuRef}>
 									<Menu.Item onClick={this.editPlaylist}>Edit Playlist</Menu.Item>
 								</Menu>
-								</Menu.Anchor>
-							
+							</Menu.Anchor>
 						</div>
 					</div>
 				</div>
@@ -148,6 +151,7 @@ export default class Playlist extends Component {
 						)}
 					</List>
 				</div>
+				{editingPlaylist && <EditPlaylist playlist={playlistData} onCancel={this.onClose} onAccept={this.onClose} />}
 			</div>
 		);
 	}

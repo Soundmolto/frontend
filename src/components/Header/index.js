@@ -34,9 +34,15 @@ import { SETTINGS } from '../../enums/settings';
 import { disable_beta, enable_beta, enable_waveform, disable_waveform } from '../../actions/settings';
 import { SearchModal } from '../SearchModal';
 import { Notification } from '../Notification';
+import { EditPlaylist } from '../EditPlaylist/EditPlaylist';
 
 @connect(state => state)
 export default class Header extends Component {
+
+	state = {
+		shareTrack: null,
+		createPlaylist: false,
+	};
 
 	currentUrl = '/';
 
@@ -208,6 +214,11 @@ export default class Header extends Component {
 		this.props.dispatch(logout());
 	}
 
+	createPlaylist = () => {
+		console.log('yeah');
+		this.setState({ createPlaylist: true });
+	}
+
 	login_or_logout () {
 		const { auth, user, settings } = this.props;
 		let defaultVal = (
@@ -280,7 +291,13 @@ export default class Header extends Component {
 							Playlists
 							<small>{settings.beta === SETTINGS.ENABLE_BETA ? "BETA" : "Soon"}</small>
 						</h1>
-						<Button ripple={true} class={style.playlistButton}>Create Playlist</Button>
+						<Button
+							ripple={true}
+							class={style.playlistButton}
+							onClick={this.createPlaylist}
+						>
+							Create Playlist
+						</Button>
 						{user.playlists.map(playlist => 
 							<Drawer.DrawerItem
 								onClick={e => {
@@ -356,8 +373,14 @@ export default class Header extends Component {
 		});
 	}
 
-	render ({ auth, user, UI, settings, notifications }, { shareTrack }) {
+	onCancelCreatePlaylist = () => {
+		this.setState({ createPlaylist: false });
+	}
+
+	render ({ auth, user, UI, settings, notifications }, { shareTrack, createPlaylist }) {
 		this.currentUrl = getCurrentUrl();
+
+		console.log(createPlaylist);
 
 		try {
 			if (UI.settings_open === true) {
@@ -594,6 +617,15 @@ export default class Header extends Component {
 					</Dialog>
 
 					<SearchModal />
+
+					{createPlaylist && (
+						<EditPlaylist
+							onCancel={this.onCancelCreatePlaylist}
+							onAccept={this.onCancelCreatePlaylist}
+							create={true}
+						/>
+					)}
+					
 
 					<div class="mdc-toolbar-blur-bg"></div>
 				</div>
