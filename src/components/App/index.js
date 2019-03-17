@@ -34,7 +34,10 @@ if (typeof window !== "undefined") {
 		}
 	};
 
-	MainAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+	if (MainAudioContext == null) {
+		MainAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+	}
+
 }
 
 @connect(state => state)
@@ -42,6 +45,8 @@ export default class App extends Component {
 
 	footer = null;
 	audioContext = MainAudioContext;
+
+	state = { dragging: false };
 
 	constructor (opts) {
 		super(opts);
@@ -66,23 +71,37 @@ export default class App extends Component {
 		ReactGA.pageview(window.location.pathname + window.location.search);
 		const event = new Event('url-change');
 		window.document.dispatchEvent(event);
+		this.setState({ dragging: false });
 	};
 
 	get_current_route () {
 		return this.currentUrl;
 	}
 
-	render ({ auth, UI, store }) {
-		const url = this.get_current_route.bind(this);
+	onStartDraggingTrack = () => this.setState({ dragging: true });
 
+	onEndDraggingTrack = (track) => {
+		this.setState({ dragging: false });
+		this.header._component.onEndDraggingTrack(track);
+	}
+
+	render ({ auth, UI, store }, { dragging }) {
+		const url = this.get_current_route.bind(this);
 		onRender(UI, auth);
 
 		return (
 			<div id="app">
-				<Header get_url={url} ref={e => this.header = e} />
+				<Header get_url={url} ref={e => this.header = e} isDraggingTrack={dragging} />
 				<div class="route-container">
 					<Router onChange={this.handleRoute}>
-						<Home path="/" className="route-page" queue={queue} onShareTrack={track => this.header._component.openShareTrack(track)} />
+						<Home
+							path="/"
+							className="route-page"
+							queue={queue}
+							onShareTrack={track => this.header._component.openShareTrack(track)}
+							onStartDraggingTrack={this.onStartDraggingTrack}
+							onEndDraggingTrack={this.onEndDraggingTrack}
+						/>
 						<Login path="/login" key="login" className="route-page" />
 						<Register path="/register" key="register" className="route-page" />
 						<Admin path="/admin" className="route-page" />

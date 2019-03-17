@@ -61,19 +61,21 @@ export default function reducer (state = {
 			playlists = playlists.sort((a,b) => parseInt(b.createdAt) - parseInt(a.createdAt));
 
 			state.playlists = [].concat(playlists);
+			break;
 		}
 
 		case PLAYLIST.CREATED_PLAYLIST: {
-			const updated = action.payload.playlist;
-			let playlists = [].concat(state.playlists);
-			playlists.push(updated);
+			let playlists = [].concat(action.payload.user.playlists)
+			playlists.push(action.payload.playlist);
 			playlists = playlists.sort((a,b) => parseInt(b.createdAt) - parseInt(a.createdAt));
 			state.playlists = [].concat(playlists);
+			break;
 		}
 
 		case PLAYLIST.DELETED_PLAYLIST: {
 			const { playlists } = action.payload;
 			state.playlists = [].concat(playlists);
+			break;
 		}
 	}
 

@@ -298,3 +298,12 @@ h1.subtitle-header > small {
     padding: 0 15px;
     border-radius: 50px;
 }
+
+.dragging a:not(.playlist) {
+    opacity: 0.1;
+    cursor: not-allowed !important;
+}
+
+.dragging .dragOver {
+    background: var(--mdc-search-bg);
+}

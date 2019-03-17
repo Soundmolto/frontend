@@ -35,6 +35,8 @@ import { disable_beta, enable_beta, enable_waveform, disable_waveform } from '..
 import { SearchModal } from '../SearchModal';
 import { Notification } from '../Notification';
 import { EditPlaylist } from '../EditPlaylist/EditPlaylist';
+import store from '../../store';
+import { add_track_to_playlist } from '../../actions/playlist';
 
 @connect(state => state)
 export default class Header extends Component {
@@ -42,6 +44,7 @@ export default class Header extends Component {
 	state = {
 		shareTrack: null,
 		createPlaylist: false,
+		activePlaylist: null,
 	};
 
 	currentUrl = '/';
@@ -215,12 +218,11 @@ export default class Header extends Component {
 	}
 
 	createPlaylist = () => {
-		console.log('yeah');
 		this.setState({ createPlaylist: true });
 	}
 
 	login_or_logout () {
-		const { auth, user, settings } = this.props;
+		const { auth, user, settings, isDraggingTrack } = this.props;
 		let defaultVal = (
 			<div>
 				<Drawer.DrawerItem onClick={this.goToLogin} class={this.isActive('/login')} href="/login">
@@ -239,6 +241,8 @@ export default class Header extends Component {
 		);
 
 		if (auth.logged_in) {
+			user.playlists = user.playlists || [];
+			user.playlists = user.playlists.filter(playlist => playlist != null);
 			defaultVal = (
 				<div>
 					<Drawer.DrawerItem onClick={this.goToMyProfile} class={this.isActive(`/${user.profile.url}`)} href={`/${user.profile.url}`}>
@@ -289,7 +293,7 @@ export default class Header extends Component {
 					<div class="section">
 						<h1 class={style['subtitle-header']}>
 							Playlists
-							<small>{settings.beta === SETTINGS.ENABLE_BETA ? "BETA" : "Soon"}</small>
+							<small>BETA</small>
 						</h1>
 						<Button
 							ripple={true}
@@ -305,7 +309,18 @@ export default class Header extends Component {
 									this.linkTo(`/playlist/${playlist.id}`);
 								}}
 								href={`/playlist/${playlist.id}`}
-								class={this.isActive(`/playlist/${playlist.id}`)}
+								class={`${this.isActive(`/playlist/${playlist.id}`)} ${style.playlist}`}
+								onDragOver={e => {
+									if (isDraggingTrack) {
+										e.target.classList.add(style.dragOver);
+										this.setState({ activePlaylist: playlist.id });
+									}
+								}}
+								onDragLeave={e => {
+									if (isDraggingTrack) {
+										e.target.classList.remove(style.dragOver);
+									}
+								}}
 							>
 								<span class="text">
 									<List.ItemGraphic>playlist_play</List.ItemGraphic>
@@ -377,10 +392,16 @@ export default class Header extends Component {
 		this.setState({ createPlaylist: false });
 	}
 
-	render ({ auth, user, UI, settings, notifications }, { shareTrack, createPlaylist }) {
-		this.currentUrl = getCurrentUrl();
+	onEndDraggingTrack = async track => {
+		if (track != null) {
+			await add_track_to_playlist(this.props.dispatch, { trackID: track.id, token: this.props.auth.token, id: this.state.activePlaylist });
+		}
 
-		console.log(createPlaylist);
+		this.setState({ activePlaylist: null });
+	}
+
+	render ({ auth, user, UI, settings, notifications, isDraggingTrack }, { shareTrack, createPlaylist }) {
+		this.currentUrl = getCurrentUrl();
 
 		try {
 			if (UI.settings_open === true) {
@@ -477,14 +498,14 @@ export default class Header extends Component {
 						</Toolbar.Row>
 					</Toolbar>
 					<div class={style.drawerCloseContainer} onClick={this.closeMenu}></div>
-					<Drawer.PermanentDrawer class={`${style.drawer} ${auth.logged_in !== true && style.loggedOut}`}>
+					<Drawer.PermanentDrawer class={`${style.drawer} ${auth.logged_in !== true && style.loggedOut} ${isDraggingTrack ? style.dragging : ''}`}>
 						<Drawer.DrawerContent>
 							<div class="section">
 								<h1 class={style['subtitle-header']}>
 									Discover
 								</h1>
 							</div>
-							<Drawer.DrawerItem onClick={this.goHome} class={this.isActive('/')} href={`/`}>
+							<Drawer.DrawerItem onClick={this.goHome} class={this.isActive('/')} href={`/`} disabled={isDraggingTrack}>
 								<span class="text">
 									<List.ItemGraphic>music_note</List.ItemGraphic>
 									Stream

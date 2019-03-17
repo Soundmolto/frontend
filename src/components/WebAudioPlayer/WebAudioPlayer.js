@@ -64,6 +64,7 @@ export class WebAudioPlayer {
 	}
 
 	play (file, time) {
+		console.log(file, time);
 		this.stop();
 		this.currentlyPlaying = file;
 		if (this.buffers[file] == null) {

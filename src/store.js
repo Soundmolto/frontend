@@ -3,7 +3,7 @@ import reducer from './reducers';
 import persistState from 'redux-localstorage'
 
 
-const enhancer = compose(persistState(null, 'persistedState'));
+const enhancer = compose(persistState(null, 'persistedState'), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 let state = { auth: {} };
 
 if (typeof window !== "undefined") {

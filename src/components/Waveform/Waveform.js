@@ -28,7 +28,7 @@ export class Waveform extends Component {
 	subscribed = false;
 	mouseDown = false;
 
-	onTimeUpdate (e) {
+	onTimeUpdate = () => {
 		if (this.props.data.id === store.getState().currently_playing.track.id) {
 			const audio = window.document.querySelector('audio');
 			if (this.timelineRoot == null && this.baseEl == null) return;
@@ -61,14 +61,14 @@ export class Waveform extends Component {
 						this.subscribed = true;
 						
 						if (audioEl != null) {
-							audioEl.addEventListener('timeupdate', this.onTimeUpdate.bind(this));
+							audioEl.addEventListener('timeupdate', this.onTimeUpdate);
 						}
 					}
 					
 					if (this.subscribed && state.currently_playing && state.currently_playing.track != null && state.currently_playing.track.id !== this.props.data.id) {
 						this.subscribed = false;
 						if (audioEl != null) {
-							audioEl.removeEventListener('timeupdate', this.onTimeUpdate.bind(this));
+							audioEl.removeEventListener('timeupdate', this.onTimeUpdate);
 						}
 					}
 				});
@@ -183,7 +183,7 @@ export class Waveform extends Component {
 	
 				if (this.subscribed === false && currently_playing.track && state.currently_playing.playing === true && state.currently_playing.track.id === this.props.data.id) {
 					this.subscribed = true;
-					window.document.querySelector('audio').addEventListener('timeupdate', this.onTimeUpdate.bind(this));
+					window.document.querySelector('audio').addEventListener('timeupdate', this.onTimeUpdate);
 				}
 			}
 
@@ -192,7 +192,7 @@ export class Waveform extends Component {
 		}
 	}
 
-	onMouseMove (e) {
+	onMouseMove = e => {
 		const percentage = e.layerX / e.currentTarget.clientWidth;
 		const tooltip = e.currentTarget.querySelector(`.${styles.tooltip}`);
 		tooltip.classList.add(styles.show);
@@ -211,20 +211,20 @@ export class Waveform extends Component {
 		tooltip.setAttribute('style', `transform: translateX(${e.layerX}px)`);
 	}
 
-	onMouseOut (e) {
+	onMouseOut = e => {
 		if (e.relatedTarget && (e.relatedTarget.parentElement.parentElement == this.baseEl.firstChild || e.relatedTarget == this.baseEl.firstChild)) return;
 		this.mouseDown = false;
 		e.currentTarget.querySelector(`.${styles.tooltip}`).classList.remove(styles.show);
 	}
 
-	onMouseDown (e) {
+	onMouseDown = e => {
 		if (e.which !== 1) return;
 		this.mouseDown = true;
 		const percentage = e.layerX / e.currentTarget.clientWidth;
 		this.props.onClickContainer(this.props.data.duration * percentage);
 	}
 
-	onMouseUp () {
+	onMouseUp = () => {
 		this.mouseDown = false;
 	}
 
@@ -233,7 +233,7 @@ export class Waveform extends Component {
 		try {
 			const audioEl = window.document.querySelector('audio');
 			if (audioEl != null) {
-				audioEl.removeEventListener('timeupdate', this.onTimeUpdate.bind(this));
+				audioEl.removeEventListener('timeupdate', this.onTimeUpdate);
 			}
 		} catch (e) {
 			console.error(e);
@@ -247,7 +247,13 @@ export class Waveform extends Component {
 	render () {
 		return (
 			<div class={styles.root} ref={e => (this.baseEl = e)}>
-				<div class={`prel ${styles.container}`} onMouseMove={this.onMouseMove.bind(this)} onMouseOut={this.onMouseOut.bind(this)} onMouseDown={this.onMouseDown.bind(this)} onMouseUp={this.onMouseUp.bind(this)}>
+				<div
+					class={`prel ${styles.container}`}
+					onMouseMove={this.onMouseMove}
+					onMouseOut={this.onMouseOut}
+					onMouseDown={this.onMouseDown}
+					onMouseUp={this.onMouseUp}
+				>
 					<div class={styles.tooltip}></div>
 					<div className={styles.waveform} ref={e => this.containerEl = e}></div>
 					<div class={styles['waveform-timeline--root']} ref={e => this.timelineRoot = e}></div>

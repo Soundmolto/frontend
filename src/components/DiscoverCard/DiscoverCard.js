@@ -100,7 +100,13 @@ export class DiscoverCard extends Component {
 							</a>
 						</h2>
 						<div class={`mdc-typography--caption ${styles.noOverflow}`}>
-							<a href={`/${(user && user.url)}/${track.url}`}>
+							<a
+								href={`/${(user && user.url)}/${track.url}`}
+								onDragStart={this.props.onStartDraggingTrack}
+								onDragEnd={() => {
+									this.props.onEndDraggingTrack(track);
+								}}
+							>
 								{track.name}
 							</a>
 						</div>

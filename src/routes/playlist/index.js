@@ -9,14 +9,15 @@ import 'preact-material-components/Button/style.css';
 import 'preact-material-components/Menu/style.css';
 import Helmet from 'preact-helmet';
 import styles from './style.css'
-import { get_playlist } from '../../actions/playlist';
+import { get_playlist, delete_playlist } from '../../actions/playlist';
 import { TrackListItem } from '../../components/TrackListItem';
 import Goku from '../../assets/goku.png';
 import { playing_now } from '../../actions/track';
 import { seconds_to_time } from '../../utils/seconds-to-time';
 import { EditPlaylist } from '../../components/EditPlaylist';
+import { route } from 'preact-router';
 
-@connect(({ playlist }) => ({ playlist }))
+@connect(({ auth, playlist }) => ({ auth, playlist }))
 export default class Playlist extends Component {
 
 	state = {
@@ -68,6 +69,13 @@ export default class Playlist extends Component {
 	}
 
 	editPlaylist = () => this.setState({ editingPlaylist: true });
+	
+	deletePlaylist = async () => {
+		const { playlistID, auth } = this.props;
+		await delete_playlist(this.props.dispatch, { id: playlistID, token: auth.token })
+		route('/');
+	};
+
 	onRemoveItem () {}
 
 	onClose = () => this.setState({ editingPlaylist: false });
@@ -128,6 +136,8 @@ export default class Playlist extends Component {
 								</Button>
 								<Menu ref={this.menuRef}>
 									<Menu.Item onClick={this.editPlaylist}>Edit Playlist</Menu.Item>
+									<hr />
+									<Menu.Item onClick={this.deletePlaylist}>Delete Playlist</Menu.Item>
 								</Menu>
 							</Menu.Anchor>
 						</div>
