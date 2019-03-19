@@ -14,7 +14,7 @@
 	display: flex;
 	align-items: center;
 	flex-wrap: wrap;
-	min-height: 300px;
+	min-height: 300px !important;
 	height: auto;
 }
 
