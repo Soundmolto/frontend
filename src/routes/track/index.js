@@ -186,6 +186,7 @@ export default class Track extends Component {
 										onStartPlay={this.onStartPlay.bind(this)}
 										onDelete={this.onDelete}
 										onShareTrack={this.props.onShareTrack}
+										audioPlayer={this.props.audioPlayer}
 									/>
 								</div>
 							</LayoutGrid.Cell>

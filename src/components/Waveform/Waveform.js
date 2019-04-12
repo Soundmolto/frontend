@@ -30,7 +30,7 @@ export class Waveform extends Component {
 
 	onTimeUpdate = () => {
 		if (this.props.data.id === store.getState().currently_playing.track.id) {
-			const audio = window.document.querySelector('audio');
+			const audio = this.props.audioPlayer;
 			if (this.timelineRoot == null && this.baseEl == null) return;
 			const timelineRoot = this.timelineRoot || this.baseEl.querySelector(`.${styles['waveform-timeline--root']}`);
 			timelineRoot.setAttribute('style', `width: ${(audio.currentTime / audio.duration) * 100}%;`);
@@ -50,7 +50,7 @@ export class Waveform extends Component {
 			store.subscribe(_ => {
 				window.requestAnimationFrame(_ => {
 					const state = Object.assign({}, store.getState());
-					const audioEl = window.document.querySelector('audio');
+					const audioEl = this.props.audioPlayer;
 
 					if (state.UI.theme !== initialState.UI.theme) {
 						initialState = state;
@@ -183,7 +183,7 @@ export class Waveform extends Component {
 	
 				if (this.subscribed === false && currently_playing.track && state.currently_playing.playing === true && state.currently_playing.track.id === this.props.data.id) {
 					this.subscribed = true;
-					window.document.querySelector('audio').addEventListener('timeupdate', this.onTimeUpdate);
+					this.props.audioPlayer.addEventListener('timeupdate', this.onTimeUpdate);
 				}
 			}
 
@@ -231,7 +231,7 @@ export class Waveform extends Component {
 	componentWillUnmount () {
 		this.subscribed = false;
 		try {
-			const audioEl = window.document.querySelector('audio');
+			const audioEl = this.props.audioPlayer;
 			if (audioEl != null) {
 				audioEl.removeEventListener('timeupdate', this.onTimeUpdate);
 			}

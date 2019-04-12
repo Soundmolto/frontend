@@ -12,7 +12,7 @@ const loader = (<div key={0}><Stretch color="#c67dcb" /></div>);
 const infiniteScrollStyle = { display: "inline-block", width: '100%' };
 let hasMore = false;
 
-const renderTrackCard = (track, viewedUser, user, onStartPlay, onDelete, onReportTrack, onShareTrack) => (
+const renderTrackCard = (track, viewedUser, user, onStartPlay, onDelete, onReportTrack, onShareTrack, audioPlayer) => (
 	<TrackCard
 		track={track}
 		user={viewedUser}
@@ -23,6 +23,7 @@ const renderTrackCard = (track, viewedUser, user, onStartPlay, onDelete, onRepor
 		onDelete={() => onDelete(track)}
 		onReportTrack={onReportTrack}
 		onShareTrack={() => onShareTrack(track)}
+		audioPlayer={audioPlayer}
 	/>
 );
 
@@ -39,10 +40,10 @@ const renderTrackListItem = (track, onStartPlay, onDelete, onReportTrack, onShar
 	/>
 );
 
-export const TracksContainer = ({ tracks, shouldRenderWaveform, onStartPlay, viewedUser, user, onDelete, onReportTrack, onShareTrack }) => (
+export const TracksContainer = ({ tracks, shouldRenderWaveform, onStartPlay, viewedUser, user, onDelete, onReportTrack, onShareTrack, audioPlayer }) => (
 	<InfiniteScroll pageStart={0} loadMore={this.loadMore} hasMore={hasMore} style={infiniteScrollStyle} loader={loader}>
 			{shouldRenderWaveform ?
-				tracks.map(track => renderTrackCard(track, viewedUser, user, onStartPlay, onDelete, onReportTrack, onShareTrack)) : (
+				tracks.map(track => renderTrackCard(track, viewedUser, user, onStartPlay, onDelete, onReportTrack, onShareTrack, audioPlayer)) : (
 				<List class={style.listContainer}>
 					{window.innerWidth >= 768 && (
 						<List.Item class={style['list-item']}>

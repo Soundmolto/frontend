@@ -10,7 +10,7 @@ export class WebAudioPlayer {
 	stopped = true;
 	pausedAt = 0;
 	source = null;
-	events = {};
+	events = [];
 	duration = 0;
 	_currentTime = 0;
 	buffers = {};
@@ -35,7 +35,7 @@ export class WebAudioPlayer {
 	}
 
 	addEventListener (event, cb) {
-		this.events[event] = cb;
+		this.events.push({ [event]: cb });
 	}
 
 	loadFile (url, done) {
@@ -54,12 +54,9 @@ export class WebAudioPlayer {
 	}
 
 	_dispatchUpdate (time) {
-		if (this.events.timeupdate) {
-			this.events.timeupdate();
-		} else {
-			window.document.dispatchEvent(
-				new CustomEvent('webAudioPlayerTimeUpdate', { detail: time })
-			);
+		const events = this.events.filter(event => Object.keys(event)[0] === 'timeupdate');
+		for (const event of events) {
+			event.timeupdate({ detail: time })
 		}
 	}
 

@@ -44,7 +44,7 @@
     "preact": "^8.2.1",
     "preact-compat": "^3.17.0",
     "preact-helmet": "^4.0.0-alpha-3",
-    "preact-material-components": "^1.5.2",
+    "preact-material-components": "^1.5.1",
     "preact-redux": "^2.0.3",
     "preact-router": "^2.5.5",
     "raf": "^3.4.0",

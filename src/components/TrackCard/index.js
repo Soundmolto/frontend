@@ -53,7 +53,7 @@ export class TrackCard extends Component {
 		this.props.onStartPlay(this.props.track);
 		this.played = true;
 		const position = this.props.currently_playing.position;
-		const audio = document.querySelector('audio') || { currentTime: position };
+		const audio = this.props.audioPlayer || { currentTime: position };
 		
 
 		playing_now(this.props.dispatch, {
@@ -187,6 +187,7 @@ export class TrackCard extends Component {
 						parentPlaying={this.state.playing}
 						isCurrentTrack={isCurrentTrack}
 						onClickContainer={position => this.onTogglePlay(true, position)}
+						audioPlayer={this.props.audioPlayer}
 					/>
 					<div class={styles.hiddenMobile}>
 						<p class={`${styles.centered} ${styles.plays}`}>

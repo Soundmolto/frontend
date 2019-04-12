@@ -107,8 +107,25 @@ export default class App extends Component {
 						<Admin path="/admin" className="route-page" />
 						<Users path="/users" className="route-page" />
 						<Playlist path="/playlist/:playlistID" className="route-page" audioContext={this.audioContext} queue={queue} />
-						<Profile path="/:vanity_url" key="profile" audioContext={this.audioContext} queue={queue} store={store} class="route-page" onShareTrack={track => this.header._component.openShareTrack(track)} />
-						<Track path="/:vanity_url/:track_url" key="track" audioContext={this.audioContext} queue={queue} class="route-page" onShareTrack={track => this.header._component.openShareTrack(track)} />
+						<Profile
+							path="/:vanity_url"
+							key="profile"
+							audioContext={this.audioContext}
+							queue={queue}
+							store={store}
+							class="route-page"
+							onShareTrack={track => this.header._component.openShareTrack(track)}
+							audioPlayer={this.player}
+						/>
+						<Track
+							path="/:vanity_url/:track_url"
+							key="track"
+							audioContext={this.audioContext}
+							queue={queue}
+							class="route-page"
+							onShareTrack={track => this.header._component.openShareTrack(track)}
+							audioPlayer={this.player}
+						/>
 						<TrackCollection path="/collection/tracks" key="track-collection" audioContext={this.audioContext} queue={queue} class="route-page" />
 						<Following path="/:vanity_url/following" className="route-page" />
 						<Stats path="/you/stats" className="route-page" />

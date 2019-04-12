@@ -276,6 +276,7 @@ export default class Profile extends Component {
 										onDelete={track => this.onDelete(track)}
 										onReportTrack={this.onReportTrack}
 										onShareTrack={this.props.onShareTrack}
+										audioPlayer={this.props.audioPlayer}
 									/>
 								)}
 								{tracks.length <= 0 && <h1>No tracks</h1>}
