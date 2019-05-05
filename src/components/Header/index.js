@@ -255,40 +255,18 @@ export default class Header extends Component {
 						<h1 class={style['subtitle-header']}>
 							My Music
 						</h1>
-						{settings.beta === SETTINGS.ENABLE_BETA && (
-							<Drawer.DrawerItem onClick={this.goToArtists} class={`mdc-list-item ${this.isActive(`/${user.profile.url}/following`)}`} href={`/${user.profile.url}/following`}>
-								<span class="text">
-									<List.ItemGraphic>person</List.ItemGraphic>
-									Artists
-								</span>
-							</Drawer.DrawerItem>
-						)}
-						{settings.beta === SETTINGS.ENABLE_BETA && (
-							<Drawer.DrawerItem onClick={this.goToTrackCollection} class={`mdc-list-item ${this.isActive(`/collection/tracks`)}`} href='/collection/tracks'>
-								<span class="text">
-									<List.ItemGraphic>music_note</List.ItemGraphic>
-									Songs
-								</span>
-							</Drawer.DrawerItem>
-						)}
-
-						{settings.beta === SETTINGS.DISABLE_BETA && (
-							<Drawer.DrawerItem class={`mdc-list-item`}>
-								<span class="text">
-									<List.ItemGraphic>person</List.ItemGraphic>
-									Artists
-								</span>
-							</Drawer.DrawerItem>
-						)}
-
-						{settings.beta === SETTINGS.DISABLE_BETA && (
-							<Drawer.DrawerItem class={`mdc-list-item`}>
-								<span class="text">
-									<List.ItemGraphic>music_note</List.ItemGraphic>
-									Songs
-								</span>
-							</Drawer.DrawerItem>
-						)}
+						<Drawer.DrawerItem onClick={this.goToArtists} class={`mdc-list-item ${this.isActive(`/${user.profile.url}/following`)}`} href={`/${user.profile.url}/following`}>
+							<span class="text">
+								<List.ItemGraphic>person</List.ItemGraphic>
+								Artists
+							</span>
+						</Drawer.DrawerItem>
+						<Drawer.DrawerItem onClick={this.goToTrackCollection} class={`mdc-list-item ${this.isActive(`/collection/tracks`)}`} href='/collection/tracks'>
+							<span class="text">
+								<List.ItemGraphic>music_note</List.ItemGraphic>
+								Songs
+							</span>
+						</Drawer.DrawerItem>
 					</div>
 					<div class="section">
 						<h1 class={style['subtitle-header']}>

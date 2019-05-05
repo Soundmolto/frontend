@@ -196,7 +196,7 @@ export default class Footer extends Component {
 			if (currently_playing.position != null && currently_playing.position < this.tracks[currently_playing.track.id]) {
 				this.tracks[currently_playing.track.id] = currently_playing.position;
 			}
-			audioPlayer.addEventListener('timeupdate', this.onPosChange.bind(this));
+			window.addEventListener('audioTimeUpdate', this.onPosChange.bind(this));
 			requestAnimationFrame(_ => {
 				const updatedTime = this.tracks[currently_playing.track.id] || currently_playing.position || 0;
 				const url = currently_playing.track.stream_url;

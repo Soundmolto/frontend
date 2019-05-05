@@ -1,6 +1,13 @@
 import store from "../../store";
 
 let vol = 100;
+export const eventKeys = {
+	timeUpdate: 'audioTimeUpdate'
+}
+
+const events = {
+	timeUpdate: new Event(eventKeys.timeUpdate)
+}
 
 export class WebAudioPlayer {
 
@@ -54,14 +61,12 @@ export class WebAudioPlayer {
 	}
 
 	_dispatchUpdate (time) {
-		const events = this.events.filter(event => Object.keys(event)[0] === 'timeupdate');
-		for (const event of events) {
-			event.timeupdate({ detail: time })
-		}
+		// const events = this.events.filter(event => Object.keys(event)[0] === 'timeupdate');
+		// TODO: Move this into a new EventTarget that is used as a replacement for the audio element event system.
+		window.dispatchEvent(events.timeUpdate);
 	}
 
 	play (file, time) {
-		console.log(file, time);
 		this.stop();
 		this.currentlyPlaying = file;
 		if (this.buffers[file] == null) {
@@ -75,6 +80,10 @@ export class WebAudioPlayer {
 	}
 
 	_playBuffer (buffer, offset) {
+		if (this.timeupdateInt) {
+			window.clearInterval(this.timeupdateInt);
+			this.timeupdateInt = null;
+		}
 		if (this.playing) {
 			this.stop();
 		}
@@ -94,9 +103,13 @@ export class WebAudioPlayer {
 		this.startedAt = this.audioContext.currentTime - offset;
 		this.pausedAt = 0;
 		this.timeupdateInt = window.setInterval(() => {
-			this._currentTime += 1;
+			this._currentTime += 1 / 5;
 			this._dispatchUpdate(this.currentTime);
-		}, 1000);
+
+			if (this.playing === false) {
+				window.clearInterval(this.timeupdateInt);
+			}
+		}, 500);
 
 		this.source.onended = () => {
 			if (

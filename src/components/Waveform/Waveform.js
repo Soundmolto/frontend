@@ -31,8 +31,7 @@ export class Waveform extends Component {
 	onTimeUpdate = () => {
 		if (this.props.data.id === store.getState().currently_playing.track.id) {
 			const audio = this.props.audioPlayer;
-			if (this.timelineRoot == null && this.baseEl == null) return;
-			const timelineRoot = this.timelineRoot || this.baseEl.querySelector(`.${styles['waveform-timeline--root']}`);
+			const timelineRoot = this.timelineRoot || window.document.querySelector(`[data-song-id="${this.props.data.id}"]`);
 			timelineRoot.setAttribute('style', `width: ${(audio.currentTime / audio.duration) * 100}%;`);
 		}
 	}
@@ -61,14 +60,14 @@ export class Waveform extends Component {
 						this.subscribed = true;
 						
 						if (audioEl != null) {
-							audioEl.addEventListener('timeupdate', this.onTimeUpdate);
+							window.addEventListener('audioTimeUpdate', this.onTimeUpdate);
 						}
 					}
 					
 					if (this.subscribed && state.currently_playing && state.currently_playing.track != null && state.currently_playing.track.id !== this.props.data.id) {
 						this.subscribed = false;
 						if (audioEl != null) {
-							audioEl.removeEventListener('timeupdate', this.onTimeUpdate);
+							window.removeEventListener('audioTimeUpdate', this.onTimeUpdate);
 						}
 					}
 				});
@@ -256,7 +255,13 @@ export class Waveform extends Component {
 				>
 					<div class={styles.tooltip}></div>
 					<div className={styles.waveform} ref={e => this.containerEl = e}></div>
-					<div class={styles['waveform-timeline--root']} ref={e => this.timelineRoot = e}></div>
+					<div
+						class={styles['waveform-timeline--root']}
+						ref={e => this.timelineRoot = e}
+						// The below is here simply due to some race conditions in regards to rendering.
+						data-song-id={this.props.data.id}
+						>
+					</div>
 				</div>
 			</div>
 		);
