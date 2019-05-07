@@ -103,7 +103,7 @@ export class WebAudioPlayer {
 		this.startedAt = this.audioContext.currentTime - offset;
 		this.pausedAt = 0;
 		this.timeupdateInt = window.setInterval(() => {
-			this._currentTime += 1 / 5;
+			this._currentTime += 1 / 2;
 			this._dispatchUpdate(this.currentTime);
 
 			if (this.playing === false) {

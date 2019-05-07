@@ -16,7 +16,10 @@ export default class Stats extends Component {
 	}
 
 	render ({ auth, analytics }) {
-		if (!auth.logged_in) route('/', true);
+		if (!auth.logged_in) {
+			return route('/', true);
+		}
+		analytics.user = analytics.user || {};
 		const listeners = analytics.listeners || [];
 		const tracks = analytics.user.tracks || [];
 		let likes = 0;
@@ -49,7 +52,7 @@ export default class Stats extends Component {
 
 						<Card class={`${styles.card} ${styles.plays}`}>
 							<h3>Total Followers</h3>
-							<p>{analytics.user.followers.length || 0}</p>
+							<p>{(analytics.user != null && analytics.user.followers && analytics.user.followers.length) || 0}</p>
 						</Card>
 					</div>
 

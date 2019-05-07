@@ -243,6 +243,7 @@ export default class Header extends Component {
 		if (auth.logged_in) {
 			user.playlists = user.playlists || [];
 			user.playlists = user.playlists.filter(playlist => playlist != null);
+			user.profile = user.profile || {};
 			defaultVal = (
 				<div>
 					<Drawer.DrawerItem onClick={this.goToMyProfile} class={this.isActive(`/${user.profile.url}`)} href={`/${user.profile.url}`}>

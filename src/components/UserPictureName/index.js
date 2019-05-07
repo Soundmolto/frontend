@@ -5,7 +5,7 @@ import styles from './style';
 
 const className = styles.smol;
 
-const getPicture = user => user.profilePicture || Goku;
+const getPicture = user => user && user.profilePicture || Goku;
 
 const renderProfile = ({
 	children,
@@ -19,7 +19,7 @@ const renderProfile = ({
 	<img src={getPicture(user)} />
 	{(showUsername === true || show_location === true) && (
 		<h1 class={`${h1_class} ${styles.usernameCustom}`}>
-			{showUsername === true && user.displayName || user.url || "[Name]"}
+			{showUsername === true && user && (user.displayName || user.url) || "[Name]"}
 			{role != null && role === "admin" && <Icon>verified_user</Icon>}
 			{show_location && <small class={className}>{user.location || ""}</small>}
 		</h1>

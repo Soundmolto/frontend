@@ -20,6 +20,8 @@ import Stats from '../../routes/stats';
 import PrivacyPolicy from '../../routes/privacy-policy';
 import { WebAudioPlayer } from '../WebAudioPlayer/WebAudioPlayer';
 import Playlist from '../../routes/playlist';
+import store from '../../store';
+import { TRACK } from '../../enums/track';
 
 let onRender = (UI) => {};
 let MainAudioContext;
@@ -52,6 +54,14 @@ export default class App extends Component {
 		super(opts);
 		this.player = new WebAudioPlayer({ audioContext: MainAudioContext });
 		window.__webAudioPlayer = this.player;
+
+		window.addEventListener('audioTimeUpdate', () => {
+			const { currently_playing } = store.getState();
+			store.dispatch({
+				type: TRACK.PLAYING_TRACK,
+				payload: { ...currently_playing, position: this.player._currentTime }
+			})
+		});
 	}
 	
 	componentDidMount () {

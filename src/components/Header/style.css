@@ -39,7 +39,7 @@
 
 @media screen and (max-width: 768px) {
     .clickable, .menu, .notificationsMenu {
-        max-width: 100vw;
+        max-width: 75vw;
     }
 
     .appName, .hideMobile {

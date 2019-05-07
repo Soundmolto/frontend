@@ -32,7 +32,9 @@ export class Waveform extends Component {
 		if (this.props.data.id === store.getState().currently_playing.track.id) {
 			const audio = this.props.audioPlayer;
 			const timelineRoot = this.timelineRoot || window.document.querySelector(`[data-song-id="${this.props.data.id}"]`);
-			timelineRoot.setAttribute('style', `width: ${(audio.currentTime / audio.duration) * 100}%;`);
+			if (timelineRoot != null) {
+				timelineRoot.setAttribute('style', `width: ${(audio.currentTime / audio.duration) * 100}%;`);
+			}
 		}
 	}
 
