@@ -11,6 +11,7 @@ import { seconds_to_time } from "../../utils/seconds-to-time";
 import { playing_now } from '../../actions/track';
 import { QueuePanel } from "../QueuePanel";
 import { MobileFooter } from "../MobileFooter";
+import { eventKeys } from "../WebAudioPlayer/WebAudioPlayer";
 
 @connect(({ currently_playing, user }) => ({ currently_playing, user }))
 export default class Footer extends Component {
@@ -156,7 +157,7 @@ export default class Footer extends Component {
 				audioPlayer = window.document.querySelector('audio');
 			}
 
-			audioPlayer.addEventListener('ended', () => {
+			window.addEventListener(eventKeys.audioEnded, () => {
 				const owner = { profile: currently_playing.track.owner || currently_playing.owner };
 				this.tracks[currently_playing.track.id] = 0;
 				playing_now(dispatch, { playing: false, position, track: currently_playing.track, owner });
