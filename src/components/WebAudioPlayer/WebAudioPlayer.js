@@ -48,15 +48,15 @@ export class WebAudioPlayer {
 	}
 
 	loadFile (url, done) {
-		var request = new XMLHttpRequest();
-		request.open('GET', url, true);
+		const request = new XMLHttpRequest();
 		const { token } = store.getState().auth;
+		request.open('GET', url, true);
 		if (token) {
 			request.setRequestHeader('Authorization', `Bearer ${token}`);
 		}
 
 		request.responseType = 'arraybuffer';
-	  
+
 		// Decode asynchronously
 		request.onload = () => this.audioContext.decodeAudioData(request.response, done);
 		request.send();
