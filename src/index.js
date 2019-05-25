@@ -33,7 +33,7 @@ class HotKeysHOC extends Component {
 		super(opts);
 		const state = store.getState();
 		const payload = Object.assign({}, state.currently_playing, { position: 0 });
-		const _payload = Object.assign({}, state.UI, { settings_open: false, goto_open: false, shortcuts_open: false });
+		const _payload = Object.assign({}, state.UI, { goto_open: false, shortcuts_open: false });
 		store.dispatch({ type: TRACK.PAUSED_TRACK, payload });
 		store.dispatch({ type: SETTINGS.RESET, payload: _payload });
 

@@ -1,0 +1,46 @@
+.container {
+  display: flex;
+  width: 100%;
+  padding: 30px 50px 50px;
+  flex-wrap: wrap;
+}
+
+.container > .column {
+  width: 100%;
+  padding-bottom: 20px;
+}
+
+.container > .column h4 {
+  margin: 0 0 10px 0;
+  border-bottom: 1px solid var(--mdc-search-bg);
+  padding-bottom: 10px;
+}
+
+.container > .column .profile {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.container > .column .profile img {
+  border-radius: 100%;
+  width: 64px;
+  height: 64px;
+  margin-right: 20px;
+}
+
+.container > .column .profile h1 {
+  font-size: 1.7rem;
+  font-weight: 500;
+}
+
+.switchContainer {
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.switchContainer > label {
+  cursor: pointer;
+  margin-right: 20px;
+}

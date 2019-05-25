@@ -2,14 +2,13 @@ import store from './store';
 import { TRACK } from './enums/track';
 import { QueueController } from './components/QueueController';
 import { playing_now } from './actions/track';
+import { route } from 'preact-router';
 const queue = new QueueController();
 
 export const shortcuts = [
 	{
 		action: e => {
-			store.dispatch({
-				type: "SHOW_SETTINGS_PANEL"
-			})
+			route('/settings', false);
 		},
 		keys: 'ctrl+,',
 		name: 'show:settings',

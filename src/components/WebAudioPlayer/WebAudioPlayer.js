@@ -1,4 +1,5 @@
 import store from "../../store";
+import { WebAudioScheduler } from "../../utils/WebAudioScheduler";
 
 let vol = 100;
 export const eventKeys = {
@@ -28,6 +29,8 @@ export class WebAudioPlayer {
 		this.audioContext = opts.audioContext;
 		this.gainNode = this.audioContext.createGain();
 		this.gainNode.connect(this.audioContext.destination);
+
+		this.scheduler = new WebAudioScheduler();
 	}
 
 	get src () {

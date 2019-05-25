@@ -51,7 +51,7 @@ export default class Header extends Component {
 
 	openSettings = () => {
 		this.closeMenu();
-		this.settingsModal.MDComponent.show();
+		route('/settings', false);
 	};
 
 	openEditProfileModal = () => {
@@ -383,10 +383,6 @@ export default class Header extends Component {
 		this.currentUrl = getCurrentUrl();
 
 		try {
-			if (UI.settings_open === true) {
-				this.openSettings();
-			}
-
 			if (UI.goto_open === true) {
 				this.openGotoPanel();
 			}
@@ -514,34 +510,6 @@ export default class Header extends Component {
 							</Drawer.DrawerItem>
 						</Drawer.DrawerContent>
 					</Drawer.PermanentDrawer>
-					
-					{/* TODO: Move these into their own components */}
-					<Dialog ref={this.settingsDialogRef} onCancel={e => this.props.dispatch({ type: "HIDE_SETTINGS_PANEL" } )}>
-						<div class="modal-border-top"></div>
-						<Dialog.Header>Settings</Dialog.Header>
-						<Dialog.Body>
-							<div class={style.switchContainer}>
-								<Switch checked={this.props.UI.theme === THEMES.dark} onClick={this.toggleDarkTheme} id="toggleDarkTheme" />
-								<label for="toggleDarkTheme">
-									Enable dark theme
-								</label>
-							</div>
-							<div class={style.switchContainer}>
-								<Switch checked={settings.beta === SETTINGS.ENABLE_BETA} onClick={this.toggleBeta} id="toggleBetaFeatures" />
-								<label for="toggleBetaFeatures">
-									Enable beta features
-								</label>
-							</div>
-							{settings.beta === SETTINGS.ENABLE_BETA && (
-								<div class={style.switchContainer}>
-									<Switch checked={settings.waveforms === SETTINGS.ENABLE_WAVEFORMS || settings.waveforms == null} onClick={this.toggleWaveForms} id="toggleWaveForms" />
-									<label for="toggleWaveForms">
-										Enable waveforms on profile page (slow)
-									</label>
-								</div>
-							)}
-						</Dialog.Body>
-					</Dialog>
 
 					<Dialog ref={this.editProfileDialogRef} class="edit-modal">
 						<div class="modal-border-top"></div>

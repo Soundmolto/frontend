@@ -88,7 +88,7 @@ export class DiscoverCard extends Component {
 
 		return (
 			<Card style={{ overflow: 'hidden' }}>
-				<div class={`${styles.paddingAll} ${styles.flexible}`}>
+				<div class={`${styles.paddingAll} ${styles.flexible} ${track.visibility !== 'public' ? styles['private-header'] : ''}`}>
 					<Button onClick={this.onStartPlay.bind(this)}>
 						{playing === false && (<Icon>play_arrow</Icon>)}
 						{playing === true && (<Icon>pause</Icon>)}

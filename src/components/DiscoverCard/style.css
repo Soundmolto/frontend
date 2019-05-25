@@ -235,3 +235,12 @@ span.private i {
     margin-right: 5px;
     padding: 6px;
 }
+
+.private-header {
+    background: linear-gradient(to right, var(--mdc-theme-primary) -40%, var(--mdc-theme-complementary-color) 170%) !important;
+    color: #ffffff;
+}
+
+.private-header a, .private-header i {
+    color: #ffffff !important;
+}

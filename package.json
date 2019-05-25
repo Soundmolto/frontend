@@ -29,8 +29,7 @@
     "eslint": "^4.5.0",
     "eslint-config-synacor": "^1.1.0",
     "if-env": "^1.0.0",
-    "preact-cli": "^2.0.0",
-    "preact-cli-plugin-typescript": "^0.2.2"
+    "preact-cli": "^2.2.1"
   },
   "dependencies": {
     "approximate-number": "^2.0.0",

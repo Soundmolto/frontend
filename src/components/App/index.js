@@ -22,6 +22,7 @@ import { WebAudioPlayer } from '../WebAudioPlayer/WebAudioPlayer';
 import Playlist from '../../routes/playlist';
 import store from '../../store';
 import { TRACK } from '../../enums/track';
+import Settings from '../../routes/settings';
 
 let onRender = (UI) => {};
 let MainAudioContext;
@@ -141,6 +142,8 @@ export default class App extends Component {
 						<Stats path="/you/stats" className="route-page" />
 						<PrivacyPolicy path="/privacy-policy" className="route-page" />
 						<Stats path="/terms-of-use" className="route-page" />
+
+						<Settings path="/settings" className="route-page" />
 					</Router>
 				</div>
 				<Footer ref={e => (this.footer = e)} audioContext={this.audioContext} queue={queue} audioPlayer={this.player} />
