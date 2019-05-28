@@ -23,6 +23,7 @@ import Playlist from '../../routes/playlist';
 import store from '../../store';
 import { TRACK } from '../../enums/track';
 import Settings from '../../routes/settings';
+const allowTracking = window.doNotTrack !== '1';
 
 let onRender = (UI) => {};
 let MainAudioContext;
@@ -40,15 +41,12 @@ if (typeof window !== "undefined") {
 	if (MainAudioContext == null) {
 		MainAudioContext = new (window.AudioContext || window.webkitAudioContext)();
 	}
-
 }
 
 @connect(state => state)
 export default class App extends Component {
-
 	footer = null;
 	audioContext = MainAudioContext;
-
 	state = { dragging: false };
 
 	constructor (opts) {
@@ -66,7 +64,9 @@ export default class App extends Component {
 	}
 	
 	componentDidMount () {
-		ReactGA.initialize('UA-125828388-1');
+		if (allowTracking) {
+			ReactGA.initialize('UA-125828388-1');
+		}
 		const { auth, dispatch, user, UI } = this.props;
 		if (auth.logged_in) {
 			request_new_data(dispatch, { token: auth.token, vanity_url: user.profile.url })
@@ -79,7 +79,9 @@ export default class App extends Component {
 	 */
 	handleRoute = e => {
 		this.currentUrl = e.url;
-		ReactGA.pageview(window.location.pathname + window.location.search);
+		if (allowTracking) {
+			ReactGA.pageview(window.location.pathname + window.location.search);
+		}
 		const event = new Event('url-change');
 		window.document.dispatchEvent(event);
 		this.setState({ dragging: false });

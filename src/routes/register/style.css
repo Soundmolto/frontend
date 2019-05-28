@@ -99,6 +99,11 @@
     left: 10px;
 }
 
+.facebookButton[disabled="true"] {
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
 .line-center {
 	margin: 0;
 	padding:0 10px;

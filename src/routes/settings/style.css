@@ -32,15 +32,3 @@
   font-size: 1.7rem;
   font-weight: 500;
 }
-
-.switchContainer {
-  padding: 20px 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.switchContainer > label {
-  cursor: pointer;
-  margin-right: 20px;
-}

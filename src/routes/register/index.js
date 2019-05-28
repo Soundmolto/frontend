@@ -147,6 +147,12 @@ export default class Login extends Component {
 		});
 	}
 
+	onClickAllowFacebook = () => {
+		if (this.state.acceptedTerms) {
+			this.setState({ allowFacebook: true })
+		}
+	};
+
 	render ({ loading, logged_in, error, errorMessage }, state) {
 		if (logged_in === true) route("/", true);
 		let otherProps = {};
@@ -202,10 +208,11 @@ export default class Login extends Component {
 									data-button-type="login_with"
 									data-auto-logout-link="true"
 									scope="public_profile,email"
+									{...otherProps}
 								></div>
 							</div>
 						) : (
-							<div class={style.facebookButton} onClick={() => this.setState({ allowFacebook: true })}>
+							<div class={style.facebookButton} onClick={this.onClickAllowFacebook} {...otherProps}>
 								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 216 216" class="_5h0m" color="#FFFFFF">
 									<path fill="#FFFFFF" d="
 										M204.1 0H11.9C5.3 0 0 5.3 0 11.9v192.2c0 6.6 5.3 11.9 11.9

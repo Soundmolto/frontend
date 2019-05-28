@@ -17,7 +17,9 @@ export class WebAudioScheduler {
 		if (typeof window !== "undefined") {
 			window.document.addEventListener(visibilityChange, () => {
 				console.log('we hidden', window.document[hidden]);
-			}, false);
+			}, { passive: true });
+
+			window.document.addEventListener('readystatechange', e => console.log(e));
 		}
 	}
 	

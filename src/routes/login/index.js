@@ -32,15 +32,17 @@ export default class Login extends Component {
 				FB.init(facebookConfig);
 				const fields = 'first_name,last_name,email,picture';
 
-				FB.Event.subscribe('auth.login', response => {
-					if (response.status === "connected") {
-						FB.api('/me', { fields }, response => this.loginWithFacebook(response));
+				FB.Event.subscribe('auth.login', res => {
+					if (res.status === "connected") {
+						const accessToken = res.authResponse.accessToken;
+						FB.api('/me', { fields }, response => this.loginWithFacebook(accessToken, response));
 					}
 				});
 
-				FB.getLoginStatus(response => {
-					if (response.status === "connected") {
-						FB.api('/me', { fields }, response => this.loginWithFacebook(response));
+				FB.getLoginStatus(res => {
+					if (res.status === "connected") {
+						const accessToken = res.authResponse.accessToken;
+						FB.api('/me', { fields }, response => this.loginWithFacebook(accessToken, response));
 					}
 				});
 			};
@@ -109,10 +111,10 @@ export default class Login extends Component {
 		this.onEmailChange(e);
 	}
 
-	loginWithFacebook (profile) {
+	loginWithFacebook (accessToken, profile) {
 		const { dispatch } = this.props;
 		/** This will update our state to indicate we've either logged in or failed login */
-		facebook_login(profile, dispatch, _ => {
+		facebook_login({...profile, accessToken }, dispatch, _ => {
 			this.__state = {};
 			this.setState({ allowFacebook: false });
 		});

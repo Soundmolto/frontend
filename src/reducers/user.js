@@ -13,7 +13,7 @@ export default function reducer (state = {
 	switch (action.type) {
 
 		case USER.SUCCESSFULLY_LOGGED_IN: {
-			let playlists = action.payload.user.playlists;
+			let playlists = action.payload.user.playlists || [];
 			playlists = playlists.sort((a,b) => parseInt(b.createdAt) - parseInt(a.createdAt));
 			action.payload.user.playlists = [].concat(playlists);
 			state = Object.assign({}, state, action.payload.user);
