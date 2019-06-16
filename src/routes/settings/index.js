@@ -8,11 +8,7 @@ import styles from "./style.css";
 
 @connect(({ auth, user }) => ({ auth, user }))
 export default class Settings extends Component {
-	shouldComponentUpdate() {
-		return true;
-	}
-
-	render ({ auth, user }) {
+	render ({ auth }) {
 		if (!auth.logged_in) return route("/", true);
 
 		return (
@@ -22,13 +18,14 @@ export default class Settings extends Component {
 					<h1>Settings</h1>
 				</div>
 				<div class={styles.container}>
-					<AppSettings rootClass={styles.column} className={styles.switchContainer} />
+					<AppSettings
+						rootClass={styles.column}
+						className={styles.switchContainer}
+					/>
 
 					<div class={styles.column}>
 						<h4>User Settings</h4>
-						{console.log(user)}
-						<h6>Connected Accounts</h6>
-						<p>Facebook ID: {user.facebookId || "Connect FB"}</p>
+						<p>Coming soon.</p>
 					</div>
 				</div>
 			</div>
