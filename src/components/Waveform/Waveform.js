@@ -165,6 +165,10 @@ export class Waveform extends Component {
 		return canvas;
 	}
 
+	/**
+	 * TODO:
+	 * 	Move this into a web worker to make this non-blocking.
+	 */
 	async renderCanvas(data) {
 		const that = this;
 		const { audioContext } = this.props;

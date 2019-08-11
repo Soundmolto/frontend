@@ -1,11 +1,3 @@
-const idle = cb => {
-	if (requestIdleCallback) {
-		requestIdleCallback(cb);
-	} else {
-		window.setTimeout(cb, 128);
-	}
-};
-
 export class WaveformGenerator {
 	buffer = [];
 
@@ -30,7 +22,17 @@ export class WaveformGenerator {
 		let sections = this.settings.canvas.width;
 		let len = Math.floor(vals.length / sections);
 		let maxHeight = this.settings.canvas.height;
-		vals.max = () => Math.max.apply(null, this);
+		vals.max = function() {
+			return Math.max.apply(null, this);
+		};
+		// this.settings.canvas.transferControlToOffscreen();
+		const idle = cb => {
+			if (requestIdleCallback) {
+				requestIdleCallback(cb);
+			} else {
+				window.setTimeout(cb, 128);
+			}
+		};
 
 		idle(() => {
 			for (let j = 0; j < sections; j += this.settings.bar_width) {
@@ -40,18 +42,14 @@ export class WaveformGenerator {
 				val += 1;
 				this.drawBar(j, val);
 			}
-
-			if (this.settings.onComplete) {
-				this.settings.onComplete(this.buffer);
-			}
+			if (this.settings.onComplete) this.settings.onComplete(this.buffer);
 		});
 	}
 
 	bufferMeasure(position, length, data) {
 		let sum = 0.0;
-		for (let i = position; i <= position + length - 1; i++) {
+		for (let i = position; i <= position + length - 1; i++)
 			sum += Math.pow(data[i], 2);
-		}
 		return Math.sqrt(sum / data.length);
 	}
 
