@@ -1,9 +1,9 @@
-import { API_ENDPOINT } from '../api';
-import { USER } from '../enums/user';
-import { TRACK } from '../enums/track';
-import { prefill_auth } from '../prefill-authorized-route';
+import { API_ENDPOINT } from "../api";
+import { USER } from "../enums/user";
+import { TRACK } from "../enums/track";
+import { prefill_auth } from "../prefill-authorized-route";
 
-export async function edit_track (dispatch, { track, token, id }) {
+export async function edit_track(dispatch, { track, token, id }) {
 	let returnObject = {};
 
 	try {
@@ -11,8 +11,8 @@ export async function edit_track (dispatch, { track, token, id }) {
 			body: JSON.stringify(track),
 			method: "PATCH",
 			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
+				Accept: "application/json",
+				"Content-Type": "application/json",
 				...prefill_auth(token)
 			}
 		});
@@ -21,11 +21,10 @@ export async function edit_track (dispatch, { track, token, id }) {
 			returnObject = {
 				type: USER.TRACK_UPDATE_SUCCESS,
 				payload: await data.json()
-			}
+			};
 		} else {
 			throw new Error(data.statusText);
 		}
-
 	} catch (error) {
 		returnObject = {
 			type: USER.PROFILE_UPDATE_FAILURE,
@@ -43,13 +42,13 @@ export async function edit_track (dispatch, { track, token, id }) {
 					track,
 					user: returnObject.payload
 				}
-			})
+			});
 		}
 		return dispatch(returnObject);
 	}
-};
+}
 
-export async function delete_track (dispatch, { track, token, id }) {
+export async function delete_track(dispatch, { track, token, id }) {
 	let returnObject = {};
 
 	try {
@@ -57,8 +56,8 @@ export async function delete_track (dispatch, { track, token, id }) {
 			body: JSON.stringify(track),
 			method: "DELETE",
 			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
+				Accept: "application/json",
+				"Content-Type": "application/json",
 				...prefill_auth(token)
 			}
 		});
@@ -67,11 +66,10 @@ export async function delete_track (dispatch, { track, token, id }) {
 			returnObject = {
 				type: USER.TRACK_DELETE_SUCCESS,
 				payload: await data.json()
-			}
+			};
 		} else {
 			throw new Error(data.statusText);
 		}
-
 	} catch (error) {
 		returnObject = {
 			type: USER.PROFILE_UPDATE_FAILURE,
@@ -82,33 +80,40 @@ export async function delete_track (dispatch, { track, token, id }) {
 			dispatch({
 				type: USER.HAS_NEW_DATA,
 				payload: Object.assign({}, returnObject.payload)
-			})
+			});
 		}
 		return dispatch(returnObject);
 	}
 }
 
-export async function get_track (dispatch, { token, track_url, vanity_url, secret }) {
+export async function get_track(
+	dispatch,
+	{ token, track_url, vanity_url, secret }
+) {
 	let returnObject = {};
 
 	try {
-		const data = await fetch(`${API_ENDPOINT}/${vanity_url}/${track_url}${secret === null ? '' : `?secret=${secret}`}`, {
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-				...prefill_auth(token)
+		const data = await fetch(
+			`${API_ENDPOINT}/${vanity_url}/${track_url}${
+				secret === null ? "" : `?secret=${secret}`
+			}`,
+			{
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+					...prefill_auth(token)
+				}
 			}
-		});
+		);
 
 		if (data.status === 200) {
 			returnObject = {
 				type: USER.GOT_TRACK,
 				payload: await data.json()
-			}
+			};
 		} else {
 			throw new Error(data.statusText);
 		}
-
 	} catch (error) {
 		returnObject = {
 			type: USER.TRACK_NOT_FOUND,
@@ -119,27 +124,35 @@ export async function get_track (dispatch, { token, track_url, vanity_url, secre
 	}
 }
 
-export function playing_now (dispatch, { playing, position, track, owner = { profile: {} } }) {
+export function playing_now(
+	dispatch,
+	{ playing, position, track, owner = { profile: {} } }
+) {
 	let type = TRACK.PLAYING_TRACK;
 	if (!playing) type = TRACK.PAUSED_TRACK;
 	delete track.peaks;
-	if (playing) window.document.title = `${track.user.displayName || track.user.url} - ${track.name}`
-	return dispatch({ type: type, payload: { position, track, owner } })
+	if (playing)
+		window.document.title = `${track.user.displayName ||
+			track.user.url} - ${track.name}`;
+	return dispatch({ type: type, payload: { position, track, owner } });
 }
 
-export function update_position (dispatch, { playing, position, track, owner }) {
-	return dispatch({ type: TRACK.POS_CHANGE, payload: { position, track, owner } })
+export function update_position(dispatch, { playing, position, track, owner }) {
+	return dispatch({
+		type: TRACK.POS_CHANGE,
+		payload: { position, track, owner }
+	});
 }
 
-export async function get_discover_tracks (dispatch, token) {
+export async function get_discover_tracks(dispatch, token) {
 	let returnObject = {};
 	let error = {};
 
 	try {
 		const data = await fetch(`${API_ENDPOINT}/discover`, {
 			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
+				Accept: "application/json",
+				"Content-Type": "application/json",
 				...prefill_auth(token)
 			}
 		});
@@ -148,7 +161,7 @@ export async function get_discover_tracks (dispatch, token) {
 			returnObject = {
 				type: TRACK.HAS_DISCOVER_TRACKS,
 				payload: await data.json()
-			}
+			};
 		} else {
 			error = data;
 			throw new Error(data.statusText);
@@ -160,15 +173,15 @@ export async function get_discover_tracks (dispatch, token) {
 	}
 }
 
-export async function get_more_discover_tracks (dispatch, nextUrl, token) {
+export async function get_more_discover_tracks(dispatch, nextUrl, token) {
 	let returnObject = {};
 	let error = {};
 
 	try {
 		const data = await fetch(nextUrl, {
 			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
+				Accept: "application/json",
+				"Content-Type": "application/json",
 				...prefill_auth(token)
 			}
 		});
@@ -177,7 +190,7 @@ export async function get_more_discover_tracks (dispatch, nextUrl, token) {
 			returnObject = {
 				type: TRACK.HAS_MORE_DISCOVER_TRACKS,
 				payload: await data.json()
-			}
+			};
 		} else {
 			error = data;
 			throw new Error(data.statusText);
@@ -189,14 +202,18 @@ export async function get_more_discover_tracks (dispatch, nextUrl, token) {
 	}
 }
 
-export async function toggle_like (dispatch, { token, id, user }, done = () => {}) {
+export async function toggle_like(
+	dispatch,
+	{ token, id, user },
+	done = () => {}
+) {
 	let returnObject = {};
 
 	try {
 		const data = await fetch(`${API_ENDPOINT}/tracks/${id}/like`, {
 			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
+				Accept: "application/json",
+				"Content-Type": "application/json",
 				...prefill_auth(token)
 			},
 			method: "PUT"
@@ -210,12 +227,16 @@ export async function toggle_like (dispatch, { token, id, user }, done = () => {
 			}
 
 			returnObject = { type: USER.HAS_NEW_DATA, payload };
-			dispatch({ type: USER.TOGGLED_LIKE_ON_TRACK, track: payload.filter(track => track.id === id)[0] || { id: null } })
+			dispatch({
+				type: USER.TOGGLED_LIKE_ON_TRACK,
+				track: payload.filter(track => track.id === id)[0] || {
+					id: null
+				}
+			});
 			done(payload.filter(track => track.id === id));
 		} else {
 			throw new Error(data.statusText);
 		}
-
 	} catch (error) {
 		returnObject = {
 			type: USER.TRACK_NOT_FOUND,
@@ -226,43 +247,42 @@ export async function toggle_like (dispatch, { token, id, user }, done = () => {
 	}
 }
 
-export async function fetch_tracks (dispatch, token) {
-    let returnObject = {};
+export async function fetch_tracks(dispatch, token) {
+	let returnObject = {};
 
-    try {
-        const data = await fetch(`${API_ENDPOINT}/tracks`, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                ...prefill_auth(token)
-            }
-        });
+	try {
+		const data = await fetch(`${API_ENDPOINT}/tracks`, {
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+				...prefill_auth(token)
+			}
+		});
 
-        if (data.status === 200) {
-            returnObject = {
-                type: TRACK.GOT_ALL_TRACKS,
-                payload: await data.json()
-            }
-        } else {
-            throw new Error(data.statusText);
-        }
-
-    } catch (error) {
-        console.error(error);
-    } finally {
-        return dispatch(returnObject);
-    }
+		if (data.status === 200) {
+			returnObject = {
+				type: TRACK.GOT_ALL_TRACKS,
+				payload: await data.json()
+			};
+		} else {
+			throw new Error(data.statusText);
+		}
+	} catch (error) {
+		console.error(error);
+	} finally {
+		return dispatch(returnObject);
+	}
 }
 
-export async function get_track_collection (dispatch, token) {
+export async function get_track_collection(dispatch, token) {
 	let returnObject = {};
 	let error = {};
 
 	try {
 		const data = await fetch(`${API_ENDPOINT}/collection/tracks`, {
 			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
+				Accept: "application/json",
+				"Content-Type": "application/json",
 				...prefill_auth(token)
 			}
 		});
@@ -271,7 +291,7 @@ export async function get_track_collection (dispatch, token) {
 			returnObject = {
 				type: TRACK.HAS_TRACK_COLLECTION,
 				payload: await data.json()
-			}
+			};
 		} else {
 			error = data;
 			throw new Error(data.statusText);
@@ -283,15 +303,15 @@ export async function get_track_collection (dispatch, token) {
 	}
 }
 
-export async function remove_track_from_collection (dispatch, { token, id }) {
+export async function remove_track_from_collection(dispatch, { token, id }) {
 	let returnObject = {};
 	let error = {};
 
 	try {
 		const data = await fetch(`${API_ENDPOINT}/collection/tracks/${id}`, {
 			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
+				Accept: "application/json",
+				"Content-Type": "application/json",
 				...prefill_auth(token)
 			},
 			method: "DELETE"
@@ -301,7 +321,7 @@ export async function remove_track_from_collection (dispatch, { token, id }) {
 			returnObject = {
 				type: TRACK.HAS_TRACK_COLLECTION,
 				payload: await data.json()
-			}
+			};
 		} else {
 			error = data;
 			throw new Error(data.statusText);
@@ -313,15 +333,15 @@ export async function remove_track_from_collection (dispatch, { token, id }) {
 	}
 }
 
-export async function save_track_in_collection (dispatch, { token, id }) {
+export async function save_track_in_collection(dispatch, { token, id }) {
 	let returnObject = {};
 	let error = {};
 
 	try {
 		const data = await fetch(`${API_ENDPOINT}/collection/tracks/${id}`, {
 			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
+				Accept: "application/json",
+				"Content-Type": "application/json",
 				...prefill_auth(token)
 			},
 			method: "PUT"
@@ -331,7 +351,7 @@ export async function save_track_in_collection (dispatch, { token, id }) {
 			returnObject = {
 				type: TRACK.HAS_TRACK_COLLECTION,
 				payload: await data.json()
-			}
+			};
 		} else {
 			error = data;
 			throw new Error(data.statusText);
