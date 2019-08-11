@@ -1,20 +1,29 @@
 .smol {
-	font-size: 1rem;
-	line-height: 1rem;
-	display: block;
+  font-size: 1rem;
+  line-height: 1rem;
+  display: block;
 }
 
 .username {
-	overflow: hidden;
-	max-width: calc(100% - 60px);
-	text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: calc(100% - 60px);
+  text-overflow: ellipsis;
 }
 
 .usernameCustom > i {
-	font-size: 1.3rem;
-	margin-left: 10px;
+  font-size: 1.3rem;
+  margin-left: 10px;
+}
+
+.usernameCustom {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 15px 50px;
+  border-radius: 10px;
+  box-shadow: var(--mdc-theme--box-shadow--floating);
+  backdrop-filter: var(--theme-blur);
+  font-size: 1.3rem;
 }
 
 .noTextDecoration {
-	text-decoration: none;
+  text-decoration: none;
 }

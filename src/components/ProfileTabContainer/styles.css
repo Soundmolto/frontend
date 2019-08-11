@@ -1,64 +1,65 @@
 .tabs {
-	display: flex !important;
-	align-content: center;
-	width: 100%;
-	max-width: 500px;
-	margin: -58px 0 30px 20px;
+  display: flex !important;
+  align-content: center;
+  width: 100%;
+  max-width: 500px;
+  margin: -58px 0 30px 20px;
 }
 
 .tabs a {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 50%;
-	background: rgba(0, 0, 0, 0.3);
-	/* transition: all 0.3s ease-in-out; */
-	color: #ffffff !important;
-	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-	font-size: 0.8rem;
-	font-weight: 600;
-	border-radius: 50px !important;
-    overflow: hidden;
-	margin: 0 10px 0 0;
-	box-shadow: var(--mdc-theme--box-shadow--floating);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  background: rgba(0, 0, 0, 0.3);
+  /* transition: all 0.3s ease-in-out; */
+  color: #ffffff !important;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 50px !important;
+  overflow: hidden;
+  margin: 0 10px 0 0;
+  box-shadow: var(--mdc-theme--box-shadow--floating);
+  backdrop-filter: var(--theme-blur);
 }
 
 .tabs a:last-of-type {
-	border-radius: 0 10px 0 0;
+  border-radius: 0 10px 0 0;
 }
 
 .tabs a i {
-	margin-right: 10px;
+  margin-right: 10px;
 }
 
 .tabs a small {
-	margin-left: 10px;
-	font-size: 0.9rem;
-	opacity: 0.75;
+  margin-left: 10px;
+  font-size: 0.9rem;
+  opacity: 0.75;
 }
 
 .tabContainer {
-    padding: 20px;
-	cursor: initial;
+  padding: 20px;
+  cursor: initial;
 }
 
 .minHeight {
-    min-height: calc(100vh - 350px);
+  min-height: calc(100vh - 350px);
 }
 
 @media screen and (max-width: 540px) {
-	.tabs {
-		margin: -48px 0 30px 0 !important;
-	}
-	.tabs a {
-		overflow: hidden;
-		margin: 0 !important;
-		border-radius: 0 !important;
-	}
+  .tabs {
+    margin: -48px 0 30px 0 !important;
+  }
+  .tabs a {
+    overflow: hidden;
+    margin: 0 !important;
+    border-radius: 0 !important;
+  }
 }
 
 @media screen and (max-width: 768px) {
-	.tabContainer {
-		padding: 20px 10px;
-	}
+  .tabContainer {
+    padding: 20px 10px;
+  }
 }

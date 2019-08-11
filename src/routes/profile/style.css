@@ -1,126 +1,123 @@
 .profile {
-	min-height: 100%;
-	width: 100%;
+  min-height: 100%;
+  width: 100%;
 }
 
 .header img {
-	max-width: 64px;
-	height: 64px;
-	margin-right: 10px;
-	border-radius: 100%;
+  max-width: 64px;
+  height: 64px;
+  margin-right: 10px;
+  border-radius: 100%;
 }
 
 .profile_contents h1.mainHeader {
-	font-size: 1.3rem;
+  font-size: 1.3rem;
 }
 
 .profile_contents [class="mdc-card"] {
-	padding: 20px;
+  padding: 20px;
 }
 
 .profile_contents [class="mdc-card"] h2 {
-	margin-top: 0;
-	font-size: 0.9rem !important;
+  margin-top: 0;
+  font-size: 0.9rem !important;
 }
 
 .smol {
-	font-size: 1rem;
-	line-height: 1rem;
-	display: block;
+  font-size: 1rem;
+  line-height: 1rem;
+  display: block;
 }
 
-.button, .coverPhotoButton {
-	position: absolute;
-	color: #ffffff !important;
-	background: rgba(0, 0, 0, 0.8) !important;
-	border-radius: 50px;
-	padding: 15px;
+.button,
+.coverPhotoButton {
+  position: absolute;
+  color: #ffffff !important;
+  background: rgba(0, 0, 0, 0.5) !important;
+  border-radius: 50px;
+  padding: 15px 25px;
+  height: 50px;
+  backdrop-filter: var(--theme-blur);
 }
 
 @media screen and (min-width: 500px) {
-	.button, .coverPhotoButton {
-		right: 28px;
-	}
+  .button,
+  .coverPhotoButton {
+    right: 28px;
+  }
 }
 
 @media screen and (max-width: 500px) {
-	.button, .coverPhotoButton {
-		right: 10px;
-		top: 30px;
-		background: #111 !important;
-	}
+  .button,
+  .coverPhotoButton {
+    right: 10px;
+    top: 30px;
+    background: #111 !important;
+  }
 }
 
 @media screen and (min-width: 500px) {
-	.username_custom {
-		max-width: calc(100% - 300px);
-	}
+  .username_custom {
+    max-width: calc(100% - 300px);
+  }
 }
 
 .home {
-	padding: 0 20px;
-	min-height: 100%;
-	width: 100%;
+  padding: 0 20px;
+  min-height: 100%;
+  width: 100%;
 }
 
 .home a {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 .header > h1 {
-	margin-left: 0 !important;
+  margin-left: 0 !important;
 }
 
 .hover {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .header {
-	background: transparent;
-	background-repeat: no-repeat !important;
-	background-position: center !important;
-	background-size: cover !important;
-	height: 300px;
-	position: relative !important;
-	overflow: visible !important;
+  background: transparent;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: cover !important;
+  height: 300px;
+  position: relative !important;
+  overflow: visible !important;
 }
-
 
 .fade {
-	height: 48px;
-	position: absolute;
-	background: linear-gradient(transparent 0%, var(--mdc-theme-background) 100%);
-	width: 100vw;
-	margin-left: -20px;
-	z-index: 0;
-	bottom: 0;
-}
-
-.username_custom {
-	background: rgba(0, 0, 0, 0.8);
-	padding: 10px;
-	border-radius: 10px;
-	box-shadow: var(--mdc-theme--box-shadow--floating);
+  height: 48px;
+  position: absolute;
+  background: linear-gradient(transparent 0%, var(--mdc-theme-background) 100%);
+  width: 100vw;
+  margin-left: -20px;
+  z-index: 0;
+  bottom: 0;
 }
 
 .username_custom i {
-	color: white;
+  color: white;
 }
 
 .modalClose {
-    float: right;
-    cursor: pointer;
-    padding: 10px;
-    margin-top: -10px;
-    border-radius: 100%;
+  float: right;
+  cursor: pointer;
+  padding: 10px;
+  margin-top: -10px;
+  border-radius: 100%;
 }
 
 .modalClose:hover {
-    background: var(--mdc-search-bg);
+  background: var(--mdc-search-bg);
 }
 
 @media screen and (min-width: 768px) {
-    .modalClose {
-        display: none;
-    }
+  .modalClose {
+    display: none;
+  }
 }
