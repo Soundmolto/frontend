@@ -1,14 +1,14 @@
-import { Component } from 'preact';
-import { Provider, connect } from 'preact-redux';
-import { HotKeys } from 'react-hotkeys';
-import { TRACK } from './enums/track'
-import { SETTINGS } from './enums/settings'
-import App from './components/App';
-import store from './store';
-import { shortcuts } from './shortcuts';
-import './style';
-import { WS_ENDPOINT } from './api';
-import { NOTIFICATIONS } from './enums/notifications';
+import { Component } from "preact";
+import { Provider, connect } from "preact-redux";
+import { HotKeys } from "react-hotkeys";
+import { TRACK } from "./enums/track";
+import { SETTINGS } from "./enums/settings";
+import App from "./components/App";
+import store from "./store";
+import { shortcuts } from "./shortcuts";
+import "./style";
+import { WS_ENDPOINT } from "./api";
+import { NOTIFICATIONS } from "./enums/notifications";
 
 let attach = null;
 
@@ -25,21 +25,30 @@ for (const shortcut of shortcuts) {
 }
 
 class HotKeysHOC extends Component {
-
 	map = map;
 	handlers = handlers;
 
-	constructor (opts) {
+	constructor(opts) {
 		super(opts);
+
 		const state = store.getState();
-		const payload = Object.assign({}, state.currently_playing, { position: 0 });
-		const _payload = Object.assign({}, state.UI, { goto_open: false, shortcuts_open: false });
+		const payload = Object.assign({}, state.currently_playing, {
+			position: 0
+		});
+		const _payload = Object.assign({}, state.UI, {
+			goto_open: false,
+			shortcuts_open: false
+		});
 		store.dispatch({ type: TRACK.PAUSED_TRACK, payload });
 		store.dispatch({ type: SETTINGS.RESET, payload: _payload });
 
+		this.setupWebSockets();
+	}
+
+	setupWebSockets() {
 		const ws = new WebSocket(`${WS_ENDPOINT}`);
 
-		ws.addEventListener('message', (event) => {
+		ws.addEventListener("message", event => {
 			const { token } = store.getState().auth;
 			const message = JSON.parse(event.data);
 
@@ -57,23 +66,35 @@ class HotKeysHOC extends Component {
 				}
 
 				case "notifications": {
-					const notifications = message.notifications.sort((first, second) => parseInt(second.createdAt) - parseInt(first.createdAt));
+					const notifications = message.notifications.sort(
+						(first, second) =>
+							parseInt(second.createdAt) -
+							parseInt(first.createdAt)
+					);
 					console.log(notifications);
-					store.dispatch({ type: NOTIFICATIONS.GOT_NOTIFICATIONS, payload: notifications });
+					store.dispatch({
+						type: NOTIFICATIONS.GOT_NOTIFICATIONS,
+						payload: notifications
+					});
 					return;
 				}
 			}
 		});
 	}
 
-	render ({ children }) {
+	render({ children }) {
 		return (
-			<HotKeys handlers={this.handlers} keyMap={this.map} focused={true} attach={attach}>
+			<HotKeys
+				handlers={this.handlers}
+				keyMap={this.map}
+				focused={true}
+				attach={attach}
+			>
 				{children}
 			</HotKeys>
 		);
 	}
-};
+}
 
 const Main = () => (
 	<Provider store={store}>
@@ -82,6 +103,5 @@ const Main = () => (
 		</HotKeysHOC>
 	</Provider>
 );
-
 
 export default Main;

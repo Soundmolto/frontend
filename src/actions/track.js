@@ -3,6 +3,13 @@ import { USER } from "../enums/user";
 import { TRACK } from "../enums/track";
 import { prefill_auth } from "../prefill-authorized-route";
 
+const defaultProfile = {
+	profile: {
+		displayName: "",
+		url: ""
+	}
+};
+
 export async function edit_track(dispatch, { track, token, id }) {
 	let returnObject = {};
 
@@ -126,15 +133,19 @@ export async function get_track(
 
 export function playing_now(
 	dispatch,
-	{ playing, position, track, owner = { profile: {} } }
+	{ playing, position, track, owner = defaultProfile }
 ) {
 	let type = TRACK.PLAYING_TRACK;
+	const { profile } = owner;
 	if (!playing) type = TRACK.PAUSED_TRACK;
 	delete track.peaks;
-	if (playing)
-		window.document.title = `${track.user.displayName ||
-			track.user.url} - ${track.name}`;
-	return dispatch({ type: type, payload: { position, track, owner } });
+
+	if (playing) {
+		window.document.title = `${profile.displayName || profile.url} - ${
+			track.name
+		}`;
+	}
+	return dispatch({ type, payload: { position, track, owner } });
 }
 
 export function update_position(dispatch, { playing, position, track, owner }) {
